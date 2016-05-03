@@ -8,6 +8,9 @@ namespace Competitions.POCO
   public class Competitor
   {
     #region *********************** Constants ************************
+
+    public enum GENDER { UNKNOWN, MALE, FEMALE }
+
     #endregion
 
 
@@ -16,6 +19,8 @@ namespace Competitions.POCO
 
 
     #region *********************** Properties ***********************
+
+    public GENDER Gender { get; set; }
 
     public int Id { get; set; }
 

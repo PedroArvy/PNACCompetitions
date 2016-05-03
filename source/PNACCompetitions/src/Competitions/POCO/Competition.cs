@@ -22,6 +22,7 @@ namespace Competitions
 
     public int Id { get; set; }
 
+    [Column(TypeName = "smalldatetime")]
     public DateTime End { get; set; }
 
     [Column(TypeName = "varchar(100)"), Required]
@@ -29,7 +30,7 @@ namespace Competitions
 
     public ICollection<Competitions.POCO.Result> Results { get; set; }
 
-    [Required]
+    [Column(TypeName = "smalldatetime"), Required]
     public DateTime Start { get; set; }
 
 

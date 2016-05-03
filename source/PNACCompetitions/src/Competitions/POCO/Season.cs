@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace Competitions.POCO
@@ -8,6 +9,9 @@ namespace Competitions.POCO
   {
 
     #region *********************** Constants ************************
+
+    public enum COMPETITOR_TYPE { UNASSIGNED, NON_MEMBER, SENIOR, JUNIOR}
+
     #endregion
 
 
@@ -17,12 +21,14 @@ namespace Competitions.POCO
 
     #region *********************** Properties ***********************
 
+    public COMPETITOR_TYPE CompetitorType { get; set; }
+
     public int Id { get; set; }
 
-    [Required]
+    [Column(TypeName = "smalldatetime"), Required]
     public DateTime End { get; set; }
 
-    [Required]
+    [Column(TypeName = "smalldatetime"), Required]
     public DateTime Start { get; set; }
     
     #endregion
