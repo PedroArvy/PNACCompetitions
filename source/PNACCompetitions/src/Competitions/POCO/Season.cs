@@ -6,6 +6,17 @@ namespace Competitions.POCO
 {
   public class Season
   {
+
+    #region *********************** Constants ************************
+    #endregion
+
+
+    #region *********************** Fields ***************************
+    #endregion
+
+
+    #region *********************** Properties ***********************
+
     public int Id { get; set; }
 
     [Required]
@@ -13,6 +24,22 @@ namespace Competitions.POCO
 
     [Required]
     public DateTime Start { get; set; }
+    
+    #endregion
+
+
+    #region *********************** Initialisation *******************
+    #endregion
+
+
+    #region *********************** Methods **************************
+    #endregion
+
+
+    #region *********************** Interfaces ***********************
+    #endregion
+
+
 
   }
 }

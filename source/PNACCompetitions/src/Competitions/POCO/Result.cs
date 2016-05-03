@@ -4,6 +4,20 @@ namespace Competitions.POCO
 {
   public class Result
   {
+    #region *********************** Constants ************************
+    #endregion
+
+
+    #region *********************** Fields ***************************
+    #endregion
+
+
+    #region *********************** Properties ***********************
+    #endregion
+
+
+    #region *********************** Initialisation *******************
+
     public int Id { get; set; }
 
     public int CompetitorId { get; set; }
@@ -17,5 +31,17 @@ namespace Competitions.POCO
 
     [Required]
     public int Length { get; set; }
+
+    #endregion
+
+
+    #region *********************** Methods **************************
+    #endregion
+
+
+    #region *********************** Interfaces ***********************
+    #endregion
+
+
   }
 }

@@ -7,6 +7,16 @@ namespace Competitions.POCO
 
   public class Competitor
   {
+    #region *********************** Constants ************************
+    #endregion
+
+
+    #region *********************** Fields ***************************
+    #endregion
+
+
+    #region *********************** Properties ***********************
+
     public int Id { get; set; }
 
     [Column(TypeName = "varchar(100)"), Required]
@@ -18,6 +28,22 @@ namespace Competitions.POCO
     public string NickName { get; set; }
 
     public ICollection<Result> Results { get; set; }
+
+
+    #endregion
+
+
+    #region *********************** Initialisation *******************
+    #endregion
+
+
+    #region *********************** Methods **************************
+    #endregion
+
+
+    #region *********************** Interfaces ***********************
+    #endregion
+
 
   }
 }

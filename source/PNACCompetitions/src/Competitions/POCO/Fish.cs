@@ -6,6 +6,17 @@ namespace Competitions.POCO
 {
   public class Fish
   {
+    #region *********************** Constants ************************
+    #endregion
+
+
+    #region *********************** Fields ***************************
+    #endregion
+
+
+    #region *********************** Properties ***********************
+
+
     [Required]
     public int Difficulty { get; set; }
 
@@ -19,6 +30,21 @@ namespace Competitions.POCO
 
     [Column(TypeName = "varchar(100)"), Required]
     public string Name { get; set; }
+
+    #endregion
+
+
+    #region *********************** Initialisation *******************
+    #endregion
+
+
+    #region *********************** Methods **************************
+    #endregion
+
+
+    #region *********************** Interfaces ***********************
+    #endregion
+
 
   }
 }
