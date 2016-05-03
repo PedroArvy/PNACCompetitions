@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
@@ -30,6 +31,9 @@ namespace Competitions.POCO
 
     [Column(TypeName = "varchar(100)"), Required]
     public string Name { get; set; }
+
+    public List<Result> Results { get; set; }
+
 
     #endregion
 

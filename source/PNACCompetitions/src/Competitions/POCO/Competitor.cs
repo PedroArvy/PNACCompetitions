@@ -20,6 +20,10 @@ namespace Competitions.POCO
 
     #region *********************** Properties ***********************
 
+    public List<CompetitorCompetition> CompetitorCompetitions { get; set; }
+
+    public List<Result> Results { get; set; }
+
     public GENDER Gender { get; set; }
 
     public int Id { get; set; }
@@ -30,10 +34,8 @@ namespace Competitions.POCO
     [Column(TypeName = "varchar(100)"), Required]
     public string LastName { get; set; }
 
+    [Column(TypeName = "varchar(100)")]
     public string NickName { get; set; }
-
-    public ICollection<Result> Results { get; set; }
-
 
     #endregion
 

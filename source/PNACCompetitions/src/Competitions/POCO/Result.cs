@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Competitions.POCO
 {
@@ -18,10 +20,8 @@ namespace Competitions.POCO
 
     #region *********************** Initialisation *******************
 
-    public int Id { get; set; }
-
     public int CompetitorId { get; set; }
-    public Competition Competitor { get; set; }
+    public Competitor Competitor { get; set; }
 
     public int CompetitionId { get; set; }
     public Competition Competition { get; set; }

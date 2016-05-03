@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Competitions.POCO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,15 +24,17 @@ namespace Competitions
     public int Id { get; set; }
 
     [Column(TypeName = "smalldatetime")]
-    public DateTime End { get; set; }
+    public DateTime? End { get; set; }
 
     [Column(TypeName = "varchar(100)"), Required]
     public string Name { get; set; }
 
-    public ICollection<Competitions.POCO.Result> Results { get; set; }
-
     [Column(TypeName = "smalldatetime"), Required]
     public DateTime Start { get; set; }
+
+    public List<CompetitorCompetition> CompetitorCompetitions { get; set; }
+
+    public List<Result> Results { get; set; }
 
 
     #endregion
