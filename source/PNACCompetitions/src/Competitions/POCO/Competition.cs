@@ -32,6 +32,7 @@ namespace Competitions
     [Column(TypeName = "smalldatetime"), Required]
     public DateTime Start { get; set; }
 
+    //many to many
     public List<CompetitorCompetition> CompetitorCompetitions { get; set; }
 
     public List<Result> Results { get; set; }

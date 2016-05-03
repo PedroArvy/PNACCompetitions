@@ -20,6 +20,7 @@ namespace Competitions.POCO
 
     #region *********************** Properties ***********************
 
+    //many to many
     public List<CompetitorCompetition> CompetitorCompetitions { get; set; }
 
     public List<Result> Results { get; set; }
