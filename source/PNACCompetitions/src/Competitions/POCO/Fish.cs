@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Competitions.POCO
 {
@@ -18,7 +17,7 @@ namespace Competitions.POCO
     [Required]
     public int Minimum { get; set; }
 
-    [Required]
+    [Column(TypeName = "varchar(100)"), Required]
     public string Name { get; set; }
 
   }

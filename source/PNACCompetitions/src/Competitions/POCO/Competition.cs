@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Competitions
 {
@@ -8,11 +10,21 @@ namespace Competitions
   // To enable this option, right-click on the project and select the Properties menu item. In the Build tab select "Produce outputs on build".
   public class Competition
   {
+    #region *********************** Constants ************************
+    #endregion
+
+
+    #region *********************** Fields ***************************
+    #endregion
+
+
+    #region *********************** Properties ***********************
+
     public int Id { get; set; }
 
     public DateTime End { get; set; }
 
-    [Required]
+    [Column(TypeName = "varchar(100)"), Required]
     public string Name { get; set; }
 
     public ICollection<Competitions.POCO.Result> Results { get; set; }
@@ -20,9 +32,29 @@ namespace Competitions
     [Required]
     public DateTime Start { get; set; }
 
+
+    #endregion
+
+
+    #region *********************** Initialisation *******************
+
     public Competition()
     {
     }
+
+    #endregion
+
+
+    #region *********************** Methods **************************
+    #endregion
+
+
+    #region *********************** Interfaces ***********************
+    #endregion
+
+
+
+
 
   }
 }

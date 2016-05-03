@@ -1,12 +1,17 @@
 ﻿{
   "version": "1.0.0-*",
-  "description": "Competitions Class Library",
-  "authors": [ "Michael" ],
+  "description": "Fund.FundEntitlement.Business Class Library",
+  "authors": [ "bryan" ],
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
   "frameworks": {
-    "net451": { },
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime": "4.0.10.0"
+      }
+    },
+
     "dotnet5.4": {
       "dependencies": {
         "Microsoft.CSharp": "4.0.1-beta-23516",
@@ -18,6 +23,6 @@
     }
   },
   "dependencies": {
-    "System.ComponentModel.Annotations": "4.0.11-beta-23516"
+    "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final"
   }
 }
