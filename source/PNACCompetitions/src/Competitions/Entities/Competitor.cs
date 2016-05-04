@@ -30,7 +30,7 @@ namespace Competitions.Entities
 
     public COMPETITOR_TYPE CompetitorType { get; set; }
 
-    public List<Result> Results { get; set; }
+    public List<Catch> Results { get; set; }
 
     public GENDER Gender { get; set; }
 

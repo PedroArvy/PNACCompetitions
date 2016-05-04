@@ -190,6 +190,8 @@ namespace Competitions.Tests
 
       AddCompetition(club);
 
+      AddCatch(club);
+
       _context.Clubs.Remove(club);
       _context.SaveChanges();
 

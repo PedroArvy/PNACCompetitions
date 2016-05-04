@@ -34,7 +34,7 @@ namespace Competitions.Entities
     [Column(TypeName = "varchar(100)"), Required]
     public string Name { get; set; }
 
-    public List<Result> Results { get; set; }
+    public List<Catch> Results { get; set; }
 
     public ENVIRONMENT Environment { get; set; }
 

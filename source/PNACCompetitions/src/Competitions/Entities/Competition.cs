@@ -46,7 +46,7 @@ namespace Competitions
     //public int Referee2Id { get; set; }
     //public Competitor Referee2 { get; set; }
 
-    public List<Result> Results { get; set; }
+    public List<Catch> Results { get; set; }
 
     public int SeasonId { get; set; }
     public Season Season { get; set; }
