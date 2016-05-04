@@ -18,12 +18,15 @@ namespace Competitions.POCO
 
     #region *********************** Properties ***********************
 
+
+
     public int CompetitorId { get; set; }
     public Competitor Competitor { get; set; }
 
 
     public int CompetitionId { get; set; }
     public Competition Competition { get; set; }
+
 
 
     #endregion

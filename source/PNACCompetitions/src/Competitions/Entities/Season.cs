@@ -36,15 +36,16 @@ namespace Competitions.POCO
 
 
     #region *********************** Initialisation *******************
+
+    public Season()
+    {
+    }
+
     #endregion
 
 
     #region *********************** Methods **************************
 
-
-    public Season()
-    {
-    }
 
 
     public Season(Club club, DateTime start, DateTime end)

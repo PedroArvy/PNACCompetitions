@@ -15,10 +15,6 @@ namespace Competitions.POCO
 
 
     #region *********************** Properties ***********************
-    #endregion
-
-
-    #region *********************** Initialisation *******************
 
     public int CompetitorId { get; set; }
     public Competitor Competitor { get; set; }
@@ -31,6 +27,16 @@ namespace Competitions.POCO
 
     [Required]
     public int Length { get; set; }
+
+    #endregion
+
+
+    #region *********************** Initialisation *******************
+
+    public Result()
+    {
+
+    }
 
     #endregion
 

@@ -1,6 +1,7 @@
 ﻿using Competitions.Entities;
 using Competitions.Tests;
 using Microsoft.AspNet.Mvc;
+using System.Linq;
 
 namespace PNACCompetitions
 {
@@ -43,9 +44,16 @@ namespace PNACCompetitions
 
     public IActionResult Test()
     {
-      Tests test = new Tests();
+      int no = _context.Clubs.Where(c => c.Id == 1).Count();
 
-      test.SeasonClubAddition(_context);
+      no = _context.Competitors.Count();
+
+      no = _context.Competitors.Where(c => c.ClubId == 1).Count();
+
+
+      Tests test = new Tests(_context);
+
+      test.Construction();
 
       return RedirectToAction(nameof(Index));
     }

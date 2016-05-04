@@ -39,6 +39,11 @@ namespace Competitions.POCO
 
 
     #region *********************** Initialisation *******************
+
+    public Fish()
+    {
+
+    }
     #endregion
 
 

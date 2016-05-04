@@ -47,12 +47,33 @@ namespace Competitions.POCO
 
     //public List<Competition> RefereedCompetitions { get; set; }
 
-    public List<Competition> TripCaptaincies { get; set; }
+    //public List<Competition> TripCaptaincies { get; set; }
 
     #endregion
 
 
     #region *********************** Initialisation *******************
+
+    public Competitor()
+    {
+    }
+
+
+    public Competitor(string firstname, string lastname, string nickname, Club club, COMPETITOR_TYPE competitorType, GENDER gender)
+    {
+      if(club != null)
+      {
+        Club = club;
+        ClubId = club.Id;
+      }
+
+      CompetitorType = competitorType;
+      Gender = gender;
+      FirstName = firstname;
+      LastName = lastname;
+      NickName = nickname;
+    }
+
     #endregion
 
 
