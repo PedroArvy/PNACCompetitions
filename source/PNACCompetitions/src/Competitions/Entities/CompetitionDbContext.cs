@@ -25,7 +25,7 @@ namespace Competitions.Stores
 
     public DbSet<Result> Results { get; set; }
 
-    public DbSet<Season> Season { get; set; }
+    public DbSet<Season> Seasons { get; set; }
 
     #endregion
 
@@ -45,7 +45,6 @@ namespace Competitions.Stores
       modelBuilder.Entity<Result>();
       modelBuilder.Entity<Season>();
 
-      modelBuilder.Entity<CompetitorCompetition>().HasIndex(b => b.CompetitionId);
 
       modelBuilder.Entity<Competition>().HasIndex(b => b.Start);
 

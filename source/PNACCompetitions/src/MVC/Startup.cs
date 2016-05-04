@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.Entity;
 using Competitions.Stores;
+using Competitions.Services;
 
 namespace PNACCompetitions
 {
@@ -42,8 +43,25 @@ namespace PNACCompetitions
     #region *********************** Methods **************************
 
 
+    // This method gets called by the runtime. Use this method to add services to the container.
+    // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
+    public void ConfigureServices(IServiceCollection services)
+    {
+      services.AddMvc();
+
+      services.AddEntityFramework()
+        .AddSqlServer()
+        .AddDbContext<CompetitionDbContext>(options => options.UseSqlServer(Configuration["database:connection"]));
+
+      services.AddSingleton(provider => Configuration);
+
+      services.AddScoped<ICompetitionData, SqlCompetitionData>();
+    }
+
+
+
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app)
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
       app.UseIISPlatformHandler();
 
@@ -62,10 +80,10 @@ namespace PNACCompetitions
 
       app.UseMvc(ConfigureRoute);
 
-      app.Run(async (context) =>
-      {
-        await context.Response.WriteAsync("Hello World!");
-      });
+      //app.Run(async (context) =>
+      //{
+      //  await context.Response.WriteAsync("Hello World!");
+      //});
     }
 
 
@@ -75,19 +93,6 @@ namespace PNACCompetitions
     }
 
 
-    // This method gets called by the runtime. Use this method to add services to the container.
-    // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
-    public void ConfigureServices(IServiceCollection services)
-    {
-      services.AddMvc();
-
-      services.AddEntityFramework()
-        .AddSqlServer()
-        .AddDbContext<CompetitionDbContext>(options => options.UseSqlServer(Configuration["database:connection"]));
-
-
-      services.AddSingleton<ICompetitionStore, CompetitionDbContext>();
-    }
 
     // Entry point for the application.
     public static void Main(string[] args) => WebApplication.Run<Startup>(args);

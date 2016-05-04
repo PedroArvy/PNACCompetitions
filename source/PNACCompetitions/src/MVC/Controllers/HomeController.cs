@@ -1,10 +1,6 @@
-﻿using Competitions.Stores;
+﻿using Competitions.Services;
 using Competitions.Tests;
 using Microsoft.AspNet.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PNACCompetitions
 {
@@ -16,7 +12,7 @@ namespace PNACCompetitions
 
     #region *********************** Fields ***************************
 
-    private ICompetitionStore _ICompetitionStore;
+    private ICompetitionData _ICompetitionData;
 
     #endregion
 
@@ -27,10 +23,9 @@ namespace PNACCompetitions
 
     #region *********************** Initialisation *******************
 
-
-    public HomeController(ICompetitionStore iCompetitionStore)
+    public HomeController(ICompetitionData iCompetitionData)
     {
-      _ICompetitionStore = iCompetitionStore;
+      _ICompetitionData = iCompetitionData;
     }
 
 
@@ -40,11 +35,26 @@ namespace PNACCompetitions
     #region *********************** Methods **************************
 
 
-    public ActionResult Index()
+    public ViewResult Index()
     {
-      Tests.Test(_ICompetitionStore);
-
       return View();
+    }
+
+
+    public IActionResult Test()
+    {
+      int x = 4;
+      if (x == 4)
+      {
+
+      }
+
+
+      Tests test = new Tests();
+
+      test.SeasonClubAddition(_ICompetitionData);
+
+      return RedirectToAction(nameof(Index));
     }
 
 

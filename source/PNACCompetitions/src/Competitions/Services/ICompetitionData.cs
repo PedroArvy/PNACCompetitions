@@ -1,14 +1,20 @@
 ﻿using Competitions.POCO;
-using System;
+using Microsoft.Data.Entity;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Competitions.Stores
+namespace Competitions.Services
 {
-  public interface ICompetitionStore
+  public interface ICompetitionData
   {
     void Add(Club club);
     void Add(Season season);
+
+    IEnumerable<Club> Clubs();
+
+    void Delete(Club club);
+    void Delete(Season season);
+
+
+    IEnumerable<Season> Seasons();
   }
 }

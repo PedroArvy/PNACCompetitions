@@ -32,6 +32,11 @@ namespace Competitions.POCO
     #region *********************** Initialisation *******************
 
 
+    public Club()
+    {
+    }
+
+
     public Club(string name)
     {
       Name = name;

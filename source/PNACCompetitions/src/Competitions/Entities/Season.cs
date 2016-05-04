@@ -24,7 +24,6 @@ namespace Competitions.POCO
     public int ClubId { get; set; }
     public Club Club { get; set; }
 
-
     public int Id { get; set; }
 
     [Column(TypeName = "smalldatetime"), Required]
@@ -43,9 +42,13 @@ namespace Competitions.POCO
     #region *********************** Methods **************************
 
 
+    public Season()
+    {
+    }
+
+
     public Season(Club club, DateTime start, DateTime end)
     {
-
       if (end < start)
         throw new Exception("Season(Club club, DateTime start, DateTime end) - end must be after start");
 
