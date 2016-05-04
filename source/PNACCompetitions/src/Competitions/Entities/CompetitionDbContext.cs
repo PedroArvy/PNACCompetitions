@@ -24,8 +24,6 @@ namespace Competitions.Entities
 
     public DbSet<Competitor> Competitors { get; set; }
 
-    public DbSet<CompetitorCompetition> CompetitorCompetitions { get; set; }
-
     public DbSet<Fish> Fish { get; set; }
 
     public DbSet<Season> Seasons { get; set; }
@@ -42,35 +40,16 @@ namespace Competitions.Entities
       modelBuilder.Entity<Club>();
       modelBuilder.Entity<Competition>();
       modelBuilder.Entity<Competitor>();
-      //modelBuilder.Entity<CompetitorResult>();
-      modelBuilder.Entity<CompetitorCompetition>();
       modelBuilder.Entity<Fish>();
       modelBuilder.Entity<Catch>();
       modelBuilder.Entity<Season>();
 
       modelBuilder.Entity<Competition>().HasIndex(b => b.Start);
 
-      modelBuilder.Entity<CompetitorCompetition>()
-                    .HasKey(t => new { t.CompetitorId, t.CompetitionId });
-
-
-
       modelBuilder.Entity<Season>()
          .HasOne(s => s.Club)
          .WithMany(c => c.Seasons)
          .HasForeignKey(c => c.ClubId);
-
-
-      modelBuilder.Entity<CompetitorCompetition>()
-         .HasOne(c => c.Competitor)
-         .WithMany(c => c.CompetitorCompetitions)
-         .HasForeignKey(c => c.CompetitorId).OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);
-
-
-      modelBuilder.Entity<CompetitorCompetition>()
-       .HasOne(c => c.Competition)
-       .WithMany(c => c.CompetitorCompetitions)
-       .HasForeignKey(c => c.CompetitionId).OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);
 
       modelBuilder.Entity<Catch>()
                      .HasKey(t => new { t.CompetitorId, t.CompetitionId, t.FishId });

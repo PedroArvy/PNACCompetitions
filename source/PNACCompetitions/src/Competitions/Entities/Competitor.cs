@@ -25,9 +25,6 @@ namespace Competitions.Entities
     public int ClubId { get; set; }
     public Club  Club { get; set; }
 
-    //many to many
-    public List<CompetitorCompetition> CompetitorCompetitions { get; set; }
-
     public COMPETITOR_TYPE CompetitorType { get; set; }
 
     public virtual List<Catch> Catches { get; set; }

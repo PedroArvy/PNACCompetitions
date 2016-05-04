@@ -38,7 +38,7 @@ namespace Competitions
     public DateTime Start { get; set; }
 
     //many to many
-    public List<CompetitorCompetition> CompetitorCompetitions { get; set; }
+    //public List<CompetitorCompetition> CompetitorCompetitions { get; set; }
 
     //public int Referee1Id { get; set; }
     //public Competitor Referee1 { get; set; }
