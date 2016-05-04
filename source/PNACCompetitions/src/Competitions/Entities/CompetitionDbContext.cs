@@ -46,31 +46,12 @@ namespace Competitions.Entities
 
       modelBuilder.Entity<Competition>().HasIndex(b => b.Start);
 
-<<<<<<< HEAD
-=======
-      modelBuilder.Entity<CompetitorCompetition>()
-                    .HasKey(t => new { t.CompetitorId, t.CompetitionId });
-
-
->>>>>>> cf10081ffc483910b01a2bbf872ecd9c72f59623
       modelBuilder.Entity<Season>()
          .HasOne(s => s.Club)
          .WithMany(c => c.Seasons)
          .HasForeignKey(c => c.ClubId);
 
-<<<<<<< HEAD
-=======
-      modelBuilder.Entity<CompetitorCompetition>()
-         .HasOne(c => c.Competitor)
-         .WithMany(c => c.CompetitorCompetitions)
-         .HasForeignKey(c => c.CompetitorId).OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);
 
-      modelBuilder.Entity<CompetitorCompetition>()
-       .HasOne(c => c.Competition)
-       .WithMany(c => c.CompetitorCompetitions)
-       .HasForeignKey(c => c.CompetitionId).OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);
-
->>>>>>> cf10081ffc483910b01a2bbf872ecd9c72f59623
       modelBuilder.Entity<Catch>()
                      .HasKey(t => new { t.CompetitorId, t.CompetitionId, t.FishId });
 
