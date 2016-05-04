@@ -9,7 +9,7 @@ namespace Competitions.Entities
   {
     #region *********************** Constants ************************
 
-    public enum COMPETITOR_TYPE { UNASSIGNED, NON_MEMBER, SENIOR, JUNIOR }
+    public enum COMPETITOR_TYPE { UNASSIGNED, NON_MEMBER, JUNIOR, SENIOR}
 
     public enum GENDER { UNKNOWN, MALE, FEMALE }
 
