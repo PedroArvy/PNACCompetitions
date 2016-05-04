@@ -63,15 +63,6 @@ namespace Competitions.Entities
 
     #region *********************** Methods **************************
 
-    public static Season Get(CompetitionDbContext context, Club club, DateTime start, DateTime end)
-    {
-      Season season = null;
-
-      season = context.Seasons.SingleOrDefault(s => s.ClubId == club.Id && s.Start <= start && end <= s.End);
-
-      return season;
-    }
-
     #endregion
 
 

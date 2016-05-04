@@ -30,7 +30,7 @@ namespace Competitions.Entities
 
     public COMPETITOR_TYPE CompetitorType { get; set; }
 
-    public List<Catch> Results { get; set; }
+    public virtual List<Catch> Catches { get; set; }
 
     public GENDER Gender { get; set; }
 
@@ -59,7 +59,7 @@ namespace Competitions.Entities
     }
 
 
-    public Competitor(string firstname, string lastname, string nickname, Club club, COMPETITOR_TYPE competitorType, GENDER gender)
+    public Competitor(string firstname, string nickname, string lastname, Club club, COMPETITOR_TYPE competitorType, GENDER gender)
     {
       if(club != null)
       {

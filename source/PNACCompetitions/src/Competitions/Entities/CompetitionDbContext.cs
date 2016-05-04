@@ -16,6 +16,8 @@ namespace Competitions.Entities
 
     #region *********************** Properties ***********************
 
+    public DbSet<Catch> Catches { get; set; }
+
     public DbSet<Club> Clubs { get; set; }
 
     public DbSet<Competition> Competitions { get; set; }
@@ -25,8 +27,6 @@ namespace Competitions.Entities
     public DbSet<CompetitorCompetition> CompetitorCompetitions { get; set; }
 
     public DbSet<Fish> Fish { get; set; }
-
-    public DbSet<Catch> Results { get; set; }
 
     public DbSet<Season> Seasons { get; set; }
 
@@ -53,22 +53,12 @@ namespace Competitions.Entities
       modelBuilder.Entity<CompetitorCompetition>()
                     .HasKey(t => new { t.CompetitorId, t.CompetitionId });
 
-      /*
-
-            modelBuilder.Entity<Competitor>()
-         .HasOne(c => c.Club)
-         .WithMany(c => c.Competitors)
-         .HasForeignKey(c => c.ClubId).OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);///////////////////
-
-
-        */
 
 
       modelBuilder.Entity<Season>()
          .HasOne(s => s.Club)
          .WithMany(c => c.Seasons)
          .HasForeignKey(c => c.ClubId);
-
 
 
       modelBuilder.Entity<CompetitorCompetition>()
@@ -87,13 +77,12 @@ namespace Competitions.Entities
 
       modelBuilder.Entity<Catch>()
         .HasOne(r => r.Competitor)
-        .WithMany(c => c.Results)
+        .WithMany(c => c.Catches)
         .HasForeignKey(c => c.CompetitorId).OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);
-
 
       modelBuilder.Entity<Catch>()
         .HasOne(r => r.Competition)
-        .WithMany(c => c.Results)
+        .WithMany(c => c.Catches)
         .HasForeignKey(c => c.CompetitionId).OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);
 
       modelBuilder.Entity<Catch>()
@@ -101,32 +90,11 @@ namespace Competitions.Entities
         .WithMany(f => f.Results)
         .HasForeignKey(r => r.FishId).OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);
 
-      /*
-      modelBuilder.Entity<Competition>()
-        .HasOne(c => c.TripCaptain)
-        .WithMany(r => r.TripCaptaincies)
-        .HasForeignKey(r => r.TripCaptainId).OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);
-        */
 
-
-      /*
-      modelBuilder.Entity<Competition>()
-        .HasOne(c => c.Referee1)
-        .WithMany(r => r.RefereedCompetitions)
-        .HasForeignKey(r => r.Referee1Id);
-
-      modelBuilder.Entity<Competition>()
-        .HasOne(c => c.Referee2)
-        .WithMany(r => r.RefereedCompetitions)
-        .HasForeignKey(r => r.Referee2Id);
-
-
-      modelBuilder.Entity<Season>()
-        .HasOne(s => s.Club)
-        .WithMany(r => r.Seasons)
-        .HasForeignKey(r => r.ClubId);
-        */
-
+      modelBuilder.Entity<Competitor>()
+        .HasMany(c => c.Catches)
+        .WithOne(f => f.Competitor)
+        .OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Cascade);
 
     }
 

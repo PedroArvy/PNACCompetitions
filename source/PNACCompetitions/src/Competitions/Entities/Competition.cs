@@ -31,7 +31,7 @@ namespace Competitions
 
     public DateTime? End { get; set; }
 
-    [Column(TypeName = "varchar(100)"), Required]
+    [Column(TypeName = "varchar(100)")]
     public string Name { get; set; }
 
     [Required]
@@ -46,13 +46,17 @@ namespace Competitions
     //public int Referee2Id { get; set; }
     //public Competitor Referee2 { get; set; }
 
-    public List<Catch> Results { get; set; }
+    public List<Catch> Catches { get; set; }
 
     public int SeasonId { get; set; }
     public Season Season { get; set; }
 
     public int ? TripCaptainId { get; set; }
     public Competitor TripCaptain { get; set; }
+
+    [Column(TypeName = "varchar(100)"), Required]
+    public string Venue { get; set; }
+
 
     public DateTime WeighInTime { get; set; }
 
@@ -63,11 +67,11 @@ namespace Competitions
 
     public Competition()
     {
-
     }
 
-    public Competition(string name, DateTime start, DateTime ? end, ENVIRONMENT environment, Season season)
+    public Competition(string venue, string name, DateTime start, DateTime ? end, ENVIRONMENT environment, Season season)
     {
+      Venue = venue;
       Name = name;
       Start = start;
       End = end;
@@ -84,6 +88,8 @@ namespace Competitions
 
 
     #region *********************** Methods **************************
+
+
     #endregion
 
 
