@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Competitions.POCO
+namespace Competitions.Entities
 {
   public class Club
   {
@@ -27,6 +27,8 @@ namespace Competitions.POCO
     public string Name { get; set; }
 
     public List<Season> Seasons { get; set; }
+
+    public List<Fish> Fish { get; set; }
 
     #endregion
 

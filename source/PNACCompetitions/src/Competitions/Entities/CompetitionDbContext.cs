@@ -1,5 +1,6 @@
-﻿using Competitions.POCO;
+﻿using Competitions.Entities;
 using Microsoft.Data.Entity;
+using System;
 
 namespace Competitions.Entities
 {
@@ -61,6 +62,12 @@ namespace Competitions.Entities
 
 
         */
+
+
+      modelBuilder.Entity<Season>()
+         .HasOne(s => s.Club)
+         .WithMany(c => c.Seasons)
+         .HasForeignKey(c => c.ClubId).OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);
 
 
       modelBuilder.Entity<CompetitorCompetition>()
@@ -127,6 +134,8 @@ namespace Competitions.Entities
 
 
     #region *********************** Methods **************************
+
+
 
     #endregion
 

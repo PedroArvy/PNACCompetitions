@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Competitions.POCO
+namespace Competitions.Entities
 {
 
   public class Competitor

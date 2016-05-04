@@ -44,13 +44,6 @@ namespace PNACCompetitions
 
     public IActionResult Test()
     {
-      int no = _context.Clubs.Where(c => c.Id == 1).Count();
-
-      no = _context.Competitors.Count();
-
-      no = _context.Competitors.Where(c => c.ClubId == 1).Count();
-
-
       Tests test = new Tests(_context);
 
       test.Construction();
