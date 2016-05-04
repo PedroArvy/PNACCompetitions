@@ -47,6 +47,15 @@ namespace PNACCompetitions
     {
       app.UseIISPlatformHandler();
 
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+      }
+      else
+      {
+        //...
+      }
+
       app.UseRuntimeInfoPage();
       app.UseDefaultFiles();
       app.UseStaticFiles();
@@ -77,7 +86,7 @@ namespace PNACCompetitions
         .AddDbContext<CompetitionDbContext>(options => options.UseSqlServer(Configuration["database:connection"]));
 
 
-      services.AddSingleton<DbContext, CompetitionDbContext>();
+      services.AddSingleton<ICompetitionStore, CompetitionDbContext>();
     }
 
     // Entry point for the application.

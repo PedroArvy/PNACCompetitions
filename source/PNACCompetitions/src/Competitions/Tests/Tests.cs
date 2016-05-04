@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Competitions.POCO;
+using Competitions.Stores;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Competitions.POCO
+namespace Competitions.Tests
 {
-  public class Club
+  public class Tests
   {
     #region *********************** Constants ************************
     #endregion
@@ -18,14 +18,6 @@ namespace Competitions.POCO
 
 
     #region *********************** Properties ***********************
-
-    public int Id { get; set; }
-
-    [Column(TypeName = "varchar(100)"), Required]
-    public string Name { get; set; }
-
-    public List<Season> Seasons { get; set; }
-
     #endregion
 
 
@@ -34,6 +26,17 @@ namespace Competitions.POCO
 
 
     #region *********************** Methods **************************
+
+    public static void Test(ICompetitionStore store)
+    {
+
+      Club club = new Club("Northern Suburbs Fly Fishing Club");
+      store.Add(club);
+
+      Season season = new Season(club, DateTime.Parse("5 September 2017"), DateTime.Parse("5 September 2018"));
+      store.Add(season);
+    }
+
     #endregion
 
 
