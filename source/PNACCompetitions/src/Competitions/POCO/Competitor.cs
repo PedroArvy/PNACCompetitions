@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 namespace Competitions.POCO
 {
 
-
   public class Competitor
   {
-
     public int Id { get; set; }
 
     [Required]
