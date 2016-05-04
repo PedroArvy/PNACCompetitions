@@ -21,6 +21,9 @@ namespace Competitions.POCO
 
     #region *********************** Properties ***********************
 
+    public int ClubId { get; set; }
+    public Club Club { get; set; }
+
     public COMPETITOR_TYPE CompetitorType { get; set; }
 
     public int Id { get; set; }

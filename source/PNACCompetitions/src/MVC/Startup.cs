@@ -76,6 +76,8 @@ namespace PNACCompetitions
         .AddSqlServer()
         .AddDbContext<CompetitionDbContext>(options => options.UseSqlServer(Configuration["database:connection"]));
 
+
+      services.AddSingleton<DbContext, CompetitionDbContext>();
     }
 
     // Entry point for the application.
@@ -86,10 +88,6 @@ namespace PNACCompetitions
 
     #region *********************** Interfaces ***********************
     #endregion
-
-
-
-
 
   }
 }

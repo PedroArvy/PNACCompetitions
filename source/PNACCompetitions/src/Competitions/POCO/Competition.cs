@@ -35,7 +35,16 @@ namespace Competitions
     //many to many
     public List<CompetitorCompetition> CompetitorCompetitions { get; set; }
 
+    //public int Referee1Id { get; set; }
+    //public Competitor Referee1 { get; set; }
+
+    //public int Referee2Id { get; set; }
+    //public Competitor Referee2 { get; set; }
+
     public List<Result> Results { get; set; }
+
+    public int TripCaptainId { get; set; }
+    public Competitor TripCaptain { get; set; }
 
 
     #endregion

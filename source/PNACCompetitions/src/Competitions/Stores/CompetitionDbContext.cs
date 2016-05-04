@@ -40,6 +40,7 @@ namespace Competitions.Stores
     {
       base.OnModelCreating(modelBuilder);
 
+      modelBuilder.Entity<Club>();
       modelBuilder.Entity<Competition>();
       modelBuilder.Entity<Competitor>();
       //modelBuilder.Entity<CompetitorResult>();
@@ -59,7 +60,7 @@ namespace Competitions.Stores
       modelBuilder.Entity<CompetitorCompetition>()
           .HasOne(c => c.Competitor)
           .WithMany(c => c.CompetitorCompetitions)
-          .HasForeignKey(c => c.CompetitorId)
+          .HasForeignKey(c => c.CompetitorId);
 
       modelBuilder.Entity<CompetitorCompetition>()
           .HasOne(c => c.Competition)
@@ -84,6 +85,31 @@ namespace Competitions.Stores
         .HasOne(r => r.Fish)
         .WithMany(f => f.Results)
         .HasForeignKey(r => r.FishId);
+
+      modelBuilder.Entity<Competition>()
+        .HasOne(c => c.TripCaptain)
+        .WithMany(r => r.TripCaptaincies)
+        .HasForeignKey(r => r.TripCaptainId).OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);
+
+
+      /*
+      modelBuilder.Entity<Competition>()
+        .HasOne(c => c.Referee1)
+        .WithMany(r => r.RefereedCompetitions)
+        .HasForeignKey(r => r.Referee1Id);
+
+      modelBuilder.Entity<Competition>()
+        .HasOne(c => c.Referee2)
+        .WithMany(r => r.RefereedCompetitions)
+        .HasForeignKey(r => r.Referee2Id);
+
+
+      modelBuilder.Entity<Season>()
+        .HasOne(s => s.Club)
+        .WithMany(r => r.Seasons)
+        .HasForeignKey(r => r.ClubId);
+        */
+
 
     }
 

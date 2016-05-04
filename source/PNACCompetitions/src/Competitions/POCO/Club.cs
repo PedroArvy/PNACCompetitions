@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Competitions.POCO
 {
-
-  public class Competitor
+  public class Club
   {
     #region *********************** Constants ************************
-
-    public enum GENDER { UNKNOWN, MALE, FEMALE }
-
     #endregion
 
 
@@ -20,27 +19,12 @@ namespace Competitions.POCO
 
     #region *********************** Properties ***********************
 
-    //many to many
-    public List<CompetitorCompetition> CompetitorCompetitions { get; set; }
-
-    public List<Result> Results { get; set; }
-
-    public GENDER Gender { get; set; }
-
     public int Id { get; set; }
 
     [Column(TypeName = "varchar(100)"), Required]
-    public string FirstName { get; set; }
+    public string Name { get; set; }
 
-    [Column(TypeName = "varchar(100)"), Required]
-    public string LastName { get; set; }
-
-    [Column(TypeName = "varchar(100)")]
-    public string NickName { get; set; }
-
-    //public List<Competition> RefereedCompetitions { get; set; }
-
-    public List<Competition> TripCaptaincies { get; set; }
+    public List<Season> Seasons { get; set; }
 
     #endregion
 
@@ -55,7 +39,5 @@ namespace Competitions.POCO
 
     #region *********************** Interfaces ***********************
     #endregion
-
-
   }
 }
