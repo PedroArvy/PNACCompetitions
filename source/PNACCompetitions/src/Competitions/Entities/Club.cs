@@ -21,6 +21,8 @@ namespace Competitions.POCO
 
     public int Id { get; set; }
 
+    public List<Competitor> Competitors { get; set; }
+
     [Column(TypeName = "varchar(100)"), Required]
     public string Name { get; set; }
 

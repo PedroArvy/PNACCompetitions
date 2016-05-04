@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.Entity;
-using Competitions.Stores;
-using Competitions.Services;
+using Competitions.Entities;
+using System;
 
 namespace PNACCompetitions
 {
@@ -53,9 +52,7 @@ namespace PNACCompetitions
         .AddSqlServer()
         .AddDbContext<CompetitionDbContext>(options => options.UseSqlServer(Configuration["database:connection"]));
 
-      services.AddSingleton(provider => Configuration);
-
-      services.AddScoped<ICompetitionData, SqlCompetitionData>();
+      services.AddInstance<CompetitionDbContext>(services.BuildServiceProvider().GetService<CompetitionDbContext>());
     }
 
 

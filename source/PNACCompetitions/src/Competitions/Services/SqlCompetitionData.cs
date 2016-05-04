@@ -1,5 +1,5 @@
-﻿using Competitions.POCO;
-using Competitions.Stores;
+﻿using Competitions.Entities;
+using Competitions.POCO;
 using Microsoft.Data.Entity;
 using System.Collections.Generic;
 

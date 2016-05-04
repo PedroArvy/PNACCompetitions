@@ -1,7 +1,7 @@
 ﻿using Competitions.POCO;
 using Microsoft.Data.Entity;
 
-namespace Competitions.Stores
+namespace Competitions.Entities
 {
   public class CompetitionDbContext : DbContext
   {

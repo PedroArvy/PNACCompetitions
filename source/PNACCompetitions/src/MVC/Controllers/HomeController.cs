@@ -1,4 +1,4 @@
-﻿using Competitions.Services;
+﻿using Competitions.Entities;
 using Competitions.Tests;
 using Microsoft.AspNet.Mvc;
 
@@ -12,7 +12,7 @@ namespace PNACCompetitions
 
     #region *********************** Fields ***************************
 
-    private ICompetitionData _ICompetitionData;
+    private CompetitionDbContext _context;
 
     #endregion
 
@@ -23,9 +23,9 @@ namespace PNACCompetitions
 
     #region *********************** Initialisation *******************
 
-    public HomeController(ICompetitionData iCompetitionData)
+    public HomeController(CompetitionDbContext context)
     {
-      _ICompetitionData = iCompetitionData;
+      _context = context;
     }
 
 
@@ -43,16 +43,9 @@ namespace PNACCompetitions
 
     public IActionResult Test()
     {
-      int x = 4;
-      if (x == 4)
-      {
-
-      }
-
-
       Tests test = new Tests();
 
-      test.SeasonClubAddition(_ICompetitionData);
+      test.SeasonClubAddition(_context);
 
       return RedirectToAction(nameof(Index));
     }
