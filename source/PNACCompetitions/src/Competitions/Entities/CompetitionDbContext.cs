@@ -67,7 +67,8 @@ namespace Competitions.Entities
       modelBuilder.Entity<Season>()
          .HasOne(s => s.Club)
          .WithMany(c => c.Seasons)
-         .HasForeignKey(c => c.ClubId).OnDelete(Microsoft.Data.Entity.Metadata.DeleteBehavior.Restrict);
+         .HasForeignKey(c => c.ClubId);
+
 
 
       modelBuilder.Entity<CompetitorCompetition>()
@@ -134,9 +135,6 @@ namespace Competitions.Entities
 
 
     #region *********************** Methods **************************
-
-
-
     #endregion
 
 
