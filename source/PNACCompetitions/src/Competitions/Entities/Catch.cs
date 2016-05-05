@@ -14,8 +14,6 @@ namespace Competitions.Entities
     private const double MAXIMUM_POINTS = 1000;
     public const double MAX_POWER = 16.5133;
 
-
-
     #endregion
 
 

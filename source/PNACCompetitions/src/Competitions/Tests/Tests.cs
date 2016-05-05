@@ -74,6 +74,9 @@ namespace Competitions.Tests
       _context.SaveChanges();
 
       AddCatchSaturday(club, competition);
+
+      if(competition.Competitors.Count() != 6)
+        throw new Exception("AddCatch 30");
     }
 
 

@@ -32,7 +32,7 @@ namespace Competitions
     public int ClubId { get; set; }
     public Club Club { get; set; }
 
-    /*
+    
     [NotMapped]
     public IEnumerable<Competitor> Competitors
     {
@@ -51,7 +51,7 @@ namespace Competitions
         return competitors.Distinct();
       }
     }
-    */
+    
 
 
     public ENVIRONMENT Environment { get; set; }
