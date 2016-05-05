@@ -32,7 +32,6 @@ namespace Competitions
     public int ClubId { get; set; }
     public Club Club { get; set; }
 
-
     /*
     [NotMapped]
     public IEnumerable<Competitor> Competitors
@@ -67,7 +66,7 @@ namespace Competitions
     [Required]
     public DateTime Start { get; set; }
 
-    /*
+    //2
     public int? Referee1Id { get; set; }
     public Competitor Referee1 { get; set; }
 
@@ -76,7 +75,7 @@ namespace Competitions
 
     public int? Referee3Id { get; set; }
     public Competitor Referee3 { get; set; }
-    */
+
 
     public int SeasonId { get; set; }
     public Season Season { get; set; }
@@ -100,7 +99,7 @@ namespace Competitions
     {
     }
 
-    public Competition(string venue, string name, DateTime start, DateTime? end, ENVIRONMENT environment, Season season)
+    public Competition(Club club, string venue, string name, DateTime start, DateTime? end, ENVIRONMENT environment, Season season)
     {
       Venue = venue;
       Name = name;
@@ -114,8 +113,8 @@ namespace Competitions
         Season = season;
         SeasonId = season.SeasonId;
 
-        //ClubId = season.ClubId;
-        //Club = season.Club;
+        ClubId = season.ClubId;
+        Club = season.Club;
       }
       else
         throw new Exception("Competition(string name, DateTime start, DateTime ? end, ENVIRONMENT environment, Season season)");

@@ -5,21 +5,6 @@
  dnx ef database update
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  
     private void Restrict(ModelBuilder modelBuilder)
     {

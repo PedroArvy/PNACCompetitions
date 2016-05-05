@@ -49,7 +49,7 @@ namespace Competitions.Tests
 
     #region *********************** Methods **************************
 
-    /*
+ 
     private void AddCatches(Club club)
     {
       DateTime dt = DateTime.Parse("24 March 2016 7:00pm");
@@ -120,9 +120,8 @@ namespace Competitions.Tests
 
     private Club AddClub()
     {
-
-      //_context.Clubs.RemoveRange(_context.Clubs);
-      //_context.SaveChanges();
+      _context.Clubs.RemoveRange(_context.Clubs);
+      _context.SaveChanges();
 
       Club prestonNorthcote = new Club("Northern Suburbs Fly Fishing Club");
       _context.Add(prestonNorthcote);
@@ -141,7 +140,7 @@ namespace Competitions.Tests
     {
       Season season = Manager.Get(_context, club, DateTime.Parse(START_FYANS), DateTime.Parse(END_FYANS));
 
-      Competition comp1 = new Competition(LAKE_FYANS, "Anazac weekend", DateTime.Parse("23 March 2016"), DateTime.Parse("25 March 2016"), ENVIRONMENT.FRESHWATER, season);
+      Competition comp1 = new Competition(club, LAKE_FYANS, "Anazac weekend", DateTime.Parse("23 March 2016"), DateTime.Parse("25 March 2016"), ENVIRONMENT.FRESHWATER, season);
       _context.Add(comp1);
       _context.SaveChanges();
 
@@ -272,9 +271,7 @@ namespace Competitions.Tests
       _context.Fish.Add(fish4);
 
       _context.SaveChanges();
-
     }
-
 
 
     private void AddSeasons(Club club)
@@ -317,8 +314,6 @@ namespace Competitions.Tests
     }
 
 
-
-
     public void Construction()
     {
       Club club = AddClub();
@@ -346,15 +341,11 @@ namespace Competitions.Tests
       if(catches.First().Competition == null)
         throw new Exception("Construction 7");
 
-
-
-       club.Competitors.re(c => true);
-
+      club.Competitions.First().Catches.RemoveAll(c => true);
+      _context.SaveChanges();
 
       club.Competitors.RemoveAll(c => true);
       _context.SaveChanges();
-
-
 
       club.Competitions.RemoveAll(c => true);
       _context.SaveChanges();
@@ -376,7 +367,7 @@ namespace Competitions.Tests
         throw new Exception("Construction 40");
 
     }
-*/
+
   
     #endregion
 

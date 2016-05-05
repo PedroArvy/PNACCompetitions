@@ -25,14 +25,16 @@ namespace Competitions.Entities
     public int CompetitionId { get; set; }
     public Competition Competition { get; set; }
 
-    //public int FishId { get; set; }
-   // public Fish Fish { get; set; }
+    public int FishId { get; set; }
+    public Fish Fish { get; set; }
 
     [Required]
     public int Length { get; set; }
 
     [Required]
     public DateTime Recordered { get; set; }
+
+    public double Weight { get; set; }
 
     #endregion
 
@@ -44,16 +46,16 @@ namespace Competitions.Entities
     }
 
 
-    public Catch(/*Competitor competitor, */Competition competition, /*Fish fish,*/ int length)
+    public Catch(Competitor competitor, Competition competition, Fish fish, int length)
     {
-     // CompetitorId = competitor.CompetitorId;
-     // Competitor = competitor;
+      CompetitorId = competitor.CompetitorId;
+      Competitor = competitor;
 
       Competition = competition;
       CompetitionId = competition.CompetitionId;
 
-   //   FishId = fish.FishId;
-   //   Fish = fish;
+      FishId = fish.FishId;
+      Fish = fish;
 
       Length = length;
       Recordered = DateTime.Now;
