@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace Competitions.Entities
 {
@@ -24,9 +23,10 @@ namespace Competitions.Entities
     #region *********************** Properties ***********************
 
     public int ClubId { get; set; }
+    [ForeignKey("ClubId")]
     public Club Club { get; set; }
 
-    public int Id { get; set; }
+    public int SeasonId { get; set; }
 
     [Required]
     public DateTime End { get; set; }
@@ -52,7 +52,7 @@ namespace Competitions.Entities
         throw new Exception("Season(Club club, DateTime start, DateTime end) - end must be after start");
 
       Club = club;
-      ClubId = club.Id;
+      ClubId = club.ClubId;
 
       Start = start;
       End = end;
@@ -62,6 +62,7 @@ namespace Competitions.Entities
 
 
     #region *********************** Methods **************************
+
 
     #endregion
 

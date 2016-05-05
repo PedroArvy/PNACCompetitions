@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 
 namespace Competitions
@@ -25,9 +26,38 @@ namespace Competitions
 
     #region *********************** Properties ***********************
 
+
+    public List<Catch> Catches { get; set; }
+
+    public int ClubId { get; set; }
+    public Club Club { get; set; }
+
+
+    /*
+    [NotMapped]
+    public IEnumerable<Competitor> Competitors
+    {
+      get
+      {
+        List<Competitor> competitors = new List<Competitor>();
+
+        if (Catches != null)
+        {
+          foreach (Catch @catch in Catches)
+          {
+            competitors.Add(@catch.Competitor);
+          }
+        }
+
+        return competitors.Distinct();
+      }
+    }
+    */
+
+
     public ENVIRONMENT Environment { get; set; }
 
-    public int Id { get; set; }
+    public int CompetitionId { get; set; }
 
     public DateTime? End { get; set; }
 
@@ -37,26 +67,27 @@ namespace Competitions
     [Required]
     public DateTime Start { get; set; }
 
-    //many to many
-    //public List<CompetitorCompetition> CompetitorCompetitions { get; set; }
+    /*
+    public int? Referee1Id { get; set; }
+    public Competitor Referee1 { get; set; }
 
-    //public int Referee1Id { get; set; }
-    //public Competitor Referee1 { get; set; }
+    public int? Referee2Id { get; set; }
+    public Competitor Referee2 { get; set; }
 
-    //public int Referee2Id { get; set; }
-    //public Competitor Referee2 { get; set; }
-
-    public List<Catch> Catches { get; set; }
+    public int? Referee3Id { get; set; }
+    public Competitor Referee3 { get; set; }
+    */
 
     public int SeasonId { get; set; }
     public Season Season { get; set; }
 
-    public int ? TripCaptainId { get; set; }
+    /*
+    public int? TripCaptainId { get; set; }
     public Competitor TripCaptain { get; set; }
+    */
 
     [Column(TypeName = "varchar(100)"), Required]
     public string Venue { get; set; }
-
 
     public DateTime WeighInTime { get; set; }
 
@@ -69,17 +100,23 @@ namespace Competitions
     {
     }
 
-    public Competition(string venue, string name, DateTime start, DateTime ? end, ENVIRONMENT environment, Season season)
+    public Competition(string venue, string name, DateTime start, DateTime? end, ENVIRONMENT environment, Season season)
     {
       Venue = venue;
       Name = name;
       Start = start;
       End = end;
       Environment = environment;
-      SeasonId = season.Id;
+      SeasonId = season.SeasonId;
 
       if (season != null)
+      {
         Season = season;
+        SeasonId = season.SeasonId;
+
+        //ClubId = season.ClubId;
+        //Club = season.Club;
+      }
       else
         throw new Exception("Competition(string name, DateTime start, DateTime ? end, ENVIRONMENT environment, Season season)");
     }
@@ -88,6 +125,7 @@ namespace Competitions
 
 
     #region *********************** Methods **************************
+
 
 
     #endregion

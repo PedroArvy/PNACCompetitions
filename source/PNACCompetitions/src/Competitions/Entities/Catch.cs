@@ -17,14 +17,16 @@ namespace Competitions.Entities
 
     #region *********************** Properties ***********************
 
+    public int CatchId { get; set; }
+
     public int CompetitorId { get; set; }
-    public virtual Competitor Competitor { get; set; }
+    public Competitor Competitor { get; set; }
 
     public int CompetitionId { get; set; }
-    public virtual Competition Competition { get; set; }
+    public Competition Competition { get; set; }
 
-    public int FishId { get; set; }
-    public virtual Fish Fish { get; set; }
+    //public int FishId { get; set; }
+   // public Fish Fish { get; set; }
 
     [Required]
     public int Length { get; set; }
@@ -42,16 +44,16 @@ namespace Competitions.Entities
     }
 
 
-    public Catch(Competitor competitor, Competition competition, Fish fish, int length)
+    public Catch(/*Competitor competitor, */Competition competition, /*Fish fish,*/ int length)
     {
-      CompetitorId = competitor.Id;
-      Competitor = competitor;
+     // CompetitorId = competitor.CompetitorId;
+     // Competitor = competitor;
 
       Competition = competition;
-      CompetitionId = competition.Id;
+      CompetitionId = competition.CompetitionId;
 
-      FishId = fish.Id;
-      Fish = fish;
+   //   FishId = fish.FishId;
+   //   Fish = fish;
 
       Length = length;
       Recordered = DateTime.Now;
@@ -62,6 +64,9 @@ namespace Competitions.Entities
 
 
     #region *********************** Methods **************************
+
+
+
     #endregion
 
 

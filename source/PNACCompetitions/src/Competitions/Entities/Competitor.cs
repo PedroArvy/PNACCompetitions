@@ -27,11 +27,11 @@ namespace Competitions.Entities
 
     public COMPETITOR_TYPE CompetitorType { get; set; }
 
-    public virtual List<Catch> Catches { get; set; }
+    public List<Catch> Catches { get; set; }
 
     public GENDER Gender { get; set; }
 
-    public int Id { get; set; }
+    public int CompetitorId { get; set; }
 
     [Column(TypeName = "varchar(100)"), Required]
     public string FirstName { get; set; }
@@ -41,10 +41,6 @@ namespace Competitions.Entities
 
     [Column(TypeName = "varchar(100)")]
     public string NickName { get; set; }
-
-    //public List<Competition> RefereedCompetitions { get; set; }
-
-    //public List<Competition> TripCaptaincies { get; set; }
 
     #endregion
 
@@ -61,7 +57,7 @@ namespace Competitions.Entities
       if(club != null)
       {
         Club = club;
-        ClubId = club.Id;
+        ClubId = club.ClubId;
       }
 
       CompetitorType = competitorType;
@@ -75,6 +71,9 @@ namespace Competitions.Entities
 
 
     #region *********************** Methods **************************
+
+
+
     #endregion
 
 

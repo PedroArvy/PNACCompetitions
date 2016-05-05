@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,16 +16,18 @@ namespace Competitions.Entities
 
     #region *********************** Properties ***********************
 
-    public int Id { get; set; }
+    public int ClubId { get; set; }
 
-    public List<Competitor> Competitors { get; set; }
+    public List<Competition> Competitions { get; set; }
+
+    //public List<Competitor> Competitors { get; set; }
 
     [Column(TypeName = "varchar(100)"), Required]
     public string Name { get; set; }
 
     public List<Season> Seasons { get; set; }
 
-    public List<Fish> Fish { get; set; }
+    //public List<Fish> Fish { get; set; }
 
     #endregion
 
@@ -50,6 +49,8 @@ namespace Competitions.Entities
 
 
     #region *********************** Methods **************************
+
+
     #endregion
 
 
