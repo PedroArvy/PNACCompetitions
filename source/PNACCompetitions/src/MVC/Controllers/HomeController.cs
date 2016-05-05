@@ -46,6 +46,7 @@ namespace PNACCompetitions
     {
       Tests test = new Tests(_context);
 
+      test.Power();
       test.Construction();
 
       return RedirectToAction(nameof(Index));

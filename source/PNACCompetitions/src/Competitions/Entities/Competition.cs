@@ -125,6 +125,42 @@ namespace Competitions
 
     #region *********************** Methods **************************
 
+    private List<CompetitorPoints> CompetitorPoints()
+    {
+      List<CompetitorPoints> weights = new List<CompetitorPoints>();
+      Competitor competitor;
+      CompetitorPoints weight;
+
+      foreach (Catch @catch in Catches.Where(c => c.Weight > 0 && c.Length > c.Fish.Minimum))
+      {
+        competitor = @catch.Competitor;
+
+        weight = weights.SingleOrDefault(w => w.Competitor.CompetitorId == competitor.CompetitorId);
+
+        if (weight != null)
+          weight.Weight += @catch.CompetitionWeight();
+        else
+          weights.Add(new CompetitorPoints() { Competitor = @catch.Competitor, Weight = @catch.CompetitionWeight() });
+      }
+
+
+      return weights;
+    }
+
+
+    public List<CompetitorPoints> Points()
+    {
+      List<CompetitorPoints> points = new List<CompetitorPoints>();
+      int POINT = 40;
+
+      foreach (CompetitorPoints point in points.OrderByDescending(w => w.Weight))
+      {
+        point.Points = POINT;
+        POINT--;
+      }
+
+      return points;
+    }
 
 
     #endregion
@@ -134,8 +170,14 @@ namespace Competitions
     #endregion
 
 
-
-
-
   }
+
+  public class CompetitorPoints
+  {
+    public Competitor Competitor { get; set; }
+    public int Points { get; set; }
+    public double Weight { get; set; }
+  }
+
+
 }
