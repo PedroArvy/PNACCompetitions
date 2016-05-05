@@ -23,7 +23,7 @@ namespace Competitions.Entities
     [Required]
     public double Difficulty { get; set; }
 
-    public int Id { get; set; }
+    public int FishId { get; set; }
 
     [Required]
     public int Maximum { get; set; }
@@ -34,7 +34,7 @@ namespace Competitions.Entities
     [Column(TypeName = "varchar(100)"), Required]
     public string Name { get; set; }
 
-    public List<Catch> Results { get; set; }
+    public List<Catch> Catches { get; set; }
 
     public ENVIRONMENT Environment { get; set; }
 
@@ -50,7 +50,7 @@ namespace Competitions.Entities
 
     public Fish(Club club, string name, int maximum, int minimum, double difficulty, ENVIRONMENT environment)
     {
-      ClubId = club.Id;
+      ClubId = club.ClubId;
 
       Name = name;
       Maximum = maximum;

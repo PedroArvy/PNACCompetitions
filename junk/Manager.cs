@@ -38,7 +38,7 @@ namespace Competitions.Entities
 
       Season season = Manager.GetSeason(context, club, date);
 
-      competition = context.Competitions.SingleOrDefault(c => c.SeasonId == season.Id && c.Start <= date && date <= c.End);
+      competition = context.Competitions.SingleOrDefault(c => c.SeasonId == season.SeasonId && c.Start <= date && date <= c.End);
 
       return competition;
     }
@@ -48,7 +48,7 @@ namespace Competitions.Entities
     {
       Season season = null;
 
-      season = context.Seasons.SingleOrDefault(s => s.ClubId == club.Id && s.Start <= date && date <= s.End);
+      season = context.Seasons.SingleOrDefault(s => s.ClubId == club.ClubId && s.Start <= date && date <= s.End);
 
       return season;
     }
@@ -58,7 +58,7 @@ namespace Competitions.Entities
     {
       Season season = null;
 
-      season = context.Seasons.SingleOrDefault(s => s.ClubId == club.Id && s.Start <= start && end <= s.End);
+      season = context.Seasons.SingleOrDefault(s => s.ClubId == club.ClubId && s.Start <= start && end <= s.End);
 
       return season;
     }
