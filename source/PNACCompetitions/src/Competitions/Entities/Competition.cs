@@ -156,7 +156,15 @@ namespace Competitions
       foreach (CompetitorPoints point in points.OrderByDescending(w => w.Weight))
       {
         point.Points = POINT;
-        POINT--;
+
+        if (POINT == 40)
+          POINT -= 5;
+        else if (POINT == 35)
+          POINT -= 3;
+        else if (POINT == 32)
+          POINT -= 2;
+        else
+          POINT--;
       }
 
       return points;

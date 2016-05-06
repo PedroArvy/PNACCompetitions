@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Competitions.Entities
 {
 
-  public class Competitor
+  public class Competitor : IdentityUser
   {
     #region *********************** Constants ************************
 

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.Entity;
 using Competitions.Entities;
 using System;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PNACCompetitions
 {
@@ -52,6 +53,9 @@ namespace PNACCompetitions
         .AddSqlServer()
         .AddDbContext<CompetitionDbContext>(options => options.UseSqlServer(Configuration["database:connection"]));
 
+      services.AddIdentity<Competitor, IdentityRole>()
+        .AddEntityFrameworkStores<CompetitionDbContext>();
+
       services.AddInstance<CompetitionDbContext>(services.BuildServiceProvider().GetService<CompetitionDbContext>());
     }
 
@@ -74,6 +78,8 @@ namespace PNACCompetitions
       app.UseRuntimeInfoPage();
       app.UseDefaultFiles();
       app.UseStaticFiles();
+
+      app.UseIdentity();
 
       app.UseMvc(ConfigureRoute);
 

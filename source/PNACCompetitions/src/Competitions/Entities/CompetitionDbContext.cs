@@ -1,4 +1,5 @@
 ﻿using Competitions.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Metadata;
 using System;
@@ -6,7 +7,7 @@ using System.Linq;
 
 namespace Competitions.Entities
 {
-  public class CompetitionDbContext : DbContext
+  public class CompetitionDbContext : IdentityDbContext<Competitor>
   {
     #region *********************** Constants ************************
     #endregion
