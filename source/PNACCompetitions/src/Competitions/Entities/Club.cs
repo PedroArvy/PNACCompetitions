@@ -20,14 +20,15 @@ namespace Competitions.Entities
 
     public List<Competition> Competitions { get; set; }
 
-    //public List<Competitor> Competitors { get; set; }
+    //3
+    public List<Competitor> Competitors { get; set; }
 
     [Column(TypeName = "varchar(100)"), Required]
     public string Name { get; set; }
 
     public List<Season> Seasons { get; set; }
 
-    //public List<Fish> Fish { get; set; }
+    public List<Fish> Fish { get; set; }
 
     #endregion
 

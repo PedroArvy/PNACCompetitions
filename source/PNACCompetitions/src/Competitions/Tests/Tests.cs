@@ -25,6 +25,8 @@ namespace Competitions.Tests
     private const string MURRAY_COD = "Murray Cod";
     private const string BREAM = "Bream";
 
+    public double MAX_POWER = 16.51;//2 ^ 1.15 ^ 10
+
 
     #endregion
 
@@ -49,7 +51,7 @@ namespace Competitions.Tests
 
     #region *********************** Methods **************************
 
-    /*
+ 
     private void AddCatches(Club club)
     {
       DateTime dt = DateTime.Parse("24 March 2016 7:00pm");
@@ -72,6 +74,9 @@ namespace Competitions.Tests
       _context.SaveChanges();
 
       AddCatchSaturday(club, competition);
+
+      if(competition.Competitors.Count() != 6)
+        throw new Exception("AddCatch 30");
     }
 
 
@@ -100,16 +105,35 @@ namespace Competitions.Tests
     private void AddCatchSaturdayDirect(Club club, Competition competition)
     {
       Season season = Manager.Get(_context, club, DateTime.Parse(START_FYANS), DateTime.Parse(END_FYANS));
+      Catch @catch;
 
       int no = club.Competitors.Where(c => c.LastName == BARCLAY).Count();
 
-      _context.Add(new Catch(club.Competitors.Single(c => c.LastName == "Deveson"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 44));
-      _context.Add(new Catch(club.Competitors.Single(c => c.FirstName == "Rod" && c.LastName == "King"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 56));
-      _context.Add(new Catch(club.Competitors.Single(c => c.LastName == "Scott"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 42));
-      _context.Add(new Catch(club.Competitors.Single(c => c.LastName == "Francis"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 41));
+      @catch = new Catch(club.Competitors.Single(c => c.LastName == "Deveson"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 44);
+      _context.Add(@catch);
 
-      _context.Add(new Catch(club.Competitors.Single(c => c.LastName == "Taylor"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == RAINBOW_TROUT), 36));
-      _context.Add(new Catch(club.Competitors.Single(c => c.LastName == "Brown"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == RAINBOW_TROUT), 36));
+      if (@catch.PointsByFormula() - 142.69 > 0.01)
+        throw new Exception("AddCatchSaturdayDirect");
+
+      @catch = new Catch(_context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 85);
+
+      if (@catch.PointsByFormula() - 1000 > 0.01)
+        throw new Exception("AddCatchSaturdayDirect");
+
+      @catch = new Catch(club.Competitors.Single(c => c.FirstName == "Rod" && c.LastName == "King"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 56);
+      _context.Add(@catch);
+
+      @catch = new Catch(club.Competitors.Single(c => c.LastName == "Scott"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 42);
+      _context.Add(@catch);
+
+      @catch = new Catch(club.Competitors.Single(c => c.LastName == "Francis"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 41);
+      _context.Add(@catch);
+
+      @catch = new Catch(club.Competitors.Single(c => c.LastName == "Taylor"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == RAINBOW_TROUT), 36);
+      _context.Add(@catch);
+
+      @catch = new Catch(club.Competitors.Single(c => c.LastName == "Brown"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == RAINBOW_TROUT), 36);
+      _context.Add(@catch);
 
       Competitor competitor = club.Competitors.Single(c => c.FirstName == "Rod" && c.LastName == "King");
       _context.Add(new Catch(competitor, competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == RAINBOW_TROUT), 33));
@@ -120,9 +144,8 @@ namespace Competitions.Tests
 
     private Club AddClub()
     {
-
-      //_context.Clubs.RemoveRange(_context.Clubs);
-      //_context.SaveChanges();
+      _context.Clubs.RemoveRange(_context.Clubs);
+      _context.SaveChanges();
 
       Club prestonNorthcote = new Club("Northern Suburbs Fly Fishing Club");
       _context.Add(prestonNorthcote);
@@ -141,7 +164,7 @@ namespace Competitions.Tests
     {
       Season season = Manager.Get(_context, club, DateTime.Parse(START_FYANS), DateTime.Parse(END_FYANS));
 
-      Competition comp1 = new Competition(LAKE_FYANS, "Anazac weekend", DateTime.Parse("23 March 2016"), DateTime.Parse("25 March 2016"), ENVIRONMENT.FRESHWATER, season);
+      Competition comp1 = new Competition(club, LAKE_FYANS, "Anazac weekend", DateTime.Parse("23 March 2016"), DateTime.Parse("25 March 2016"), ENVIRONMENT.FRESHWATER, season);
       _context.Add(comp1);
       _context.SaveChanges();
 
@@ -272,9 +295,7 @@ namespace Competitions.Tests
       _context.Fish.Add(fish4);
 
       _context.SaveChanges();
-
     }
-
 
 
     private void AddSeasons(Club club)
@@ -317,8 +338,6 @@ namespace Competitions.Tests
     }
 
 
-
-
     public void Construction()
     {
       Club club = AddClub();
@@ -346,17 +365,16 @@ namespace Competitions.Tests
       if(catches.First().Competition == null)
         throw new Exception("Construction 7");
 
-
-
-       club.Competitors.re(c => true);
-
+      club.Competitions.First().Catches.RemoveAll(c => true);
+      _context.SaveChanges();
 
       club.Competitors.RemoveAll(c => true);
       _context.SaveChanges();
 
-
-
       club.Competitions.RemoveAll(c => true);
+      _context.SaveChanges();
+
+      club.Fish.RemoveAll(c => true);
       _context.SaveChanges();
 
       _context.Clubs.Remove(club);
@@ -376,8 +394,28 @@ namespace Competitions.Tests
         throw new Exception("Construction 40");
 
     }
-*/
-  
+
+
+    public void Power()
+    {
+      double x = Catch.PowerN(1);
+      if (x - 2.21 > 0.01)
+        throw new Exception("Power 10");
+
+      x = Catch.PowerN(2);
+      if (x - 2.50 > 0.01)
+        throw new Exception("Power 20");
+
+      x = Catch.PowerN(9.5);
+      if (x - 13.66 > 0.01)
+        throw new Exception("Power 30");
+
+      x = Catch.PowerN(10);
+      if (x - MAX_POWER > 0.01)
+        throw new Exception("Power 40");
+    }
+
+
     #endregion
 
 

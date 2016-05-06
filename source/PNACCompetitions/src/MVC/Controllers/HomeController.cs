@@ -44,9 +44,10 @@ namespace PNACCompetitions
 
     public IActionResult Test()
     {
-      //Tests test = new Tests(_context);
+      Tests test = new Tests(_context);
 
-      //test.Construction();
+      test.Power();
+      test.Construction();
 
       return RedirectToAction(nameof(Index));
     }

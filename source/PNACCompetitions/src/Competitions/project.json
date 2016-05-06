@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "Fund.FundEntitlement.Business Class Library",
   "authors": [ "bryan" ],
@@ -23,6 +23,7 @@
     }
   },
   "dependencies": {
-    "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final"
+    "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
+    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
   }
 }

@@ -32,8 +32,7 @@ namespace Competitions
     public int ClubId { get; set; }
     public Club Club { get; set; }
 
-
-    /*
+    
     [NotMapped]
     public IEnumerable<Competitor> Competitors
     {
@@ -52,7 +51,7 @@ namespace Competitions
         return competitors.Distinct();
       }
     }
-    */
+    
 
 
     public ENVIRONMENT Environment { get; set; }
@@ -67,7 +66,7 @@ namespace Competitions
     [Required]
     public DateTime Start { get; set; }
 
-    /*
+    //2
     public int? Referee1Id { get; set; }
     public Competitor Referee1 { get; set; }
 
@@ -76,7 +75,7 @@ namespace Competitions
 
     public int? Referee3Id { get; set; }
     public Competitor Referee3 { get; set; }
-    */
+
 
     public int SeasonId { get; set; }
     public Season Season { get; set; }
@@ -100,7 +99,7 @@ namespace Competitions
     {
     }
 
-    public Competition(string venue, string name, DateTime start, DateTime? end, ENVIRONMENT environment, Season season)
+    public Competition(Club club, string venue, string name, DateTime start, DateTime? end, ENVIRONMENT environment, Season season)
     {
       Venue = venue;
       Name = name;
@@ -114,8 +113,8 @@ namespace Competitions
         Season = season;
         SeasonId = season.SeasonId;
 
-        //ClubId = season.ClubId;
-        //Club = season.Club;
+        ClubId = season.ClubId;
+        Club = season.Club;
       }
       else
         throw new Exception("Competition(string name, DateTime start, DateTime ? end, ENVIRONMENT environment, Season season)");
@@ -126,6 +125,50 @@ namespace Competitions
 
     #region *********************** Methods **************************
 
+    private List<CompetitorPoints> CompetitorPoints()
+    {
+      List<CompetitorPoints> weights = new List<CompetitorPoints>();
+      Competitor competitor;
+      CompetitorPoints weight;
+
+      foreach (Catch @catch in Catches.Where(c => c.Weight > 0 && c.Length > c.Fish.Minimum))
+      {
+        competitor = @catch.Competitor;
+
+        weight = weights.SingleOrDefault(w => w.Competitor.CompetitorId == competitor.CompetitorId);
+
+        if (weight != null)
+          weight.Weight += @catch.CompetitionWeight();
+        else
+          weights.Add(new CompetitorPoints() { Competitor = @catch.Competitor, Weight = @catch.CompetitionWeight() });
+      }
+
+
+      return weights;
+    }
+
+
+    public List<CompetitorPoints> Points()
+    {
+      List<CompetitorPoints> points = new List<CompetitorPoints>();
+      int POINT = 40;
+
+      foreach (CompetitorPoints point in points.OrderByDescending(w => w.Weight))
+      {
+        point.Points = POINT;
+
+        if (POINT == 40)
+          POINT -= 5;
+        else if (POINT == 35)
+          POINT -= 3;
+        else if (POINT == 32)
+          POINT -= 2;
+        else
+          POINT--;
+      }
+
+      return points;
+    }
 
 
     #endregion
@@ -135,8 +178,14 @@ namespace Competitions
     #endregion
 
 
-
-
-
   }
+
+  public class CompetitorPoints
+  {
+    public Competitor Competitor { get; set; }
+    public int Points { get; set; }
+    public double Weight { get; set; }
+  }
+
+
 }
