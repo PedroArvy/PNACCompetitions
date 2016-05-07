@@ -1,0 +1,66 @@
+﻿<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foundation for Sites</title>
+  <link rel="stylesheet" href="/css/foundation.css">
+  <link rel="stylesheet" href="/css/app.css">
+
+</head>
+<body>
+
+
+  <div class="title-bar" data-responsive-toggle="realEstateMenu" data-hide-for="small">
+    <button class="menu-icon" type="button" data-toggle></button>
+    <div class="title-bar-title">Menu</div>
+  </div>
+
+  <div class="row">
+    <div class="large-12">
+      <div class="top-bar" id="realEstateMenu">
+        <div class="top-bar-left">
+          <ul class="menu" data-responsive-menu="accordion">
+            <li class="menu-text">Interplanetary</li>
+            <li><a href="/Home">Leaderbaord</a></li>
+            <li><a href="#">Competitors</a></li>
+            <li><a href="#">Competitons</a></li>
+            <li><a href="#">Fish</a></li>
+            <li><a href="#">Seasons</a></li>
+            <li><a href="/home/test">Tests</a></li>
+          </ul>
+        </div>
+        <div class="top-bar-right">
+          <ul class="menu">
+            <li><a href="#">My Account</a></li>
+            <li><a class="button">Login</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+      @RenderBody()
+
+      <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+      <script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+      <script>
+        $(document).foundation();
+      </script>
+      <script type="text/javascript" src="https://intercom.zurb.com/scripts/zcom.js"></script>
+
+
+      <script src="/js/vendor/what-input.js"></script>
+      <script src="/js/vendor/foundation.js"></script>
+      <script src="/js/app.js"></script>
+
+
+
+
+</body>
+</html>
