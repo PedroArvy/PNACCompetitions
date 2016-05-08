@@ -1,4 +1,4 @@
-﻿
+﻿using Entities;
 using PNACCompetitions.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,9 +14,9 @@ namespace PNACCompetitions.Controllers
     {
       using (var db = new CompetitionDbContext())
       {
-       // Tests test = new Tests(db);
-      //  test.Construction();
-      //  test.Power();
+        Tests test = new Tests(db);
+        test.Construction();
+        test.Power();
       }
 
 

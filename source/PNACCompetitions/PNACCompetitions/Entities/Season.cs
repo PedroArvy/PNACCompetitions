@@ -22,7 +22,6 @@ namespace PNACCompetitions.Entities
     #region *********************** Properties ***********************
 
     public int ClubId { get; set; }
-    [Required]
     public virtual Club Club { get; set; }
 
     public int SeasonId { get; set; }
@@ -34,8 +33,6 @@ namespace PNACCompetitions.Entities
     [Required]
     [Column(TypeName = "datetime")]
     public DateTime Start { get; set; }
-
-    public List<Competition> Competitions { get; set; }
 
     #endregion
 

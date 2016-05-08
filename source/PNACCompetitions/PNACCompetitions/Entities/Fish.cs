@@ -37,13 +37,10 @@ namespace PNACCompetitions.Entities
     }
 
 
-    public Fish(string name, int maximum, int minimum, double difficulty, ENVIRONMENT environment)
+    public Fish(string name, ENVIRONMENT environment)
     {
-      //FishClubId = fishClub.FishClubId;
-
       Name = name;
       Environment = environment;
-
     }
 
     #endregion

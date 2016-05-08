@@ -24,15 +24,25 @@ namespace PNACCompetitions.Entities
 
     public int CatchId { get; set; }
 
+
     public bool Cleaned { get; set; }
 
+
+    [NotMapped]
+    public Competitor Competitor
+    {
+      get
+      {
+        return Entry.Competitor;
+      }
+    }
+
+
     public int EntryId { get; set; }
-    [Required]
     public virtual Entry Entry { get; set; }
 
 
     public int FishRuleId { get; set; }
-    [Required]
     public virtual FishRule FishRule { get; set; }
 
 
@@ -60,7 +70,7 @@ namespace PNACCompetitions.Entities
       EntryId = entry.EntryId;
       Entry = entry;
 
-     FishRuleId = fishRule.FishId;
+      FishRuleId = fishRule.FishId;
       FishRule = fishRule;
 
       Length = length;
@@ -70,11 +80,11 @@ namespace PNACCompetitions.Entities
 
     public Catch(FishRule fishRule, int length)
     {
-      //FishRuleId = fishRule.FishId;
-     // FishRule = fishRule;
+      FishRuleId = fishRule.FishId;
+      FishRule = fishRule;
 
-      //Length = length;
-     // Recordered = DateTime.Now;
+      Length = length;
+      Recordered = DateTime.Now;
     }
 
     #endregion
@@ -85,11 +95,10 @@ namespace PNACCompetitions.Entities
 
     public double CompetitionWeight()
     {
-      //if (Cleaned)
-      // return Weight;
-      //else
-      // return 0.9 * Weight;
-      return 1;
+      if (Cleaned)
+        return Weight;
+      else
+        return 0.9 * Weight;
     }
 
 
@@ -97,18 +106,18 @@ namespace PNACCompetitions.Entities
     {
       double value = 0;
 
-      /*
-      if(Length > Fish.Minimum)
+
+      if (Length > FishRule.Minimum)
       {
-        double @base = Fish.Difficulty * BASE_POINTS;
-        double percentageToMax = (double)(Length - Fish.Minimum) / (double)(Fish.Maximum - Fish.Minimum);
+        double @base = FishRule.Difficulty * BASE_POINTS;
+        double percentageToMax = (double)(Length - FishRule.Minimum) / (double)(FishRule.Maximum - FishRule.Minimum);
         double two_power_size = PowerN(percentageToMax * 10);
 
         value = @base + (MAXIMUM_POINTS - @base) * percentageToMax * two_power_size / MAX_POWER;
 
         value = Math.Round(value, 2, MidpointRounding.AwayFromZero);
       }
-      */
+
 
       return value;
     }
@@ -118,8 +127,8 @@ namespace PNACCompetitions.Entities
     {
       double value = 0;
 
-     // if (Length > Fish.Minimum)
-      //  value = 5 + Length - Fish.Minimum;
+      if (Length > FishRule.Minimum)
+        value = 5 + Length - FishRule.Minimum;
 
       return value;
     }

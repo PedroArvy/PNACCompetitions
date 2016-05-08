@@ -47,12 +47,31 @@ namespace PNACCompetitions.Entities
     }
 
 
+    //Add-Migration v1
+    //update-database -verbose
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
       base.OnModelCreating(modelBuilder);
 
-      modelBuilder.Entity<FishRule>().HasRequired(s => s.Club).WithMany(c => c.FishRule).WillCascadeOnDelete(false);
-      modelBuilder.Entity<Competitor>().HasRequired(s => s.Club).WithMany(c => c.Competitors).WillCascadeOnDelete(false);
+      modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+
+      modelBuilder.Entity<Competition>().HasRequired(m => m.Club).WithMany(t => t.Competitions).WillCascadeOnDelete(true);
+      modelBuilder.Entity<Competitor>().HasRequired(m => m.Club).WithMany(t => t.Competitors).WillCascadeOnDelete(true);
+      modelBuilder.Entity<Entry>().HasRequired(m => m.Competitor).WithMany(t => t.Entries).WillCascadeOnDelete(true);
+      modelBuilder.Entity<Catch>().HasRequired(m => m.Entry).WithMany(t => t.Catches).WillCascadeOnDelete(true);
+      modelBuilder.Entity<FishRule>().HasRequired(m => m.Fish).WithMany(t => t.FishRules).WillCascadeOnDelete(true);
+      modelBuilder.Entity<Season>().HasRequired(m => m.Club).WithMany(t => t.Seasons).WillCascadeOnDelete(true);
+
+      modelBuilder.Entity<FishRule>().HasRequired(m => m.Club).WithMany(t => t.FishRule).WillCascadeOnDelete(true);
+      //modelBuilder.Entity<Entry>().HasRequired(m => m.Competition).WithMany(t => t.Entries).WillCascadeOnDelete(true);
+
+      //modelBuilder.Entity<Competitor>().HasMany(c => c.Entries).WithRequired().WillCascadeOnDelete(true);
+      //modelBuilder.Entity<Entry>().HasMany(c => c.Catches).WithRequired().WillCascadeOnDelete(true);
+
+      //modelBuilder.Entity<FishRule>().HasRequired(s => s.Club).WithMany(c => c.FishRule).WillCascadeOnDelete(false);
+      // modelBuilder.Entity<Competition>().HasMany(i => i.Entries).WithRequired().WillCascadeOnDelete(false);
+
+      //modelBuilder.Entity<Competitor>().HasRequired(s => s.Club).WithMany(c => c.Competitors).WillCascadeOnDelete(false);
 
       //modelBuilder.Entity<Competitor>().HasRequired(s => s.Club).WithMany(c => c.Competitors).WillCascadeOnDelete(false);
       //modelBuilder.Entity<Fish>().HasRequired(s => s.Club).WithMany(c => c.Fish).WillCascadeOnDelete(false);
@@ -69,7 +88,8 @@ namespace PNACCompetitions.Entities
       //   modelBuilder.Entity<Competitor>().HasRequired(s => s.Club).WithMany(c => c.Competitors).WillCascadeOnDelete(false);
       //   modelBuilder.Entity<Season>().HasRequired(s => s.Club).WithMany(c => c.Seasons).WillCascadeOnDelete(false);
 
-      modelBuilder.Entity<Club>().HasMany(i => i.FishRule).WithRequired().WillCascadeOnDelete(true);
+      // modelBuilder.Entity<Club>().HasMany(i => i.FishRule).WithRequired().WillCascadeOnDelete(true);
+
       //modelBuilder.Entity<Club>().HasMany(i => i.Competitions).WithRequired().WillCascadeOnDelete(true);
       //modelBuilder.Entity<Club>().HasMany(i => i.Seasons).WithRequired().WillCascadeOnDelete(true);
       //modelBuilder.Entity<Club>().HasMany(i => i.Fish).WithRequired().WillCascadeOnDelete(true);

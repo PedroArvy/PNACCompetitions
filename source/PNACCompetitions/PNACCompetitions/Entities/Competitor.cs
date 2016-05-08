@@ -23,16 +23,40 @@ namespace PNACCompetitions.Entities
 
     #region *********************** Properties ***********************
 
+    /// <summary>
+    /// Distinct competitions
+    /// </summary>
+    [NotMapped]
+    public List<Competition> Competitions
+    {
+      get
+      {
+        List<Competition> competitions = new List<Competition>();
+
+        if(Entries != null)
+        {
+          foreach (Entry entry in Entries)
+          {
+            if (!competitions.Contains(entry.Competition))
+              competitions.Add(entry.Competition);
+          }
+        }
+
+        return competitions;
+      }
+    }
+    
+
     public COMPETITOR_TYPE CompetitorType { get; set; }
 
-    public List<Entry> CompetitorCompetitions { get; set; }
+    public virtual List<Entry> Entries { get; set; }
 
     public GENDER Gender { get; set; }
 
     public int CompetitorId { get; set; }
 
-
     public int ClubId { get; set; }
+    [ForeignKey("ClubId")]
     public virtual Club Club { get; set; }
 
 
@@ -62,6 +86,8 @@ namespace PNACCompetitions.Entities
 
     public Competitor(string firstname, string nickname, string lastname, Club club, COMPETITOR_TYPE competitorType, GENDER gender)
     {
+      ClubId = club.ClubId;
+      Club = club;
       CompetitorType = competitorType;
       Gender = gender;
       FirstName = firstname;

@@ -52,7 +52,7 @@ namespace Entities
 
     #region *********************** Methods **************************
 
- 
+
     private void AddCatches(Club club)
     {
       DateTime dt = DateTime.Parse("24 March 2016 7:00pm");
@@ -60,23 +60,27 @@ namespace Entities
 
       AddCatchSaturday(club, competition);
 
-      _context.Catches.Remove(_context.Catches.SingleOrDefault(c => c.CompetitionId == competition.CompetitionId && c.Competitor.LastName == "Deveson"));
+      _context.Catches.Remove(_context.Catches.SingleOrDefault(c => c.Entry.CompetitionId == competition.CompetitionId && c.Entry.Competitor.LastName == "Deveson"));
       _context.SaveChanges();
 
-      if (_context.Catches.Where(c => c.CompetitionId == competition.CompetitionId).Count() != 6)
+      int no = _context.Catches.Where(c => c.Entry.CompetitionId == competition.CompetitionId).Count();
+
+      if (no != 7)
         throw new Exception("AddCatch 10");
 
       Season season = Manager.GetSeason(_context, club, dt);
 
-      if (club.Seasons.SingleOrDefault(s => s.SeasonId == season.SeasonId).Competitions.SingleOrDefault(c => c.Venue == LAKE_FYANS) == null)
-        throw new Exception("AddCatch 20");
+      //if (club.Seasons.SingleOrDefault(s => s.SeasonId == season.SeasonId).Competitions.SingleOrDefault(c => c.Venue == LAKE_FYANS) == null)
+      //  throw new Exception("AddCatch 20");
 
-      _context.Catches.RemoveRange(_context.Catches.Where(c => c.CompetitionId == competition.CompetitionId));
+      _context.Catches.RemoveRange(_context.Catches.Where(c => c.Entry.CompetitionId == competition.CompetitionId));
       _context.SaveChanges();
 
       AddCatchSaturday(club, competition);
 
-      if(competition.Competitors.Count() != 6)
+      no = competition.Competitors.Count();
+
+      if (no != 6)
         throw new Exception("AddCatch 30");
     }
 
@@ -85,13 +89,15 @@ namespace Entities
     {
       AddCatchSaturdayDirect(club, competition);
 
-      if (Manager.Catches(_context, competition).Count() != 7)
+      int no = Manager.Catches(_context, competition).Count();
+
+      if (no != 8)
         throw new Exception("AddCatchSaturday 10");
 
       _context.Catches.RemoveRange(_context.Catches.Where(c => c.Entry.CompetitionId == competition.CompetitionId));
       _context.SaveChanges();
 
-      if(Manager.Catches(_context, competition).Count() != 0)
+      if (Manager.Catches(_context, competition).Count() != 0)
         throw new Exception("AddCatchSaturday 20");
 
       AddCatchSaturdayDirect(club, competition);
@@ -106,53 +112,68 @@ namespace Entities
     private void AddCatchSaturdayDirect(Club club, Competition competition)
     {
       Season season = Manager.Get(_context, club, DateTime.Parse(START_FYANS), DateTime.Parse(END_FYANS));
-      Catch @catch;
 
-      Competitor competitor = club.Competitors.SingleOrDefault(c => c.LastName == BARCLAY);
+      //if (@catch.PointsByFormula() - 142.69 > 0.01)
+      //  throw new Exception("AddCatchSaturdayDirect");
 
-      Entry entry = _context.Entries.SingleOrDefault(c => c.CompetitorId == competitor.CompetitorId);
-      FishRule rule = _context.FishRules.SingleOrDefault(r => r.ClubId == club.ClubId && r.Fish.Name == BROWN_TROUT);
+      //  if (@catch.PointsByFormula() - 1000 > 0.01)
+      //throw new Exception("AddCatchSaturdayDirect");
 
-      @catch = new Catch(entry, rule, 44);
+      AddEntries(club, "John", "Deveson", BROWN_TROUT, 44);
+      AddEntries(club, "Rod", "King", BROWN_TROUT, 56);
+      AddEntries(club, "", "Scott", BROWN_TROUT, 42);
+      AddEntries(club, "Anthony", "Francis", BROWN_TROUT, 41);
+      AddEntries(club, "", "Francis", RAINBOW_TROUT, 41);
+      AddEntries(club, "", "Taylor", RAINBOW_TROUT, 36);
 
+      AddEntries(club, "", "Brown", RAINBOW_TROUT, 36);
+      AddEntries(club, "Rod", "King", RAINBOW_TROUT, 33);
+
+    }
+
+
+    private void AddEntries(Club club, string first, string last, string fishName, int length)
+    {
+      Competition competition = _context.Competitions.Single(c => c.ClubId == club.ClubId);
+
+      Competitor competitor = null;
+
+      if (string.IsNullOrWhiteSpace(first))
+        competitor = _context.Competitors.Single(c => c.ClubId == club.ClubId && c.LastName == last);
+      else
+        competitor = _context.Competitors.Single(c => c.ClubId == club.ClubId && c.FirstName == first && c.LastName == last);
+
+      Entry entry = null;
+
+      entry = _context.Entries.SingleOrDefault(e => e.CompetitionId == competition.CompetitionId && e.CompetitorId == competitor.CompetitorId);
+
+      if (entry == null)
+      {
+        entry = new Entry(competitor, competition);
+        _context.Entries.Add(entry);
+        _context.SaveChanges();
+      }
+
+      FishRule rule = _context.FishRules.Single(f => f.ClubId == club.ClubId && f.Fish.Name == fishName);
+
+      Catch @catch = new Catch(entry, rule, length);
       _context.Catches.Add(@catch);
-
-      if (@catch.PointsByFormula() - 142.69 > 0.01)
-        throw new Exception("AddCatchSaturdayDirect");
-
-      @catch = new Catch(_context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 85);
-
-      if (@catch.PointsByFormula() - 1000 > 0.01)
-        throw new Exception("AddCatchSaturdayDirect");
-
-      @catch = new Catch(club.Competitors.Single(c => c.FirstName == "Rod" && c.LastName == "King"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 56);
-      _context.Catches.Add(@catch);
-
-      @catch = new Catch(club.Competitors.Single(c => c.LastName == "Scott"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 42);
-      _context.Catches.Add(@catch);
-
-      @catch = new Catch(club.Competitors.Single(c => c.LastName == "Francis"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == BROWN_TROUT), 41);
-      _context.Catches.Add(@catch);
-
-      @catch = new Catch(club.Competitors.Single(c => c.LastName == "Taylor"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == RAINBOW_TROUT), 36);
-      _context.Catches.Add(@catch);
-
-      @catch = new Catch(club.Competitors.Single(c => c.LastName == "Brown"), competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == RAINBOW_TROUT), 36);
-      _context.Catches.Add(@catch);
-
-      Competitor competitor = club.Competitors.Single(c => c.FirstName == "Rod" && c.LastName == "King");
-      _context.Catches.Add(new Catch(competitor, competition, _context.Fish.Single(f => f.ClubId == club.ClubId && f.Name == RAINBOW_TROUT), 33));
-
       _context.SaveChanges();
     }
 
 
     private Club AddClub()
     {
-      _context.Clubs.RemoveRange(_context.Clubs);
-      _context.SaveChanges();
+      string TEST_CLUB = "Preston Northcote Angling Club Test";
+      Club test_club = _context.Clubs.SingleOrDefault(c => c.Name == TEST_CLUB);
 
-      Club prestonNorthcote = new Club("Northern Suburbs Fly Fishing Club");
+      if (test_club != null)
+      {
+        _context.Clubs.RemoveRange(_context.Clubs.Where(c => c.Name == TEST_CLUB));
+        _context.SaveChanges();
+      }
+
+      Club prestonNorthcote = new Club(TEST_CLUB);
       _context.Clubs.Add(prestonNorthcote);
 
       _context.SaveChanges();
@@ -169,11 +190,11 @@ namespace Entities
     {
       Season season = Manager.Get(_context, club, DateTime.Parse(START_FYANS), DateTime.Parse(END_FYANS));
 
-      Competition comp1 = new Competition(club, LAKE_FYANS, "Anazac weekend", DateTime.Parse("23 March 2016"), DateTime.Parse("25 March 2016"), ENVIRONMENT.FRESHWATER, season);
+      Competition comp1 = new Competition(club, LAKE_FYANS, "Anazac weekend", DateTime.Parse("23 March 2016"), DateTime.Parse("25 March 2016"), ENVIRONMENT.FRESHWATER);
       _context.Competitions.Add(comp1);
       _context.SaveChanges();
 
-      Competition competition = club.Seasons.SingleOrDefault(s => s.SeasonId == season.SeasonId).Competitions.First();
+      Competition competition = club.Competitions.First();
       if (competition.Venue != LAKE_FYANS)
         throw new Exception("AddCompetition 10");
     }
@@ -192,7 +213,7 @@ namespace Entities
       _context.Competitors.Remove(_context.Competitors.Where(c => c.ClubId == club.ClubId && c.LastName == "Mallini").First());
       _context.SaveChanges();
 
-      if(_context.Competitors.SingleOrDefault(c => c.ClubId == club.ClubId && c.LastName == BARCLAY) != null)
+      if (_context.Competitors.SingleOrDefault(c => c.ClubId == club.ClubId && c.LastName == BARCLAY) != null)
         throw new Exception("AddCompetitors 5");
 
       if (club.Competitors.Count() != 8)
@@ -201,7 +222,7 @@ namespace Entities
       if (club.Seasons.Count() != 3)
         throw new Exception("AddCompetitors 20");
 
-      if (club.Fish.Count() != 4)
+      if (_context.Fish.Count() != 4)
         throw new Exception("AddCompetitors 30");
 
       _context.Competitors.RemoveRange(club.Competitors);
@@ -211,6 +232,7 @@ namespace Entities
         throw new Exception("AddCompetitors 40");
 
       AddCompetitorsDirect(club);
+
     }
 
 
@@ -270,18 +292,18 @@ namespace Entities
     {
       AddFishDirect(club);
 
-      if (_context.Clubs.Single(c => c.ClubId == club.ClubId).Fish.Count() != 4)
+      if (_context.Fish.Count() != 4)
         throw new Exception("AddFish 10");
 
-      _context.Fish.RemoveRange(_context.Fish.Where(f => f.ClubId == club.ClubId));
+      _context.Fish.RemoveRange(_context.Fish);
       _context.SaveChanges();
 
-      if (_context.Clubs.Single(c => c.ClubId == club.ClubId).Fish.Count() != 0)
+      if (_context.Fish.Count() != 0)
         throw new Exception("AddFish 20");
 
       AddFishDirect(club);
 
-      if (_context.Clubs.Single(c => c.ClubId == club.ClubId).Fish.Count() != 4)
+      if (_context.Fish.Count() != 4)
         throw new Exception("AddFish 30");
 
     }
@@ -289,15 +311,41 @@ namespace Entities
 
     private void AddFishDirect(Club club)
     {
-      Fish fish1 = new Fish(club, "Brown trout", 85, 28, 1, ENVIRONMENT.FRESHWATER);
-      Fish fish2 = new Fish(club, "Rainbow trout", 85, 28, 1.2, ENVIRONMENT.FRESHWATER);
-      Fish fish3 = new Fish(club, "Murray cod", 85, 28, 1.2, ENVIRONMENT.FRESHWATER);
-      Fish fish4 = new Fish(club, "Bream", 45, 28, 1, ENVIRONMENT.ALL);
+      Fish fish1 = new Fish("Brown trout", ENVIRONMENT.FRESHWATER);
+      Fish fish2 = new Fish("Rainbow trout", ENVIRONMENT.FRESHWATER);
+      Fish fish3 = new Fish("Murray cod", ENVIRONMENT.FRESHWATER);
+      Fish fish4 = new Fish("Bream", ENVIRONMENT.ALL);
 
-      _context.Fish.Add(fish1);
-      _context.Fish.Add(fish2);
-      _context.Fish.Add(fish3);
-      _context.Fish.Add(fish4);
+      if (!_context.Fish.Any(f => f.Name == fish1.Name))
+        _context.Fish.Add(fish1);
+      else
+        fish1 = _context.Fish.Single(f => f.Name == fish1.Name);
+
+      if (!_context.Fish.Any(f => f.Name == fish2.Name))
+        _context.Fish.Add(fish2);
+      else
+        fish2 = _context.Fish.Single(f => f.Name == fish1.Name);
+
+      if (!_context.Fish.Any(f => f.Name == fish3.Name))
+        _context.Fish.Add(fish3);
+      else
+        fish3 = _context.Fish.Single(f => f.Name == fish1.Name);
+
+      if (!_context.Fish.Any(f => f.Name == fish4.Name))
+        _context.Fish.Add(fish4);
+      else
+        fish4 = _context.Fish.Single(f => f.Name == fish1.Name);
+
+      _context.SaveChanges();
+
+      FishRule rule1 = new FishRule(fish1, club, 85, 28, 1);
+      _context.FishRules.Add(rule1);
+      FishRule rule2 = new FishRule(fish2, club, 85, 28, 1);
+      _context.FishRules.Add(rule2);
+      FishRule rule3 = new FishRule(fish3, club, 120, 45, 1);
+      _context.FishRules.Add(rule3);
+      FishRule rule4 = new FishRule(fish4, club, 45, 28, 1);
+      _context.FishRules.Add(rule4);
 
       _context.SaveChanges();
     }
@@ -313,7 +361,7 @@ namespace Entities
       _context.Seasons.RemoveRange(_context.Seasons.Where(s => s.ClubId == club.ClubId));
       _context.SaveChanges();
 
-      if(club.Seasons.Count() != 0)
+      if (club.Seasons.Count() != 0)
         throw new Exception("AddSeasons 5");
 
       AddSeasonsDirect(club);
@@ -362,29 +410,40 @@ namespace Entities
       AddCatches(club);
 
       IEnumerable<Competition> competitions = club.Competitions;
-      IEnumerable<Catch> catches = club.Competitions.First().Catches;
+      IEnumerable<Catch> catches = Manager.Catches(_context, club.Competitions.First());
 
-      if (catches.Count() != 7)
+      int no = catches.Count();
+
+      if (catches.Count() != 8)
         throw new Exception("Construction 5");
 
-      if(catches.First().Competition == null)
-        throw new Exception("Construction 7");
+      //if(catches.First()..Competition == null)
+      // throw new Exception("Construction 7");
 
-      club.Competitions.First().Catches.RemoveAll(c => true);
+      //club.Competitions.First().Catches.RemoveAll(c => true);
+      // _context.SaveChanges();
+
+
+     // _context.Catches.RemoveRange(_context.Catches.Where(c => c.Entry.Competition.ClubId == club.ClubId));
+      //_context.SaveChanges();
+     // _context.Entries.RemoveRange(_context.Entries.Where(e => e.Competition.ClubId == club.ClubId));
+     // _context.SaveChanges();
+
+      Competitor competitor = club.Competitors.Single(c => c.LastName == "Taylor");
+      _context.Competitors.Remove(competitor);
       _context.SaveChanges();
 
-      club.Competitors.RemoveAll(c => true);
+      _context.Competitors.RemoveRange(club.Competitors);
       _context.SaveChanges();
 
-      club.Competitions.RemoveAll(c => true);
-      _context.SaveChanges();
+      // club.Competitions.RemoveAll(c => true);
+      //  _context.SaveChanges();
 
-      club.Fish.RemoveAll(c => true);
-      _context.SaveChanges();
+      //club.Fish.RemoveAll(c => true);
+      // _context.SaveChanges();
 
       _context.Clubs.Remove(club);
       _context.SaveChanges();
-
 
       if (_context.Seasons.SingleOrDefault(s => s.SeasonId == season1Id) != null)
         throw new Exception("Construction 10");
@@ -395,9 +454,8 @@ namespace Entities
       if (_context.Competitors.SingleOrDefault(c => c.ClubId == clubId) != null)
         throw new Exception("Construction 30");
 
-      if (_context.Catches.SingleOrDefault(c => c.Competition.Season.ClubId == clubId) != null)
-        throw new Exception("Construction 40");
-
+      //  if (_context.Catches.SingleOrDefault(c => c.Entry.Competition.ClubId == clubId) != null)
+      //    throw new Exception("Construction 40");
     }
 
 

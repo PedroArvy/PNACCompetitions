@@ -37,14 +37,23 @@ namespace PNACCompetitions.Entities
       return context.Catches.Where(c => c.Entry.CompetitionId == competition.CompetitionId);
     }
 
+    public static void DeleteCompetitors(CompetitionDbContext context, IEnumerable<Competitor> competitors)
+    {
+      if(competitors != null)
+      {
+        for (int i = competitors.Count() - 1; i >= 0; i--)
+          context.Competitors.Remove(competitors.ElementAt(i));
+
+        context.SaveChanges();
+      }
+    }
+
 
     public static Competition Get(CompetitionDbContext context, Club club, DateTime date)
     {
       Competition competition = null;
 
-      Season season = Manager.GetSeason(context, club, date);
-
-      competition = context.Competitions.SingleOrDefault(c => c.SeasonId == season.SeasonId && c.Start <= date && date <= c.End);
+      competition = context.Competitions.SingleOrDefault(c => c.Start <= date && date <= c.End);
 
       return competition;
     }

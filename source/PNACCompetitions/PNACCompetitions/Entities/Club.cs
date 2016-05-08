@@ -20,7 +20,10 @@ namespace PNACCompetitions.Entities
     public int ClubId { get; set; }
 
 
-    public List<Competitor> Competitors { get; set; }
+    public virtual List<Competitor> Competitors { get; set; }
+
+
+    public List<Competition> Competitions { get; set; }//1
 
 
     public List<FishRule> FishRule { get; set; }

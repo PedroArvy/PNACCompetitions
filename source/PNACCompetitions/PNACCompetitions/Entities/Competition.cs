@@ -26,21 +26,47 @@ namespace PNACCompetitions
 
     #region *********************** Properties ***********************
 
+    public int ClubId { get; set; }
+    //[Required]
+    public virtual Club Club { get; set; }
 
 
-    [NotMapped]
-    public Club Club
+    public IEnumerable<Catch> Catches
     {
       get
       {
-        return Season.Club;
+        List<Catch> catches = new List<Catch>();
+
+        foreach (Entry entry in Entries)
+        {
+          catches.AddRange(entry.Catches);
+        }
+
+        return catches;
       }
     }
 
+
+    [NotMapped]
+    public IEnumerable<Competitor> Competitors
+    {
+      get
+      {
+        List<Competitor> competitors = new List<Competitor>();
+
+        foreach (Entry entry in Entries)
+        {
+          competitors.Add(entry.Competitor);
+        }
+
+        return competitors.Distinct();
+      }
+    }
+
+
     public List<Entry> Entries { get; set; }
 
-
-   public ENVIRONMENT Environment { get; set; }
+    public ENVIRONMENT Environment { get; set; }
 
     public int CompetitionId { get; set; }
 
@@ -55,7 +81,6 @@ namespace PNACCompetitions
     [Column(TypeName = "datetime")]
     public DateTime Start { get; set; }
 
-    /*
     public int? Referee1Id { get; set; }
     public virtual Competitor Referee1 { get; set; }
 
@@ -65,20 +90,15 @@ namespace PNACCompetitions
     public int? Referee3Id { get; set; }
     public virtual Competitor Referee3 { get; set; }
 
-
     public int? TripCaptainId { get; set; }
     public virtual Competitor TripCaptain { get; set; }
-    */
-
-    public int SeasonId { get; set; }
-    public Season Season { get; set; }
 
     [MaxLength(100)]
     [Column(TypeName = "varchar"), Required]
     public string Venue { get; set; }
 
     [Column(TypeName = "datetime")]
-    public DateTime WeighInTime { get; set; }
+    public DateTime ? WeighInTime { get; set; }
 
     #endregion
 
@@ -89,25 +109,16 @@ namespace PNACCompetitions
     {
     }
 
-    public Competition(Club club, string venue, string name, DateTime start, DateTime? end, ENVIRONMENT environment, Season season)
+    public Competition(Club club, string venue, string name, DateTime start, DateTime? end, ENVIRONMENT environment)
     {
-      //Venue = venue;
+      Club = club;
+      ClubId = club.ClubId;
+      Venue = venue;
       Name = name;
-      //Start = start;
-      //End = end;
-      //Environment = environment;
-      SeasonId = season.SeasonId;
+      Start = start;
+      End = end;
+      Environment = environment;
 
-      if (season != null)
-      {
-        Season = season;
-        SeasonId = season.SeasonId;
-
-        // ClubId = season.ClubId;
-        //Club = season.Club;
-      }
-      else
-        throw new Exception("Competition(string name, DateTime start, DateTime ? end, ENVIRONMENT environment, Season season)");
     }
 
     #endregion
@@ -120,11 +131,11 @@ namespace PNACCompetitions
     {
       List<CompetitorPoints> weights = new List<CompetitorPoints>();
 
-      /*
+
       Competitor competitor;
       CompetitorPoints weight;
 
-      foreach (Catch @catch in Catches.Where(c => c.Weight > 0 && c.Length > c.Fish.Minimum))
+      foreach (Catch @catch in Catches.Where(c => c.Weight > 0 && c.Length > c.FishRule.Minimum))
       {
         competitor = @catch.Competitor;
 
@@ -136,7 +147,7 @@ namespace PNACCompetitions
           weights.Add(new CompetitorPoints() { Competitor = @catch.Competitor, Weight = @catch.CompetitionWeight() });
       }
 
-  */
+
       return weights;
     }
 
@@ -175,7 +186,7 @@ namespace PNACCompetitions
 
   public class CompetitorPoints
   {
-    //public Competitor Competitor { get; set; }
+    public Competitor Competitor { get; set; }
     public int Points { get; set; }
     public double Weight { get; set; }
   }
