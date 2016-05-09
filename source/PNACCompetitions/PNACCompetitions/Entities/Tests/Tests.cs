@@ -391,7 +391,7 @@ namespace Entities
     }
 
 
-    public void Construction()
+    public void Construction(bool delete)
     {
       Club club = AddClub();
 
@@ -403,10 +403,25 @@ namespace Entities
       int season1Id = club.Seasons.First().SeasonId;
       int season2Id = club.Seasons.Skip(1).First().SeasonId;
 
+      AddCompetition(club);
       AddCompetitors(club);
+      AddCatches(club);
+
+      _context.Competitors.RemoveRange(club.Competitors);
+      _context.Competitions.RemoveRange(club.Competitions);
+      _context.SaveChanges();
+
+      if(club.Competitions.Count() != 0)
+        throw new Exception("Construction 10");
+
+      if (club.Competitors.Count() != 0)
+        throw new Exception("Construction 20");
+
+      if (_context.Catches.Count() != 0)
+        throw new Exception("Construction 30");
 
       AddCompetition(club);
-
+      AddCompetitors(club);
       AddCatches(club);
 
       IEnumerable<Competition> competitions = club.Competitions;
@@ -417,45 +432,28 @@ namespace Entities
       if (catches.Count() != 8)
         throw new Exception("Construction 5");
 
-      //if(catches.First()..Competition == null)
-      // throw new Exception("Construction 7");
 
-      //club.Competitions.First().Catches.RemoveAll(c => true);
-      // _context.SaveChanges();
+      if(delete)
+      {
+        Competitor competitor = club.Competitors.Single(c => c.LastName == "Taylor");
+        _context.Competitors.Remove(competitor);
+        _context.SaveChanges();
 
+        _context.Competitors.RemoveRange(club.Competitors);
+        _context.SaveChanges();
 
-     // _context.Catches.RemoveRange(_context.Catches.Where(c => c.Entry.Competition.ClubId == club.ClubId));
-      //_context.SaveChanges();
-     // _context.Entries.RemoveRange(_context.Entries.Where(e => e.Competition.ClubId == club.ClubId));
-     // _context.SaveChanges();
+        _context.Clubs.Remove(club);
+        _context.SaveChanges();
 
-      Competitor competitor = club.Competitors.Single(c => c.LastName == "Taylor");
-      _context.Competitors.Remove(competitor);
-      _context.SaveChanges();
+        if (_context.Seasons.SingleOrDefault(s => s.SeasonId == season1Id) != null)
+          throw new Exception("Construction 10");
 
-      _context.Competitors.RemoveRange(club.Competitors);
-      _context.SaveChanges();
+        if (_context.Seasons.SingleOrDefault(s => s.SeasonId == season2Id) != null)
+          throw new Exception("Construction 20");
 
-      // club.Competitions.RemoveAll(c => true);
-      //  _context.SaveChanges();
-
-      //club.Fish.RemoveAll(c => true);
-      // _context.SaveChanges();
-
-      _context.Clubs.Remove(club);
-      _context.SaveChanges();
-
-      if (_context.Seasons.SingleOrDefault(s => s.SeasonId == season1Id) != null)
-        throw new Exception("Construction 10");
-
-      if (_context.Seasons.SingleOrDefault(s => s.SeasonId == season2Id) != null)
-        throw new Exception("Construction 20");
-
-      if (_context.Competitors.SingleOrDefault(c => c.ClubId == clubId) != null)
-        throw new Exception("Construction 30");
-
-      //  if (_context.Catches.SingleOrDefault(c => c.Entry.Competition.ClubId == clubId) != null)
-      //    throw new Exception("Construction 40");
+        if (_context.Competitors.SingleOrDefault(c => c.ClubId == clubId) != null)
+          throw new Exception("Construction 30");
+      }
     }
 
 

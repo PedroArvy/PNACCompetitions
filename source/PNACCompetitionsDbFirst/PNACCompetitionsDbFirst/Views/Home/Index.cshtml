@@ -1,0 +1,44 @@
+﻿@using PNACCompetitionsDbFirst.Entities.ViewModels;
+@model IEnumerable<PNACCompetitionsDbFirst.Entities.ViewModels.LeaderBoardLineItem>
+  
+@{
+  ViewBag.Title = "Leader Board";
+}
+
+<div class="row">
+  <div class="col-md-4">
+    <h2>Leader Board</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Competitor</th>
+            <th>Points</th>
+            <th>Formula Points</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          @foreach (LeaderBoardLineItem item in Model)
+          {
+            <tr>
+              <td>@item.Order</td>
+              <td>@item.Name</td>
+              <td>@item.TrialPoints</td>
+              <td>@item.FormulaPoints</td>
+            </tr>
+          }
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+

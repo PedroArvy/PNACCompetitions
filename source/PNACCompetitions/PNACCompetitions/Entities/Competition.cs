@@ -131,7 +131,6 @@ namespace PNACCompetitions
     {
       List<CompetitorPoints> weights = new List<CompetitorPoints>();
 
-
       Competitor competitor;
       CompetitorPoints weight;
 

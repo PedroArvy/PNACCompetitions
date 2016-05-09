@@ -6,7 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using PNACCompetitions.Models;
-using PNACCompetitions.Entities;
+
 
 namespace PNACCompetitions
 {
@@ -16,7 +16,7 @@ namespace PNACCompetitions
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(CompetitionDbContext.Create);
+            //app.CreatePerOwinContext(CompetitionDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 

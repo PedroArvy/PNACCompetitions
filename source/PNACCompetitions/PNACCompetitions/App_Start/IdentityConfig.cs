@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using PNACCompetitions.Models;
-using PNACCompetitions.Entities;
+using PNACCompetitions.DatabaseModel;
 
 namespace PNACCompetitions
 {
@@ -43,7 +43,9 @@ namespace PNACCompetitions
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<CompetitionDbContext>()));
+      var db = new PNACCompetitionsEntities();
+
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<PNACCompetitionsEntities>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {

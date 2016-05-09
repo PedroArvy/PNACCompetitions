@@ -1,0 +1,54 @@
+﻿@using PNACCompetitionsDbFirst.Entities;
+@using PNACCompetitionsDbFirst.Entities.ViewModels;
+@model IEnumerable<CompetitorListItem>
+
+@{
+  ViewBag.Title = "Competitors";
+}
+
+<div class="row">
+  <div class="col-md-4">
+    <h2>Competitors</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            @if (Model.Any(c => c.CanEdit))
+            {
+              <th>Action</th>
+            }
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+
+
+          @foreach (CompetitorListItem competitor in Model)
+          {
+            <tr>
+
+              @if (Model.Any(c => c.CanEdit))
+              {
+                <td class="table-action">
+                  @if (competitor.CanEdit)
+                  {
+                    @Html.ActionLink("Edit", "Edit", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm" })
+                  }
+                </td>
+              }
+
+              <td>@competitor.Name</td>
+            </tr>
+          }
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

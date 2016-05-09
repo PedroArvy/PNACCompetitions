@@ -100,7 +100,19 @@ namespace PNACCompetitions.Entities
 
     #region *********************** Methods **************************
 
+    public string FriendlyName()
+    {
+      string name = FirstName;
 
+      if(!string.IsNullOrEmpty(NickName))
+      {
+        name += " \"" + NickName + "\"";
+      }
+
+      name += LastName;
+
+      return name;
+    }
 
     #endregion
 

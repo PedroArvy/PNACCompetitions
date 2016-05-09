@@ -52,6 +52,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -170,26 +172,60 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Entities\Catch.cs" />
-    <Compile Include="Entities\Club.cs" />
-    <Compile Include="Entities\Competition.cs" />
-    <Compile Include="Entities\CompetitionDbContext.cs" />
-    <Compile Include="Entities\Competitor.cs" />
-    <Compile Include="Entities\Entry.cs" />
-    <Compile Include="Entities\Fish.cs" />
-    <Compile Include="Entities\FishRule.cs" />
-    <Compile Include="Entities\Manager.cs" />
-    <Compile Include="Entities\Sample.cs" />
-    <Compile Include="Entities\Season.cs" />
-    <Compile Include="Entities\Tests\Tests.cs" />
+    <Compile Include="DatabaseModel\AspNetRole.cs">
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\AspNetUser.cs">
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\AspNetUserClaim.cs">
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\AspNetUserLogin.cs">
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Catch.cs">
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Club.cs">
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Competition.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Competition.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Competition.cs">
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Competition.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Competition.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Competition1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Competitor.cs">
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Entry.cs">
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Fish.cs">
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\FishRule.cs">
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\Season.cs">
+      <DependentUpon>Competition.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605081218267_v1.cs" />
-    <Compile Include="Migrations\201605081218267_v1.Designer.cs">
-      <DependentUpon>201605081218267_v1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -199,12 +235,29 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DatabaseModel\Competition.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Competition.edmx</DependentUpon>
+      <LastGenOutput>Competition.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DatabaseModel\Competition.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Competition.edmx</DependentUpon>
+      <LastGenOutput>Competition1.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="DatabaseModel\Competition.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Competition.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DatabaseModel\Competition.edmx.diagram">
+      <DependentUpon>Competition.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -264,9 +317,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605081218267_v1.resx">
-      <DependentUpon>201605081218267_v1.cs</DependentUpon>
-    </EmbeddedResource>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PNACCompetitions.Entities.ViewModel;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -102,7 +103,18 @@ namespace PNACCompetitions.Entities
     }
 
 
-    public double PointsByFormula()
+    public Score LeaderBoard()
+    {
+      Score board = new Score();
+      board.Name = Competitor.FriendlyName();
+      board.FormulaPoints = FormulaPoints();
+      board.TrialPoints = TrialPoints();
+
+      return board;
+    }
+
+
+    public double FormulaPoints()
     {
       double value = 0;
 
@@ -123,9 +135,9 @@ namespace PNACCompetitions.Entities
     }
 
 
-    public double PointsByLengthOriginal()
+    public int TrialPoints()
     {
-      double value = 0;
+      int value = 0;
 
       if (Length > FishRule.Minimum)
         value = 5 + Length - FishRule.Minimum;
