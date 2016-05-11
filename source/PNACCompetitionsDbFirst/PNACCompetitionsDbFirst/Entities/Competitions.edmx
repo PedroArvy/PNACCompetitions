@@ -21,7 +21,6 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="Admin" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Catches">
           <Key>
@@ -30,7 +29,7 @@
           <Property Name="CatchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Cleaned" Type="bit" Nullable="false" />
           <Property Name="EntryId" Type="int" Nullable="false" />
-          <Property Name="FishRuleId" Type="int" Nullable="false" />
+          <Property Name="FishId" Type="int" Nullable="false" />
           <Property Name="Length" Type="int" Nullable="false" />
           <Property Name="Recordered" Type="datetime" Nullable="false" />
           <Property Name="Weight" Type="float" Nullable="false" />
@@ -75,6 +74,7 @@
           <Property Name="LastName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="NickName" Type="varchar" MaxLength="100" />
           <Property Name="AspNetUserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Admin" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Entries">
           <Key>
@@ -90,18 +90,9 @@
           </Key>
           <Property Name="FishId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Environment" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="FishRules">
-          <Key>
-            <PropertyRef Name="FishRuleId" />
-          </Key>
-          <Property Name="FishRuleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClubId" Type="int" Nullable="false" />
-          <Property Name="FishId" Type="int" Nullable="false" />
-          <Property Name="Difficulty" Type="float" Nullable="false" />
-          <Property Name="Maximum" Type="int" Nullable="false" />
           <Property Name="Minimum" Type="int" Nullable="false" />
+          <Property Name="Maximum" Type="int" Nullable="false" />
+          <Property Name="Difficulty" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Seasons">
           <Key>
@@ -112,6 +103,18 @@
           <Property Name="End" Type="datetime" Nullable="false" />
           <Property Name="Start" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Catches_Fish">
+          <End Role="Fish" Type="Self.Fish" Multiplicity="1" />
+          <End Role="Catches" Type="Self.Catches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fish">
+              <PropertyRef Name="FishId" />
+            </Principal>
+            <Dependent Role="Catches">
+              <PropertyRef Name="FishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Competitors_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Competitors" Type="Self.Competitors" Multiplicity="*" />
@@ -135,18 +138,6 @@
             </Principal>
             <Dependent Role="Catches">
               <PropertyRef Name="EntryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Catches_dbo_FishRules_FishRuleId">
-          <End Role="FishRules" Type="Self.FishRules" Multiplicity="1" />
-          <End Role="Catches" Type="Self.Catches" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FishRules">
-              <PropertyRef Name="FishRuleId" />
-            </Principal>
-            <Dependent Role="Catches">
-              <PropertyRef Name="FishRuleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -252,34 +243,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_FishRules_dbo_Clubs_ClubId">
-          <End Role="Clubs" Type="Self.Clubs" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="FishRules" Type="Self.FishRules" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clubs">
-              <PropertyRef Name="ClubId" />
-            </Principal>
-            <Dependent Role="FishRules">
-              <PropertyRef Name="ClubId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_FishRules_dbo_Fish_FishId">
-          <End Role="Fish" Type="Self.Fish" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="FishRules" Type="Self.FishRules" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Fish">
-              <PropertyRef Name="FishId" />
-            </Principal>
-            <Dependent Role="FishRules">
-              <PropertyRef Name="FishId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_Seasons_dbo_Clubs_ClubId">
           <End Role="Clubs" Type="Self.Clubs" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -302,18 +265,17 @@
           <EntitySet Name="Competitors" EntityType="Self.Competitors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Entries" EntityType="Self.Entries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fish" EntityType="Self.Fish" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FishRules" EntityType="Self.FishRules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seasons" EntityType="Self.Seasons" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Catches_Fish" Association="Self.FK_Catches_Fish">
+            <End Role="Fish" EntitySet="Fish" />
+            <End Role="Catches" EntitySet="Catches" />
+          </AssociationSet>
           <AssociationSet Name="FK_Competitors_AspNetUsers" Association="Self.FK_Competitors_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Competitors" EntitySet="Competitors" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Catches_dbo_Entries_EntryId" Association="Self.FK_dbo_Catches_dbo_Entries_EntryId">
             <End Role="Entries" EntitySet="Entries" />
-            <End Role="Catches" EntitySet="Catches" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Catches_dbo_FishRules_FishRuleId" Association="Self.FK_dbo_Catches_dbo_FishRules_FishRuleId">
-            <End Role="FishRules" EntitySet="FishRules" />
             <End Role="Catches" EntitySet="Catches" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Competitions_dbo_Clubs_ClubId" Association="Self.FK_dbo_Competitions_dbo_Clubs_ClubId">
@@ -348,14 +310,6 @@
             <End Role="Competitors" EntitySet="Competitors" />
             <End Role="Entries" EntitySet="Entries" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_FishRules_dbo_Clubs_ClubId" Association="Self.FK_dbo_FishRules_dbo_Clubs_ClubId">
-            <End Role="Clubs" EntitySet="Clubs" />
-            <End Role="FishRules" EntitySet="FishRules" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_FishRules_dbo_Fish_FishId" Association="Self.FK_dbo_FishRules_dbo_Fish_FishId">
-            <End Role="Fish" EntitySet="Fish" />
-            <End Role="FishRules" EntitySet="FishRules" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_Seasons_dbo_Clubs_ClubId" Association="Self.FK_dbo_Seasons_dbo_Clubs_ClubId">
             <End Role="Clubs" EntitySet="Clubs" />
             <End Role="Seasons" EntitySet="Seasons" />
@@ -365,31 +319,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PNACCompetitionsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Catch">
-          <Key>
-            <PropertyRef Name="CatchId" />
-          </Key>
-          <Property Name="CatchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Cleaned" Type="Boolean" Nullable="false" />
-          <Property Name="EntryId" Type="Int32" Nullable="false" />
-          <Property Name="FishRuleId" Type="Int32" Nullable="false" />
-          <Property Name="Length" Type="Int32" Nullable="false" />
-          <Property Name="Recordered" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Weight" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Entry" Relationship="Self.FK_dbo_Catches_dbo_Entries_EntryId" FromRole="Catches" ToRole="Entries" />
-          <NavigationProperty Name="FishRule" Relationship="Self.FK_dbo_Catches_dbo_FishRules_FishRuleId" FromRole="Catches" ToRole="FishRules" />
-        </EntityType>
-        <EntityType Name="Club">
-          <Key>
-            <PropertyRef Name="ClubId" />
-          </Key>
-          <Property Name="ClubId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Competitions" Relationship="Self.FK_dbo_Competitions_dbo_Clubs_ClubId" FromRole="Clubs" ToRole="Competitions" />
-          <NavigationProperty Name="FishRules" Relationship="Self.FK_dbo_FishRules_dbo_Clubs_ClubId" FromRole="Clubs" ToRole="FishRules" />
-          <NavigationProperty Name="Seasons" Relationship="Self.FK_dbo_Seasons_dbo_Clubs_ClubId" FromRole="Clubs" ToRole="Seasons" />
-          <NavigationProperty Name="Competitors" Relationship="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" FromRole="Club" ToRole="Competitor" />
-        </EntityType>
         <EntityType Name="Competition">
           <Key>
             <PropertyRef Name="CompetitionId" />
@@ -410,12 +339,12 @@
           <Property Name="Referee2_CompetitorId" Type="Int32" />
           <Property Name="Referee3_CompetitorId" Type="Int32" />
           <Property Name="TripCaptain_CompetitorId" Type="Int32" />
-          <NavigationProperty Name="Club" Relationship="Self.FK_dbo_Competitions_dbo_Clubs_ClubId" FromRole="Competitions" ToRole="Clubs" />
           <NavigationProperty Name="Entries" Relationship="Self.FK_dbo_Entries_dbo_Competitions_CompetitionId" FromRole="Competitions" ToRole="Entries" />
           <NavigationProperty Name="Competitor" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee1_CompetitorId" FromRole="Competition" ToRole="Competitor" />
           <NavigationProperty Name="Competitor1" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee2_CompetitorId" FromRole="Competition" ToRole="Competitor" />
           <NavigationProperty Name="Competitor2" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee3_CompetitorId" FromRole="Competition" ToRole="Competitor" />
           <NavigationProperty Name="Competitor3" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_TripCaptain_CompetitorId" FromRole="Competition" ToRole="Competitor" />
+          <NavigationProperty Name="Club" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Clubs_ClubId" FromRole="Competition" ToRole="Club" />
           </EntityType>
         <EntityType Name="Entry">
           <Key>
@@ -424,32 +353,9 @@
           <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompetitorId" Type="Int32" Nullable="false" />
           <Property Name="CompetitionId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Catches" Relationship="Self.FK_dbo_Catches_dbo_Entries_EntryId" FromRole="Entries" ToRole="Catches" />
           <NavigationProperty Name="Competition" Relationship="Self.FK_dbo_Entries_dbo_Competitions_CompetitionId" FromRole="Entries" ToRole="Competitions" />
           <NavigationProperty Name="Competitor" Relationship="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitors_CompetitorId" FromRole="Entry" ToRole="Competitor" />
-        </EntityType>
-        <EntityType Name="Fish">
-          <Key>
-            <PropertyRef Name="FishId" />
-          </Key>
-          <Property Name="FishId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Environment" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="FishRules" Relationship="Self.FK_dbo_FishRules_dbo_Fish_FishId" FromRole="Fish" ToRole="FishRules" />
-        </EntityType>
-        <EntityType Name="FishRule">
-          <Key>
-            <PropertyRef Name="FishRuleId" />
-          </Key>
-          <Property Name="FishRuleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClubId" Type="Int32" Nullable="false" />
-          <Property Name="FishId" Type="Int32" Nullable="false" />
-          <Property Name="Difficulty" Type="Double" Nullable="false" />
-          <Property Name="Maximum" Type="Int32" Nullable="false" />
-          <Property Name="Minimum" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Catches" Relationship="Self.FK_dbo_Catches_dbo_FishRules_FishRuleId" FromRole="FishRules" ToRole="Catches" />
-          <NavigationProperty Name="Club" Relationship="Self.FK_dbo_FishRules_dbo_Clubs_ClubId" FromRole="FishRules" ToRole="Clubs" />
-          <NavigationProperty Name="Fish" Relationship="Self.FK_dbo_FishRules_dbo_Fish_FishId" FromRole="FishRules" ToRole="Fish" />
+          <NavigationProperty Name="Catches" Relationship="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" FromRole="Entry" ToRole="Catch" />
         </EntityType>
         <EntityType Name="Season">
           <Key>
@@ -459,76 +365,8 @@
           <Property Name="ClubId" Type="Int32" Nullable="false" />
           <Property Name="End" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Club" Relationship="Self.FK_dbo_Seasons_dbo_Clubs_ClubId" FromRole="Seasons" ToRole="Clubs" />
+          <NavigationProperty Name="Club" Relationship="PNACCompetitionsModel.FK_dbo_Seasons_dbo_Clubs_ClubId" FromRole="Season" ToRole="Club" />
         </EntityType>
-        <Association Name="FK_dbo_Catches_dbo_Entries_EntryId">
-          <End Role="Entries" Type="Self.Entry" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Catches" Type="Self.Catch" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Entries">
-              <PropertyRef Name="EntryId" />
-            </Principal>
-            <Dependent Role="Catches">
-              <PropertyRef Name="EntryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Catches_dbo_FishRules_FishRuleId">
-          <End Role="FishRules" Type="Self.FishRule" Multiplicity="1" />
-          <End Role="Catches" Type="Self.Catch" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FishRules">
-              <PropertyRef Name="FishRuleId" />
-            </Principal>
-            <Dependent Role="Catches">
-              <PropertyRef Name="FishRuleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Competitions_dbo_Clubs_ClubId">
-          <End Role="Clubs" Type="Self.Club" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Competitions" Type="Self.Competition" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clubs">
-              <PropertyRef Name="ClubId" />
-            </Principal>
-            <Dependent Role="Competitions">
-              <PropertyRef Name="ClubId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_FishRules_dbo_Clubs_ClubId">
-          <End Role="Clubs" Type="Self.Club" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="FishRules" Type="Self.FishRule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clubs">
-              <PropertyRef Name="ClubId" />
-            </Principal>
-            <Dependent Role="FishRules">
-              <PropertyRef Name="ClubId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Seasons_dbo_Clubs_ClubId">
-          <End Role="Clubs" Type="Self.Club" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Seasons" Type="Self.Season" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clubs">
-              <PropertyRef Name="ClubId" />
-            </Principal>
-            <Dependent Role="Seasons">
-              <PropertyRef Name="ClubId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_Entries_dbo_Competitions_CompetitionId">
           <End Role="Competitions" Type="Self.Competition" Multiplicity="1" />
           <End Role="Entries" Type="Self.Entry" Multiplicity="*" />
@@ -541,64 +379,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_FishRules_dbo_Fish_FishId">
-          <End Role="Fish" Type="Self.Fish" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="FishRules" Type="Self.FishRule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Fish">
-              <PropertyRef Name="FishId" />
-            </Principal>
-            <Dependent Role="FishRules">
-              <PropertyRef Name="FishId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="PNACCompetitionsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Catches" EntityType="Self.Catch" />
-          <EntitySet Name="Clubs" EntityType="Self.Club" />
           <EntitySet Name="Competitions" EntityType="Self.Competition" />
           <EntitySet Name="Entries" EntityType="Self.Entry" />
-          <EntitySet Name="Fish" EntityType="Self.Fish" />
-          <EntitySet Name="FishRules" EntityType="Self.FishRule" />
           <EntitySet Name="Seasons" EntityType="Self.Season" />
-          <AssociationSet Name="FK_dbo_Catches_dbo_Entries_EntryId" Association="Self.FK_dbo_Catches_dbo_Entries_EntryId">
-            <End Role="Entries" EntitySet="Entries" />
-            <End Role="Catches" EntitySet="Catches" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Catches_dbo_FishRules_FishRuleId" Association="Self.FK_dbo_Catches_dbo_FishRules_FishRuleId">
-            <End Role="FishRules" EntitySet="FishRules" />
-            <End Role="Catches" EntitySet="Catches" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Competitions_dbo_Clubs_ClubId" Association="Self.FK_dbo_Competitions_dbo_Clubs_ClubId">
-            <End Role="Clubs" EntitySet="Clubs" />
-            <End Role="Competitions" EntitySet="Competitions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_FishRules_dbo_Clubs_ClubId" Association="Self.FK_dbo_FishRules_dbo_Clubs_ClubId">
-            <End Role="Clubs" EntitySet="Clubs" />
-            <End Role="FishRules" EntitySet="FishRules" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Seasons_dbo_Clubs_ClubId" Association="Self.FK_dbo_Seasons_dbo_Clubs_ClubId">
-            <End Role="Clubs" EntitySet="Clubs" />
-            <End Role="Seasons" EntitySet="Seasons" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_Entries_dbo_Competitions_CompetitionId" Association="Self.FK_dbo_Entries_dbo_Competitions_CompetitionId">
             <End Role="Competitions" EntitySet="Competitions" />
             <End Role="Entries" EntitySet="Entries" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_FishRules_dbo_Fish_FishId" Association="Self.FK_dbo_FishRules_dbo_Fish_FishId">
-            <End Role="Fish" EntitySet="Fish" />
-            <End Role="FishRules" EntitySet="FishRules" />
           </AssociationSet>
           <EntitySet Name="AspNetUsers" EntityType="PNACCompetitionsModel.AspNetUser" />
           <EntitySet Name="Competitors" EntityType="PNACCompetitionsModel.Competitor" />
           <AssociationSet Name="FK_Competitors_AspNetUsers" Association="PNACCompetitionsModel.FK_Competitors_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Competitor" EntitySet="Competitors" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Competitors_dbo_Clubs_ClubId" Association="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId">
-            <End Role="Club" EntitySet="Clubs" />
             <End Role="Competitor" EntitySet="Competitors" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Competitions_dbo_Competitors_Referee1_CompetitorId" Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee1_CompetitorId">
@@ -621,6 +413,29 @@
             <End Role="Competitor" EntitySet="Competitors" />
             <End Role="Entry" EntitySet="Entries" />
           </AssociationSet>
+          <EntitySet Name="Catches" EntityType="PNACCompetitionsModel.Catch" />
+          <AssociationSet Name="FK_dbo_Catches_dbo_Entries_EntryId" Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId">
+            <End Role="Entry" EntitySet="Entries" />
+            <End Role="Catch" EntitySet="Catches" />
+          </AssociationSet>
+          <EntitySet Name="Clubs" EntityType="PNACCompetitionsModel.Club" />
+          <AssociationSet Name="FK_dbo_Competitions_dbo_Clubs_ClubId" Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Clubs_ClubId">
+            <End Role="Club" EntitySet="Clubs" />
+            <End Role="Competition" EntitySet="Competitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Competitors_dbo_Clubs_ClubId" Association="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId">
+            <End Role="Club" EntitySet="Clubs" />
+            <End Role="Competitor" EntitySet="Competitors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Seasons_dbo_Clubs_ClubId" Association="PNACCompetitionsModel.FK_dbo_Seasons_dbo_Clubs_ClubId">
+            <End Role="Club" EntitySet="Clubs" />
+            <End Role="Season" EntitySet="Seasons" />
+          </AssociationSet>
+          <EntitySet Name="Fish" EntityType="PNACCompetitionsModel.Fish" />
+          <AssociationSet Name="FK_Catches_Fish" Association="PNACCompetitionsModel.FK_Catches_Fish">
+            <End Role="Fish" EntitySet="Fish" />
+            <End Role="Catch" EntitySet="Catches" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetUser">
           <Key>
@@ -638,7 +453,6 @@
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Admin" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Competitors" Relationship="PNACCompetitionsModel.FK_Competitors_AspNetUsers" FromRole="AspNetUser" ToRole="Competitor" />
         </EntityType>
         <EntityType Name="Competitor">
@@ -653,13 +467,14 @@
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="NickName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="AspNetUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Admin" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="PNACCompetitionsModel.FK_Competitors_AspNetUsers" FromRole="Competitor" ToRole="AspNetUser" />
-          <NavigationProperty Name="Club" Relationship="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" FromRole="Competitor" ToRole="Club" />
           <NavigationProperty Name="Competitions" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee1_CompetitorId" FromRole="Competitor" ToRole="Competition" />
           <NavigationProperty Name="Competitions1" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee2_CompetitorId" FromRole="Competitor" ToRole="Competition" />
           <NavigationProperty Name="Competitions2" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee3_CompetitorId" FromRole="Competitor" ToRole="Competition" />
           <NavigationProperty Name="Competitions3" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_TripCaptain_CompetitorId" FromRole="Competitor" ToRole="Competition" />
           <NavigationProperty Name="Entries" Relationship="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitors_CompetitorId" FromRole="Competitor" ToRole="Entry" />
+          <NavigationProperty Name="Club" Relationship="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" FromRole="Competitor" ToRole="Club" />
         </EntityType>
         <Association Name="FK_Competitors_AspNetUsers">
           <End Type="PNACCompetitionsModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
@@ -670,20 +485,6 @@
             </Principal>
             <Dependent Role="Competitor">
               <PropertyRef Name="AspNetUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Competitors_dbo_Clubs_ClubId">
-          <End Type="PNACCompetitionsModel.Club" Role="Club" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="PNACCompetitionsModel.Competitor" Role="Competitor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Club">
-              <PropertyRef Name="ClubId" />
-            </Principal>
-            <Dependent Role="Competitor">
-              <PropertyRef Name="ClubId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -749,33 +550,115 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Catch">
+          <Key>
+            <PropertyRef Name="CatchId" />
+          </Key>
+          <Property Name="CatchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cleaned" Type="Boolean" Nullable="false" />
+          <Property Name="EntryId" Type="Int32" Nullable="false" />
+          <Property Name="FishId" Type="Int32" Nullable="false" />
+          <Property Name="Length" Type="Int32" Nullable="false" />
+          <Property Name="Recordered" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Weight" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Entry" Relationship="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" FromRole="Catch" ToRole="Entry" />
+          <NavigationProperty Name="Fish" Relationship="PNACCompetitionsModel.FK_Catches_Fish" FromRole="Catch" ToRole="Fish" />
+        </EntityType>
+        <Association Name="FK_dbo_Catches_dbo_Entries_EntryId">
+          <End Type="PNACCompetitionsModel.Entry" Role="Entry" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PNACCompetitionsModel.Catch" Role="Catch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entry">
+              <PropertyRef Name="EntryId" />
+            </Principal>
+            <Dependent Role="Catch">
+              <PropertyRef Name="EntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Club">
+          <Key>
+            <PropertyRef Name="ClubId" />
+          </Key>
+          <Property Name="ClubId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Competitions" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Clubs_ClubId" FromRole="Club" ToRole="Competition" />
+          <NavigationProperty Name="Competitors" Relationship="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" FromRole="Club" ToRole="Competitor" />
+          <NavigationProperty Name="Seasons" Relationship="PNACCompetitionsModel.FK_dbo_Seasons_dbo_Clubs_ClubId" FromRole="Club" ToRole="Season" />
+        </EntityType>
+        <Association Name="FK_dbo_Competitions_dbo_Clubs_ClubId">
+          <End Type="PNACCompetitionsModel.Club" Role="Club" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PNACCompetitionsModel.Competition" Role="Competition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Club">
+              <PropertyRef Name="ClubId" />
+            </Principal>
+            <Dependent Role="Competition">
+              <PropertyRef Name="ClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Competitors_dbo_Clubs_ClubId">
+          <End Type="PNACCompetitionsModel.Club" Role="Club" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PNACCompetitionsModel.Competitor" Role="Competitor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Club">
+              <PropertyRef Name="ClubId" />
+            </Principal>
+            <Dependent Role="Competitor">
+              <PropertyRef Name="ClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Seasons_dbo_Clubs_ClubId">
+          <End Type="PNACCompetitionsModel.Club" Role="Club" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PNACCompetitionsModel.Season" Role="Season" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Club">
+              <PropertyRef Name="ClubId" />
+            </Principal>
+            <Dependent Role="Season">
+              <PropertyRef Name="ClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Fish">
+          <Key>
+            <PropertyRef Name="FishId" />
+          </Key>
+          <Property Name="FishId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Minimum" Type="Int32" Nullable="false" />
+          <Property Name="Maximum" Type="Int32" Nullable="false" />
+          <Property Name="Difficulty" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Catches" Relationship="PNACCompetitionsModel.FK_Catches_Fish" FromRole="Fish" ToRole="Catch" />
+        </EntityType>
+        <Association Name="FK_Catches_Fish">
+          <End Type="PNACCompetitionsModel.Fish" Role="Fish" Multiplicity="1" />
+          <End Type="PNACCompetitionsModel.Catch" Role="Catch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fish">
+              <PropertyRef Name="FishId" />
+            </Principal>
+            <Dependent Role="Catch">
+              <PropertyRef Name="FishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="PNACCompetitionsModelStoreContainer" CdmEntityContainer="PNACCompetitionsEntities">
-          <EntitySetMapping Name="Catches">
-            <EntityTypeMapping TypeName="PNACCompetitionsModel.Catch">
-              <MappingFragment StoreEntitySet="Catches">
-                <ScalarProperty Name="CatchId" ColumnName="CatchId" />
-                <ScalarProperty Name="Cleaned" ColumnName="Cleaned" />
-                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
-                <ScalarProperty Name="FishRuleId" ColumnName="FishRuleId" />
-                <ScalarProperty Name="Length" ColumnName="Length" />
-                <ScalarProperty Name="Recordered" ColumnName="Recordered" />
-                <ScalarProperty Name="Weight" ColumnName="Weight" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Clubs">
-            <EntityTypeMapping TypeName="PNACCompetitionsModel.Club">
-              <MappingFragment StoreEntitySet="Clubs">
-                <ScalarProperty Name="ClubId" ColumnName="ClubId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Competitions">
             <EntityTypeMapping TypeName="PNACCompetitionsModel.Competition">
               <MappingFragment StoreEntitySet="Competitions">
@@ -807,27 +690,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Fish">
-            <EntityTypeMapping TypeName="PNACCompetitionsModel.Fish">
-              <MappingFragment StoreEntitySet="Fish">
-                <ScalarProperty Name="FishId" ColumnName="FishId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Environment" ColumnName="Environment" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FishRules">
-            <EntityTypeMapping TypeName="PNACCompetitionsModel.FishRule">
-              <MappingFragment StoreEntitySet="FishRules">
-                <ScalarProperty Name="FishRuleId" ColumnName="FishRuleId" />
-                <ScalarProperty Name="ClubId" ColumnName="ClubId" />
-                <ScalarProperty Name="FishId" ColumnName="FishId" />
-                <ScalarProperty Name="Difficulty" ColumnName="Difficulty" />
-                <ScalarProperty Name="Maximum" ColumnName="Maximum" />
-                <ScalarProperty Name="Minimum" ColumnName="Minimum" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Seasons">
             <EntityTypeMapping TypeName="PNACCompetitionsModel.Season">
               <MappingFragment StoreEntitySet="Seasons">
@@ -841,7 +703,6 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="PNACCompetitionsModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Admin" ColumnName="Admin" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
@@ -860,6 +721,7 @@
           <EntitySetMapping Name="Competitors">
             <EntityTypeMapping TypeName="PNACCompetitionsModel.Competitor">
               <MappingFragment StoreEntitySet="Competitors">
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
                 <ScalarProperty Name="AspNetUserId" ColumnName="AspNetUserId" />
                 <ScalarProperty Name="NickName" ColumnName="NickName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -868,6 +730,38 @@
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="CompetitorType" ColumnName="CompetitorType" />
                 <ScalarProperty Name="CompetitorId" ColumnName="CompetitorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Catches">
+            <EntityTypeMapping TypeName="PNACCompetitionsModel.Catch">
+              <MappingFragment StoreEntitySet="Catches">
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Recordered" ColumnName="Recordered" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="FishId" ColumnName="FishId" />
+                <ScalarProperty Name="EntryId" ColumnName="EntryId" />
+                <ScalarProperty Name="Cleaned" ColumnName="Cleaned" />
+                <ScalarProperty Name="CatchId" ColumnName="CatchId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clubs">
+            <EntityTypeMapping TypeName="PNACCompetitionsModel.Club">
+              <MappingFragment StoreEntitySet="Clubs">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ClubId" ColumnName="ClubId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fish">
+            <EntityTypeMapping TypeName="PNACCompetitionsModel.Fish">
+              <MappingFragment StoreEntitySet="Fish">
+                <ScalarProperty Name="Difficulty" ColumnName="Difficulty" />
+                <ScalarProperty Name="Maximum" ColumnName="Maximum" />
+                <ScalarProperty Name="Minimum" ColumnName="Minimum" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FishId" ColumnName="FishId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

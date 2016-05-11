@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompetitorsController.cs" />
+    <Compile Include="Controllers\FishController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PNACController.cs" />
@@ -212,14 +213,15 @@
     <Compile Include="Entities\Fish.cs">
       <DependentUpon>Competitions.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\FishRule.cs">
-      <DependentUpon>Competitions.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\PNACCompetitionsEntities_partial.cs" />
     <Compile Include="Entities\Season.cs">
       <DependentUpon>Competitions.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ViewModels\FishListItem.cs" />
+    <Compile Include="Entities\ViewModels\FishIndex.cs" />
+    <Compile Include="Entities\ViewModels\FishEdit.cs" />
     <Compile Include="Entities\ViewModels\CompetitorEdit.cs" />
+    <Compile Include="Entities\ViewModels\CompetitorIndex.cs" />
     <Compile Include="Entities\ViewModels\CompetitorListItem.cs" />
     <Compile Include="Entities\ViewModels\LeaderBoardLineItem.cs" />
     <Compile Include="Global.asax.cs">
@@ -311,6 +313,9 @@
     <Content Include="Views\Competitors\Index.cshtml" />
     <Content Include="Views\Competitors\Edit.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
+    <Content Include="Views\Competitors\New.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CompetitorEdit.cshtml" />
+    <Content Include="Views\Fish\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

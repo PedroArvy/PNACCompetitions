@@ -32,9 +32,9 @@ namespace PNACCompetitionsDbFirst.Entities
         public string LastName { get; set; }
         public string NickName { get; set; }
         public string AspNetUserId { get; set; }
+        public bool Admin { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Club Club { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Competition> Competitions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -45,5 +45,6 @@ namespace PNACCompetitionsDbFirst.Entities
         public virtual ICollection<Competition> Competitions3 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Entry> Entries { get; set; }
+        public virtual Club Club { get; set; }
     }
 }

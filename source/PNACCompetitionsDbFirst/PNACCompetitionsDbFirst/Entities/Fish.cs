@@ -17,14 +17,16 @@ namespace PNACCompetitionsDbFirst.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Fish()
         {
-            this.FishRules = new HashSet<FishRule>();
+            this.Catches = new HashSet<Catch>();
         }
     
         public int FishId { get; set; }
         public string Name { get; set; }
-        public int Environment { get; set; }
+        public int Minimum { get; set; }
+        public int Maximum { get; set; }
+        public double Difficulty { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FishRule> FishRules { get; set; }
+        public virtual ICollection<Catch> Catches { get; set; }
     }
 }

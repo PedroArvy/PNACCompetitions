@@ -2,12 +2,12 @@
 @model CompetitorEdit
 
 @{
-  ViewBag.Title = "Edit " + @Model.FriendlyName;
+  ViewBag.Title = "New Competitor";
 }
 
 <div class="row">
   <div class="col-md-8">
-    <h2>Edit @Model.FriendlyName</h2>
+    <h2>New Competitor</h2>
   </div>
 </div>
 
@@ -15,10 +15,9 @@
 <div class="row">
   <div class="col-md-10">
 
-    @using (Html.BeginForm("Edit", "Competitors", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("New", "Competitors", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
       @Html.EditorFor(m => m)
-      @Html.HiddenFor(c => c.CompetitorId)
     }
 
   </div>

@@ -40,7 +40,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       MenuViewModel menu = new MenuViewModel();
 
       if(Competitor != null && Competitor.AspNetUser != null)
-        menu.IsAdmin = Competitor.AspNetUser.Admin;
+        menu.IsAdmin = Competitor.Admin;
 
       return PartialView(menu);
     }
@@ -64,7 +64,6 @@ namespace PNACCompetitionsDbFirst.Controllers
         item_.Order = count;
         count++;
       }
-
 
       return View(items.OrderBy(i => i.Order));
     }

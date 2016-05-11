@@ -37,10 +37,10 @@ namespace PNACCompetitionsDbFirst.Entities
     {
       double value = 0;
 
-      if (Length > FishRule.Minimum)
+      if (Length > Fish.Minimum)
       {
-        double @base = FishRule.Difficulty * BASE_POINTS;
-        double percentageToMax = (double)(Length - FishRule.Minimum) / (double)(FishRule.Maximum - FishRule.Minimum);
+        double @base = Fish.Difficulty * BASE_POINTS;
+        double percentageToMax = (double)(Length - Fish.Minimum) / (double)(Fish.Maximum - Fish.Minimum);
         double two_power_size = PowerN(percentageToMax * 10);
 
         value = @base + (MAXIMUM_POINTS - @base) * percentageToMax * two_power_size / MAX_POWER;
@@ -68,8 +68,8 @@ namespace PNACCompetitionsDbFirst.Entities
     {
       int value = 0;
 
-      if (Length > FishRule.Minimum)
-        value = 5 + Length - FishRule.Minimum;
+      if (Length > Fish.Minimum)
+        value = 5 + Length - Fish.Minimum;
 
       return value;
     }

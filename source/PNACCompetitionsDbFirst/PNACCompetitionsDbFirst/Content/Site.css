@@ -34,3 +34,13 @@ a.btn
 {
   margin-right:10px;
 }
+
+
+.help {
+  font-size:10px;
+}
+
+
+.field-validation-error{
+  color:red;
+}

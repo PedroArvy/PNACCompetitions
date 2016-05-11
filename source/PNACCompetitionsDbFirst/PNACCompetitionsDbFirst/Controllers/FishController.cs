@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using PNACCompetitionsDbFirst.Controllers;
 using PNACCompetitionsDbFirst.Entities;
 using PNACCompetitionsDbFirst.Entities.ViewModels;
-using PNACCompetitionsDbFirst.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +9,7 @@ using System.Web.Mvc;
 
 namespace PNACCompetitionsDbFirst.Controllers
 {
-  public class CompetitorsController : PNACController
+  public class FishController : PNACController
   {
     #region *********************** Constants ************************
     #endregion
@@ -75,13 +73,14 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    private void AssignModel(Competitor competitor, CompetitorEdit model)
+    private void AssignModel(Competitor competitor, FishEdit model)
     {
+      /*
       competitor.FirstName = model.FirstName;
       competitor.NickName = model.NickName;
       competitor.LastName = model.LastName;
 
-      if(competitor.AspNetUser != null)
+      if (competitor.AspNetUser != null)
         competitor.AspNetUser.Email = model.Email;
 
       competitor.Admin = model.Admin;
@@ -95,12 +94,14 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         competitor.Admin = model.Admin;
       }
+      */
     }
 
 
     [HttpPost]
     public ActionResult Edit(CompetitorEdit model)
     {
+      /*
       CompetitorEdit edit = new CompetitorEdit();
       Competitor competitor = db.Competitors.SingleOrDefault(c => c.CompetitorId == model.CompetitorId);
 
@@ -123,30 +124,27 @@ namespace PNACCompetitionsDbFirst.Controllers
         return View(model);
       else if (!CanEdit(competitor))
         throw new UnauthorizedAccessException("");
-
+        */
       return new EmptyResult();
     }
 
 
     public ActionResult Index()
     {
-      IEnumerable<Competitor> competitors = db.Competitors.OrderBy(c => c.LastName);
-      CompetitorListItem competitorListItem;
-      CompetitorIndex index = new CompetitorIndex();
+      IEnumerable<Fish> fish = db.Fish.OrderBy(c => c.Name);
+      FishListItem fishListItem;
+      FishIndex index = new FishIndex();
 
-      index.CompetitorListItems = new List<CompetitorListItem>();
+      index.FishListItems = new List<FishListItem>();
 
-      foreach (Competitor competitor in db.Competitors.OrderBy(c => c.LastName))
+      foreach (Fish fish_ in db.Fish.OrderBy(c => c.Name))
       {
-        competitorListItem = new CompetitorListItem() { Name = competitor.FriendlyName(), CompetitorId = competitor.CompetitorId };
+        fishListItem = new FishListItem() { Name = fish_.Name, Difficulty = fish_.Difficulty, Maximum = fish_.Maximum, Minimum = fish_.Minimum };
 
-        if (CanEdit(competitor))
-          competitorListItem.CanEdit = true;
-
-        index.CompetitorListItems.Add(competitorListItem);
+        index.FishListItems.Add(fishListItem);
       }
 
-      if(Competitor != null)
+      if (Competitor != null)
         index.CanCreate = Competitor.Admin;
 
       return View(index);
@@ -155,6 +153,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     public ActionResult New()
     {
+      /*
       CompetitorEdit edit = new CompetitorEdit();
 
       if (Competitor.Admin)
@@ -164,6 +163,8 @@ namespace PNACCompetitionsDbFirst.Controllers
       }
 
       return View(edit);
+      */
+      return null;
     }
 
 
@@ -172,11 +173,9 @@ namespace PNACCompetitionsDbFirst.Controllers
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> New(CompetitorEdit model)
     {
+      /*
       CompetitorEdit edit = new CompetitorEdit();
       Competitor competitor = new Competitor();
-
-      if (db.Competitors.Any(c => c.AspNetUser.Email.ToLower() == model.Email.ToLower()))
-        ModelState.AddModelError("Email", "There is already a user with this email address");
 
       if (Competitor.Admin && ModelState.IsValid)
       {
@@ -203,7 +202,9 @@ namespace PNACCompetitionsDbFirst.Controllers
       else if (!CanEdit(competitor))
         throw new UnauthorizedAccessException("");
 
+  */
       return new EmptyResult();
+
     }
 
 

@@ -1,6 +1,6 @@
 ﻿@using PNACCompetitionsDbFirst.Entities;
 @using PNACCompetitionsDbFirst.Entities.ViewModels;
-@model IEnumerable<CompetitorListItem>
+@model CompetitorIndex
 
 @{
   ViewBag.Title = "Competitors";
@@ -15,10 +15,16 @@
 <div class="row">
   <div class="col-md-4">
     <div class="table-responsive">
+
+      @if (Model.CanCreate)
+      {
+        @Html.ActionLink("New", "New", "Competitors", new {}, new { @class = "btn btn-primary btn-sm" })
+      }
+
       <table class="table table-striped">
         <thead>
           <tr>
-            @if (Model.Any(c => c.CanEdit))
+            @if (Model.CompetitorListItems.Any(c => c.CanEdit))
             {
               <th>Action</th>
             }
@@ -28,11 +34,11 @@
         <tbody>
 
 
-          @foreach (CompetitorListItem competitor in Model)
+          @foreach (CompetitorListItem competitor in Model.CompetitorListItems)
           {
             <tr>
 
-              @if (Model.Any(c => c.CanEdit))
+              @if (Model.CompetitorListItems.Any(c => c.CanEdit))
               {
                 <td class="table-action">
                   @if (competitor.CanEdit)

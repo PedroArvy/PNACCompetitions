@@ -17,12 +17,12 @@ namespace PNACCompetitionsDbFirst.Entities
         public int CatchId { get; set; }
         public bool Cleaned { get; set; }
         public int EntryId { get; set; }
-        public int FishRuleId { get; set; }
+        public int FishId { get; set; }
         public int Length { get; set; }
         public System.DateTime Recordered { get; set; }
         public double Weight { get; set; }
     
         public virtual Entry Entry { get; set; }
-        public virtual FishRule FishRule { get; set; }
+        public virtual Fish Fish { get; set; }
     }
 }

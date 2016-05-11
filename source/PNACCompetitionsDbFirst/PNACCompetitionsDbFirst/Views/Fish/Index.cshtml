@@ -1,0 +1,65 @@
+﻿@using PNACCompetitionsDbFirst.Entities;
+@using PNACCompetitionsDbFirst.Entities.ViewModels;
+@model FishIndex
+
+@{
+  ViewBag.Title = "Fish";
+}
+
+<div class="row">
+  <div class="col-md-6">
+    <h2>Fish</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="table-responsive">
+
+      @if (Model.CanCreate)
+      {
+        @Html.ActionLink("New", "New", "Fish", new { }, new { @class = "btn btn-primary btn-sm" })
+      }
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            @if (Model.CanCreate)
+            {
+              <th>Action</th>
+            }
+            <th>Name</th>
+            <th>Minimum</th>
+            <th>Maximum</th>
+            <th>Difficulty</th>
+          </tr>
+        </thead>
+        <tbody>
+
+
+          @foreach (FishListItem fish in Model.FishListItems)
+          {
+            <tr>
+
+              @if (Model.CanCreate)
+              {
+                <td class="table-action">
+
+                  @Html.ActionLink("Edit", "Edit", "Competitors", new { id = fish.FishId }, new { @class = "btn btn-primary btn-sm" })
+                  @Html.ActionLink("Delete", "Delete", "Competitors", new { id = fish.FishId }, new { @class = "btn btn-primary btn-sm" })
+
+                </td>
+              }
+
+              <td>@fish.Name</td>
+              <td>@fish.Minimum</td>
+              <td>@fish.Maximum</td>
+              <td>@fish.Difficulty</td>
+            </tr>
+          }
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

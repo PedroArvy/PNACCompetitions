@@ -5,29 +5,26 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="84abb98dede6479fbad2e97fe6b763de" Name="Diagram1">
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Catch" Width="1.5" PointX="9.75" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Club" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Competition" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Entry" Width="1.5" PointX="7.5" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Fish" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.FishRule" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Season" Width="1.5" PointX="2.25" PointY="12.25" IsExpanded="true" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" ManuallyRouted="false" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_FishRules_FishRuleId" ManuallyRouted="false" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Clubs_ClubId" ManuallyRouted="false" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_FishRules_dbo_Clubs_ClubId" ManuallyRouted="false" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Seasons_dbo_Clubs_ClubId" ManuallyRouted="false" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" ManuallyRouted="false" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_FishRules_dbo_Fish_FishId" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.AspNetUser" Width="1.5" PointX="3.75" PointY="3.625" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Competitor" Width="1.5" PointX="6" PointY="4.5" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.AspNetUser" Width="1.5" PointX="3.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Competitor" Width="1.5" PointX="6" PointY="4.375" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_Competitors_AspNetUsers" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee1_CompetitorId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee2_CompetitorId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee3_CompetitorId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_TripCaptain_CompetitorId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitors_CompetitorId" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Catch" Width="1.5" PointX="9.75" PointY="6" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Club" Width="1.5" PointX="0.75" PointY="8.625" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Clubs_ClubId" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Seasons_dbo_Clubs_ClubId" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Fish" Width="1.5" PointX="0.75" PointY="0.875" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_Catches_Fish" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

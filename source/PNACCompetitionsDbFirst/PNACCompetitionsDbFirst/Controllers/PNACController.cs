@@ -1,4 +1,5 @@
-﻿using PNACCompetitionsDbFirst.Entities;
+﻿using Microsoft.AspNet.Identity.Owin;
+using PNACCompetitionsDbFirst.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     private AspNetUser _AspNetUser = null;
     private Competitor _Competitor = null;
+    protected ApplicationUserManager _userManager;
 
     protected PNACCompetitionsEntities db = new PNACCompetitionsEntities();
 
@@ -56,6 +58,19 @@ namespace PNACCompetitionsDbFirst.Controllers
           _Competitor = db.Competitors.SingleOrDefault(c => c.AspNetUserId == AspNetUser.Id);
 
         return _Competitor;
+      }
+    }
+
+
+    protected ApplicationUserManager UserManager
+    {
+      get
+      {
+        return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+      }
+      set
+      {
+        _userManager = value;
       }
     }
 

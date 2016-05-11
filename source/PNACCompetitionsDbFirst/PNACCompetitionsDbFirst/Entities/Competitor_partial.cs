@@ -12,7 +12,7 @@ namespace PNACCompetitionsDbFirst.Entities
 
     public enum COMPETITOR_TYPE
     {
-      [Display(Name = "Unassigned")]
+      [Display(Name = "Select")]
       UNASSIGNED,
 
       [Display(Name = "Non member")]
@@ -28,7 +28,7 @@ namespace PNACCompetitionsDbFirst.Entities
     public enum GENDER
     {
 
-      [Display(Name = "Unassigned")]
+      [Display(Name = "Select")]
       UNASSIGNED,
 
       [Display(Name = "Male")]
@@ -47,23 +47,6 @@ namespace PNACCompetitionsDbFirst.Entities
 
 
     #region *********************** Properties ***********************
-
-    public COMPETITOR_TYPE CompetitorType_
-    {
-      get
-      {
-        return (COMPETITOR_TYPE)CompetitorType;
-      }
-    }
-
-    public GENDER Gender_
-    {
-      get
-      {
-        return (GENDER)Gender;
-      }
-    }
-
 
     #endregion
 
