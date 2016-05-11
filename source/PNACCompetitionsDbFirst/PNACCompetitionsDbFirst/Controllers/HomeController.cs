@@ -1,5 +1,6 @@
 ﻿using PNACCompetitionsDbFirst.Entities;
 using PNACCompetitionsDbFirst.Entities.ViewModels;
+using PNACCompetitionsDbFirst.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,16 @@ namespace PNACCompetitionsDbFirst.Controllers
 
 
     #region *********************** Methods **************************
+
+    public ActionResult Menu()
+    {
+      MenuViewModel menu = new MenuViewModel();
+
+      if(Competitor != null && Competitor.AspNetUser != null)
+        menu.IsAdmin = Competitor.AspNetUser.Admin;
+
+      return PartialView(menu);
+    }
 
 
     public ActionResult Index()

@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="PNACCompetitionsModel.Entry" Width="1.5" PointX="7.5" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Fish" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.FishRule" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Season" Width="1.5" PointX="3" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Season" Width="1.5" PointX="2.25" PointY="12.25" IsExpanded="true" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" ManuallyRouted="false" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_FishRules_FishRuleId" ManuallyRouted="false" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Clubs_ClubId" ManuallyRouted="false" />
