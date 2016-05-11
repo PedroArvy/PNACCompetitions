@@ -1,0 +1,31 @@
+﻿@using PNACCompetitionsDbFirst.Entities.ViewModels
+@model FishEdit
+
+@{
+  ViewBag.Title = "Edit " + @Model.Name;
+}
+
+<div class="row">
+  <div class="col-md-8">
+    <h2>Edit @Model.Name</h2>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-10">
+
+    @using (Html.BeginForm("Edit", "Fish", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+      @Html.EditorFor(m => m)
+      @Html.HiddenFor(c => c.FishId)
+    }
+
+  </div>
+</div>
+
+@section Scripts {
+  @Scripts.Render("~/bundles/jqueryval")
+}
+
+

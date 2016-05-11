@@ -34,6 +34,30 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     #region *********************** Methods **************************
 
+
+    private void AssignModel(Competitor competitor, CompetitorEdit model)
+    {
+      competitor.FirstName = model.FirstName;
+      competitor.NickName = model.NickName;
+      competitor.LastName = model.LastName;
+
+      if (competitor.AspNetUser != null)
+        competitor.AspNetUser.Email = model.Email;
+
+      competitor.Admin = model.Admin;
+
+      if (model.ShowCompetitorType)
+        competitor.CompetitorType = (int)model.CompetitorType;
+
+      competitor.Gender = (int)model.Gender;
+
+      if (competitor != null && competitor.Admin)
+      {
+        competitor.Admin = model.Admin;
+      }
+    }
+
+
     private bool CanEdit(Competitor competitor)
     {
       bool canEdit = false;
@@ -55,7 +79,10 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.FirstName = competitor.FirstName;
         edit.NickName = competitor.NickName;
         edit.LastName = competitor.LastName;
-        edit.Email = competitor.AspNetUser.Email;
+
+        if(competitor.AspNetUser != null && competitor.AspNetUser.Email != null)
+          edit.Email = competitor.AspNetUser.Email;
+
         edit.Admin = competitor.Admin;
         edit.CompetitorType = competitor.CompetitorType;
         edit.Gender = competitor.Gender;
@@ -72,29 +99,6 @@ namespace PNACCompetitionsDbFirst.Controllers
         throw new NotImplementedException();
 
       return View(edit);
-    }
-
-
-    private void AssignModel(Competitor competitor, CompetitorEdit model)
-    {
-      competitor.FirstName = model.FirstName;
-      competitor.NickName = model.NickName;
-      competitor.LastName = model.LastName;
-
-      if(competitor.AspNetUser != null)
-        competitor.AspNetUser.Email = model.Email;
-
-      competitor.Admin = model.Admin;
-
-      if (model.ShowCompetitorType)
-        competitor.CompetitorType = (int)model.CompetitorType;
-
-      competitor.Gender = (int)model.Gender;
-
-      if (competitor != null && competitor.Admin)
-      {
-        competitor.Admin = model.Admin;
-      }
     }
 
 

@@ -219,8 +219,8 @@
     </Compile>
     <Compile Include="Entities\ViewModels\FishListItem.cs" />
     <Compile Include="Entities\ViewModels\FishIndex.cs" />
-    <Compile Include="Entities\ViewModels\FishEdit.cs" />
     <Compile Include="Entities\ViewModels\CompetitorEdit.cs" />
+    <Compile Include="Entities\ViewModels\FishEdit.cs" />
     <Compile Include="Entities\ViewModels\CompetitorIndex.cs" />
     <Compile Include="Entities\ViewModels\CompetitorListItem.cs" />
     <Compile Include="Entities\ViewModels\LeaderBoardLineItem.cs" />
@@ -311,11 +311,14 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Competitors\Index.cshtml" />
-    <Content Include="Views\Competitors\Edit.cshtml" />
+    <Content Include="Views\Fish\Edit.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Competitors\New.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CompetitorEdit.cshtml" />
     <Content Include="Views\Fish\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\FishEdit.cshtml" />
+    <Content Include="Views\Competitors\Edit.cshtml" />
+    <Content Include="Views\Fish\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

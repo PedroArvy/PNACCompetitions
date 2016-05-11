@@ -32,47 +32,6 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     #region *********************** Methods **************************
 
-    private bool CanEdit(Competitor competitor)
-    {
-      bool canEdit = false;
-
-      if (Competitor != null && (Competitor.CompetitorId == competitor.CompetitorId || Competitor.Admin))
-        canEdit = true;
-
-      return canEdit;
-    }
-
-
-    public ActionResult Edit(int id)
-    {
-      Competitor competitor = db.Competitors.SingleOrDefault(c => c.CompetitorId == id);
-      CompetitorEdit edit = new CompetitorEdit();
-
-      if (CanEdit(competitor))
-      {
-        edit.FirstName = competitor.FirstName;
-        edit.NickName = competitor.NickName;
-        edit.LastName = competitor.LastName;
-        edit.Email = competitor.AspNetUser.Email;
-        edit.Admin = competitor.Admin;
-        edit.CompetitorType = competitor.CompetitorType;
-        edit.Gender = competitor.Gender;
-        edit.CompetitorId = competitor.CompetitorId;
-        edit.FriendlyName = competitor.FriendlyName();
-
-        if (competitor.Admin)
-        {
-          edit.ShowAdmin = true;
-          edit.ShowCompetitorType = true;
-        }
-      }
-      else
-        throw new NotImplementedException();
-
-      return View(edit);
-    }
-
-
     private void AssignModel(Competitor competitor, FishEdit model)
     {
       /*
@@ -95,6 +54,36 @@ namespace PNACCompetitionsDbFirst.Controllers
         competitor.Admin = model.Admin;
       }
       */
+    }
+
+
+    private bool CanEdit(Competitor competitor)
+    {
+      bool canEdit = false;
+
+      if (Competitor != null && (Competitor.CompetitorId == competitor.CompetitorId || Competitor.Admin))
+        canEdit = true;
+
+      return canEdit;
+    }
+
+
+    public ActionResult Edit(int id)
+    {
+      Fish fish = db.Fish.SingleOrDefault(c => c.FishId == id);
+      FishEdit edit = new FishEdit();
+
+      if (Competitor.Admin)
+      {
+        edit.Name = fish.Name;
+        edit.Minimum = fish.Minimum;
+        edit.Maximum = fish.Maximum;
+        edit.Difficulty = fish.Difficulty;
+      }
+      else
+        throw new NotImplementedException();
+
+      return View(edit);
     }
 
 
@@ -139,7 +128,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       foreach (Fish fish_ in db.Fish.OrderBy(c => c.Name))
       {
-        fishListItem = new FishListItem() { Name = fish_.Name, Difficulty = fish_.Difficulty, Maximum = fish_.Maximum, Minimum = fish_.Minimum };
+        fishListItem = new FishListItem() { FishId = fish_.FishId, Name = fish_.Name, Difficulty = fish_.Difficulty, Maximum = fish_.Maximum, Minimum = fish_.Minimum };
 
         index.FishListItems.Add(fishListItem);
       }
