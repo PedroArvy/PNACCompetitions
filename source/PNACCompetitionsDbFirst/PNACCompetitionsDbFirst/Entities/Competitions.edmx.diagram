@@ -10,21 +10,21 @@
         <EntityTypeShape EntityType="PNACCompetitionsModel.Season" Width="1.5" PointX="2.25" PointY="12.25" IsExpanded="true" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" ManuallyRouted="false" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.AspNetUser" Width="1.5" PointX="3.75" PointY="3.75" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Competitor" Width="1.5" PointX="6" PointY="4.375" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Catch" Width="1.5" PointX="9.75" PointY="6" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Club" Width="1.5" PointX="0.75" PointY="8.625" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Clubs_ClubId" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Seasons_dbo_Clubs_ClubId" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Fish" Width="1.5" PointX="0.75" PointY="0.875" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_Catches_Fish" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Competitor" Width="1.5" PointX="6" PointY="4" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_Competitors_AspNetUsers" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee1_CompetitorId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee2_CompetitorId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee3_CompetitorId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_TripCaptain_CompetitorId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitors_CompetitorId" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Catch" Width="1.5" PointX="9.75" PointY="6" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Club" Width="1.5" PointX="0.75" PointY="8.625" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Clubs_ClubId" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Seasons_dbo_Clubs_ClubId" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Fish" Width="1.5" PointX="0.75" PointY="0.875" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_Catches_Fish" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

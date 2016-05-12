@@ -51,6 +51,9 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       competitor.Gender = (int)model.Gender;
 
+      if (model.ShowHidden)
+        competitor.Hide = model.Hidden;
+
       if (competitor != null && competitor.Admin)
       {
         competitor.Admin = model.Admin;
@@ -66,6 +69,31 @@ namespace PNACCompetitionsDbFirst.Controllers
         canEdit = true;
 
       return canEdit;
+    }
+
+    [Authorize]
+    public JsonResult Delete(int id)
+    {
+      bool success = false;
+      Competitor competitor = db.Competitors.SingleOrDefault(c => c.CompetitorId == id);
+
+      if (Competitor.Admin || (Competitor.CompetitorId == competitor.CompetitorId))
+      {
+        if (db.Catches.Any(c => c.Entry.CompetitorId == id))
+          competitor.Hide = true;
+        else
+          db.Competitors.Remove(competitor);
+
+        success = true;
+        db.SaveChanges();
+      }
+      else
+      {
+        success = false;
+      }
+
+
+      return Json(new { success = success.ToString().ToString().ToLower() }, JsonRequestBehavior.AllowGet);
     }
 
 
@@ -88,10 +116,12 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.Gender = competitor.Gender;
         edit.CompetitorId = competitor.CompetitorId;
         edit.FriendlyName = competitor.FriendlyName();
+        edit.Hidden = competitor.Hide;
 
-        if (competitor.Admin)
+        if (Competitor.Admin)
         {
           edit.ShowAdmin = true;
+          edit.ShowHidden = true;
           edit.ShowCompetitorType = true;
         }
       }
@@ -134,15 +164,22 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     public ActionResult Index()
     {
-      IEnumerable<Competitor> competitors = db.Competitors.OrderBy(c => c.LastName);
       CompetitorListItem competitorListItem;
       CompetitorIndex index = new CompetitorIndex();
 
       index.CompetitorListItems = new List<CompetitorListItem>();
 
-      foreach (Competitor competitor in db.Competitors.OrderBy(c => c.LastName))
+      IEnumerable<Competitor> competitors = null;
+
+      if (Competitor.Admin)
+        competitors = db.Competitors.OrderBy(c => c.LastName);
+      else
+        competitors = db.Competitors.Where(c => c.Hide == false).OrderBy(c => c.LastName);
+
+
+      foreach (Competitor competitor in competitors)
       {
-        competitorListItem = new CompetitorListItem() { Name = competitor.FriendlyName(), CompetitorId = competitor.CompetitorId };
+        competitorListItem = new CompetitorListItem() { Name = competitor.FriendlyName(), CompetitorId = competitor.CompetitorId, Hide = competitor.Hide };
 
         if (CanEdit(competitor))
           competitorListItem.CanEdit = true;

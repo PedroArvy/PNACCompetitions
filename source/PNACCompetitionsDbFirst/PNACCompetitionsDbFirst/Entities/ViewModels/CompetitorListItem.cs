@@ -10,5 +10,6 @@ namespace PNACCompetitionsDbFirst.Entities.ViewModels
     public int CompetitorId { get; set; }
     public string Name { get; set; }
     public bool CanEdit { get; set; }
+    public bool Hide { get; set; }
   }
 }

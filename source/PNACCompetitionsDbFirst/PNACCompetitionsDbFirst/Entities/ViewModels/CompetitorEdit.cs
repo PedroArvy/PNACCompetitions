@@ -23,6 +23,8 @@ namespace PNACCompetitionsDbFirst.Entities.ViewModels
 
     public bool Admin { get; set; }
 
+    public bool Hidden { get; set; }
+
     public int CompetitorId { get; set; }
 
     [Required]
@@ -30,7 +32,6 @@ namespace PNACCompetitionsDbFirst.Entities.ViewModels
     public int CompetitorType { get; set; }
 
 
-    [Required(ErrorMessage = "The email address is required")]
     [EmailAddress(ErrorMessage = "Invalid Email Address")]
     public string Email { get; set; }
 
@@ -64,6 +65,8 @@ namespace PNACCompetitionsDbFirst.Entities.ViewModels
 
 
     public bool ShowAdmin { get; set; }
+
+    public bool ShowHidden { get; set; }
 
     public bool ShowCompetitorType { get; set; }
 
