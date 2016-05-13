@@ -31,7 +31,8 @@ namespace PNACCompetitionsDbFirst.Entities
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Catch> Catches { get; set; }
         public virtual DbSet<Club> Clubs { get; set; }
-        public virtual DbSet<Fish> Fish { get; set; }
         public virtual DbSet<Competitor> Competitors { get; set; }
+        public virtual DbSet<Environment> Environments { get; set; }
+        public virtual DbSet<Fish> Fish { get; set; }
     }
 }

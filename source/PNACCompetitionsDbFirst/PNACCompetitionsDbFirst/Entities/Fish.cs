@@ -18,6 +18,7 @@ namespace PNACCompetitionsDbFirst.Entities
         public Fish()
         {
             this.Catches = new HashSet<Catch>();
+            this.Environments = new HashSet<Environment>();
         }
     
         public int FishId { get; set; }
@@ -28,5 +29,7 @@ namespace PNACCompetitionsDbFirst.Entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Catch> Catches { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Environment> Environments { get; set; }
     }
 }

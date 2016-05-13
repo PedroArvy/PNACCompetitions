@@ -20,7 +20,13 @@ namespace PNACCompetitionsDbFirst.Entities.ViewModels
 
 
     [Required]
+    [Range(1, 100)]
     public double Difficulty { get; set; }
+
+
+    public bool EnvironmentFreshwater { get; set; }
+    public bool EnvironmentEstuary { get; set; }
+    public bool EnvironmentSaltwater { get; set; }
 
 
     [Required]
@@ -28,11 +34,14 @@ namespace PNACCompetitionsDbFirst.Entities.ViewModels
 
 
     [Required]
+    [Range(20, 2000)]
     public int Maximum { get; set; }
 
 
     [Required]
+    [Range(20, 2000)]
     public int Minimum { get; set; }
+
     
     #endregion
 

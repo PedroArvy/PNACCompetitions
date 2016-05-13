@@ -62,6 +62,20 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
+    protected bool IsAdmin
+    {
+      get
+      {
+        bool isAdmin = false;
+
+        if (Competitor != null && Competitor.Admin)
+          isAdmin = true;
+
+        return isAdmin;
+      }
+    }
+
+
     protected ApplicationUserManager UserManager
     {
       get

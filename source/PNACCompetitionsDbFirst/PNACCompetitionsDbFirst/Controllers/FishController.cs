@@ -32,28 +32,13 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     #region *********************** Methods **************************
 
-    private void AssignModel(Competitor competitor, FishEdit model)
+    private void AssignModel(Fish fish, FishEdit model)
     {
-      /*
-      competitor.FirstName = model.FirstName;
-      competitor.NickName = model.NickName;
-      competitor.LastName = model.LastName;
 
-      if (competitor.AspNetUser != null)
-        competitor.AspNetUser.Email = model.Email;
-
-      competitor.Admin = model.Admin;
-
-      if (model.ShowCompetitorType)
-        competitor.CompetitorType = (int)model.CompetitorType;
-
-      competitor.Gender = (int)model.Gender;
-
-      if (competitor != null && competitor.Admin)
-      {
-        competitor.Admin = model.Admin;
-      }
-      */
+      fish.Name = model.Name;
+      fish.Minimum = model.Minimum;
+      fish.Maximum = model.Maximum;
+      fish.Difficulty = model.Difficulty;
     }
 
 
@@ -75,6 +60,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       if (Competitor.Admin)
       {
+        edit.FishId = fish.FishId;
         edit.Name = fish.Name;
         edit.Minimum = fish.Minimum;
         edit.Maximum = fish.Maximum;
@@ -88,32 +74,24 @@ namespace PNACCompetitionsDbFirst.Controllers
 
 
     [HttpPost]
-    public ActionResult Edit(CompetitorEdit model)
+    public ActionResult Edit(FishEdit model)
     {
-      /*
-      CompetitorEdit edit = new CompetitorEdit();
-      Competitor competitor = db.Competitors.SingleOrDefault(c => c.CompetitorId == model.CompetitorId);
+      
+      FishEdit edit = new FishEdit();
+      Fish fish = db.Fish.SingleOrDefault(c => c.FishId == model.FishId);
 
-      if (CanEdit(competitor) && ModelState.IsValid)
+      if (IsAdmin && ModelState.IsValid)
       {
-        AssignModel(competitor, model);
-
-        if (!string.IsNullOrWhiteSpace(model.Password) && model.Password == model.ConfirmPassword)
-        {
-          UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
-
-          userManager.RemovePassword(competitor.AspNetUser.Id);
-          userManager.AddPassword(competitor.AspNetUser.Id, model.Password);
-        }
+        AssignModel(fish, model);
 
         db.SaveChanges();
         return RedirectToAction("Index");
       }
-      else if (CanEdit(competitor) && !ModelState.IsValid)
+      else if (IsAdmin && !ModelState.IsValid)
         return View(model);
-      else if (!CanEdit(competitor))
+      else if (!IsAdmin)
         throw new UnauthorizedAccessException("");
-        */
+        
       return new EmptyResult();
     }
 
@@ -142,58 +120,33 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     public ActionResult New()
     {
-      /*
-      CompetitorEdit edit = new CompetitorEdit();
-
-      if (Competitor.Admin)
-      {
-        edit.ShowAdmin = true;
-        edit.ShowCompetitorType = true;
-      }
-
+      FishEdit edit = new FishEdit();
       return View(edit);
-      */
-      return null;
     }
 
 
     [HttpPost]
     [AllowAnonymous]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> New(CompetitorEdit model)
+    public ActionResult New(FishEdit model)
     {
-      /*
-      CompetitorEdit edit = new CompetitorEdit();
-      Competitor competitor = new Competitor();
+      FishEdit edit = new FishEdit();
+      Fish fish = new Fish();
 
-      if (Competitor.Admin && ModelState.IsValid)
+      if (IsAdmin && ModelState.IsValid)
       {
-        AssignModel(competitor, model);
+        AssignModel(fish, model);
 
-        if (!string.IsNullOrWhiteSpace(model.Password) && model.Password == model.ConfirmPassword)
-        {
-          var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-          var result = await UserManager.CreateAsync(user, model.Password);
-        }
-
-        AspNetUser aspNetUser = db.AspNetUsers.Single(a => a.Email == model.Email);
-        competitor.AspNetUser = aspNetUser;
-
-
-        competitor.ClubId = db.Clubs.First().ClubId;
-
-        db.Competitors.Add(competitor);
+        db.Fish.Add(fish);
         db.SaveChanges();
         return RedirectToAction("Index");
       }
-      else if (CanEdit(competitor) && !ModelState.IsValid)
+      else if (IsAdmin && !ModelState.IsValid)
         return View(model);
-      else if (!CanEdit(competitor))
+      else if (!IsAdmin)
         throw new UnauthorizedAccessException("");
 
-  */
       return new EmptyResult();
-
     }
 
 

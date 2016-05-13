@@ -2,8 +2,8 @@
 Setup - 4
 
 Leader board - 1.5
-Competitors - 1, 1.75
+Competitors - 1, 1.75, 0.75
 Competitions - 
-Fish - 0.5
+Fish - 0.75
 
 

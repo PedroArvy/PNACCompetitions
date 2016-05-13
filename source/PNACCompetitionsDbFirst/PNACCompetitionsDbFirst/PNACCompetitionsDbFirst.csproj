@@ -210,6 +210,9 @@
     <Compile Include="Entities\Entry.cs">
       <DependentUpon>Competitions.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Environment.cs">
+      <DependentUpon>Competitions.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Fish.cs">
       <DependentUpon>Competitions.tt</DependentUpon>
     </Compile>

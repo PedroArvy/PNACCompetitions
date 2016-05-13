@@ -18,7 +18,6 @@
     @using (Html.BeginForm("Edit", "Fish", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
       @Html.EditorFor(m => m)
-      @Html.HiddenFor(c => c.FishId)
     }
 
   </div>
