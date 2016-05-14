@@ -15,8 +15,7 @@
 
         .done(function (msg) {
 
-          if (msg.success == 'true')
-          {
+          if (msg.success == 'true') {
             $('#row-' + id).hide('slow');
           }
 
@@ -39,6 +38,12 @@
 </div>
 
 <div class="row">
+  <div class="col-md-6">
+    <div class="search-bar"><span style="float:left;vertical-align:middle;padding-right:5px;padding-top:7px">Search </span><input type="text" id="search" class="form-control" style="float:left;vertical-align:middle;margin-right:5px"><a href="#" id="clear" style="float:left" class="btn btn-primary btn-sm">Show all</a></div>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-md-4">
     <div class="table-responsive">
 
@@ -50,10 +55,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            @if (Model.CompetitorListItems.Any(c => c.CanEdit))
-            {
-              <th>Action</th>
-            }
+            <th>Action</th>
             <th>Name</th>
           </tr>
         </thead>
@@ -64,25 +66,27 @@
           {
             <tr id="row-@competitor.CompetitorId">
 
-              @if (Model.CompetitorListItems.Any(c => c.CanEdit))
-              {
-                <td class="table-action">
-                  @if (competitor.CanEdit)
+
+              <td class="table-action">
+                @if (competitor.CanEdit)
+                {
+                  @Html.ActionLink("Edit", "Edit", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm" })
+
+                  if (competitor.IsAdmin)
                   {
-                    @Html.ActionLink("Edit", "Edit", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm" })
                     @Html.ActionLink("Delete", "Delete", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm", onclick = "return DeleteCompetitor(" + competitor.CompetitorId + ")" })
                   }
-                </td>
-              }
-
-              <td>@competitor.Name
-              
-              @if(competitor.Hide)
-              {
-                @:(hidden)
-              }
+                }
+                else if (competitor.CanCreatePassword)
+                {
+                  @Html.ActionLink("Create password", "Create", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm" })
+                }
 
               </td>
+
+
+              <td class="name">@Model.NameToDisplay(competitor)</td>
+
             </tr>
           }
 
@@ -91,3 +95,53 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(function () {
+    var members = [
+
+      @Html.Raw(Model.MemberNames)
+
+    ];
+
+    $('#search').autocomplete({
+      source: members,
+
+      select: function (event, ui) {
+        FindTd(ui.item.label);
+      }
+
+    });
+
+
+    $('#clear').click(function () {
+
+      $('tr').show();
+      $('#search').val('');
+      $(this).hide();
+
+    });
+
+  });
+
+
+  function FindTd(value) {
+
+    $('td.name').each(function (index) {
+
+      var text = $(this).text();
+
+      if (text.indexOf(value) < 0) {
+        $(this).parent('tr').hide();
+      }
+
+      $('#clear').show();
+
+    });
+
+  }
+
+
+
+
+</script>

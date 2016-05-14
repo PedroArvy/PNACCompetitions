@@ -1,100 +1,116 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+  padding-top: 50px;
+  padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
 .dl-horizontal dt {
-    white-space: normal;
+  white-space: normal;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
-    max-width: 280px;
+  max-width: 280px;
 }
 
-td.btn
-{
-  width:150px;
-
+td.btn {
+  width: 150px;
 }
 
 
-a.btn
-{
-  margin-right:10px;
+a.btn {
+  margin-right: 10px;
 }
 
 
 .help {
-  font-size:10px;
+  font-size: 10px;
 }
 
 
-.field-validation-error{
-  color:red;
+.field-validation-error {
+  color: red;
 }
 
 
-.pnac-label
-{
-  text-align:left;
+.pnac-label {
+  text-align: left;
 }
 
 
-.save-button{
-  margin-top:20px;
+.save-button {
+  margin-top: 20px;
 }
 
-.back-button{
-  margin-left:10px;
+.back-button {
+  margin-left: 10px;
 }
 
-.single-checkbox
-{
-  margin-left:15px;
+.single-checkbox {
+  margin-left: 15px;
 }
 
-.single-checkbox-label
-{
-  width:100px;
-  background-color:red;
-  display:inline;
-}
-
-
-.section-title{
-  margin-bottom:30px;
+.single-checkbox-label {
+  width: 100px;
+  background-color: red;
+  display: inline;
 }
 
 
-.datepicker, .timepicker{
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-    color: #555555;
-    display: block;
-    font-size: 14px;
-    height: 34px;
-    line-height: 1.42857;
-    padding: 6px 12px;
-    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-    vertical-align: middle;
-    width: 100%;
+.section-title {
+  margin-bottom: 30px;
 }
 
 
-.day-type{
-  display:none;
+.datepicker, .timepicker {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  color: #555555;
+  display: block;
+  font-size: 14px;
+  height: 34px;
+  line-height: 1.42857;
+  padding: 6px 12px;
+  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+  vertical-align: middle;
+  width: 100%;
+}
+
+
+.day-type {
+  display: none;
+}
+
+.search-bar {
+  margin-bottom: 50px;
+}
+
+#clear {
+  display: none;
+}
+
+#search {
+  width: 200px;
+}
+
+.validation-summary-errors {
+  color: red;
+}
+
+.save-button {
+  background-color: #428bca;
+  border-color: #357ebd;
+  color:#ffffff;
 }

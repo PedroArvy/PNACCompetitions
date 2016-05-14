@@ -1,0 +1,211 @@
+﻿@using PNACCompetitionsDbFirst.Models.ViewModels
+@model CompetitionEdit
+
+
+@Html.AntiForgeryToken()
+
+<div class="form-group">
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.Venue, new { @class = "pnac-label" })
+  </div>
+  <div class="col-md-10">
+    @Html.TextBoxFor(m => m.Venue, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Venue)
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.StartDate, new { @class = "pnac-label" })
+  </div>
+  <div class="col-md-10">
+    @Html.TextBoxFor(m => m.StartDate, new { @class = "datepicker" })
+    @Html.ValidationMessageFor(m => m.StartDate)
+  </div>
+</div>
+
+
+<div class="form-group">
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.StartTime, new { @class = "pnac-label" })
+  </div>
+  <div class="col-md-10">
+    @Html.TextBoxFor(m => m.StartTime, new { @class = "timepicker" })
+    @Html.ValidationMessageFor(m => m.StartTime)
+  </div>
+</div>
+
+
+
+<div class="form-group">
+  <div class="col-md-10">
+    <a id="multi-day" href="#" class="btn btn-default save-button day-type">Multi day competition</a>
+    <a id="single-day" href="#" class="btn btn-default save-button day-type">Single day competition</a>
+  </div>
+</div>
+
+
+@Html.HiddenFor(m => m.SingleDay)
+
+<div class="form-group multi-day">
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.EndDate, new { @class = "pnac-label" })
+  </div>
+  <div class="col-md-10">
+    @Html.TextBoxFor(m => m.EndDate, new { @class = "datepicker" })
+    @Html.ValidationMessageFor(m => m.EndDate)
+  </div>
+</div>
+
+<div class="form-group multi-day">
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.EndTime, new { @class = "pnac-label" })
+  </div>
+  <div class="col-md-10">
+    @Html.TextBoxFor(m => m.EndTime, new { @class = "timepicker" })
+    @Html.ValidationMessageFor(m => m.EndTime)
+  </div>
+</div>
+
+
+<div class="form-group">
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.TripCaptain, new { @class = "pnac-label" })
+  </div>
+  <div class="col-md-10">
+    @Html.TextBoxFor(m => m.TripCaptain, new { @class = "form-control", data_type = "search", placeholder = "Search members..." })
+  </div>
+</div>
+
+
+<div class="form-group">
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.Referee1, new { @class = "pnac-label" })
+  </div>
+  <div class="col-md-10">
+    @Html.TextBoxFor(m => m.Referee1, new { @class = "form-control" })
+  </div>
+</div>
+
+
+<div class="form-group">
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.Referee2, new { @class = "pnac-label" })
+  </div>
+  <div class="col-md-10">
+    @Html.TextBoxFor(m => m.Referee2, new { @class = "form-control" })
+  </div>
+</div>
+
+
+
+<div class="form-group">
+  <div class="col-md-10">
+    <input type="submit" class="btn btn-default save-button" value="Save" />
+    <a href="/competition/index" class="btn btn-default save-button back-button">Back to all competitions</a>
+  </div>
+</div>
+
+<link rel="stylesheet" href="/Content/pickadate/default.css" />
+<link rel="stylesheet" href="/Content/pickadate/default.date.css" />
+<link rel="stylesheet" href="/Content/pickadate/default.time.css" />
+<script src="/scripts/pickadate/picker.js"></script>
+<script src="/scripts/pickadate/picker.date.js"></script>
+<script src="/scripts/pickadate/picker.time.js"></script>
+<script src="/scripts/pickadate/legacy.js"></script>
+
+
+<script>
+
+  var $input = $('.datepicker').pickadate({
+    format: 'dddd d mmm yyyy',
+    formatSubmit: 'dddd d mmm yyyy',
+    // min: [2015, 7, 14],
+    //container: '#datepicker-container',
+    //editable: true,
+    closeOnSelect: false,
+    closeOnClear: false,
+  })
+
+  var picker = $input.pickadate('picker')
+
+  var $input = $('.timepicker').pickatime({})
+  var timepicker = $input.pickatime('picker')
+
+
+
+  $(function () {
+
+    $("#single-day").click(function () {
+      $(".single-day").show();
+      $(".multi-day").hide();
+      $('#SingleDay').attr('value', 'false');
+      $('#SingleDay').attr('value', 'true');
+
+      $("#multi-day").show();
+      $("#single-day").hide();
+
+    });
+
+    $("#multi-day").click(function () {
+      $(".single-day").hide();
+      $(".multi-day").show();
+      $('#SingleDay').attr('value', 'true');
+      $('#SingleDay').attr('value', 'false');
+
+      $("#multi-day").hide();
+      $("#single-day").show();
+
+    });
+
+    @{
+      if(Model.SingleDay)
+      {
+        <text>
+    $(".single-day").show();
+    $(".multi-day").hide();
+    $("#multi-day").show();
+    $("#single-day").hide();
+    </text>
+      }
+      else
+      {
+        <text>
+    $(".single-day").hide();
+    $(".multi-day").show();
+    $("#multi-day").hide();
+    $("#single-day").show();
+    </text>
+      }
+
+    }
+
+  });
+
+
+</script>
+
+
+
+<script>
+  $(function() {
+    var members = [
+
+      @Html.Raw(Model.MemberNames)
+
+    ];
+
+    $('#TripCaptain').autocomplete({
+      source: members
+    });
+
+    $('#Referee1').autocomplete({
+      source: members
+    });
+
+    $('#Referee2').autocomplete({
+      source: members
+    });
+
+  });
+</script>

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace PNACCompetitionsDbFirst.Controllers
 {
@@ -50,6 +51,10 @@ namespace PNACCompetitionsDbFirst.Controllers
         competitor.CompetitorType = (int)model.CompetitorType;
 
       competitor.Gender = (int)model.Gender;
+
+      competitor.Phone = model.Phone;
+      competitor.Mobile = model.Mobile;
+
       competitor.Suburb = model.Suburb;
 
       if (model.ShowHidden)
@@ -72,6 +77,67 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       return canEdit;
     }
+
+
+    public ActionResult Create(int id)
+    {
+      CompetitorCreate model = new CompetitorCreate();
+      Competitor competitor = db.Competitors.Single(c => c.CompetitorId == id);
+
+      model.Name = competitor.FriendlyName();
+      model.CompetitorId = competitor.CompetitorId;
+
+      return View(model);
+    }
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> Create(CompetitorCreate model)
+    {
+      Competitor competitor = db.Competitors.Single(c => c.CompetitorId == model.CompetitorId);
+
+      CreateErrors(competitor, model);
+
+      if (ModelState.IsValid)
+      {
+        var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+        var result = await UserManager.CreateAsync(user, model.Password);
+
+        if (result.Succeeded)
+        {
+          competitor.AspNetUserId = user.Id;
+          db.SaveChanges();
+          await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+          return RedirectToAction("Index", "Home");
+        }
+
+        return RedirectToAction("Index");
+      }
+      else
+        return View(model);
+    }
+
+
+    private bool CreateErrors(Competitor competitor, CompetitorCreate model)
+    {
+      bool passed = false;
+
+      if (!string.IsNullOrEmpty(model.Email.Trim()) && model.Email.Trim().Length >= 10 & competitor.Email.Length == 0)
+        passed = true;
+
+      else if (!string.IsNullOrEmpty(model.Email) && model.Email.Trim().Length >= 10 & model.Email == competitor.Email)
+        passed = true;
+
+      if (!passed)
+      {
+        if (!string.IsNullOrEmpty(model.Email.Trim()) && model.Email.Trim() != competitor.Email)
+          ModelState.AddModelError("Email", "The email address does not match what you have supplied to the club");
+      }
+
+      return passed;
+    }
+
 
 
     [Authorize]
@@ -111,7 +177,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.NickName = competitor.NickName;
         edit.LastName = competitor.LastName;
 
-        if(competitor.AspNetUser != null && competitor.AspNetUser.Email != null)
+        if (competitor.AspNetUser != null && competitor.AspNetUser.Email != null)
           edit.Email = competitor.AspNetUser.Email;
 
         edit.Admin = competitor.Admin;
@@ -120,6 +186,8 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.CompetitorId = competitor.CompetitorId;
         edit.FriendlyName = competitor.FriendlyName();
         edit.Hidden = competitor.Hide;
+        edit.Phone = competitor.Phone;
+        edit.Mobile = competitor.Mobile;
         edit.Suburb = competitor.Suburb;
 
         if (Competitor.Admin)
@@ -130,32 +198,57 @@ namespace PNACCompetitionsDbFirst.Controllers
         }
       }
       else
-        throw new NotImplementedException();
+        throw new UnauthorizedAccessException();
 
       return View(edit);
     }
 
 
+    private void AssignErrors(Competitor competitor, CompetitorEdit model)
+    {
+      if (string.IsNullOrWhiteSpace(model.Email) && (!string.IsNullOrWhiteSpace(model.Password) || !string.IsNullOrWhiteSpace(model.ConfirmPassword)))
+        ModelState.AddModelError("Password", "You need to provide an email address to assign a password");
+
+      if (!string.IsNullOrWhiteSpace(competitor.AspNetUserId) && string.IsNullOrWhiteSpace(model.Email))
+        ModelState.AddModelError("Email", "You need to provide an email address");
+
+      if (!string.IsNullOrWhiteSpace(model.Password) && model.Password != model.ConfirmPassword)
+        ModelState.AddModelError("Password", "Password and confirm password do not match");
+    }
+
+
     [HttpPost]
-    public ActionResult Edit(CompetitorEdit model)
+    public async Task<ActionResult> Edit(CompetitorEdit model)
     {
       CompetitorEdit edit = new CompetitorEdit();
       Competitor competitor = db.Competitors.SingleOrDefault(c => c.CompetitorId == model.CompetitorId);
+
+      AssignErrors(competitor, model);
 
       if (CanEdit(competitor) && ModelState.IsValid)
       {
         AssignModel(competitor, model);
 
-        if (!string.IsNullOrWhiteSpace(model.Password) && model.Password == model.ConfirmPassword)
-        {
-          UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+        AspNetUser member = db.AspNetUsers.SingleOrDefault(u => u.UserName == model.Email.Trim());
 
-          userManager.RemovePassword(competitor.AspNetUser.Id);
-          userManager.AddPassword(competitor.AspNetUser.Id, model.Password);
+        if(member == null)
+        {
+          var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+          var result = UserManager.CreateAsync(user, model.Password);
+        }
+        else
+        {
+          var user = await UserManager.FindByNameAsync(model.Email);
+
+          UserManager.RemovePassword(user.Id);
+          UserManager.AddPassword(user.Id, model.Password);
         }
 
+        competitor.AspNetUser.Email = model.Email;
+        competitor.AspNetUser.UserName = model.Email;
+
         db.SaveChanges();
-        return RedirectToAction("Index");
+        return RedirectToAction("Modified");
       }
       else if (CanEdit(competitor) && !ModelState.IsValid)
         return View(model);
@@ -166,16 +259,27 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
+    private void AddNewMember(string email, string password)
+    {
+      UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+
+      userManager.AddPassword(email, password);
+
+    }
+
+
     public ActionResult Index()
     {
       CompetitorListItem competitorListItem;
       CompetitorIndex index = new CompetitorIndex();
 
+      index.MemberNames = MakeNames();
+
       index.CompetitorListItems = new List<CompetitorListItem>();
 
       IEnumerable<Competitor> competitors = null;
 
-      if (Competitor.Admin)
+      if (IsAdmin)
         competitors = db.Competitors.OrderBy(c => c.LastName);
       else
         competitors = db.Competitors.Where(c => c.Hide == false).OrderBy(c => c.LastName);
@@ -183,18 +287,39 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       foreach (Competitor competitor in competitors)
       {
-        competitorListItem = new CompetitorListItem() { Name = competitor.FriendlyName(), CompetitorId = competitor.CompetitorId, Hide = competitor.Hide };
+        competitorListItem = new CompetitorListItem() { Name = competitor.FriendlyName(), CompetitorId = competitor.CompetitorId, Hide = competitor.Hide, IsRegistered = !string.IsNullOrEmpty(competitor.AspNetUserId) };
 
         if (CanEdit(competitor))
           competitorListItem.CanEdit = true;
 
+        if (IsAdmin)
+          competitorListItem.IsAdmin = true;
+
+        if (!string.IsNullOrEmpty(competitor.AspNetUserId))
+          competitorListItem.CanCreatePassword = false;
+        else if (AspNetUser == null)
+          competitorListItem.CanCreatePassword = true;
+        else if (AspNetUser != null && IsAdmin)
+          competitorListItem.CanCreatePassword = true;
+        else
+          competitorListItem.CanCreatePassword = false;
+
+        if (Competitor != null && !string.IsNullOrEmpty(Competitor.AspNetUserId) && Competitor.AspNetUserId == competitor.AspNetUserId)
+          competitorListItem.IsLoggedIn = true;
+
         index.CompetitorListItems.Add(competitorListItem);
       }
 
-      if(Competitor != null)
+      if (Competitor != null)
         index.CanCreate = Competitor.Admin;
 
       return View(index);
+    }
+
+
+    public ActionResult Modified()
+    {
+      return View();
     }
 
 

@@ -1,97 +1,176 @@
 ﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Autocomplete - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-<meta charset="utf-8">
+  <script>
+  $(function() {
+    var availableTags = [
 
-<meta name="author" content="Amsul - http://amsul.ca">
-<meta name="viewport" content="width=device-width,user-scalable=no">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+      "Fernanda",
+      "Harry & Barbara",
+      "Preston Northcote Angling Club",
+      "Peter",
+      "Ian",
+      "John",
+      "Kevin",
+      "Andrew",
+      "Bob",
+      "Harry & Barbara",
+      "Andrew",
+      "Phil",
+      "Alf & Margaret",
+      "Len",
+      "Jamie",
+      "Kerrie",
+      "Stephen",
+      "David",
+      "Frank & Bronwyn",
+      "Les",
+      "Frank & Norma",
+      "John & Lyn",
+      "Mick",
+      "Ron & Di ",
+      "Tony & Dot",
+      "Amanda",
+      "John & Jenny",
+      "Julian",
+      "Tony",
+      "Bill & Karlene",
+      "Ron & Mimma",
+      "Andrew",
+      "John & Bernice",
+      "Michael",
+      "Neil",
+      "Leo & Laura",
+      "Joe",
+      "Tony",
+      "Bob & Rachael",
+      "Dennis",
+      "John",
+      "Niki",
+      "Jim  ",
+      "Ken & Deanna",
+      "Rod",
+      "David",
+      "Manuel",
+      "Robert",
+      "Dave",
+      "Vic",
+      "John",
+      "Peter & Josephine",
+      "Alex & Jenny",
+      "Stephen & Di",
+      "Perc",
+      "Charlie & Margaret",
+      "Joe & Anna",
+      "Steve",
+      "Mark",
+      "David",
+      "Ross & Marie",
+      "Andrew",
+      "Bernard",
+      "Wayne",
+      "Duncan",
+      "Richard",
+      "Daniel",
+      "Mark & Sharon",
+      "Timothy",
+      "Daniel",
+      "Robert",
+      "Graeme",
+      "George",
+      "Jason",
+      "Peter",
+      "Rod",
+      "Mark",
+      "Frank & Mary",
+      "Glenn",
+      "Roy & Kerry",
+      "Rod",
+      "Gordon",
+      "Heath",
+      "Joe  ",
+      "Peter",
+      "Robert & Sandy",
+      "Greg",
+      "Ken",
+      "Vladimir",
+      "Sandi",
+      "Tony",
+      "Arthur",
+      "Chris",
+      "Michael",
+      "Donald",
+      "Samuel",
+      "John",
+      "Brian",
+      "Peter & Patty",
+      "Tim & Julie",
+      "John",
+      "Les & Dawn",
+      "Joe & Lyn",
+      "Stan",
+      "Joe & Jane",
+      "Ryhs",
+      "Jim & Heather",
+      "Bob",
+      "Alan & Eileen",
+      "Jill",
+      "Jeffrey",
+      "Gary",
+      "Steve",
+      "Adam",
+      "Kellie",
+      "Petras",
+      "Jason",
+      "David",
+      "Nick",
+      "John",
+      "Stuart",
+      "Daniel",
+      "Phil & Val",
+      "Tony & Laura",
+      "Helen",
+      "Bruce",
+      "David",
+      "Gavin",
+      "Luke",
+      "Ross",
+      "John & Natalie"
+    ];
 
-<title>Pickadate.js</title>
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
 
-<link rel="stylesheet" href="/Content/pickadate/default.css">
-<link rel="stylesheet" href="/Content/pickadate/default.date.css">
+  });
+  </script>
+</head>
 
-<!--[if lt IE 9]>
-    <script>document.createElement('section')</script>
-    <style type="text/css">
-        .holder {
-            position: relative;
-            z-index: 10000;
-        }
-        .datepicker {
-            display: block;
-        }
-    </style>
-<![endif]-->
+<style>
 
+  input
+  {
+    width:300px;
+    height:30px;
+    font-size:30px;
+    line-height:30px;
+  }
+
+</style>
 
 <body>
 
-  <section class="section">
-
-    <form>
-      <fieldset>
-        <h3><label for="input_01">Pick a date. Go ahead...</label></h3>
-
-        <input type="text">
-        <input id="input_01"
-               class="datepicker"
-               name="date"
-               type="text"
-               autofocuss
-               value="14 August, 2014"
-               data-valuee="2014-08-08">
-        <input type="text">
-
-        <br><br><br><br><br>
-        <!-- <button type="button">Disable all dates</button>
-        <input class="button" type="submit" value="open"> -->
-      </fieldset>
-    </form>
-
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-    <div id="container"></div>
-
-    <input type="text">
-
-  </section>
 
 
-  <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <input id="tags">
 
-  <script src="/scripts/pickadate/picker.js"></script>
-  <script src="/scripts/pickadate/picker.date.js"></script>
-  <script src="/scripts/pickadate/legacy.js"></script>
-
-  <script type="text/javascript">
-
-        var $input = $( '.datepicker' ).pickadate({
-          format: 'dddd d mmm yyyy',
-          formatSubmit: 'dddd d mmm yyyy',
-          // min: [2015, 7, 14],
-            container: '#container',
-            // editable: true,
-            closeOnSelect: false,
-            closeOnClear: false,
-        })
-
-        var picker = $input.pickadate('picker')
-        // picker.set('select', '14 October, 2014')
-        // picker.open()
-
-        // $('button').on('click', function() {
-        //     picker.set('disable', true);
-        // });
-
-  </script>
 
 
 </body>
-
-
-
+</html>

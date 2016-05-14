@@ -70,7 +70,9 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.StartTime = Format.TimeOnly(competition.Start);
         edit.SingleDay = competition.SingleDay();
 
-        if(!competition.SingleDay())
+        edit.MemberNames = MakeNames();
+
+        if (!competition.SingleDay())
         {
           edit.EndDate = Format.DateOnly((DateTime)competition.End);
           edit.EndTime = Format.TimeOnly((DateTime)competition.End);
@@ -89,6 +91,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       return View(edit);
     }
+
 
 
     [HttpPost]

@@ -78,6 +78,9 @@
           <Property Name="Admin" Type="bit" Nullable="false" />
           <Property Name="Hide" Type="bit" Nullable="false" />
           <Property Name="Suburb" Type="varchar" MaxLength="100" />
+          <Property Name="Phone" Type="varchar" MaxLength="30" />
+          <Property Name="Mobile" Type="varchar" MaxLength="30" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Entries">
           <Key>
@@ -588,7 +591,7 @@
           <NavigationProperty Name="Competitor1" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee2_CompetitorId" FromRole="Competition" ToRole="Competitor" />
           <NavigationProperty Name="Competitor2" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee3_CompetitorId" FromRole="Competition" ToRole="Competitor" />
           <NavigationProperty Name="Competitor3" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_TripCaptain_CompetitorId" FromRole="Competition" ToRole="Competitor" />
-        </EntityType>
+          </EntityType>
         <Association Name="FK_dbo_Competitions_dbo_Clubs_ClubId">
           <End Type="PNACCompetitionsModel.Club" Role="Club" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -630,6 +633,9 @@
           <Property Name="Admin" Type="Boolean" Nullable="false" />
           <Property Name="Hide" Type="Boolean" Nullable="false" />
           <Property Name="Suburb" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AspNetUser" Relationship="PNACCompetitionsModel.FK_Competitors_AspNetUsers" FromRole="Competitor" ToRole="AspNetUser" />
           <NavigationProperty Name="Club" Relationship="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" FromRole="Competitor" ToRole="Club" />
           <NavigationProperty Name="Competitions" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Competitors_Referee1_CompetitorId" FromRole="Competitor" ToRole="Competition" />
@@ -843,6 +849,9 @@
           <EntitySetMapping Name="Competitors">
             <EntityTypeMapping TypeName="PNACCompetitionsModel.Competitor">
               <MappingFragment StoreEntitySet="Competitors">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Suburb" ColumnName="Suburb" />
                 <ScalarProperty Name="Hide" ColumnName="Hide" />
                 <ScalarProperty Name="Admin" ColumnName="Admin" />

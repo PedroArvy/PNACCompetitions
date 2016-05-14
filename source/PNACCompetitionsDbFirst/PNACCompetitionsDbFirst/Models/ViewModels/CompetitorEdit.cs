@@ -51,17 +51,28 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public string NickName { get; set; }
 
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-    [DataType(DataType.Password)]
+    //[DataType(DataType.Password)]
     [Display(Name = "Password")]
     public string Password { get; set; }
 
-    [DataType(DataType.Password)]
+    //[DataType(DataType.Password)]
     [Display(Name = "Confirm password")]
     [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
     public string ConfirmPassword { get; set; }
 
 
     public string FriendlyName { get; set; }
+
+
+    [DataType(DataType.PhoneNumber)]
+    [MaxLength(30)]
+    public string Mobile { get; set; }
+
+
+    [Display(Name = "Home phone (landline)")]
+    [DataType(DataType.PhoneNumber)]
+    [MaxLength(30)]
+    public string Phone { get; set; }
 
 
     public bool ShowAdmin { get; set; }

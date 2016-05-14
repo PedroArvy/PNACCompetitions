@@ -35,6 +35,9 @@ namespace PNACCompetitionsDbFirst.Entities
         public bool Admin { get; set; }
         public bool Hide { get; set; }
         public string Suburb { get; set; }
+        public string Phone { get; set; }
+        public string Mobile { get; set; }
+        public string Email { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Club Club { get; set; }

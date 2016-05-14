@@ -18,6 +18,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     private AspNetUser _AspNetUser = null;
     private Competitor _Competitor = null;
+    private ApplicationSignInManager _signInManager;
     protected ApplicationUserManager _userManager;
 
     protected PNACCompetitionsEntities db = new PNACCompetitionsEntities();
@@ -76,6 +77,19 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
+    public ApplicationSignInManager SignInManager
+    {
+      get
+      {
+        return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+      }
+      private set
+      {
+        _signInManager = value;
+      }
+    }
+
+
     protected ApplicationUserManager UserManager
     {
       get
@@ -96,6 +110,24 @@ namespace PNACCompetitionsDbFirst.Controllers
 
 
     #region *********************** Methods **************************
+
+
+    protected string MakeNames()
+    {
+      string list = "";
+      int count = 0;
+
+      foreach (string name in db.MemberNames())
+      {
+        if (count > 0)
+          list += ",\n";
+
+        list += "\"" + name + "\"";
+        count++;
+      }
+
+      return list;
+    }
 
 
     #endregion

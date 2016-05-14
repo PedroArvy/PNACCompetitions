@@ -21,6 +21,8 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     public List<CompetitorListItem> CompetitorListItems { get; set; }
 
+    public string MemberNames { get; set; }
+
 
     #endregion
 
@@ -30,6 +32,17 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
 
     #region *********************** Methods **************************
+
+    public string NameToDisplay(CompetitorListItem competitor)
+    {
+      string name = competitor.Name;
+
+      if (competitor.Hide)
+        name += " (hidden)";
+
+      return name;
+    }
+
     #endregion
 
 

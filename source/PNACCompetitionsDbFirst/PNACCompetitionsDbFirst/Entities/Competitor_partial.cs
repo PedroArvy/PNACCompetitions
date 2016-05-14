@@ -57,16 +57,41 @@ namespace PNACCompetitionsDbFirst.Entities
 
     #region *********************** Methods **************************
 
+
+    public Competitor DuplicateSpouse()
+    {
+      Competitor competitor = new Competitor();
+
+      if (FirstName.IndexOf("&") != -1)
+      {
+        competitor.FirstName = FirstName.Substring(FirstName.IndexOf("&") + 1).Trim();
+        competitor.LastName = LastName.Trim();
+        competitor.NickName = "";
+        competitor.CompetitorType = CompetitorType;
+        competitor.Gender = 2;//guess female
+        competitor.ClubId = ClubId;
+        competitor.Suburb = Suburb.Trim();
+        competitor.Phone = Phone.Trim();
+        competitor.Mobile = "";
+        competitor.Email = "";
+      }
+      else
+        throw new Exception("DuplicateSpouse");
+
+      return competitor;
+    }
+
+
     public string FriendlyName()
     {
-      string name = FirstName;
+      string name = FirstName.Trim();
 
       if(!string.IsNullOrWhiteSpace(NickName))
       {
-        name += " \"" + NickName + "\"";
+        name += " \"" + NickName.Trim() + "\"";
       }
 
-      name += " " + LastName;
+      name += " " + LastName.Trim();
 
       return name;
     }

@@ -2,12 +2,12 @@
 @model CompetitorEdit
 
 @{
-  ViewBag.Title = "New Competitor";
+  ViewBag.Title = "Success";
 }
 
 <div class="row">
   <div class="col-md-8">
-    <h2>New Competitor</h2>
+    <h2>Save Complete</h2>
   </div>
 </div>
 
@@ -15,12 +15,7 @@
 <div class="row">
   <div class="col-md-10">
 
-    @using (Html.BeginForm("New", "Competitors", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-      @Html.AntiForgeryToken()
-
-      @Html.EditorFor(m => m)
-    }
+The details have been saved successfully!
 
   </div>
 </div>
@@ -28,5 +23,3 @@
 @section Scripts {
   @Scripts.Render("~/bundles/jqueryval")
 }
-
-

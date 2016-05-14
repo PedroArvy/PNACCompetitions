@@ -18,6 +18,8 @@
 
     @using (Html.BeginForm("Edit", "Competitions", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
+      @Html.AntiForgeryToken()
+
       @Html.EditorFor(m => m)
       @Html.HiddenFor(c => c.CompetitionId)
     }
@@ -27,8 +29,4 @@
 
 @section Scripts {
   @Scripts.Render("~/bundles/jqueryval")
-
-
 }
-
-

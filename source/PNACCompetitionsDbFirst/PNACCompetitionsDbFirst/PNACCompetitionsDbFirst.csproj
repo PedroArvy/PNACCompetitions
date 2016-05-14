@@ -227,6 +227,7 @@
     <Compile Include="Models\ViewModels\CompetitionEdit.cs" />
     <Compile Include="Models\ViewModels\CompetitionListItem.cs" />
     <Compile Include="Models\ViewModels\CompetitionIndex.cs" />
+    <Compile Include="Models\ViewModels\CompetitorCreate.cs" />
     <Compile Include="Models\ViewModels\FishListItem.cs" />
     <Compile Include="Models\ViewModels\FishIndex.cs" />
     <Compile Include="Models\ViewModels\CompetitorEdit.cs" />
@@ -291,6 +292,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="readme.txt" />
+    <Content Include="test1.html" />
     <Content Include="test.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -340,6 +342,8 @@
     <Content Include="Views\Competitors\Index.cshtml" />
     <Content Include="Views\Competitions\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CompetitionEdit.cshtml" />
+    <Content Include="Views\Competitors\Create.cshtml" />
+    <Content Include="Views\Competitors\Modified.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
