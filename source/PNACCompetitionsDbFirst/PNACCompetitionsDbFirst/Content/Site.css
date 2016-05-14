@@ -93,3 +93,8 @@ a.btn
     vertical-align: middle;
     width: 100%;
 }
+
+
+.day-type{
+  display:none;
+}

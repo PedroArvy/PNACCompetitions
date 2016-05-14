@@ -59,9 +59,15 @@ namespace PNACCompetitionsDbFirst.Entities
 
     #region *********************** Methods **************************
 
+
     public bool SingleDay()
     {
-      return End != null;
+      bool isSingle = true;
+
+      if (End != null && (((DateTime)End).Day != Start.Day || ((DateTime)End).Month != Start.Month || ((DateTime)End).Year != Start.Year))
+        isSingle = false;
+
+      return isSingle;
     }
 
 

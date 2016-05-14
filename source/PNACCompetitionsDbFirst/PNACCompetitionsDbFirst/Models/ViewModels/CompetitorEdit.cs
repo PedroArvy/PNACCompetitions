@@ -70,6 +70,9 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     public bool ShowCompetitorType { get; set; }
 
+
+    public string Suburb { get; set; }
+
     #endregion
 
 

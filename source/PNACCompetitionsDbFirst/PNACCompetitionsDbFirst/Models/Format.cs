@@ -38,7 +38,7 @@ namespace PNACCompetitionsDbFirst.Models
 
         if (theDate.Hour != 0)
         {
-          format += " h";
+          format += ", h";
 
           if (((DateTime)theDate).Minute != 0)
             format += ":mm";
@@ -65,6 +65,15 @@ namespace PNACCompetitionsDbFirst.Models
         theDate = new DateTime();
 
       return theDate.ToString("dddd d MMM yyyy");
+    }
+
+
+    public static string TimeOnly(DateTime theDate)
+    {
+      if (theDate == null)
+        theDate = new DateTime();
+
+      return theDate.ToString("h:mm tt");
     }
 
     #endregion

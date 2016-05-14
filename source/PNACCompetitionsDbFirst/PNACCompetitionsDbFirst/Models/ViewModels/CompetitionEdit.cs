@@ -21,8 +21,30 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     #region *********************** Properties ***********************
 
+    public bool SingleDay { get; set; }
+
 
     public int CompetitionId { get; set; }
+
+
+    [Display(Name = "End date")]
+    [Required]
+    public string EndDate { get; set; }
+
+
+    [Display(Name = "End time")]
+    [Required]
+    public string EndTime { get; set; }
+
+
+    [Display(Name = "Referee 1")]
+    public string Referee1 { get; set; }
+    public int Referee1Id { get; set; }
+
+
+    [Display(Name = "Referee 2")]
+    public string Referee2 { get; set; }
+    public int Referee2Id { get; set; }
 
 
     [Display(Name = "Start date")]
@@ -35,10 +57,14 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public string StartTime { get; set; }
 
 
+    [Display(Name = "Trip Captain")]
+    public string TripCaptain { get; set; }
+    public int TripCaptainId { get; set; }
+
+
     [Required]
     [MaxLength(100)]
     public string Venue { get; set; }
-
 
     #endregion
 

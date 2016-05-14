@@ -35,24 +35,11 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     private void AssignModel(Competition competition, CompetitionEdit model)
     {
-      /*
+      competition.Venue = model.Venue;
+      competition.Start = DateTime.Parse(model.StartDate + " " + model.StartTime);
 
-      competition.Name = model.Name;
-      competition.Minimum = model.Minimum;
-      competition.Maximum = model.Maximum;
-      competition.Difficulty = model.Difficulty;
-
-      competition.Environments.ToList().RemoveRange(0, competition.Environments.Count());
-
-      if (model.EnvironmentFreshwater)
-        competition.Environments.Add(db.Environments.Single(e => e.EnvironmentId == Competition.FRESHWATER));
-
-      if (model.EnvironmentEstuary)
-        competition.Environments.Add(db.Environments.Single(e => e.EnvironmentId == Competition.ESTUARY));
-
-      if (model.EnvironmentSaltwater)
-        competition.Environments.Add(db.Environments.Single(e => e.EnvironmentId == Competition.SALTWATER));
-        */
+      if(!model.SingleDay)
+        competition.End = DateTime.Parse(model.EndDate + " " + model.EndTime);
     }
 
 
@@ -75,11 +62,27 @@ namespace PNACCompetitionsDbFirst.Controllers
       Competition competition = db.Competitions.SingleOrDefault(c => c.CompetitionId == id);
       CompetitionEdit edit = new CompetitionEdit();
 
-      if (Competitor.Admin)
+      if (IsAdmin)
       {
         edit.CompetitionId = competition.CompetitionId;
         edit.Venue = competition.Venue;
         edit.StartDate = Format.DateOnly(competition.Start);
+        edit.StartTime = Format.TimeOnly(competition.Start);
+        edit.SingleDay = competition.SingleDay();
+
+        if(!competition.SingleDay())
+        {
+          edit.EndDate = Format.DateOnly((DateTime)competition.End);
+          edit.EndTime = Format.TimeOnly((DateTime)competition.End);
+          edit.SingleDay = false;
+        }
+        else
+        {
+          edit.EndDate = Format.DateOnly(competition.Start.AddDays(1));
+          edit.EndTime = "5:00 PM";
+          edit.SingleDay = true;
+        }
+
       }
       else
         throw new NotImplementedException();
@@ -91,9 +94,8 @@ namespace PNACCompetitionsDbFirst.Controllers
     [HttpPost]
     public ActionResult Edit(CompetitionEdit model)
     {
-      /*
       CompetitionEdit edit = new CompetitionEdit();
-      Competition competition = db.Competition.SingleOrDefault(c => c.CompetitionId == model.CompetitionId);
+      Competition competition = db.Competitions.SingleOrDefault(c => c.CompetitionId == model.CompetitionId);
 
       if (IsAdmin && ModelState.IsValid)
       {
@@ -106,7 +108,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         return View(model);
       else if (!IsAdmin)
         throw new UnauthorizedAccessException("");
-        */
+        
       return new EmptyResult();
     }
 
@@ -127,8 +129,8 @@ namespace PNACCompetitionsDbFirst.Controllers
           CompetitionId = competition_.CompetitionId,
           Venue = competition_.Venue,
           Start = competition_.Start,
-            CanEdit = canEdit, WeighIn = competition_.WeighInDescription()
-
+          CanEdit = canEdit,
+          WeighIn = competition_.WeighInDescription()
         };
 
         if (!competition_.SingleDay())

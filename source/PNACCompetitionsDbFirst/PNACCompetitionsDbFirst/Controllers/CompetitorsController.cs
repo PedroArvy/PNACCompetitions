@@ -50,6 +50,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         competitor.CompetitorType = (int)model.CompetitorType;
 
       competitor.Gender = (int)model.Gender;
+      competitor.Suburb = model.Suburb;
 
       if (model.ShowHidden)
         competitor.Hide = model.Hidden;
@@ -58,6 +59,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         competitor.Admin = model.Admin;
       }
+
     }
 
 
@@ -118,6 +120,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.CompetitorId = competitor.CompetitorId;
         edit.FriendlyName = competitor.FriendlyName();
         edit.Hidden = competitor.Hide;
+        edit.Suburb = competitor.Suburb;
 
         if (Competitor.Admin)
         {

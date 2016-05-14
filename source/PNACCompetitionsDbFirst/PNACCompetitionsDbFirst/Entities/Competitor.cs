@@ -17,11 +17,11 @@ namespace PNACCompetitionsDbFirst.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Competitor()
         {
-            this.Entries = new HashSet<Entry>();
             this.Competitions = new HashSet<Competition>();
             this.Competitions1 = new HashSet<Competition>();
             this.Competitions2 = new HashSet<Competition>();
             this.Competitions3 = new HashSet<Competition>();
+            this.Entries = new HashSet<Entry>();
         }
     
         public int CompetitorId { get; set; }
@@ -34,11 +34,10 @@ namespace PNACCompetitionsDbFirst.Entities
         public string AspNetUserId { get; set; }
         public bool Admin { get; set; }
         public bool Hide { get; set; }
+        public string Suburb { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Club Club { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Entry> Entries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Competition> Competitions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -47,5 +46,7 @@ namespace PNACCompetitionsDbFirst.Entities
         public virtual ICollection<Competition> Competitions2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Competition> Competitions3 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Entry> Entries { get; set; }
     }
 }
