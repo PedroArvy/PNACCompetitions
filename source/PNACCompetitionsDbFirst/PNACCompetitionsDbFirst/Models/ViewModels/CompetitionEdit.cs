@@ -21,10 +21,11 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     #region *********************** Properties ***********************
 
-    public bool SingleDay { get; set; }
-
 
     public int CompetitionId { get; set; }
+
+
+    public string DayType { get; set; }
 
 
     [Display(Name = "End date")]
@@ -46,6 +47,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     [Display(Name = "Referee 2")]
     public string Referee2 { get; set; }
+
 
 
     [Display(Name = "Start date")]

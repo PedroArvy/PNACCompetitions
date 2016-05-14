@@ -38,8 +38,15 @@ namespace PNACCompetitionsDbFirst.Controllers
       competition.Venue = model.Venue;
       competition.Start = DateTime.Parse(model.StartDate + " " + model.StartTime);
 
-      if(!model.SingleDay)
+      if(model.DayType == "m")
         competition.End = DateTime.Parse(model.EndDate + " " + model.EndTime);
+
+      competition.DayType = model.DayType;
+
+      competition.TripCaptain = model.TripCaptain;
+      competition.Referee1 = model.Referee1;
+      competition.Referee2 = model.Referee2;
+
     }
 
 
@@ -68,22 +75,26 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.Venue = competition.Venue;
         edit.StartDate = Format.DateOnly(competition.Start);
         edit.StartTime = Format.TimeOnly(competition.Start);
-        edit.SingleDay = competition.SingleDay();
+        edit.DayType = competition.DayType;
 
         edit.MemberNames = MakeNames();
 
-        if (!competition.SingleDay())
+        if (competition.DayType == "m")
         {
           edit.EndDate = Format.DateOnly((DateTime)competition.End);
           edit.EndTime = Format.TimeOnly((DateTime)competition.End);
-          edit.SingleDay = false;
+          edit.DayType = "m";
         }
         else
         {
           edit.EndDate = Format.DateOnly(competition.Start.AddDays(1));
           edit.EndTime = "5:00 PM";
-          edit.SingleDay = true;
+          edit.DayType = "s";
         }
+
+        edit.TripCaptain = competition.TripCaptain;
+        edit.Referee1 = competition.Referee1;
+        edit.Referee2 = competition.Referee2;
 
       }
       else
@@ -91,7 +102,6 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       return View(edit);
     }
-
 
 
     [HttpPost]
@@ -136,7 +146,7 @@ namespace PNACCompetitionsDbFirst.Controllers
           WeighIn = competition_.WeighInDescription()
         };
 
-        if (!competition_.SingleDay())
+        if (competition_.DayType == "m")
           competitionListItem.End = (DateTime)competition_.End;
 
         index.CompetitionListItems.Add(competitionListItem);
@@ -152,6 +162,9 @@ namespace PNACCompetitionsDbFirst.Controllers
     public ActionResult New()
     {
       CompetitionEdit edit = new CompetitionEdit();
+
+      edit.DayType = "s";
+
       return View(edit);
     }
 

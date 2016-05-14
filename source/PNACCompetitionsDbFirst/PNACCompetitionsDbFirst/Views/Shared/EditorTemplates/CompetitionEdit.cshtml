@@ -36,16 +36,16 @@
 </div>
 
 
-
 <div class="form-group">
   <div class="col-md-10">
-    <a id="multi-day" href="#" class="btn btn-default save-button day-type">Multi day competition</a>
-    <a id="single-day" href="#" class="btn btn-default save-button day-type">Single day competition</a>
+    <label class="pnac-label">Competition type</label>
+  </div>
+  <div class="col-md-10">
+    Single day @Html.RadioButtonFor(m => m.DayType, "s")
+    <br/>Multi day @Html.RadioButtonFor(m => m.DayType, "m")
   </div>
 </div>
 
-
-@Html.HiddenFor(m => m.SingleDay)
 
 <div class="form-group multi-day">
   <div class="col-md-10">
@@ -102,7 +102,7 @@
 <div class="form-group">
   <div class="col-md-10">
     <input type="submit" class="btn btn-default save-button" value="Save" />
-    <a href="/competition/index" class="btn btn-default save-button back-button">Back to all competitions</a>
+    <a href="/competitions/index" class="btn btn-default save-button back-button">Back to all competitions</a>
   </div>
 </div>
 
@@ -136,49 +136,28 @@
 
   $(function () {
 
-    $("#single-day").click(function () {
-      $(".single-day").show();
-      $(".multi-day").hide();
-      $('#SingleDay').attr('value', 'false');
-      $('#SingleDay').attr('value', 'true');
+    $("input[name = 'DayType']").click(function () {
 
-      $("#multi-day").show();
-      $("#single-day").hide();
-
-    });
-
-    $("#multi-day").click(function () {
-      $(".single-day").hide();
-      $(".multi-day").show();
-      $('#SingleDay').attr('value', 'true');
-      $('#SingleDay').attr('value', 'false');
-
-      $("#multi-day").hide();
-      $("#single-day").show();
-
-    });
-
-    @{
-      if(Model.SingleDay)
+      if ($(this).val() == 's')
       {
-        <text>
-    $(".single-day").show();
-    $(".multi-day").hide();
-    $("#multi-day").show();
-    $("#single-day").hide();
-    </text>
+        $(".single-day").show();
+        $(".multi-day").hide();
       }
       else
       {
-        <text>
-    $(".single-day").hide();
-    $(".multi-day").show();
-    $("#multi-day").hide();
-    $("#single-day").show();
-    </text>
+        $(".single-day").hide();
+        $(".multi-day").show();
       }
 
+    });
+
+
+    @if(Model.DayType == "s")
+    {
+      @:$(".multi-day").hide();
     }
+
+
 
   });
 
@@ -188,7 +167,7 @@
 
 
 <script>
-  $(function() {
+  $(function () {
     var members = [
 
       @Html.Raw(Model.MemberNames)
