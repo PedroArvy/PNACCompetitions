@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace PNACCompetitionsDbFirst.Entities.ViewModels
+namespace PNACCompetitionsDbFirst.Models.ViewModels
 {
-  public class FishIndex
+  public class CompetitionIndex
   {
     #region *********************** Constants ************************
     #endregion
@@ -19,8 +19,7 @@ namespace PNACCompetitionsDbFirst.Entities.ViewModels
 
     public bool CanCreate { get; set; }
 
-    public List<FishListItem> FishListItems { get; set; }
-
+    public List<CompetitionListItem> CompetitionListItems { get; set; }
 
     #endregion
 
@@ -35,5 +34,6 @@ namespace PNACCompetitionsDbFirst.Entities.ViewModels
 
     #region *********************** Interfaces ***********************
     #endregion
+
   }
 }

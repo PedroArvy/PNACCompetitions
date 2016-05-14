@@ -1,4 +1,4 @@
-﻿using PNACCompetitionsDbFirst.Entities.ViewModels;
+﻿using PNACCompetitionsDbFirst.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +54,7 @@ namespace PNACCompetitionsDbFirst.Entities
 
     public LeaderBoardLineItem LeaderBoardLineItem()
     {
-      LeaderBoardLineItem item = new ViewModels.LeaderBoardLineItem();
+      LeaderBoardLineItem item = new LeaderBoardLineItem();
 
       item.Name = Entry.Competitor.FriendlyName();
       item.FormulaPoints = (int)Math.Round(FormulaPoints());

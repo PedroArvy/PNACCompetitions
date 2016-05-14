@@ -1,11 +1,13 @@
-﻿@using PNACCompetitionsDbFirst.Entities.ViewModels
+﻿@using PNACCompetitionsDbFirst.Models.ViewModels
 @model CompetitorEdit
 
 
 @Html.AntiForgeryToken()
 
 <div class="form-group">
-  @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.FirstName, new { @class = "pnac-label" })
+  </div>
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.FirstName)
@@ -13,7 +15,9 @@
 </div>
 
 <div class="form-group">
-  @Html.LabelFor(m => m.NickName, new { @class = "col-md-2 control-label" })
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.NickName, new { @class = "pnac-label" })
+  </div>
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.NickName, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.NickName)
@@ -21,7 +25,9 @@
 </div>
 
 <div class="form-group">
-  @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.LastName, new { @class = "pnac-label" })
+  </div>
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.LastName)
@@ -30,7 +36,9 @@
 
 
 <div class="form-group">
-  @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.Email, new { @class = "pnac-label" })
+  </div>
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Email)
@@ -40,20 +48,24 @@
 
 
 <div class="form-group">
-  @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.Password, new { @class = "pnac-label" })
+  </div>
   <div class="col-md-10">
     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Password)
 
     @if (Model.CompetitorId != 0)
-    {
+      {
       <div class="help">Only enter to change password</div>
     }
   </div>
 </div>
 
 <div class="form-group">
-  @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "pnac-label" })
+  </div>
   <div class="col-md-10">
     @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.ConfirmPassword)
@@ -62,7 +74,9 @@
 
 
 <div class="form-group">
-  @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label" })
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.Gender, new { @class = "pnac-label" })
+  </div>
   <div class="col-md-10">
     @Html.DropDownListFor(m => m.Gender, EnumHelper.GetSelectList(typeof(PNACCompetitionsDbFirst.Entities.Competitor.GENDER)), new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Gender)
@@ -73,7 +87,9 @@
 @if (Model.ShowCompetitorType)
       {
   <div class="form-group">
-    @Html.LabelFor(m => m.CompetitorType, new { @class = "col-md-2 control-label" })
+    <div class="col-md-10">
+      @Html.LabelFor(m => m.CompetitorType, new { @class = "pnac-label" })
+    </div>
     <div class="col-md-10">
       @Html.DropDownListFor(m => m.CompetitorType, EnumHelper.GetSelectList(typeof(PNACCompetitionsDbFirst.Entities.Competitor.COMPETITOR_TYPE)), new { @class = "form-control" })
       @Html.ValidationMessageFor(m => m.CompetitorType)
@@ -85,9 +101,9 @@
 @if (Model.ShowAdmin)
 {
   <div class="form-group">
-    @Html.LabelFor(m => m.Admin, new { @class = "col-md-2 control-label" })
     <div class="col-md-10">
-      @Html.CheckBoxFor(m => m.Admin)
+      <span class="single-checkbox-label">@Html.LabelFor(m => m.Admin, new { @class = "pnac-label" })</span>
+      <span class="single-checkbox">@Html.CheckBoxFor(m => m.Admin)</span>
     </div>
   </div>
 }
@@ -96,17 +112,18 @@
 @if (Model.ShowHidden)
 {
   <div class="form-group">
-    @Html.LabelFor(m => m.Hidden, new { @class = "col-md-2 control-label" })
     <div class="col-md-10">
-      @Html.CheckBoxFor(m => m.Hidden)
+      <span class="single-checkbox-label">@Html.LabelFor(m => m.Hidden, new { @class = "pnac-label" })</span>
+      <span class="single-checkbox">@Html.CheckBoxFor(m => m.Hidden)</span>
     </div>
   </div>
 }
 
 
 <div class="form-group">
-  <div class="col-md-offset-2 col-md-10">
-    <input type="submit" class="btn btn-default" value="Save" />
+  <div class="col-md-10">
+    <input type="submit" class="btn btn-default save-button" value="Save" />
+    <a href="/competitor/index" class="btn btn-default save-button back-button">Back to all competitors</a>
   </div>
 </div>
 

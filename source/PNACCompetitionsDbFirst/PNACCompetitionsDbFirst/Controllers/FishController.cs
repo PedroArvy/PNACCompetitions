@@ -1,6 +1,6 @@
 ﻿using PNACCompetitionsDbFirst.Controllers;
 using PNACCompetitionsDbFirst.Entities;
-using PNACCompetitionsDbFirst.Entities.ViewModels;
+using PNACCompetitionsDbFirst.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,11 +34,21 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     private void AssignModel(Fish fish, FishEdit model)
     {
-
       fish.Name = model.Name;
       fish.Minimum = model.Minimum;
       fish.Maximum = model.Maximum;
       fish.Difficulty = model.Difficulty;
+
+      fish.Environments.ToList().RemoveRange(0, fish.Environments.Count());
+
+      if (model.EnvironmentFreshwater)
+        fish.Environments.Add(db.Environments.Single(e => e.EnvironmentId == Fish.FRESHWATER));
+
+      if (model.EnvironmentEstuary)
+        fish.Environments.Add(db.Environments.Single(e => e.EnvironmentId == Fish.ESTUARY));
+
+      if (model.EnvironmentSaltwater)
+        fish.Environments.Add(db.Environments.Single(e => e.EnvironmentId == Fish.SALTWATER));
     }
 
 
@@ -65,6 +75,11 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.Minimum = fish.Minimum;
         edit.Maximum = fish.Maximum;
         edit.Difficulty = fish.Difficulty;
+
+        edit.EnvironmentFreshwater = fish.Environments.Any(e => e.EnvironmentId == Fish.FRESHWATER);
+        edit.EnvironmentEstuary = fish.Environments.Any(e => e.EnvironmentId == Fish.ESTUARY);
+        edit.EnvironmentSaltwater = fish.Environments.Any(e => e.EnvironmentId == Fish.SALTWATER);
+
       }
       else
         throw new NotImplementedException();

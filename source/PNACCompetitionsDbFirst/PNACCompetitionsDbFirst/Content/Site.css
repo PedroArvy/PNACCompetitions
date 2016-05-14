@@ -44,3 +44,52 @@ a.btn
 .field-validation-error{
   color:red;
 }
+
+
+.pnac-label
+{
+  text-align:left;
+}
+
+
+.save-button{
+  margin-top:20px;
+}
+
+.back-button{
+  margin-left:10px;
+}
+
+.single-checkbox
+{
+  margin-left:15px;
+}
+
+.single-checkbox-label
+{
+  width:100px;
+  background-color:red;
+  display:inline;
+}
+
+
+.section-title{
+  margin-bottom:30px;
+}
+
+
+.datepicker, .timepicker{
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555555;
+    display: block;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    vertical-align: middle;
+    width: 100%;
+}

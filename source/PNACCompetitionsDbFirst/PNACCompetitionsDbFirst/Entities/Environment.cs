@@ -12,24 +12,18 @@ namespace PNACCompetitionsDbFirst.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Club
+    public partial class Environment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Club()
+        public Environment()
         {
-            this.Seasons = new HashSet<Season>();
-            this.Competitors = new HashSet<Competitor>();
-            this.Competitions = new HashSet<Competition>();
+            this.Fish = new HashSet<Fish>();
         }
     
-        public int ClubId { get; set; }
+        public int EnvironmentId { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Season> Seasons { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Competitor> Competitors { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Competition> Competitions { get; set; }
+        public virtual ICollection<Fish> Fish { get; set; }
     }
 }

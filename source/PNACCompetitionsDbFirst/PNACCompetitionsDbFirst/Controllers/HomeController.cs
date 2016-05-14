@@ -1,5 +1,5 @@
 ﻿using PNACCompetitionsDbFirst.Entities;
-using PNACCompetitionsDbFirst.Entities.ViewModels;
+using PNACCompetitionsDbFirst.Models.ViewModels;
 using PNACCompetitionsDbFirst.Models;
 using System;
 using System.Collections.Generic;

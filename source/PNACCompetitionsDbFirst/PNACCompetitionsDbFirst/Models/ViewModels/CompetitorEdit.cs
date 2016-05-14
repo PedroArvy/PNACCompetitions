@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using static PNACCompetitionsDbFirst.Entities.Competitor;
 
-namespace PNACCompetitionsDbFirst.Entities.ViewModels
+namespace PNACCompetitionsDbFirst.Models.ViewModels
 {
   public class CompetitorEdit
   {

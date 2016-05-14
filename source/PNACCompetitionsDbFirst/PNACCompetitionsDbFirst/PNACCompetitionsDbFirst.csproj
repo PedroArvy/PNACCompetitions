@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompetitorsController.cs" />
+    <Compile Include="Controllers\CompetitionsController.cs" />
     <Compile Include="Controllers\FishController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Entities\Competitor.cs">
       <DependentUpon>Competitions.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Competition_partial.cs" />
     <Compile Include="Entities\Competitor_partial.cs" />
     <Compile Include="Entities\Entry.cs">
       <DependentUpon>Competitions.tt</DependentUpon>
@@ -216,17 +218,22 @@
     <Compile Include="Entities\Fish.cs">
       <DependentUpon>Competitions.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Fish_partial.cs" />
     <Compile Include="Entities\PNACCompetitionsEntities_partial.cs" />
     <Compile Include="Entities\Season.cs">
       <DependentUpon>Competitions.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\ViewModels\FishListItem.cs" />
-    <Compile Include="Entities\ViewModels\FishIndex.cs" />
-    <Compile Include="Entities\ViewModels\CompetitorEdit.cs" />
-    <Compile Include="Entities\ViewModels\FishEdit.cs" />
-    <Compile Include="Entities\ViewModels\CompetitorIndex.cs" />
-    <Compile Include="Entities\ViewModels\CompetitorListItem.cs" />
-    <Compile Include="Entities\ViewModels\LeaderBoardLineItem.cs" />
+    <Compile Include="Models\Format.cs" />
+    <Compile Include="Models\ViewModels\CompetitionEdit.cs" />
+    <Compile Include="Models\ViewModels\CompetitionListItem.cs" />
+    <Compile Include="Models\ViewModels\CompetitionIndex.cs" />
+    <Compile Include="Models\ViewModels\FishListItem.cs" />
+    <Compile Include="Models\ViewModels\FishIndex.cs" />
+    <Compile Include="Models\ViewModels\CompetitorEdit.cs" />
+    <Compile Include="Models\ViewModels\FishEdit.cs" />
+    <Compile Include="Models\ViewModels\CompetitorIndex.cs" />
+    <Compile Include="Models\ViewModels\CompetitorListItem.cs" />
+    <Compile Include="Models\ViewModels\LeaderBoardLineItem.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -241,6 +248,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\pickadate\default.css" />
+    <Content Include="Content\pickadate\default.time.css" />
+    <Content Include="Content\pickadate\default.date.css" />
     <Content Include="Entities\Competitions.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Competitions.edmx</DependentUpon>
@@ -273,10 +283,15 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\pickadate\legacy.js" />
+    <Content Include="Scripts\pickadate\picker.time.js" />
+    <Content Include="Scripts\pickadate\picker.date.js" />
+    <Content Include="Scripts\pickadate\picker.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="readme.txt" />
+    <Content Include="test.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -313,7 +328,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Competitors\Index.cshtml" />
+    <Content Include="Views\Competitions\Index.cshtml" />
     <Content Include="Views\Fish\Edit.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Competitors\New.cshtml" />
@@ -322,6 +337,9 @@
     <Content Include="Views\Shared\EditorTemplates\FishEdit.cshtml" />
     <Content Include="Views\Competitors\Edit.cshtml" />
     <Content Include="Views\Fish\New.cshtml" />
+    <Content Include="Views\Competitors\Index.cshtml" />
+    <Content Include="Views\Competitions\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CompetitionEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

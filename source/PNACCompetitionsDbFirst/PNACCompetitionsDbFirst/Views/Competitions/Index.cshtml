@@ -1,0 +1,94 @@
+﻿@using PNACCompetitionsDbFirst.Entities;
+@using PNACCompetitionsDbFirst.Models.ViewModels;
+@using PNACCompetitionsDbFirst.Models;
+@model CompetitionIndex
+
+@{
+  ViewBag.Title = "Competitions";
+}
+
+<script>
+
+  function DeleteCompetition(id) {
+    if (confirm('Are you sure you want to delete this competition?')) {
+
+      $.ajax("/Competition/Delete?id=" + id)
+
+        .done(function (msg) {
+
+          if (msg.success == 'true')
+          {
+            $('#row-' + id).hide('slow');
+          }
+
+        })
+        .fail(function () {
+          alert("DeleteCompetition error");
+        })
+
+    }
+
+    return false;
+  }
+
+</script>
+
+<div class="row">
+  <div class="col-md-6">
+    <h2 class="section-title">Competitions</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="table-responsive">
+
+      @if (Model.CanCreate)
+      {
+        @Html.ActionLink("New", "New", "Competition", new { }, new { @class = "btn btn-primary btn-sm" })
+      }
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            @if (Model.CompetitionListItems.Any(c => c.CanEdit))
+            {
+              <th>Action</th>
+            }
+            <th>Venue</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Weigh In</th>
+          </tr>
+        </thead>
+        <tbody>
+
+
+          @foreach (CompetitionListItem competition in Model.CompetitionListItems)
+          {
+            <tr id="row-@competition.CompetitionId">
+
+              @if (Model.CompetitionListItems.Any(c => c.CanEdit))
+              {
+                <td class="table-action">
+                  @if (competition.CanEdit)
+                  {
+                    @Html.ActionLink("Edit", "Edit", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm", onclick = "return DeleteCompetition(" + competition.CompetitionId + ")" })
+                  }
+                </td>
+              }
+
+              <td>@competition.Venue</td>
+              <td>@Format.DateAndTime(competition.Start)</td>
+              <td>@Format.DateAndTime(competition.End)</td>
+              <td>@competition.WeighIn</td>
+
+            </tr>
+          }
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

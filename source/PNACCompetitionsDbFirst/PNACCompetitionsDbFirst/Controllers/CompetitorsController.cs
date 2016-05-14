@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PNACCompetitionsDbFirst.Entities;
-using PNACCompetitionsDbFirst.Entities.ViewModels;
+using PNACCompetitionsDbFirst.Models.ViewModels;
 using PNACCompetitionsDbFirst.Models;
 using System;
 using System.Collections.Generic;
@@ -70,6 +70,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       return canEdit;
     }
+
 
     [Authorize]
     public JsonResult Delete(int id)

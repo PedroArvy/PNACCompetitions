@@ -1,11 +1,13 @@
-﻿@using PNACCompetitionsDbFirst.Entities.ViewModels
+﻿@using PNACCompetitionsDbFirst.Models.ViewModels
 @model FishEdit
 
 
 @Html.AntiForgeryToken()
 
 <div class="form-group">
-  @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.Name, new { @class = "pnac-label" })
+  </div>
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Name)
@@ -13,7 +15,9 @@
 </div>
 
 <div class="form-group">
-  @Html.LabelFor(m => m.Minimum, new { @class = "col-md-2 control-label" })
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.Minimum, new { @class = "pnac-label" })
+  </div>
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.Minimum, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Minimum)
@@ -21,7 +25,9 @@
 </div>
 
 <div class="form-group">
-  @Html.LabelFor(m => m.Maximum, new { @class = "col-md-2 control-label" })
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.Maximum, new { @class = "pnac-label" })
+  </div>
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.Maximum, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Maximum)
@@ -30,15 +36,9 @@
 
 
 <div class="form-group">
-  @Html.LabelFor(m => m.Difficulty, new { @class = "col-md-2 control-label" })
   <div class="col-md-10">
-    @Html.TextBoxFor(m => m.Difficulty, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Difficulty)
+    @Html.LabelFor(m => m.Difficulty, new { @class = "pnac-label" })
   </div>
-</div>
-
-<div class="form-group">
-  @Html.LabelFor(m => m.Difficulty, new { @class = "col-md-2 control-label" })
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.Difficulty, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Difficulty)
@@ -47,7 +47,9 @@
 
 
 <div class="form-group">
- <label class="col-md-2 control-label">Environment</label>
+  <div class="col-md-10">
+    <label class="pnac-label">Environment</label>
+  </div>
   <div class="col-md-10">
     <div>@Html.CheckBoxFor(m => m.EnvironmentFreshwater) Freshwater</div>
     <div>@Html.CheckBoxFor(m => m.EnvironmentEstuary) Estuary</div>
@@ -60,8 +62,9 @@
 
 
 <div class="form-group">
-  <div class="col-md-offset-2 col-md-10">
-    <input type="submit" class="btn btn-default" value="Save" />
+  <div class="col-md-10">
+    <input type="submit" class="btn btn-default save-button" value="Save" />
+    <a href="/fish/index" class="btn btn-default save-button back-button">Back to all fish</a>
   </div>
 </div>
 
