@@ -107,7 +107,11 @@
     $('#search').autocomplete({
       source: members,
 
+
       select: function (event, ui) {
+
+        $('#search').val(ui.item.label);
+        event.preventDefault();
         FindTd(ui.item.label);
       }
 

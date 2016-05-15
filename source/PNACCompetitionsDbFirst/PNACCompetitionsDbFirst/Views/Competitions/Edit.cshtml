@@ -12,20 +12,40 @@
   </div>
 </div>
 
+<script>
+  $(function() {
+    $( "#tabs" ).tabs();
+  });
+</script>
 
-<div class="row">
-  <div class="col-md-12">
+<div id="tabs">
+  <ul>
+    <li><a href="#details-tab">Details</a></li>
+    <li><a href="#competitors-tab">Competitors</a></li>
+  </ul>
 
-    @using (Html.BeginForm("Edit", "Competitions", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-      @Html.AntiForgeryToken()
+  <div id="details-tab" class="row">
+    <div class="col-md-12">
 
-      @Html.EditorFor(m => m)
-      @Html.HiddenFor(c => c.CompetitionId)
-    }
+      @using (Html.BeginForm("Edit", "Competitions", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+      {
+        @Html.AntiForgeryToken()
 
+        @Html.EditorFor(m => m)
+        @Html.HiddenFor(c => c.CompetitionId)
+      }
+
+    </div>
   </div>
+
+  <div id="competitors-tab">
+    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+  </div>
+
 </div>
+
+
+
 
 @section Scripts {
   @Scripts.Render("~/bundles/jqueryval")

@@ -70,7 +70,7 @@
 
 <div class="form-group">
   <div class="col-md-10">
-    @Html.LabelFor(m => m.TripCaptain, new { @class = "pnac-label" })
+    @Html.LabelFor(m => m.TripCaptain, new { @class = "pnac-label a1utocomplete" })
   </div>
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.TripCaptain, new { @class = "form-control", data_type = "search", placeholder = "Search members..." })
@@ -82,7 +82,7 @@
 
 <div class="form-group">
   <div class="col-md-10">
-    @Html.LabelFor(m => m.Referee1, new { @class = "pnac-label" })
+    @Html.LabelFor(m => m.Referee1, new { @class = "pnac-label a1utocomplete" })
   </div>
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.Referee1, new { @class = "form-control" })
@@ -94,7 +94,7 @@
 
 <div class="form-group">
   <div class="col-md-10">
-    @Html.LabelFor(m => m.Referee2, new { @class = "pnac-label" })
+    @Html.LabelFor(m => m.Referee2, new { @class = "pnac-label a1utocomplete" })
   </div>
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.Referee2, new { @class = "form-control" })
@@ -179,6 +179,21 @@
 
     ];
 
+
+    $('#TripCaptain').focus(function () {
+      $(this).val('');
+      return false;
+    });
+    $('#Referee1').focus(function () {
+      $(this).val('');
+      return false;
+    });
+    $('#Referee2').focus(function () {
+      $(this).val('');
+      return false;
+    });
+
+
     $('#TripCaptain').autocomplete({
       source: members,
       select: function (event, ui)
@@ -196,7 +211,7 @@
 
         $('#Referee1Id').val(ui.item.value);
         event.preventDefault();
-        $("#Referee1Id").val(ui.item.label);
+        $("#Referee1").val(ui.item.label);
 
       }
     });
@@ -207,10 +222,13 @@
 
         $('#Referee2Id').val(ui.item.value);
         event.preventDefault();
-        $("#Referee2Id").val(ui.item.label);
+        $("#Referee2").val(ui.item.label);
 
       }
     });
 
   });
+
+
+
 </script>
