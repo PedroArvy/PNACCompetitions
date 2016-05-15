@@ -51,9 +51,9 @@
           <Property Name="End" Type="datetime" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
           <Property Name="Start" Type="datetime" Nullable="false" />
-          <Property Name="TripCaptain" Type="varchar" MaxLength="100" />
-          <Property Name="Referee1" Type="varchar" MaxLength="100" />
-          <Property Name="Referee2" Type="varchar" MaxLength="100" />
+          <Property Name="TripCaptainId" Type="int" />
+          <Property Name="Referee1Id" Type="int" />
+          <Property Name="Referee2Id" Type="int" />
           <Property Name="Venue" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="WeighInTime" Type="datetime" />
           <Property Name="WeighInVenue" Type="varchar" MaxLength="1000" />
@@ -132,6 +132,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Competitions_Competitors">
+          <End Role="Competitors" Type="Self.Competitors" Multiplicity="0..1" />
+          <End Role="Competitions" Type="Self.Competitions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competitors">
+              <PropertyRef Name="CompetitorId" />
+            </Principal>
+            <Dependent Role="Competitions">
+              <PropertyRef Name="TripCaptainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Competitions_Competitors1">
+          <End Role="Competitors" Type="Self.Competitors" Multiplicity="0..1" />
+          <End Role="Competitions" Type="Self.Competitions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competitors">
+              <PropertyRef Name="CompetitorId" />
+            </Principal>
+            <Dependent Role="Competitions">
+              <PropertyRef Name="Referee1Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Competitions_Competitors2">
+          <End Role="Competitors" Type="Self.Competitors" Multiplicity="0..1" />
+          <End Role="Competitions" Type="Self.Competitions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competitors">
+              <PropertyRef Name="CompetitorId" />
+            </Principal>
+            <Dependent Role="Competitions">
+              <PropertyRef Name="Referee2Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Competitors_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Competitors" Type="Self.Competitors" Multiplicity="*" />
@@ -155,20 +191,6 @@
             </Principal>
             <Dependent Role="Catches">
               <PropertyRef Name="EntryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Competitions_dbo_Clubs_ClubId">
-          <End Role="Clubs" Type="Self.Clubs" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Competitions" Type="Self.Competitions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clubs">
-              <PropertyRef Name="ClubId" />
-            </Principal>
-            <Dependent Role="Competitions">
-              <PropertyRef Name="ClubId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -265,6 +287,18 @@
             <End Role="Fish" EntitySet="Fish" />
             <End Role="Catches" EntitySet="Catches" />
           </AssociationSet>
+          <AssociationSet Name="FK_Competitions_Competitors" Association="Self.FK_Competitions_Competitors">
+            <End Role="Competitors" EntitySet="Competitors" />
+            <End Role="Competitions" EntitySet="Competitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Competitions_Competitors1" Association="Self.FK_Competitions_Competitors1">
+            <End Role="Competitors" EntitySet="Competitors" />
+            <End Role="Competitions" EntitySet="Competitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Competitions_Competitors2" Association="Self.FK_Competitions_Competitors2">
+            <End Role="Competitors" EntitySet="Competitors" />
+            <End Role="Competitions" EntitySet="Competitions" />
+          </AssociationSet>
           <AssociationSet Name="FK_Competitors_AspNetUsers" Association="Self.FK_Competitors_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Competitors" EntitySet="Competitors" />
@@ -272,10 +306,6 @@
           <AssociationSet Name="FK_dbo_Catches_dbo_Entries_EntryId" Association="Self.FK_dbo_Catches_dbo_Entries_EntryId">
             <End Role="Entries" EntitySet="Entries" />
             <End Role="Catches" EntitySet="Catches" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Competitions_dbo_Clubs_ClubId" Association="Self.FK_dbo_Competitions_dbo_Clubs_ClubId">
-            <End Role="Clubs" EntitySet="Clubs" />
-            <End Role="Competitions" EntitySet="Competitions" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Competitors_dbo_Clubs_ClubId" Association="Self.FK_dbo_Competitors_dbo_Clubs_ClubId">
             <End Role="Clubs" EntitySet="Clubs" />
@@ -365,8 +395,16 @@
             <End Role="Entry" EntitySet="Entries" />
           </AssociationSet>
           <EntitySet Name="Competitions" EntityType="PNACCompetitionsModel.Competition" />
-          <AssociationSet Name="FK_dbo_Competitions_dbo_Clubs_ClubId" Association="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Clubs_ClubId">
-            <End Role="Club" EntitySet="Clubs" />
+          <AssociationSet Name="FK_Competitions_Competitors" Association="PNACCompetitionsModel.FK_Competitions_Competitors">
+            <End Role="Competitor" EntitySet="Competitors" />
+            <End Role="Competition" EntitySet="Competitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Competitions_Competitors1" Association="PNACCompetitionsModel.FK_Competitions_Competitors1">
+            <End Role="Competitor" EntitySet="Competitors" />
+            <End Role="Competition" EntitySet="Competitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Competitions_Competitors2" Association="PNACCompetitionsModel.FK_Competitions_Competitors2">
+            <End Role="Competitor" EntitySet="Competitors" />
             <End Role="Competition" EntitySet="Competitions" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Entries_dbo_Competitions_CompetitionId" Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId">
@@ -428,7 +466,6 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Seasons" Relationship="PNACCompetitionsModel.FK_dbo_Seasons_dbo_Clubs_ClubId" FromRole="Club" ToRole="Season" />
           <NavigationProperty Name="Competitors" Relationship="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" FromRole="Club" ToRole="Competitor" />
-          <NavigationProperty Name="Competitions" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Clubs_ClubId" FromRole="Club" ToRole="Competition" />
         </EntityType>
         <Association Name="FK_dbo_Seasons_dbo_Clubs_ClubId">
           <End Type="PNACCompetitionsModel.Club" Role="Club" Multiplicity="1">
@@ -501,6 +538,9 @@
           <NavigationProperty Name="AspNetUser" Relationship="PNACCompetitionsModel.FK_Competitors_AspNetUsers" FromRole="Competitor" ToRole="AspNetUser" />
           <NavigationProperty Name="Club" Relationship="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" FromRole="Competitor" ToRole="Club" />
           <NavigationProperty Name="Entries" Relationship="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitors_CompetitorId" FromRole="Competitor" ToRole="Entry" />
+          <NavigationProperty Name="Competitions" Relationship="PNACCompetitionsModel.FK_Competitions_Competitors" FromRole="Competitor" ToRole="Competition" />
+          <NavigationProperty Name="Competitions1" Relationship="PNACCompetitionsModel.FK_Competitions_Competitors1" FromRole="Competitor" ToRole="Competition" />
+          <NavigationProperty Name="Competitions2" Relationship="PNACCompetitionsModel.FK_Competitions_Competitors2" FromRole="Competitor" ToRole="Competition" />
           </EntityType>
         <Association Name="FK_Competitors_AspNetUsers">
           <End Type="PNACCompetitionsModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
@@ -552,27 +592,51 @@
           <Property Name="End" Type="DateTime" Precision="3" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="TripCaptain" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Referee1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Referee2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TripCaptainId" Type="Int32" />
+          <Property Name="Referee1Id" Type="Int32" />
+          <Property Name="Referee2Id" Type="Int32" />
           <Property Name="Venue" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="WeighInTime" Type="DateTime" Precision="3" />
           <Property Name="WeighInVenue" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="DayType" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="Club" Relationship="PNACCompetitionsModel.FK_dbo_Competitions_dbo_Clubs_ClubId" FromRole="Competition" ToRole="Club" />
+          <NavigationProperty Name="Competitor" Relationship="PNACCompetitionsModel.FK_Competitions_Competitors" FromRole="Competition" ToRole="Competitor" />
+          <NavigationProperty Name="Competitor1" Relationship="PNACCompetitionsModel.FK_Competitions_Competitors1" FromRole="Competition" ToRole="Competitor" />
+          <NavigationProperty Name="Competitor2" Relationship="PNACCompetitionsModel.FK_Competitions_Competitors2" FromRole="Competition" ToRole="Competitor" />
           <NavigationProperty Name="Entries" Relationship="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" FromRole="Competition" ToRole="Entry" />
         </EntityType>
-        <Association Name="FK_dbo_Competitions_dbo_Clubs_ClubId">
-          <End Type="PNACCompetitionsModel.Club" Role="Club" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK_Competitions_Competitors">
+          <End Type="PNACCompetitionsModel.Competitor" Role="Competitor" Multiplicity="0..1" />
           <End Type="PNACCompetitionsModel.Competition" Role="Competition" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Club">
-              <PropertyRef Name="ClubId" />
+            <Principal Role="Competitor">
+              <PropertyRef Name="CompetitorId" />
             </Principal>
             <Dependent Role="Competition">
-              <PropertyRef Name="ClubId" />
+              <PropertyRef Name="TripCaptainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Competitions_Competitors1">
+          <End Type="PNACCompetitionsModel.Competitor" Role="Competitor" Multiplicity="0..1" />
+          <End Type="PNACCompetitionsModel.Competition" Role="Competition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competitor">
+              <PropertyRef Name="CompetitorId" />
+            </Principal>
+            <Dependent Role="Competition">
+              <PropertyRef Name="Referee1Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Competitions_Competitors2">
+          <End Type="PNACCompetitionsModel.Competitor" Role="Competitor" Multiplicity="0..1" />
+          <End Type="PNACCompetitionsModel.Competition" Role="Competition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competitor">
+              <PropertyRef Name="CompetitorId" />
+            </Principal>
+            <Dependent Role="Competition">
+              <PropertyRef Name="Referee2Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -706,9 +770,9 @@
                 <ScalarProperty Name="WeighInVenue" ColumnName="WeighInVenue" />
                 <ScalarProperty Name="WeighInTime" ColumnName="WeighInTime" />
                 <ScalarProperty Name="Venue" ColumnName="Venue" />
-                <ScalarProperty Name="Referee2" ColumnName="Referee2" />
-                <ScalarProperty Name="Referee1" ColumnName="Referee1" />
-                <ScalarProperty Name="TripCaptain" ColumnName="TripCaptain" />
+                <ScalarProperty Name="Referee2Id" ColumnName="Referee2Id" />
+                <ScalarProperty Name="Referee1Id" ColumnName="Referee1Id" />
+                <ScalarProperty Name="TripCaptainId" ColumnName="TripCaptainId" />
                 <ScalarProperty Name="Start" ColumnName="Start" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="End" ColumnName="End" />

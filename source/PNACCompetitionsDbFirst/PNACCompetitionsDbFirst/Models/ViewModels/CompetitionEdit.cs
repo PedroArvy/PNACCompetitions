@@ -43,10 +43,12 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     [Display(Name = "Referee 1")]
     public string Referee1 { get; set; }
+    public int? Referee1Id { get; set; }
 
 
     [Display(Name = "Referee 2")]
     public string Referee2 { get; set; }
+    public int? Referee2Id { get; set; }
 
 
 
@@ -62,6 +64,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     [Display(Name = "Trip Captain")]
     public string TripCaptain { get; set; }
+    public int? TripCaptainId { get; set; }
 
 
     [Required]

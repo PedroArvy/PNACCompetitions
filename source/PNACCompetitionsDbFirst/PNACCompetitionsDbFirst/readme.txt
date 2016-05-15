@@ -8,7 +8,6 @@ Fish - 1
 
 Sun 16/5
 
-
-
+Competitions - 0.75
 
 

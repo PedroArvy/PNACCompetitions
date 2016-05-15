@@ -26,15 +26,17 @@ namespace PNACCompetitionsDbFirst.Entities
         public Nullable<System.DateTime> End { get; set; }
         public string Name { get; set; }
         public System.DateTime Start { get; set; }
-        public string TripCaptain { get; set; }
-        public string Referee1 { get; set; }
-        public string Referee2 { get; set; }
+        public Nullable<int> TripCaptainId { get; set; }
+        public Nullable<int> Referee1Id { get; set; }
+        public Nullable<int> Referee2Id { get; set; }
         public string Venue { get; set; }
         public Nullable<System.DateTime> WeighInTime { get; set; }
         public string WeighInVenue { get; set; }
         public string DayType { get; set; }
     
-        public virtual Club Club { get; set; }
+        public virtual Competitor Competitor { get; set; }
+        public virtual Competitor Competitor1 { get; set; }
+        public virtual Competitor Competitor2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Entry> Entries { get; set; }
     }

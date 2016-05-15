@@ -43,9 +43,9 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       competition.DayType = model.DayType;
 
-      competition.TripCaptain = model.TripCaptain;
-      competition.Referee1 = model.Referee1;
-      competition.Referee2 = model.Referee2;
+      competition.TripCaptainId = model.TripCaptainId;
+      competition.Referee1Id = model.Referee1Id;
+      competition.Referee2Id = model.Referee2Id;
 
     }
 
@@ -92,10 +92,18 @@ namespace PNACCompetitionsDbFirst.Controllers
           edit.DayType = "s";
         }
 
-        edit.TripCaptain = competition.TripCaptain;
-        edit.Referee1 = competition.Referee1;
-        edit.Referee2 = competition.Referee2;
+        edit.TripCaptainId = competition.TripCaptainId;
+        edit.Referee1Id = competition.Referee1Id;
+        edit.Referee2Id = competition.Referee2Id;
 
+        if (edit.TripCaptainId != null)
+          edit.TripCaptain = db.Competitors.Single(c => c.CompetitorId == edit.TripCaptainId).FriendlyName();
+
+        if (edit.Referee1Id != null)
+          edit.Referee1 = db.Competitors.Single(c => c.CompetitorId == edit.Referee1Id).FriendlyName();
+
+        if (edit.Referee2Id != null)
+          edit.Referee2 = db.Competitors.Single(c => c.CompetitorId == edit.Referee2Id).FriendlyName();
       }
       else
         throw new NotImplementedException();

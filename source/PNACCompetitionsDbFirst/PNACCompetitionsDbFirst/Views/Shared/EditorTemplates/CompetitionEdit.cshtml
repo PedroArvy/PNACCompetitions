@@ -77,6 +77,8 @@
   </div>
 </div>
 
+@Html.HiddenFor(m => m.TripCaptainId)
+
 
 <div class="form-group">
   <div class="col-md-10">
@@ -86,6 +88,8 @@
     @Html.TextBoxFor(m => m.Referee1, new { @class = "form-control" })
   </div>
 </div>
+
+@Html.HiddenFor(m => m.Referee1Id)
 
 
 <div class="form-group">
@@ -97,6 +101,7 @@
   </div>
 </div>
 
+@Html.HiddenFor(m => m.Referee2Id)
 
 
 <div class="form-group">
@@ -175,15 +180,36 @@
     ];
 
     $('#TripCaptain').autocomplete({
-      source: members
+      source: members,
+      select: function (event, ui)
+      {
+        $('#TripCaptainId').val(ui.item.value);
+        event.preventDefault();
+        $("#TripCaptain").val(ui.item.label);
+
+      }
     });
 
     $('#Referee1').autocomplete({
-      source: members
+      source: members,
+      select: function (event, ui) {
+
+        $('#Referee1Id').val(ui.item.value);
+        event.preventDefault();
+        $("#Referee1Id").val(ui.item.label);
+
+      }
     });
 
     $('#Referee2').autocomplete({
-      source: members
+      source: members,
+      select: function (event, ui) {
+
+        $('#Referee2Id').val(ui.item.value);
+        event.preventDefault();
+        $("#Referee2Id").val(ui.item.label);
+
+      }
     });
 
   });

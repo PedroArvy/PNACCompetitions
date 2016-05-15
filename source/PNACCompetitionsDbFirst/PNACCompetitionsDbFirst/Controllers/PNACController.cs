@@ -116,13 +116,18 @@ namespace PNACCompetitionsDbFirst.Controllers
     {
       string list = "";
       int count = 0;
+      string name;
 
-      foreach (string name in db.MemberNames())
+      List<string> names = new List<string>();
+
+      foreach (Competitor competitor in db.Competitors.OrderBy(c => c.LastName).ThenBy(c => c.FirstName))
       {
+        name = competitor.FriendlyName().Replace("\"", "");
+
         if (count > 0)
           list += ",\n";
 
-        list += "\"" + name + "\"";
+        list += "{ label: \"" +  name + "\", value: \"" + competitor.CompetitorId + "\" }";
         count++;
       }
 

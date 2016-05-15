@@ -48,19 +48,6 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
-    public List<string> MemberNames()
-    {
-      List<string> names = new List<string>();
-
-      foreach(Competitor competitor in Competitors.OrderBy(c => c.LastName).ThenBy(c => c.FirstName))
-      {
-        names.Add(competitor.FriendlyName().Replace("\"", ""));
-      }
-
-      return names;
-    }
-
-
     #endregion
 
 
