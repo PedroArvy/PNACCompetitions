@@ -26,9 +26,6 @@
       function ReservationsViewModel() {
         var self = this;
 
-
-        self.Name = ko.observable("harry");
-
         // Non-editable catalog data - would come from the server
         self.availableMeals = [
             { mealName: "Standard (sandwich)", price: 0 },
@@ -50,19 +47,19 @@
           return total;
         });
 
+
+        self.test = ko.computed(function () {
+          //return self.seats()[0].name;
+          return self.seats()[0].name;
+        });
+
+
         // Operations
         self.addSeat = function () {
           self.seats.push(new SeatReservation("", self.availableMeals[0]));
         }
         self.removeSeat = function (seat) { self.seats.remove(seat) }
-
-        self.enableDetails = function (obj) {
-          console.log(obj.name());
-        };
-
-
       }
-
 
       ko.applyBindings(new ReservationsViewModel());
 
@@ -78,8 +75,6 @@
 
 <body>
 
-  <input data-bind="value: Name, event: { mouseover: enableDetails}" />
-
   <h2>Your seat reservations (<span data-bind="text: seats().length"></span>)</h2>
 
   <table>
@@ -94,7 +89,7 @@
 
     <tbody data-bind="foreach: seats">
       <tr>
-        <td><input data-bind="value: name, event: { mouseover: $root.enableDetails}" /></td>
+        <td><input data-bind="value: name" /></td>
         <td><select data-bind="options: $root.availableMeals, value: meal, optionsText: 'mealName'"></select></td>
         <td data-bind="text: formattedPrice"></td>
         <td><a href="#" data-bind="click: $root.removeSeat">Remove</a></td>
@@ -104,9 +99,12 @@
 
   <button data-bind="click: addSeat, enable: seats().length < 5">Reserve another seat</button>
 
-  <h3 data-bind="visible: totalSurcharge() > 0">
+
     Total surcharge: $<span data-bind="text: totalSurcharge().toFixed(2)"></span>
-  </h3>
+
+
+  <span data-bind="text: test()"></span>
+
 
 </body>
 </html>

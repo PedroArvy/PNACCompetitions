@@ -1,0 +1,322 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI AutoComplete - Default functionality</title>
+  <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+  <script>
+
+    $(document).ready(function () {
+
+      // Class to represent a row in the seat reservations grid
+      function CompetitorData(name, competitorId, isTripCaptain, isReferee) {
+
+        var self = this;
+
+        self.name = ko.observable(name);
+        self.competitorId = competitorId;
+
+        if(isTripCaptain)
+          self.isTripCaptain = ko.observable(competitorId.toString());
+        else
+          self.isTripCaptain = ko.observable('0');
+
+        self.isReferee = ko.observable(isReferee);
+
+      }
+
+      // Overall viewmodel for this screen, along with initial state
+      function CompetitorsViewModel() {
+        var self = this;
+
+        self.TripCaptain = ko.observable("2");
+
+        // Editable data
+        self.Competitors = ko.observableArray([
+            new CompetitorData("Steve", 1, true, false),
+            new CompetitorData("Bert", 2, false, true)
+        ]);
+
+
+        // Operations
+        self.addCompetitor = function () {
+          self.Competitors.push(new CompetitorData("", 0, false, false, false));
+          AutoComplete('.competitor', members);
+        };
+
+
+        self.save = function () {
+
+          alert(ko.toJSON({ tasks: self.Competitors }) + ' TripCaptain: ' + ko.toJSON(self.TripCaptain) );
+
+          //$.ajax("/tasks", {
+          //  data: ko.toJSON({ tasks: self.tasks }),
+          //  type: "post", contentType: "application/json",
+          //  success: function (result) { alert(result) }
+          //});
+        };
+
+      }
+
+      ko.applyBindings(new CompetitorsViewModel());
+
+    })
+
+  </script>
+
+
+
+  <script>
+
+    var members = [
+
+{ label: "Fernanda Antonello", value: "544" },
+{ label: "Peter Antonello", value: "547" },
+{ label: "Ian Axford", value: "548" },
+{ label: "John Backx", value: "549" },
+{ label: "Kevin Bamford", value: "550" },
+{ label: "Andrew Barclay", value: "551" },
+{ label: "Bob Beeson", value: "552" },
+{ label: "Barbara Braidwood", value: "691" },
+{ label: "Barbara Braidwood", value: "692" },
+{ label: "Harry Braidwood", value: "545" },
+{ label: "Harry Braidwood", value: "553" },
+{ label: "Andrew Brandi", value: "554" },
+{ label: "Phil Brandi", value: "555" },
+{ label: "Alf Breci", value: "556" },
+{ label: "Margaret Breci", value: "693" },
+{ label: "Len Brown", value: "557" },
+{ label: "Jamie Burrell", value: "558" },
+{ label: "Kerrie Burrell", value: "559" },
+{ label: "Stephen Burton", value: "560" },
+{ label: "David Cahir", value: "561" },
+{ label: "Bronwyn Calleja", value: "694" },
+{ label: "Frank Calleja", value: "562" },
+{ label: "Les Chadwick", value: "563" },
+{ label: "Frank Christopher", value: "564" },
+{ label: "Norma Christopher", value: "695" },
+{ label: "John Clarke", value: "565" },
+{ label: "Lyn Clarke", value: "696" },
+{ label: "Mick Coats", value: "566" },
+{ label: "Di Cocking", value: "697" },
+{ label: "Ron Cocking", value: "567" },
+{ label: "Dot Coon", value: "698" },
+{ label: "Tony Coon", value: "568" },
+{ label: "Amanda Costa", value: "569" },
+{ label: "Jenny Costa", value: "699" },
+{ label: "John Costa", value: "570" },
+{ label: "Julian Costa", value: "571" },
+{ label: "Tony Cupo", value: "572" },
+{ label: "Bill Cutting", value: "573" },
+{ label: "Karlene Cutting", value: "700" },
+{ label: "Mimma Debono", value: "701" },
+{ label: "Ron Debono", value: "574" },
+{ label: "Andrew Deveson", value: "575" },
+{ label: "Bernice Deveson", value: "702" },
+{ label: "John Deveson", value: "576" },
+{ label: "Michael Deveson", value: "577" },
+{ label: "Neil Deveson", value: "578" },
+{ label: "Laura DiCori", value: "703" },
+{ label: "Leo DiCori", value: "579" },
+{ label: "Joe Donnini", value: "580" },
+{ label: "Tony Dorner", value: "581" },
+{ label: "Bob Dower", value: "582" },
+{ label: "Rachael Dower", value: "704" },
+{ label: "Dennis Dowling", value: "583" },
+{ label: "John Draper", value: "584" },
+{ label: "Niki Duckstein", value: "585" },
+{ label: "Jim Duff", value: "586" },
+{ label: "Deanna Ely", value: "705" },
+{ label: "Ken Ely", value: "587" },
+{ label: "Rod Ely", value: "588" },
+{ label: "David Fairy", value: "589" },
+{ label: "Manuel Ferrero", value: "590" },
+{ label: "Robert Fisher", value: "591" },
+{ label: "Dave Fleming", value: "592" },
+{ label: "Vic Furlan", value: "593" },
+{ label: "John Gilmour", value: "594" },
+{ label: "Josephine Goldsworthy", value: "706" },
+{ label: "Peter Goldsworthy", value: "595" },
+{ label: "Alex Goodfellow", value: "596" },
+{ label: "Di Goodfellow", value: "708" },
+{ label: "Jenny Goodfellow", value: "707" },
+{ label: "Stephen Goodfellow", value: "597" },
+{ label: "Perc Gravenall", value: "598" },
+{ label: "Anna Grech", value: "710" },
+{ label: "Charlie Grech", value: "599" },
+{ label: "Joe Grech", value: "600" },
+{ label: "Margaret Grech", value: "709" },
+{ label: "Steve Gusman", value: "601" },
+{ label: "Mark Gutterson", value: "602" },
+{ label: "David Halligan", value: "603" },
+{ label: "Marie Halligan", value: "711" },
+{ label: "Ross Halligan", value: "604" },
+{ label: "Andrew Harris", value: "605" },
+{ label: "Bernard Harris", value: "606" },
+{ label: "Wayne Harris", value: "607" },
+{ label: "Duncan Henshaw", value: "608" },
+{ label: "Richard Higlett", value: "609" },
+{ label: "Daniel Hughes", value: "610" },
+{ label: "Mark Hughes", value: "611" },
+{ label: "Sharon Hughes", value: "712" },
+{ label: "Timothy Hughes", value: "612" },
+{ label: "Daniel Jennings", value: "613" },
+{ label: "Robert Johnstone", value: "614" },
+{ label: "Graeme Jonson", value: "615" },
+{ label: "George Kapouleas", value: "616" },
+{ label: "Jason King", value: "617" },
+{ label: "Peter King", value: "618" },
+{ label: "Rod King", value: "619" },
+{ label: "Mark Land", value: "620" },
+{ label: "Frank Maiolo", value: "621" },
+{ label: "Mary Maiolo", value: "713" },
+{ label: "Glenn Maplesden", value: "622" },
+{ label: "Kerry Maplesden", value: "714" },
+{ label: "Roy Maplesden", value: "623" },
+{ label: "Rod Mason", value: "624" },
+{ label: "Gordon McDonald", value: "625" },
+{ label: "Heath McKinna", value: "626" },
+{ label: "Joe Mifsud", value: "627" },
+{ label: "Peter Miles", value: "628" },
+{ label: "Robert Miles", value: "629" },
+{ label: "Sandy Miles", value: "715" },
+{ label: "Greg Mills", value: "630" },
+{ label: "Ken Minnitt", value: "631" },
+{ label: "Vladimir Molotsky", value: "632" },
+{ label: "Sandi Muzzi", value: "633" },
+{ label: "Tony Nicolosi", value: "634" },
+{ label: "Arthur Nixon", value: "635" },
+{ label: "Chris O'Connell", value: "636" },
+{ label: "Michael O'Connell", value: "637" },
+{ label: "Donald O'Donnel", value: "638" },
+{ label: "Samuel Ogden", value: "639" },
+{ label: "John Owen", value: "640" },
+{ label: "Brian Paice", value: "641" },
+{ label: "Patty Patterson", value: "716" },
+{ label: "Peter Patterson", value: "642" },
+{ label: "Julie Paul", value: "717" },
+{ label: "Tim Paul", value: "643" },
+{ label: "Dawn Penrose", value: "718" },
+{ label: "John Penrose", value: "644" },
+{ label: "Les Penrose", value: "645" },
+{ label: "Joe Perri", value: "646" },
+{ label: "Lyn Perri", value: "719" },
+{ label: "Stan Petkovic", value: "647" },
+{ label: "Jane Psaila", value: "720" },
+{ label: "Joe Psaila", value: "648" },
+{ label: "Ryhs Rech", value: "649" },
+{ label: "Heather Reimers", value: "721" },
+{ label: "Jim Reimers", value: "650" },
+{ label: "Bob Richards", value: "651" },
+{ label: "Alan Russell", value: "652" },
+{ label: "Eileen Russell", value: "722" },
+{ label: "Jill Sanders", value: "653" },
+{ label: "Jeffrey Santamaria", value: "654" },
+{ label: "Gary Short", value: "655" },
+{ label: "Steve Smith", value: "656" },
+{ label: "Adam Snelling", value: "657" },
+{ label: "Kellie Spencer", value: "658" },
+{ label: "Petras Surna", value: "659" },
+{ label: "Jason Tanti", value: "660" },
+{ label: "David Tantis", value: "661" },
+{ label: "Nick Tantis", value: "662" },
+{ label: "John Taylor", value: "663" },
+{ label: "Stuart Taylor", value: "664" },
+{ label: "Daniel Trafford", value: "665" },
+{ label: "Phil Treble", value: "666" },
+{ label: "Val Treble", value: "723" },
+{ label: "Laura Valier D'Abate", value: "724" },
+{ label: "Tony Valier D'Abate", value: "667" },
+{ label: "Helen Warne", value: "668" },
+{ label: "Bruce Warwick", value: "669" },
+{ label: "David Way", value: "670" },
+{ label: "Gavin White", value: "671" },
+{ label: "Luke Whitmore", value: "672" },
+{ label: "Ross Wolfe", value: "673" },
+{ label: "John Wus", value: "674" },
+{ label: "Natalie Wus", value: "725" }
+
+    ];
+
+
+    $(function () {
+      AutoComplete('.competitor', members);
+
+      //clear the control when user tries to edit but restore previous value if nothing chosen
+      $('.competitor').click(function () {
+        $(this).attr('previous-value', $(this).val());
+        $(this).val('');
+      }).focusout(function () {
+
+        var value = $(this).val();
+        if(value.length == 0)
+          $(this).val($(this).attr('previous-value'));
+      });
+
+
+
+    });
+
+
+    function AutoComplete(selector, options)
+    {
+      $('.competitor').autocomplete({
+        source: options,
+
+        select: function (event, ui) {
+          event.preventDefault();
+          $(this).val(ui.item.label);
+          $(this).next().val(ui.item.value).change();
+        }
+
+      });
+    }
+
+  </script>
+
+</head>
+
+
+<body>
+
+  <h2>Your seat reservations</h2>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Competitors name</th>
+        <th>Competitors id</th>
+        <th>Captain</th>
+        <th>Referee</th>
+      </tr>
+    </thead>
+
+    <tbody data-bind="foreach: Competitors">
+      <tr>
+        <td>
+          <input class="competitor" data-bind="value: name" />
+          <input class="competitorId" data-bind="value: competitorId" />
+        </td>
+        <td>
+          <input type="radio" name="TripCaptain"  data-bind="attr: {value: competitorId}, checked: $parent.TripCaptain" />
+        </td>
+        <td>
+          <input type="checkbox" name="Referee" data-bind="checked: isReferee" />
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+
+  <button data-bind="click: addCompetitor">Reserve another seat</button>
+  <button data-bind="click: save">Save</button>
+
+</body>
+</html>
