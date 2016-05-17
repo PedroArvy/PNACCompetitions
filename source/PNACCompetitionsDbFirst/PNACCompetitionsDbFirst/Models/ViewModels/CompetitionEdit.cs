@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -20,6 +21,9 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
 
     #region *********************** Properties ***********************
+
+
+    public List<CompetitorEntry> CompetitionEntries { get; set; }
 
 
     public int CompetitionId { get; set; }
@@ -65,6 +69,23 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
 
     #region *********************** Methods **************************
+
+
+    public string CompetitionEntriesJson()
+    {
+      string json = "";
+
+      foreach(CompetitorEntry entry in CompetitionEntries)
+      {
+        if (json.Length > 0)
+          json += ",\n";
+        json += "new CompetitorData('" + entry.Name.Replace("'", "\'") + "', " + entry.CompetitorId + ", " + entry.IsTripCaptain.ToString().ToLower() + ", " + entry.IsReferee.ToString().ToLower() + ")";
+      }
+
+      return json;
+    }
+
+
     #endregion
 
 

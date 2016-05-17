@@ -15,7 +15,6 @@ namespace PNACCompetitionsDbFirst.Controllers
     [Authorize]
     public class AccountController : PNACController
     {
-        private ApplicationSignInManager _signInManager;
 
         public AccountController()
         {
@@ -27,17 +26,6 @@ namespace PNACCompetitionsDbFirst.Controllers
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
-        }
 
         //
         // GET: /Account/Login

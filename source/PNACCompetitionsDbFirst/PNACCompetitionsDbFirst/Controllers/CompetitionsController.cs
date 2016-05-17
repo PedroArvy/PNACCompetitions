@@ -2,6 +2,7 @@
 using PNACCompetitionsDbFirst.Entities;
 using PNACCompetitionsDbFirst.Models;
 using PNACCompetitionsDbFirst.Models.ViewModels;
+using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,12 +60,47 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
+
+    private bool CanEditCompetition(int competitionId)
+    {
+      bool canEdit = false;
+
+      if(db.Competitions.Any(c => c.CompetitionId == competitionId))
+      {
+        if (IsAdmin)
+          canEdit = true;
+        else if (Competitor != null)
+        {
+          if (db.Entries.Any(e => e.CompetitionId == competitionId && e.CompetitorId == Competitor.CompetitorId && (e.IsTripCaptain || e.IsReferee)))
+            canEdit = true;
+        }
+      }
+
+      return canEdit;
+    }
+
+
+    private List<CompetitorEntry> CompetitionEntries(Competition competition)
+    {
+      CompetitorEntry entrant;
+      List<CompetitorEntry> entries = new List<CompetitorEntry>();
+
+      foreach (Entry entry in competition.Entries.Where(e => e.CompetitionId == competition.CompetitionId))
+      {
+        entrant = new CompetitorEntry() { Name = entry.Competitor.FriendlyName(), CompetitorId = entry.CompetitorId, IsTripCaptain = entry.IsTripCaptain, IsReferee = entry.IsReferee};
+        entries.Add(entrant);
+      }
+
+      return entries;
+    }
+
+
     public ActionResult Edit(int id)
     {
       Competition competition = db.Competitions.SingleOrDefault(c => c.CompetitionId == id);
       CompetitionEdit edit = new CompetitionEdit();
 
-      if (IsAdmin)
+      if (CanEditCompetition(id))
       {
         edit.CompetitionId = competition.CompetitionId;
         edit.Venue = competition.Venue;
@@ -87,8 +123,10 @@ namespace PNACCompetitionsDbFirst.Controllers
           edit.DayType = "s";
         }
 
-        if (competition.Entries.Any(e => e.TripCaptain))
-          edit.TripCaptainId = competition.Entries.Single(e => e.TripCaptain).CompetitorId;
+        if (competition.Entries.Any(e => e.IsTripCaptain))
+          edit.TripCaptainId = competition.Entries.Single(e => e.IsTripCaptain).CompetitorId;
+
+        edit.CompetitionEntries = CompetitionEntries(competition);
       }
       else
         throw new NotImplementedException();
@@ -103,14 +141,14 @@ namespace PNACCompetitionsDbFirst.Controllers
       CompetitionEdit edit = new CompetitionEdit();
       Competition competition = db.Competitions.SingleOrDefault(c => c.CompetitionId == model.CompetitionId);
 
-      if (IsAdmin && ModelState.IsValid)
+      if (CanEditCompetition(model.CompetitionId) && ModelState.IsValid)
       {
         AssignModel(competition, model);
 
         db.SaveChanges();
         return RedirectToAction("Index");
       }
-      else if (IsAdmin && !ModelState.IsValid)
+      else if (CanEditCompetition(model.CompetitionId) && !ModelState.IsValid)
         return View(model);
       else if (!IsAdmin)
         throw new UnauthorizedAccessException("");
@@ -185,6 +223,39 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       return new EmptyResult();
     }
+
+
+    [HttpPost]
+    public JsonResult SaveEntries(CompetitionEntries model)
+    {
+      if (CanEditCompetition(model.CompetitionId))
+      {
+        Entry entrant;
+
+        db.Entries.RemoveRange(db.Entries.Where(e => e.CompetitionId == model.CompetitionId));
+
+        foreach (CompetitorEntry entry in model.Competitors)
+        {
+          if (db.Competitors.Any(c => c.CompetitorId == entry.CompetitorId))
+          {
+            entrant = new Entry() { CompetitionId = model.CompetitionId, CompetitorId = entry.CompetitorId, IsReferee = entry.IsReferee };
+
+            if (model.TripCaptain == entry.CompetitorId)
+              entrant.IsTripCaptain = true;
+
+            db.Entries.Add(entrant);
+          }
+        }
+
+        db.SaveChanges();
+      }
+      else
+        throw new UnauthorizedAccessException("Entries");
+
+      return Json(new { success = "Success" }, JsonRequestBehavior.AllowGet);
+    }
+
+
 
 
     #endregion

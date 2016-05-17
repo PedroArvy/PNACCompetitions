@@ -228,6 +228,8 @@
     <Compile Include="Models\ViewModels\CompetitionListItem.cs" />
     <Compile Include="Models\ViewModels\CompetitionIndex.cs" />
     <Compile Include="Models\ViewModels\CompetitorCreate.cs" />
+    <Compile Include="Models\ViewModels\Entries\CompetitionEntries.cs" />
+    <Compile Include="Models\ViewModels\Entries\CompetitorEntry.cs" />
     <Compile Include="Models\ViewModels\FishListItem.cs" />
     <Compile Include="Models\ViewModels\FishIndex.cs" />
     <Compile Include="Models\ViewModels\CompetitorEdit.cs" />

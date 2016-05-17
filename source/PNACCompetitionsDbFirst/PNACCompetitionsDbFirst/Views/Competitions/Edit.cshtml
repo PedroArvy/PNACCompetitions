@@ -34,6 +34,7 @@
   function AutoComplete(selector, options) {
     $('.competitor').autocomplete({
       source: options,
+       maxLength : 0,
 
       select: function (event, ui) {
         event.preventDefault();
@@ -41,7 +42,9 @@
         $(this).next().val(ui.item.value).change();
       }
 
-    });
+    }).focus(function() {
+      $(this).autocomplete('search', $(this).val());
+    });;
   }
 
 </script>
@@ -130,24 +133,17 @@
 
       self.Name = ko.observable(name);
       self.CompetitorId = competitorId;
-
-      if (isTripCaptain)
-        self.IsTripCaptain = ko.observable(competitorId.toString());
-      else
-        self.IsTripCaptain = ko.observable('0');
+      self.IsTripCaptain = ko.observable(competitorId.toString());
 
       self.IsReferee = ko.observable(isReferee);
-
     }
 
-    // Overall viewmodel for this screen, along with initial state
 
     var entriesViewModel = {
       CompetitionId : @Model.CompetitionId,
-      TripCaptain: ko.observable(@Model.TripCaptainId),
+      TripCaptain: ko.observable("@Model.TripCaptainId"),
       Competitors: ko.observableArray([
-          new CompetitorData("Steve", 1, true, false),
-          new CompetitorData("Bert", 2, false, true)
+        @Html.Raw(Model.CompetitionEntriesJson())
       ])
     }
 
@@ -158,13 +154,14 @@
 
     entriesViewModel.save = function () {
 
-      alert(ko.toJSON(entriesViewModel));
-
-      //$.ajax("/competitions/entries", {
-      //  data: ko.toJSON({ tasks: self.tasks }),
-      //  type: "post", contentType: "application/json",
-      //  success: function (result) { alert(result) }
-      //});
+      $.ajax("/Competitions/SaveEntries", {
+        data: ko.toJSON(entriesViewModel),
+        type: "post", contentType: "application/json",
+        success: function (result) 
+        { 
+          window.location.replace('/competitions/index') ;
+        }
+      });
     };
 
     ko.applyBindings(entriesViewModel);
@@ -185,7 +182,6 @@
 
     //clear the control when user tries to edit but restore previous value if nothing chosen
     $('.competitor').click(function () {
-      alert(8);
       $(this).attr('previous-value', $(this).val());
       $(this).val('');
     }).focusout(function () {

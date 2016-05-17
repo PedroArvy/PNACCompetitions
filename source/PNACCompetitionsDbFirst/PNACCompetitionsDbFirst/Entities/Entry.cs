@@ -23,8 +23,8 @@ namespace PNACCompetitionsDbFirst.Entities
         public int EntryId { get; set; }
         public int CompetitorId { get; set; }
         public int CompetitionId { get; set; }
-        public bool TripCaptain { get; set; }
-        public bool Referee { get; set; }
+        public bool IsTripCaptain { get; set; }
+        public bool IsReferee { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Catch> Catches { get; set; }

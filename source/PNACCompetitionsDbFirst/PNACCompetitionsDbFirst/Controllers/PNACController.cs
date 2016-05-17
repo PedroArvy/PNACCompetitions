@@ -18,7 +18,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     private AspNetUser _AspNetUser = null;
     private Competitor _Competitor = null;
-    private ApplicationSignInManager _signInManager;
+    protected ApplicationSignInManager _signInManager;
     protected ApplicationUserManager _userManager;
 
     protected PNACCompetitionsEntities db = new PNACCompetitionsEntities();
@@ -83,7 +83,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
       }
-      private set
+      set
       {
         _signInManager = value;
       }

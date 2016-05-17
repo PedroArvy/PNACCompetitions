@@ -18,7 +18,7 @@
         <AssociationConnector Association="PNACCompetitionsModel.FK_Competitors_AspNetUsers" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Competition" Width="1.5" PointX="6" PointY="10.25" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Entry" Width="1.5" PointX="8.25" PointY="9.5" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Entry" Width="1.5" PointX="8.25" PointY="9.75" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitors_CompetitorId" />

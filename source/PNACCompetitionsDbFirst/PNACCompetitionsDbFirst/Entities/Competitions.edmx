@@ -82,8 +82,8 @@
           <Property Name="EntryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompetitorId" Type="int" Nullable="false" />
           <Property Name="CompetitionId" Type="int" Nullable="false" />
-          <Property Name="TripCaptain" Type="bit" Nullable="false" />
-          <Property Name="Referee" Type="bit" Nullable="false" />
+          <Property Name="IsTripCaptain" Type="bit" Nullable="false" />
+          <Property Name="IsReferee" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Environments">
           <Key>
@@ -502,8 +502,8 @@
           <Property Name="EntryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompetitorId" Type="Int32" Nullable="false" />
           <Property Name="CompetitionId" Type="Int32" Nullable="false" />
-          <Property Name="TripCaptain" Type="Boolean" Nullable="false" />
-          <Property Name="Referee" Type="Boolean" Nullable="false" />
+          <Property Name="IsTripCaptain" Type="Boolean" Nullable="false" />
+          <Property Name="IsReferee" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Catches" Relationship="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" FromRole="Entry" ToRole="Catch" />
           <NavigationProperty Name="Competition" Relationship="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" FromRole="Entry" ToRole="Competition" />
           <NavigationProperty Name="Competitor" Relationship="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitors_CompetitorId" FromRole="Entry" ToRole="Competitor" />
@@ -669,8 +669,8 @@
           <EntitySetMapping Name="Entries">
             <EntityTypeMapping TypeName="PNACCompetitionsModel.Entry">
               <MappingFragment StoreEntitySet="Entries">
-                <ScalarProperty Name="Referee" ColumnName="Referee" />
-                <ScalarProperty Name="TripCaptain" ColumnName="TripCaptain" />
+                <ScalarProperty Name="IsReferee" ColumnName="IsReferee" />
+                <ScalarProperty Name="IsTripCaptain" ColumnName="IsTripCaptain" />
                 <ScalarProperty Name="CompetitionId" ColumnName="CompetitionId" />
                 <ScalarProperty Name="CompetitorId" ColumnName="CompetitorId" />
                 <ScalarProperty Name="EntryId" ColumnName="EntryId" />
