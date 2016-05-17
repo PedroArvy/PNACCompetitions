@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Lake Fyans</title>
+  <title>Edit Lake Fyans1</title>
   <link href="/Content/bootstrap.css" rel="stylesheet" />
   <link href="/Content/site.css" rel="stylesheet" />
 
@@ -11,6 +11,7 @@
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
   <script>
@@ -58,7 +59,7 @@
 
 
         <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post">
-          <input name="__RequestVerificationToken" type="hidden" value="Vx_Ff-zGTTxUJKKvxtABqJ4Xyj-zhxAMwI6OYOr0e28jsRbS5qj7oiK8_nL0O1ECg3q_x-gWe2H-_LVf_kclLJSevns7EaOp7CnPC0CfiFjlXRN7GwFnnepyjX_yK6hqtcUIQuNm2D-XmIc72OQSVg2" />    <ul class="nav navbar-nav navbar-right">
+          <input name="__RequestVerificationToken" type="hidden" value="l0RPkanht2Iwk_FVDdOqWon4_BIaIvDFr-Ai9TnPZEFQMV3ahqhkNrWpcn2sSewABRSsL3zOW49oDkenWDGe8NA7UgXiVbhvdGKFa3L4N3fKCZgBoqK_C_dZUTAEKhvhsqsWXVwhGHBSjzrxCVFdUg2" />    <ul class="nav navbar-nav navbar-right">
             <li>
               <a href="/Manage" title="Manage">Hello petras.surna@yart.com.au!</a>
             </li>
@@ -82,11 +83,13 @@
 
     <div class="row">
       <div class="col-md-8">
-        <h2>Edit Lake Fyans</h2>
+        <h2>Edit Lake Fyans1</h2>
       </div>
     </div>
 
     <script>
+
+
 
   $(function () {
 
@@ -94,6 +97,23 @@
     $("body").show();
 
   });
+
+
+  function AutoComplete(selector, options) {
+    $('.competitor').autocomplete({
+      source: options,
+       maxLength : 0,
+
+      select: function (event, ui) {
+        event.preventDefault();
+        $(this).val(ui.item.label);
+        $(this).next().val(ui.item.value).change();
+      }
+
+    }).focus(function() {
+      $(this).autocomplete('search', $(this).val());
+    });
+  }
 
     </script>
 
@@ -107,15 +127,15 @@
         <div class="col-md-12">
 
           <form action="/Competitions/Edit/21" class="form-horizontal" method="post" role="form">
-            <input name="__RequestVerificationToken" type="hidden" value="kIABYEjVwsbUu9SOtJIe18ox6GV46nZ8avAx1T0_Ip5kVJ46i-HwTSGjJMY5ZsLz9pUBiA26Wrv4o49TkweaVU2QonVvzCLaixyd0gM0Q6_wgNkD9WN9lO9Dco_PtQ7DpBADg1SM8zR4fDOTFbHiGQ2" />
-            <input name="__RequestVerificationToken" type="hidden" value="LMm5qRo4hYdI9NByv26HPWbdZrphbYBA_twgPhfaWDtJ5l8v0I87wSt8VuPKKJbuQ8mjb0tqqVTR4n7iGXJrdeWSc_WW_TUl1pE6b2x_3IQUKDr0psvbBjkNl3QxEMkBvD04KWDJjXkxasC26dFK-w2" />
+            <input name="__RequestVerificationToken" type="hidden" value="d4hSYW6qtJWW8Q1hWRVNU8NNs1E0Tp6anoKKtPVAtzXACHxPspK-dW2Ukc6wXmUtK5myRQn95vs14STzr50C3w2ifhvf2KzO5k9eZRv6YKNMOsZmrvQHD84bygm7wk3ZVpFXkNkgfC_8_D24pYFRvQ2" />
+            <input name="__RequestVerificationToken" type="hidden" value="dZMFaj6ltjDLQJoZkZf5meOcjP9B-lHnG1akFZibZ7DnEAzwQG9l4jr8UeqNoY6pAKEz6ZLx9e82b45LjQuCZCwgjiiu-tBKACe0qGM1MEabWzMqFe-YknK0us_FYLpuo1Q7xozXABGxDpCGcZaXRg2" />
 
             <div class="form-group">
               <div class="col-md-10">
                 <label class="pnac-label" for="Venue">Venue</label>
               </div>
               <div class="col-md-10">
-                <input class="form-control capitalise" data-val="true" data-val-maxlength="The field Venue must be a string or array type with a maximum length of &#39;100&#39;." data-val-maxlength-max="100" data-val-required="The Venue field is required." id="Venue" name="Venue" type="text" value="Lake Fyans" />
+                <input class="form-control capitalise" data-val="true" data-val-maxlength="The field Venue must be a string or array type with a maximum length of &#39;100&#39;." data-val-maxlength-max="100" data-val-required="The Venue field is required." id="Venue" name="Venue" type="text" value="Lake Fyans1" />
                 <span class="field-validation-valid" data-valmsg-for="Venue" data-valmsg-replace="true"></span>
               </div>
             </div>
@@ -173,41 +193,7 @@
               </div>
             </div>
 
-
-            <div class="form-group">
-              <div class="col-md-10">
-                <label class="pnac-label a1utocomplete" for="TripCaptain">Trip Captain</label>
-              </div>
-              <div class="col-md-10">
-                <input class="form-control" data-type="search" id="TripCaptain" name="TripCaptain" placeholder="Search members..." type="text" value="Peter Antonello" />
-              </div>
-            </div>
-
-            <input data-val="true" data-val-number="The field TripCaptainId must be a number." id="TripCaptainId" name="TripCaptainId" type="hidden" value="547" />
-
-
-            <div class="form-group">
-              <div class="col-md-10">
-                <label class="pnac-label a1utocomplete" for="Referee1">Referee 1</label>
-              </div>
-              <div class="col-md-10">
-                <input class="form-control" id="Referee1" name="Referee1" type="text" value="" />
-              </div>
-            </div>
-
-            <input data-val="true" data-val-number="The field Referee1Id must be a number." id="Referee1Id" name="Referee1Id" type="hidden" value="" />
-
-
-            <div class="form-group">
-              <div class="col-md-10">
-                <label class="pnac-label a1utocomplete" for="Referee2">Referee 2</label>
-              </div>
-              <div class="col-md-10">
-                <input class="form-control" id="Referee2" name="Referee2" type="text" value="" />
-              </div>
-            </div>
-
-            <input data-val="true" data-val-number="The field Referee2Id must be a number." id="Referee2Id" name="Referee2Id" type="hidden" value="" />
+            <input data-val="true" data-val-number="The field TripCaptainId must be a number." data-val-required="The TripCaptainId field is required." id="TripCaptainId" name="TripCaptainId" type="hidden" value="550" />
 
 
             <div class="form-group">
@@ -245,7 +231,7 @@
 
 
 
-  $(function () {
+  $(document).ready(function () {
 
     $("input[name = 'DayType']").click(function () {
 
@@ -265,7 +251,6 @@
 
 
 
-
   });
 
 
@@ -273,11 +258,137 @@
 
 
 
-            <script>
-  $(function () {
-    var members = [
+            <input data-val="true" data-val-number="The field CompetitionId must be a number." data-val-required="The CompetitionId field is required." id="CompetitionId" name="CompetitionId" type="hidden" value="21" />
+          </form>
+        </div>
+      </div>
 
-      { label: "Fernanda Antonello", value: "544" },
+      <div id="competitors-tab">
+
+        <div class="row">
+          <div class="col-md-7">
+            <div class="table-responsive">
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Action</th>
+                    <th>Member</th>
+                    <th>Captain</th>
+                    <th>Referee</th>
+                  </tr>
+                </thead>
+
+                <tbody data-bind="foreach: Competitors">
+
+                  <tr>
+                    <td>
+                      <a data-bind="click: $parent.DeleteCompetitor, visible: Name().length > 0" class="btn btn-primary btn-sm btn-delete" href="#">Delete</a>
+                    </td>
+                    <td>
+                      <input class="competitor form-control capitalise" data-bind="value: Name" />
+                      <input type="hidden" class="competitorId" data-bind="value: CompetitorId" />
+                    </td>
+                    <td>
+                      <input type="radio" name="TripCaptain" data-bind="attr: {value: CompetitorId}, checked: $parent.TripCaptain" />
+                    </td>
+                    <td>
+                      <input type="checkbox" name="Referee" data-bind="checked: IsReferee" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <button data-bind="click: Save" class="btn btn-primary btn-sm">Save</button>
+              <button data-bind="click: AddCompetitor" class="btn btn-primary btn-sm">Add a competitor</button>
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+
+
+
+    <script>
+
+  $(document).ready(function () {
+
+    // Class to represent a row in the seat reservations grid
+    function CompetitorData(name, competitorId, isTripCaptain, isReferee) {
+
+      var self = this;
+
+      self.Name = ko.observable(name);
+      self.CompetitorId = competitorId;
+      self.IsTripCaptain = ko.observable(competitorId.toString());
+
+      self.IsReferee = ko.observable(isReferee);
+    }
+
+
+    var entriesViewModel = {
+      CompetitionId : 21,
+      TripCaptain: ko.observable("550"),
+      Competitors: ko.observableArray([
+        new CompetitorData('Fernanda Antonello', 544, false, false),
+new CompetitorData('Kevin Bamford', 550, true, true),
+new CompetitorData('John Backx', 549, false, true),
+new CompetitorData('Jamie Burrell', 558, false, false)
+      ])
+    }
+
+    entriesViewModel.AddCompetitor = function () {
+      entriesViewModel.Competitors.push(new CompetitorData("", 0, false, false, false));
+      AutoComplete('.competitor', members);
+    };
+
+
+    entriesViewModel.DeleteCompetitor = function (entry) {
+
+      if(confirm('Are you sure you want to delete \'' + entry.Name() + '\'?'))
+      {
+        $.ajax("/Competitions/DeleteEntry?competitorId=" + entry.CompetitorId + '&competitionId=' + $('#CompetitionId').val(), {
+          type: "post", contentType: "application/json",
+          success: function (result)
+          {
+            if(Boolean(result.success))
+            {
+              entriesViewModel.Competitors.remove(entry);
+            }
+          }
+        });
+      }
+    };
+
+    entriesViewModel.Save = function () {
+
+      $.ajax("/Competitions/SaveEntries", {
+        data: ko.toJSON(entriesViewModel),
+        type: "post", contentType: "application/json",
+        success: function (result)
+        {
+          window.location.replace('/competitions/index') ;
+        }
+      });
+    };
+
+    ko.applyBindings(entriesViewModel);
+
+  });
+
+    </script>
+
+
+    <script>
+
+  var members = [
+    { label: "Fernanda Antonello", value: "544" },
 { label: "Peter Antonello", value: "547" },
 { label: "Ian Axford", value: "548" },
 { label: "John Backx", value: "549" },
@@ -440,99 +551,27 @@
 { label: "Ross Wolfe", value: "673" },
 { label: "John Wus", value: "674" },
 { label: "Natalie Wus", value: "725" }
+  ];
 
-    ];
+  $(function () {
 
+    AutoComplete('.competitor', members);
 
-    $('#TripCaptain').focus(function () {
+    //clear the control when user tries to edit but restore previous value if nothing chosen
+    $('.competitor').click(function () {
+      $(this).attr('previous-value', $(this).val());
       $(this).val('');
-      return false;
-    });
-    $('#Referee1').focus(function () {
-      $(this).val('');
-      return false;
-    });
-    $('#Referee2').focus(function () {
-      $(this).val('');
-      return false;
+    }).focusout(function () {
+
+      var value = $(this).val();
+      if (value.length == 0)
+        $(this).val($(this).attr('previous-value'));
     });
 
-
-    $('#TripCaptain').autocomplete({
-      source: members,
-      select: function (event, ui)
-      {
-        $('#TripCaptainId').val(ui.item.value);
-        event.preventDefault();
-        $("#TripCaptain").val(ui.item.label);
-
-      }
-    });
-
-    $('#Referee1').autocomplete({
-      source: members,
-      select: function (event, ui) {
-
-        $('#Referee1Id').val(ui.item.value);
-        event.preventDefault();
-        $("#Referee1").val(ui.item.label);
-
-      }
-    });
-
-    $('#Referee2').autocomplete({
-      source: members,
-      select: function (event, ui) {
-
-        $('#Referee2Id').val(ui.item.value);
-        event.preventDefault();
-        $("#Referee2").val(ui.item.label);
-
-      }
-    });
-
-  });
+  })
 
 
-
-            </script>
-            <input data-val="true" data-val-number="The field CompetitionId must be a number." data-val-required="The CompetitionId field is required." id="CompetitionId" name="CompetitionId" type="hidden" value="21" />
-          </form>
-        </div>
-      </div>
-
-      <div id="competitors-tab">
-
-        <div class="row">
-          <div class="col-md-7">
-            <div class="table-responsive">
-
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Action</th>
-                    <th>Member</th>
-                    <th>Captain</th>
-                    <th>Referee</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><a class="btn btn-primary btn-sm btn-delete" href="#">Delete</a></td>
-                    <td>John Smith</td>
-                    <td>Wed 23 March, 6am</td>
-                    <td>Thu 24 March, 5pm</td>
-                  </tr>
-                </tbody>
-              </table>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
+    </script>
     <hr />
     <footer>
       <p>&copy; 2016 - <a href="http://www.yart.com.au" target="_blank">Yart</a> business automation</p>
@@ -550,9 +589,9 @@
 
   <!-- Visual Studio Browser Link -->
   <script type="application/json" id="__browserLink_initializationData">
-    {"appName":"Firefox","requestId":"e2a6f125a8764e2b8aff995c3a87efb8"}
+    {"appName":"Firefox","requestId":"36361dbd086f46daa92ec9b755720b2b"}
   </script>
-  <script type="text/javascript" src="http://localhost:56159/22c23b5434d046c48086d94241270c88/browserLink" async="async"></script>
+  <script type="text/javascript" src="http://localhost:52013/87da736ef8994d558d1e9b64d8bbca65/browserLink" async="async"></script>
   <!-- End Browser Link -->
 
 </body>
