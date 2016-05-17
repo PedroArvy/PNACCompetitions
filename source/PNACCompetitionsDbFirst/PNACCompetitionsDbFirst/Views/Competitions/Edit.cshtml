@@ -6,6 +6,13 @@
 }
 
 
+<style>
+  body{
+    display:none;
+  }
+</style>
+
+
 <div class="row">
   <div class="col-md-8">
     <h2>Edit @Model.Venue</h2>
@@ -13,9 +20,14 @@
 </div>
 
 <script>
-  $(function() {
-    $( "#tabs" ).tabs();
+
+  $(function () {
+
+    $("#tabs").tabs();
+    $("body").show();
+
   });
+
 </script>
 
 <div id="tabs">

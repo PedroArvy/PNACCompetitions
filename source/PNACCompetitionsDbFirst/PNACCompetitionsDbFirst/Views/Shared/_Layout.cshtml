@@ -7,10 +7,24 @@
   @Styles.Render("~/Content/css")
   @Scripts.Render("~/bundles/modernizr")
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-
   <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
+  <script>
+
+    $(function () {
+
+      $('.capitalise').change(function () {
+        $(this).val(toTitleCase($(this).val()));
+      });
+
+    });
+
+    function toTitleCase(str) {
+      return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+    }
+
+  </script>
 
 </head>
 <body>
@@ -25,9 +39,7 @@
         @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
       </div>
       <div class="navbar-collapse collapse">
-
         @Html.Action("Menu", "Home")
-
         @Html.Partial("_LoginPartial")
       </div>
     </div>
@@ -39,8 +51,6 @@
       <p>&copy; @DateTime.Now.Year - <a href="http://www.yart.com.au" target="_blank">Yart</a> business automation</p>
     </footer>
   </div>
-
-
 
   @Scripts.Render("~/bundles/bootstrap")
   @RenderSection("scripts", required: false)
