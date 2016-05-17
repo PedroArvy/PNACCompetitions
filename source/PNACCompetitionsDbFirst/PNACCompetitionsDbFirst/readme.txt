@@ -8,6 +8,6 @@ Fish - 1
 
 Knockout - 2.5, 2
 
-Entries - 0.5
+EntriesAjax - 0.5, 3
 
 

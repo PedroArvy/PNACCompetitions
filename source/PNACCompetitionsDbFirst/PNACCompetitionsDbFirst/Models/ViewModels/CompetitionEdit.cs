@@ -82,6 +82,10 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
         json += "new CompetitorData('" + entry.Name.Replace("'", "\'") + "', " + entry.CompetitorId + ", " + entry.IsTripCaptain.ToString().ToLower() + ", " + entry.IsReferee.ToString().ToLower() + ")";
       }
 
+      //add at least one blank line
+      if(json.Length == 0)
+        json = "new CompetitorData('', 0, false, false)";
+
       return json;
     }
 

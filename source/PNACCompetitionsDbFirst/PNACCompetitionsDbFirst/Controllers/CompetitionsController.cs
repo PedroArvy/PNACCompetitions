@@ -39,7 +39,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       competition.Venue = model.Venue;
       competition.Start = DateTime.Parse(model.StartDate + " " + model.StartTime);
 
-      if(model.DayType == "m")
+      if (model.DayType == "m")
         competition.End = DateTime.Parse(model.EndDate + " " + model.EndTime);
 
       competition.DayType = model.DayType;
@@ -65,7 +65,7 @@ namespace PNACCompetitionsDbFirst.Controllers
     {
       bool canEdit = false;
 
-      if(db.Competitions.Any(c => c.CompetitionId == competitionId))
+      if (db.Competitions.Any(c => c.CompetitionId == competitionId))
       {
         if (IsAdmin)
           canEdit = true;
@@ -87,11 +87,23 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       foreach (Entry entry in competition.Entries.Where(e => e.CompetitionId == competition.CompetitionId))
       {
-        entrant = new CompetitorEntry() { Name = entry.Competitor.FriendlyName(), CompetitorId = entry.CompetitorId, IsTripCaptain = entry.IsTripCaptain, IsReferee = entry.IsReferee};
+        entrant = new CompetitorEntry() { Name = entry.Competitor.FriendlyName(), CompetitorId = entry.CompetitorId, IsTripCaptain = entry.IsTripCaptain, IsReferee = entry.IsReferee };
         entries.Add(entrant);
       }
 
       return entries;
+    }
+
+
+    public JsonResult DeleteEntry(int competitorId, int competitionId)
+    {
+      if (CanEditCompetition(competitionId) && db.Entries.Any(e => e.CompetitorId == competitorId && e.CompetitionId == competitionId))
+      {
+        db.Entries.Remove(db.Entries.Single(e => e.CompetitorId == competitorId && e.CompetitionId == competitionId));
+        db.SaveChanges();
+      }
+
+      return Json(new { success = "true" }, JsonRequestBehavior.AllowGet);
     }
 
 
@@ -125,6 +137,8 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         if (competition.Entries.Any(e => e.IsTripCaptain))
           edit.TripCaptainId = competition.Entries.Single(e => e.IsTripCaptain).CompetitorId;
+        else
+          edit.TripCaptainId = -1;
 
         edit.CompetitionEntries = CompetitionEntries(competition);
       }
@@ -152,7 +166,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         return View(model);
       else if (!IsAdmin)
         throw new UnauthorizedAccessException("");
-        
+
       return new EmptyResult();
     }
 
@@ -233,10 +247,11 @@ namespace PNACCompetitionsDbFirst.Controllers
         Entry entrant;
 
         db.Entries.RemoveRange(db.Entries.Where(e => e.CompetitionId == model.CompetitionId));
+        db.SaveChanges();
 
         foreach (CompetitorEntry entry in model.Competitors)
         {
-          if (db.Competitors.Any(c => c.CompetitorId == entry.CompetitorId))
+          if (db.Competitors.Any(c => c.CompetitorId == entry.CompetitorId) && !db.Entries.Any(e => e.CompetitionId == model.CompetitionId && e.CompetitorId == entry.CompetitorId))
           {
             entrant = new Entry() { CompetitionId = model.CompetitionId, CompetitorId = entry.CompetitorId, IsReferee = entry.IsReferee };
 
@@ -244,10 +259,9 @@ namespace PNACCompetitionsDbFirst.Controllers
               entrant.IsTripCaptain = true;
 
             db.Entries.Add(entrant);
+            db.SaveChanges();
           }
         }
-
-        db.SaveChanges();
       }
       else
         throw new UnauthorizedAccessException("Entries");

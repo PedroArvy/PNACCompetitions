@@ -45,7 +45,7 @@
 
 
         // Operations
-        self.addCompetitor = function () {
+        self.AddCompetitor = function () {
           self.Competitors.push(new CompetitorData("", 0, false, false, false));
           AutoComplete('.competitor', members);
         };
@@ -316,7 +316,7 @@
   </table>
 
 
-  <button data-bind="click: addCompetitor">Reserve another seat</button>
+  <button data-bind="click: AddCompetitor">Reserve another seat</button>
   <button data-bind="click: save">Save</button>
 
 </body>
