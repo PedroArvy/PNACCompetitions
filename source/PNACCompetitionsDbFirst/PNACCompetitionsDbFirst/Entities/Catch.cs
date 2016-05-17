@@ -22,7 +22,7 @@ namespace PNACCompetitionsDbFirst.Entities
         public System.DateTime Recordered { get; set; }
         public double Weight { get; set; }
     
-        public virtual Entry Entry { get; set; }
         public virtual Fish Fish { get; set; }
+        public virtual Entry Entry { get; set; }
     }
 }

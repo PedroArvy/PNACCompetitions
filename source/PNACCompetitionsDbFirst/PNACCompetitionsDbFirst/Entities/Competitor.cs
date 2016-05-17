@@ -18,9 +18,6 @@ namespace PNACCompetitionsDbFirst.Entities
         public Competitor()
         {
             this.Entries = new HashSet<Entry>();
-            this.Competitions = new HashSet<Competition>();
-            this.Competitions1 = new HashSet<Competition>();
-            this.Competitions2 = new HashSet<Competition>();
         }
     
         public int CompetitorId { get; set; }
@@ -42,11 +39,5 @@ namespace PNACCompetitionsDbFirst.Entities
         public virtual Club Club { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Entry> Entries { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Competition> Competitions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Competition> Competitions1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Competition> Competitions2 { get; set; }
     }
 }

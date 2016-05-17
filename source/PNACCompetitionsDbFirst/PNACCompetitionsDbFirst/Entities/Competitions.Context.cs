@@ -25,7 +25,6 @@ namespace PNACCompetitionsDbFirst.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Entry> Entries { get; set; }
         public virtual DbSet<Season> Seasons { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Catch> Catches { get; set; }
@@ -34,5 +33,6 @@ namespace PNACCompetitionsDbFirst.Entities
         public virtual DbSet<Fish> Fish { get; set; }
         public virtual DbSet<Competitor> Competitors { get; set; }
         public virtual DbSet<Competition> Competitions { get; set; }
+        public virtual DbSet<Entry> Entries { get; set; }
     }
 }

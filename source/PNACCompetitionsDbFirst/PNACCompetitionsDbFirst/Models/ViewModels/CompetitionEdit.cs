@@ -41,17 +41,6 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public string MemberNames { get; set; }
 
 
-    [Display(Name = "Referee 1")]
-    public string Referee1 { get; set; }
-    public int? Referee1Id { get; set; }
-
-
-    [Display(Name = "Referee 2")]
-    public string Referee2 { get; set; }
-    public int? Referee2Id { get; set; }
-
-
-
     [Display(Name = "Start date")]
     [Required]
     public string StartDate { get; set; }
@@ -62,14 +51,10 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public string StartTime { get; set; }
 
 
-    [Display(Name = "Trip Captain")]
-    public string TripCaptain { get; set; }
-    public int? TripCaptainId { get; set; }
-
-
     [Required]
     [MaxLength(100)]
     public string Venue { get; set; }
+
 
     #endregion
 

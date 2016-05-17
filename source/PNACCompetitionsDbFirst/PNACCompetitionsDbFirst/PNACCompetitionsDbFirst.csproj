@@ -275,6 +275,7 @@
     <Content Include="Entities\Competitions.edmx.diagram">
       <DependentUpon>Competitions.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

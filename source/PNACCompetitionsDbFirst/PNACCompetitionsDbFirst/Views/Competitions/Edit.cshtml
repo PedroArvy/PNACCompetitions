@@ -7,8 +7,8 @@
 
 
 <style>
-  body{
-    display:none;
+  body {
+    display: none;
   }
 </style>
 
@@ -27,6 +27,20 @@
     $("body").show();
 
   });
+
+
+  function AutoComplete(selector, options) {
+    $('.competitor').autocomplete({
+      source: options,
+
+      select: function (event, ui) {
+        event.preventDefault();
+        $(this).val(ui.item.label);
+        $(this).next().val(ui.item.value).change();
+      }
+
+    });
+  }
 
 </script>
 
@@ -65,15 +79,27 @@
                 <th>Referee</th>
               </tr>
             </thead>
-            <tbody>
+
+            <tbody data-bind="foreach: Competitors">
+
               <tr>
                 <td><a class="btn btn-primary btn-sm btn-delete" href="#">Delete</a></td>
-                <td>John Smith</td>
-                <td>Wed 23 March, 6am</td>
-                <td>Thu 24 March, 5pm</td>
+                <td>
+                  <input class="competitor form-control capitalise" data-bind="value: Name" />
+                  <input class="competitorId" data-bind="value: CompetitorId" />
+                </td>
+                <td>
+                  <input type="radio" name="TripCaptain" data-bind="attr: {value: CompetitorId}, checked: $parent.TripCaptain" />
+                </td>
+                <td>
+                  <input type="checkbox" name="Referee" data-bind="checked: IsReferee" />
+                </td>
               </tr>
             </tbody>
           </table>
+
+          <button data-bind="click: save" class="btn btn-primary btn-sm">Save</button>
+          <button data-bind="click: addCompetitor" class="btn btn-primary btn-sm">Add a competitor</button>
 
         </div>
       </div>
@@ -90,3 +116,73 @@
 @section Scripts {
   @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+
+  $(document).ready(function () {
+
+    AutoComplete('.competitor', members);
+
+    //clear the control when user tries to edit but restore previous value if nothing chosen
+    $('.competitor').click(function () {
+      $(this).attr('previous-value', $(this).val());
+      $(this).val('');
+    }).focusout(function () {
+
+      var value = $(this).val();
+      if (value.length == 0)
+        $(this).val($(this).attr('previous-value'));
+    });
+
+    // Class to represent a row in the seat reservations grid
+    function CompetitorData(name, competitorId, isTripCaptain, isReferee) {
+
+      var self = this;
+
+      self.Name = ko.observable(name);
+      self.CompetitorId = competitorId;
+
+      if (isTripCaptain)
+        self.IsTripCaptain = ko.observable(competitorId.toString());
+      else
+        self.IsTripCaptain = ko.observable('0');
+
+      self.IsReferee = ko.observable(isReferee);
+
+    }
+
+    // Overall viewmodel for this screen, along with initial state
+
+    var entriesViewModel = {
+
+      CompetitionId : @Model.CompetitionId,
+      TripCaptain: ko.observable("2"),
+      Competitors: ko.observableArray([
+          new CompetitorData("Steve", 1, true, false),
+          new CompetitorData("Bert", 2, false, true)
+      ])
+
+    }
+
+    entriesViewModel.addCompetitor = function () {
+      entriesViewModel.Competitors.push(new CompetitorData("", 0, false, false, false));
+      AutoComplete('.competitor', members);
+    };
+
+
+    entriesViewModel.save = function () {
+
+      alert(ko.toJSON(entriesViewModel));
+
+      //$.ajax("/competitions/entries", {
+      //  data: ko.toJSON({ tasks: self.tasks }),
+      //  type: "post", contentType: "application/json",
+      //  success: function (result) { alert(result) }
+      //});
+    };
+
+    ko.applyBindings(entriesViewModel);
+
+  });
+
+</script>

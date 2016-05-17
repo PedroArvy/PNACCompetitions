@@ -1,110 +1,559 @@
-﻿<!doctype html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>jQuery UI Autocomplete - Default functionality</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Lake Fyans</title>
+  <link href="/Content/bootstrap.css" rel="stylesheet" />
+  <link href="/Content/site.css" rel="stylesheet" />
+
+  <script src="/Scripts/modernizr-2.6.2.js"></script>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
-  <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
   <script>
 
-    $(document).ready(function () {
+    $(function () {
 
-      // Class to represent a row in the seat reservations grid
-      function SeatReservation(name, initialMeal) {
-        var self = this;
-        self.name = ko.observable(name);
-        self.meal = ko.observable(initialMeal);
+      $('.capitalise').change(function () {
+        $(this).val(toTitleCase($(this).val()));
+      });
 
-        self.formattedPrice = ko.computed(function () {
-          var price = self.meal().price;
-          return price ? "$" + price.toFixed(2) : "None";
-        });
-      }
+    });
 
-      // Overall viewmodel for this screen, along with initial state
-      function ReservationsViewModel() {
-        var self = this;
-
-        // Non-editable catalog data - would come from the server
-        self.availableMeals = [
-            { mealName: "Standard (sandwich)", price: 0 },
-            { mealName: "Premium (lobster)", price: 34.95 },
-            { mealName: "Ultimate (whole zebra)", price: 290 }
-        ];
-
-        // Editable data
-        self.seats = ko.observableArray([
-            new SeatReservation("Steve", self.availableMeals[0]),
-            new SeatReservation("Bert", self.availableMeals[0])
-        ]);
-
-        // Computed data
-        self.totalSurcharge = ko.computed(function () {
-          var total = 0;
-          for (var i = 0; i < self.seats().length; i++)
-            total += self.seats()[i].meal().price;
-          return total;
-        });
-
-
-        self.test = ko.computed(function () {
-          //return self.seats()[0].name;
-          return self.seats()[0].name;
-        });
-
-
-        // Operations
-        self.addSeat = function () {
-          self.seats.push(new SeatReservation("", self.availableMeals[0]));
-        }
-        self.removeSeat = function (seat) { self.seats.remove(seat) }
-      }
-
-      ko.applyBindings(new ReservationsViewModel());
-
-    })
-
-
+    function toTitleCase(str) {
+      return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+    }
 
   </script>
 
-
 </head>
-
-
 <body>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Application name</a>
+      </div>
+      <div class="navbar-collapse collapse">
 
-  <h2>Your seat reservations (<span data-bind="text: seats().length"></span>)</h2>
+        <ul class="nav navbar-nav">
+          <li><a href="/">Leader Board</a></li>
+          <li><a href="/Competitors">Members</a></li>
+          <li><a href="/Competitions">Competitions</a></li>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Passenger name</th>
-        <th>Meal</th>
-        <th>Surcharge</th>
-        <th></th>
-      </tr>
-    </thead>
+          <li><a href="/Fish">Fish</a></li>
 
-    <tbody data-bind="foreach: seats">
-      <tr>
-        <td><input data-bind="value: name" /></td>
-        <td><select data-bind="options: $root.availableMeals, value: meal, optionsText: 'mealName'"></select></td>
-        <td data-bind="text: formattedPrice"></td>
-        <td><a href="#" data-bind="click: $root.removeSeat">Remove</a></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <button data-bind="click: addSeat, enable: seats().length < 5">Reserve another seat</button>
-
-
-    Total surcharge: $<span data-bind="text: totalSurcharge().toFixed(2)"></span>
+          <!--
+          <li><a href="/Home/About">About</a></li>
+          <li><a href="/Home/Contact">Contact</a></li>
+          -->
+        </ul>
 
 
-  <span data-bind="text: test()"></span>
+        <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post">
+          <input name="__RequestVerificationToken" type="hidden" value="Vx_Ff-zGTTxUJKKvxtABqJ4Xyj-zhxAMwI6OYOr0e28jsRbS5qj7oiK8_nL0O1ECg3q_x-gWe2H-_LVf_kclLJSevns7EaOp7CnPC0CfiFjlXRN7GwFnnepyjX_yK6hqtcUIQuNm2D-XmIc72OQSVg2" />    <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/Manage" title="Manage">Hello petras.surna@yart.com.au!</a>
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+          </ul>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container body-content">
 
+
+
+
+    <style>
+      body {
+        display: none;
+      }
+    </style>
+
+
+    <div class="row">
+      <div class="col-md-8">
+        <h2>Edit Lake Fyans</h2>
+      </div>
+    </div>
+
+    <script>
+
+  $(function () {
+
+    $("#tabs").tabs();
+    $("body").show();
+
+  });
+
+    </script>
+
+    <div id="tabs">
+      <ul>
+        <li><a href="#competitors-tab">Competitors</a></li>
+        <li><a href="#details-tab">Details</a></li>
+      </ul>
+
+      <div id="details-tab" class="row">
+        <div class="col-md-12">
+
+          <form action="/Competitions/Edit/21" class="form-horizontal" method="post" role="form">
+            <input name="__RequestVerificationToken" type="hidden" value="kIABYEjVwsbUu9SOtJIe18ox6GV46nZ8avAx1T0_Ip5kVJ46i-HwTSGjJMY5ZsLz9pUBiA26Wrv4o49TkweaVU2QonVvzCLaixyd0gM0Q6_wgNkD9WN9lO9Dco_PtQ7DpBADg1SM8zR4fDOTFbHiGQ2" />
+            <input name="__RequestVerificationToken" type="hidden" value="LMm5qRo4hYdI9NByv26HPWbdZrphbYBA_twgPhfaWDtJ5l8v0I87wSt8VuPKKJbuQ8mjb0tqqVTR4n7iGXJrdeWSc_WW_TUl1pE6b2x_3IQUKDr0psvbBjkNl3QxEMkBvD04KWDJjXkxasC26dFK-w2" />
+
+            <div class="form-group">
+              <div class="col-md-10">
+                <label class="pnac-label" for="Venue">Venue</label>
+              </div>
+              <div class="col-md-10">
+                <input class="form-control capitalise" data-val="true" data-val-maxlength="The field Venue must be a string or array type with a maximum length of &#39;100&#39;." data-val-maxlength-max="100" data-val-required="The Venue field is required." id="Venue" name="Venue" type="text" value="Lake Fyans" />
+                <span class="field-validation-valid" data-valmsg-for="Venue" data-valmsg-replace="true"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-10">
+                <label class="pnac-label" for="StartDate">Start date</label>
+              </div>
+              <div class="col-md-10">
+                <input class="datepicker" data-val="true" data-val-required="The Start date field is required." id="StartDate" name="StartDate" type="text" value="Wednesday 23 Mar 2016" />
+                <span class="field-validation-valid" data-valmsg-for="StartDate" data-valmsg-replace="true"></span>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <div class="col-md-10">
+                <label class="pnac-label" for="StartTime">Start time</label>
+              </div>
+              <div class="col-md-10">
+                <input class="timepicker" data-val="true" data-val-required="The Start time field is required." id="StartTime" name="StartTime" type="text" value="6:00 AM" />
+                <span class="field-validation-valid" data-valmsg-for="StartTime" data-valmsg-replace="true"></span>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <div class="col-md-10">
+                <label class="pnac-label">Competition type</label>
+              </div>
+              <div class="col-md-10">
+                Single day <input id="DayType" name="DayType" type="radio" value="s" />
+                <br />Multi day <input checked="checked" id="DayType" name="DayType" type="radio" value="m" />
+              </div>
+            </div>
+
+
+            <div class="form-group multi-day">
+              <div class="col-md-10">
+                <label class="pnac-label" for="EndDate">End date</label>
+              </div>
+              <div class="col-md-10">
+                <input class="datepicker" data-val="true" data-val-required="The End date field is required." id="EndDate" name="EndDate" type="text" value="Thursday 24 Mar 2016" />
+                <span class="field-validation-valid" data-valmsg-for="EndDate" data-valmsg-replace="true"></span>
+              </div>
+            </div>
+
+            <div class="form-group multi-day">
+              <div class="col-md-10">
+                <label class="pnac-label" for="EndTime">End time</label>
+              </div>
+              <div class="col-md-10">
+                <input class="timepicker" data-val="true" data-val-required="The End time field is required." id="EndTime" name="EndTime" type="text" value="5:00 PM" />
+                <span class="field-validation-valid" data-valmsg-for="EndTime" data-valmsg-replace="true"></span>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <div class="col-md-10">
+                <label class="pnac-label a1utocomplete" for="TripCaptain">Trip Captain</label>
+              </div>
+              <div class="col-md-10">
+                <input class="form-control" data-type="search" id="TripCaptain" name="TripCaptain" placeholder="Search members..." type="text" value="Peter Antonello" />
+              </div>
+            </div>
+
+            <input data-val="true" data-val-number="The field TripCaptainId must be a number." id="TripCaptainId" name="TripCaptainId" type="hidden" value="547" />
+
+
+            <div class="form-group">
+              <div class="col-md-10">
+                <label class="pnac-label a1utocomplete" for="Referee1">Referee 1</label>
+              </div>
+              <div class="col-md-10">
+                <input class="form-control" id="Referee1" name="Referee1" type="text" value="" />
+              </div>
+            </div>
+
+            <input data-val="true" data-val-number="The field Referee1Id must be a number." id="Referee1Id" name="Referee1Id" type="hidden" value="" />
+
+
+            <div class="form-group">
+              <div class="col-md-10">
+                <label class="pnac-label a1utocomplete" for="Referee2">Referee 2</label>
+              </div>
+              <div class="col-md-10">
+                <input class="form-control" id="Referee2" name="Referee2" type="text" value="" />
+              </div>
+            </div>
+
+            <input data-val="true" data-val-number="The field Referee2Id must be a number." id="Referee2Id" name="Referee2Id" type="hidden" value="" />
+
+
+            <div class="form-group">
+              <div class="col-md-10">
+                <input type="submit" class="btn btn-default save-button" value="Save" />
+                <a href="/competitions/index" class="btn btn-default save-button back-button">Back to all competitions</a>
+              </div>
+            </div>
+
+            <link rel="stylesheet" href="/Content/pickadate/default.css" />
+            <link rel="stylesheet" href="/Content/pickadate/default.date.css" />
+            <link rel="stylesheet" href="/Content/pickadate/default.time.css" />
+            <script src="/scripts/pickadate/picker.js"></script>
+            <script src="/scripts/pickadate/picker.date.js"></script>
+            <script src="/scripts/pickadate/picker.time.js"></script>
+            <script src="/scripts/pickadate/legacy.js"></script>
+
+
+            <script>
+
+  var $input = $('.datepicker').pickadate({
+    format: 'dddd d mmm yyyy',
+    formatSubmit: 'dddd d mmm yyyy',
+    // min: [2015, 7, 14],
+    //container: '#datepicker-container',
+    //editable: true,
+    closeOnSelect: false,
+    closeOnClear: false,
+  })
+
+  var picker = $input.pickadate('picker')
+
+  var $input = $('.timepicker').pickatime({})
+  var timepicker = $input.pickatime('picker')
+
+
+
+  $(function () {
+
+    $("input[name = 'DayType']").click(function () {
+
+      if ($(this).val() == 's')
+      {
+        $(".single-day").show();
+        $(".multi-day").hide();
+      }
+      else
+      {
+        $(".single-day").hide();
+        $(".multi-day").show();
+      }
+
+    });
+
+
+
+
+
+  });
+
+
+            </script>
+
+
+
+            <script>
+  $(function () {
+    var members = [
+
+      { label: "Fernanda Antonello", value: "544" },
+{ label: "Peter Antonello", value: "547" },
+{ label: "Ian Axford", value: "548" },
+{ label: "John Backx", value: "549" },
+{ label: "Kevin Bamford", value: "550" },
+{ label: "Andrew Barclay", value: "551" },
+{ label: "Bob Beeson", value: "552" },
+{ label: "Barbara Braidwood", value: "692" },
+{ label: "Harry Braidwood", value: "553" },
+{ label: "Andrew Brandi", value: "554" },
+{ label: "Phil Brandi", value: "555" },
+{ label: "Alf Breci", value: "556" },
+{ label: "Margaret Breci", value: "693" },
+{ label: "Len Brown", value: "557" },
+{ label: "Jamie Burrell", value: "558" },
+{ label: "Kerrie Burrell", value: "559" },
+{ label: "Stephen Burton", value: "560" },
+{ label: "David Cahir", value: "561" },
+{ label: "Bronwyn Calleja", value: "694" },
+{ label: "Frank Calleja", value: "562" },
+{ label: "Les Chadwick", value: "563" },
+{ label: "Frank Christopher", value: "564" },
+{ label: "Norma Christopher", value: "695" },
+{ label: "John Clarke", value: "565" },
+{ label: "Lyn Clarke", value: "696" },
+{ label: "Mick Coats", value: "566" },
+{ label: "Di Cocking", value: "697" },
+{ label: "Ron Cocking", value: "567" },
+{ label: "Dot Coon", value: "698" },
+{ label: "Tony Coon", value: "568" },
+{ label: "Amanda Costa", value: "569" },
+{ label: "Jenny Costa", value: "699" },
+{ label: "John Costa", value: "570" },
+{ label: "Julian Costa", value: "571" },
+{ label: "Tony Cupo", value: "572" },
+{ label: "Bill Cutting", value: "573" },
+{ label: "Karlene Cutting", value: "700" },
+{ label: "Mimma Debono", value: "701" },
+{ label: "Ron Debono", value: "574" },
+{ label: "Andrew Deveson", value: "575" },
+{ label: "Bernice Deveson", value: "702" },
+{ label: "John Deveson", value: "576" },
+{ label: "Michael Deveson", value: "577" },
+{ label: "Neil Deveson", value: "578" },
+{ label: "Laura DiCori", value: "703" },
+{ label: "Leo DiCori", value: "579" },
+{ label: "Joe Donnini", value: "580" },
+{ label: "Tony Dorner", value: "581" },
+{ label: "Bob Dower", value: "582" },
+{ label: "Rachael Dower", value: "704" },
+{ label: "Dennis Dowling", value: "583" },
+{ label: "John Draper", value: "584" },
+{ label: "Niki Duckstein", value: "585" },
+{ label: "Jim Duff", value: "586" },
+{ label: "Deanna Ely", value: "705" },
+{ label: "Ken Ely", value: "587" },
+{ label: "Rod Ely", value: "588" },
+{ label: "David Fairy", value: "589" },
+{ label: "Manuel Ferrero", value: "590" },
+{ label: "Robert Fisher", value: "591" },
+{ label: "Dave Fleming", value: "592" },
+{ label: "Vic Furlan", value: "593" },
+{ label: "John Gilmour", value: "594" },
+{ label: "Josephine Goldsworthy", value: "706" },
+{ label: "Peter Goldsworthy", value: "595" },
+{ label: "Alex Goodfellow", value: "596" },
+{ label: "Di Goodfellow", value: "708" },
+{ label: "Jenny Goodfellow", value: "707" },
+{ label: "Stephen Goodfellow", value: "597" },
+{ label: "Perc Gravenall", value: "598" },
+{ label: "Anna Grech", value: "710" },
+{ label: "Charlie Grech", value: "599" },
+{ label: "Joe Grech", value: "600" },
+{ label: "Margaret Grech", value: "709" },
+{ label: "Steve Gusman", value: "601" },
+{ label: "Mark Gutterson", value: "602" },
+{ label: "David Halligan", value: "603" },
+{ label: "Marie Halligan", value: "711" },
+{ label: "Ross Halligan", value: "604" },
+{ label: "Andrew Harris", value: "605" },
+{ label: "Bernard Harris", value: "606" },
+{ label: "Wayne Harris", value: "607" },
+{ label: "Duncan Henshaw", value: "608" },
+{ label: "Richard Higlett", value: "609" },
+{ label: "Daniel Hughes", value: "610" },
+{ label: "Mark Hughes", value: "611" },
+{ label: "Sharon Hughes", value: "712" },
+{ label: "Timothy Hughes", value: "612" },
+{ label: "Daniel Jennings", value: "613" },
+{ label: "Robert Johnstone", value: "614" },
+{ label: "Graeme Jonson", value: "615" },
+{ label: "George Kapouleas", value: "616" },
+{ label: "Jason King", value: "617" },
+{ label: "Peter King", value: "618" },
+{ label: "Rod King", value: "619" },
+{ label: "Mark Land", value: "620" },
+{ label: "Frank Maiolo", value: "621" },
+{ label: "Mary Maiolo", value: "713" },
+{ label: "Glenn Maplesden", value: "622" },
+{ label: "Kerry Maplesden", value: "714" },
+{ label: "Roy Maplesden", value: "623" },
+{ label: "Rod Mason", value: "624" },
+{ label: "Gordon McDonald", value: "625" },
+{ label: "Heath McKinna", value: "626" },
+{ label: "Joe Mifsud", value: "627" },
+{ label: "Peter Miles", value: "628" },
+{ label: "Robert Miles", value: "629" },
+{ label: "Sandy Miles", value: "715" },
+{ label: "Greg Mills", value: "630" },
+{ label: "Ken Minnitt", value: "631" },
+{ label: "Vladimir Molotsky", value: "632" },
+{ label: "Sandi Muzzi", value: "633" },
+{ label: "Tony Nicolosi", value: "634" },
+{ label: "Arthur Nixon", value: "635" },
+{ label: "Chris O'Connell", value: "636" },
+{ label: "Michael O'Connell", value: "637" },
+{ label: "Donald O'Donnel", value: "638" },
+{ label: "Samuel Ogden", value: "639" },
+{ label: "John Owen", value: "640" },
+{ label: "Brian Paice", value: "641" },
+{ label: "Patty Patterson", value: "716" },
+{ label: "Peter Patterson", value: "642" },
+{ label: "Julie Paul", value: "717" },
+{ label: "Tim Paul", value: "643" },
+{ label: "Dawn Penrose", value: "718" },
+{ label: "John Penrose", value: "644" },
+{ label: "Les Penrose", value: "645" },
+{ label: "Joe Perri", value: "646" },
+{ label: "Lyn Perri", value: "719" },
+{ label: "Stan Petkovic", value: "647" },
+{ label: "Jane Psaila", value: "720" },
+{ label: "Joe Psaila", value: "648" },
+{ label: "Ryhs Rech", value: "649" },
+{ label: "Heather Reimers", value: "721" },
+{ label: "Jim Reimers", value: "650" },
+{ label: "Bob Richards", value: "651" },
+{ label: "Alan Russell", value: "652" },
+{ label: "Eileen Russell", value: "722" },
+{ label: "Jill Sanders", value: "653" },
+{ label: "Jeffrey Santamaria", value: "654" },
+{ label: "Gary Short", value: "655" },
+{ label: "Steve Smith", value: "656" },
+{ label: "Adam Snelling", value: "657" },
+{ label: "Kellie Spencer", value: "658" },
+{ label: "Petras Surna", value: "659" },
+{ label: "Jason Tanti", value: "660" },
+{ label: "David Tantis", value: "661" },
+{ label: "Nick Tantis", value: "662" },
+{ label: "John Taylor", value: "663" },
+{ label: "Stuart Taylor", value: "664" },
+{ label: "Daniel Trafford", value: "665" },
+{ label: "Phil Treble", value: "666" },
+{ label: "Val Treble", value: "723" },
+{ label: "Laura Valier D'Abate", value: "724" },
+{ label: "Tony Valier D'Abate", value: "667" },
+{ label: "Helen Warne", value: "668" },
+{ label: "Bruce Warwick", value: "669" },
+{ label: "David Way", value: "670" },
+{ label: "Gavin White", value: "671" },
+{ label: "Luke Whitmore", value: "672" },
+{ label: "Ross Wolfe", value: "673" },
+{ label: "John Wus", value: "674" },
+{ label: "Natalie Wus", value: "725" }
+
+    ];
+
+
+    $('#TripCaptain').focus(function () {
+      $(this).val('');
+      return false;
+    });
+    $('#Referee1').focus(function () {
+      $(this).val('');
+      return false;
+    });
+    $('#Referee2').focus(function () {
+      $(this).val('');
+      return false;
+    });
+
+
+    $('#TripCaptain').autocomplete({
+      source: members,
+      select: function (event, ui)
+      {
+        $('#TripCaptainId').val(ui.item.value);
+        event.preventDefault();
+        $("#TripCaptain").val(ui.item.label);
+
+      }
+    });
+
+    $('#Referee1').autocomplete({
+      source: members,
+      select: function (event, ui) {
+
+        $('#Referee1Id').val(ui.item.value);
+        event.preventDefault();
+        $("#Referee1").val(ui.item.label);
+
+      }
+    });
+
+    $('#Referee2').autocomplete({
+      source: members,
+      select: function (event, ui) {
+
+        $('#Referee2Id').val(ui.item.value);
+        event.preventDefault();
+        $("#Referee2").val(ui.item.label);
+
+      }
+    });
+
+  });
+
+
+
+            </script>
+            <input data-val="true" data-val-number="The field CompetitionId must be a number." data-val-required="The CompetitionId field is required." id="CompetitionId" name="CompetitionId" type="hidden" value="21" />
+          </form>
+        </div>
+      </div>
+
+      <div id="competitors-tab">
+
+        <div class="row">
+          <div class="col-md-7">
+            <div class="table-responsive">
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Action</th>
+                    <th>Member</th>
+                    <th>Captain</th>
+                    <th>Referee</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a class="btn btn-primary btn-sm btn-delete" href="#">Delete</a></td>
+                    <td>John Smith</td>
+                    <td>Wed 23 March, 6am</td>
+                    <td>Thu 24 March, 5pm</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <hr />
+    <footer>
+      <p>&copy; 2016 - <a href="http://www.yart.com.au" target="_blank">Yart</a> business automation</p>
+    </footer>
+  </div>
+
+  <script src="/Scripts/bootstrap.js"></script>
+  <script src="/Scripts/respond.js"></script>
+
+
+  <script src="/Scripts/jquery.validate.js"></script>
+  <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+
+  <!-- Visual Studio Browser Link -->
+  <script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Firefox","requestId":"e2a6f125a8764e2b8aff995c3a87efb8"}
+  </script>
+  <script type="text/javascript" src="http://localhost:56159/22c23b5434d046c48086d94241270c88/browserLink" async="async"></script>
+  <!-- End Browser Link -->
 
 </body>
 </html>

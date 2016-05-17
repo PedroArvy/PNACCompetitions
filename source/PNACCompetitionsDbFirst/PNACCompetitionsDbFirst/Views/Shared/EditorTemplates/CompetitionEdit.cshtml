@@ -70,42 +70,6 @@
 
 <div class="form-group">
   <div class="col-md-10">
-    @Html.LabelFor(m => m.TripCaptain, new { @class = "pnac-label a1utocomplete" })
-  </div>
-  <div class="col-md-10">
-    @Html.TextBoxFor(m => m.TripCaptain, new { @class = "form-control", data_type = "search", placeholder = "Search members..." })
-  </div>
-</div>
-
-@Html.HiddenFor(m => m.TripCaptainId)
-
-
-<div class="form-group">
-  <div class="col-md-10">
-    @Html.LabelFor(m => m.Referee1, new { @class = "pnac-label a1utocomplete" })
-  </div>
-  <div class="col-md-10">
-    @Html.TextBoxFor(m => m.Referee1, new { @class = "form-control" })
-  </div>
-</div>
-
-@Html.HiddenFor(m => m.Referee1Id)
-
-
-<div class="form-group">
-  <div class="col-md-10">
-    @Html.LabelFor(m => m.Referee2, new { @class = "pnac-label a1utocomplete" })
-  </div>
-  <div class="col-md-10">
-    @Html.TextBoxFor(m => m.Referee2, new { @class = "form-control" })
-  </div>
-</div>
-
-@Html.HiddenFor(m => m.Referee2Id)
-
-
-<div class="form-group">
-  <div class="col-md-10">
     <input type="submit" class="btn btn-default save-button" value="Save" />
     <a href="/competitions/index" class="btn btn-default save-button back-button">Back to all competitions</a>
   </div>
@@ -172,12 +136,14 @@
 
 
 <script>
+  var members = [
+
+    @Html.Raw(Model.MemberNames)
+
+  ];
+
   $(function () {
-    var members = [
 
-      @Html.Raw(Model.MemberNames)
-
-    ];
 
 
     $('#TripCaptain').focus(function () {
