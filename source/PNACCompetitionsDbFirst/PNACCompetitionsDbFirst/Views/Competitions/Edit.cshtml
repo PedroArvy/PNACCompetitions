@@ -96,10 +96,10 @@
                   <input type="hidden" class="competitorId" data-bind="value: CompetitorId" />
                 </td>
                 <td>
-                  <input type="radio" name="TripCaptain" data-bind="attr: {value: CompetitorId}, checked: $parent.TripCaptain" />
+                  <input type="radio" name="TripCaptain" data-bind="attr: {value: CompetitorId}, click: $parent.CheckTripCaptain, checked: $parent.TripCaptain" />
                 </td>
                 <td>
-                  <input type="checkbox" name="Referee" data-bind="checked: IsReferee" />
+                  <input type="checkbox" name="Referee" data-bind="click: $parent.CheckReferee, checked: IsReferee" />
                 </td>
               </tr>
             </tbody>
@@ -152,6 +152,28 @@
     entriesViewModel.AddCompetitor = function () {
       entriesViewModel.Competitors.push(new CompetitorData("", 0, false, false, false));
       AutoComplete('.competitor', members);
+    };
+
+
+    entriesViewModel.CheckTripCaptain = function (competitor) {
+      competitor.IsReferee(false);
+      return true;
+    };
+
+
+    entriesViewModel.CheckReferee = function (competitor) {
+
+      //alert(root.CompetitionId);
+      //alert(competitor.parent);
+
+      if(entriesViewModel.TripCaptain() == competitor.CompetitorId)
+      {
+        alert('A trip captain cannot be a referee');
+        return false;
+      }
+      else
+        return true;
+
     };
 
 
