@@ -67,6 +67,8 @@
   </div>
 </div>
 
+@Html.HiddenFor(m => m.TripCaptainId)
+
 
 <div class="form-group">
   <div class="col-md-10">
@@ -103,7 +105,7 @@
 
 
 
-  $(function () {
+  $(document).ready(function () {
 
     $("input[name = 'DayType']").click(function () {
 
@@ -127,7 +129,6 @@
     }
 
 
-
   });
 
 
@@ -135,66 +136,3 @@
 
 
 
-<script>
-  var members = [
-
-    @Html.Raw(Model.MemberNames)
-
-  ];
-
-  $(function () {
-
-
-
-    $('#TripCaptain').focus(function () {
-      $(this).val('');
-      return false;
-    });
-    $('#Referee1').focus(function () {
-      $(this).val('');
-      return false;
-    });
-    $('#Referee2').focus(function () {
-      $(this).val('');
-      return false;
-    });
-
-
-    $('#TripCaptain').autocomplete({
-      source: members,
-      select: function (event, ui)
-      {
-        $('#TripCaptainId').val(ui.item.value);
-        event.preventDefault();
-        $("#TripCaptain").val(ui.item.label);
-
-      }
-    });
-
-    $('#Referee1').autocomplete({
-      source: members,
-      select: function (event, ui) {
-
-        $('#Referee1Id').val(ui.item.value);
-        event.preventDefault();
-        $("#Referee1").val(ui.item.label);
-
-      }
-    });
-
-    $('#Referee2').autocomplete({
-      source: members,
-      select: function (event, ui) {
-
-        $('#Referee2Id').val(ui.item.value);
-        event.preventDefault();
-        $("#Referee2").val(ui.item.label);
-
-      }
-    });
-
-  });
-
-
-
-</script>

@@ -86,6 +86,9 @@ namespace PNACCompetitionsDbFirst.Controllers
           edit.EndTime = "5:00 PM";
           edit.DayType = "s";
         }
+
+        if (competition.Entries.Any(e => e.TripCaptain))
+          edit.TripCaptainId = competition.Entries.Single(e => e.TripCaptain).CompetitorId;
       }
       else
         throw new NotImplementedException();
