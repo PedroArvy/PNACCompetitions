@@ -10,6 +10,25 @@
   body {
     display: none;
   }
+
+  .table-responsive {
+    border: none;
+    outline: none;
+  }
+
+  @@media (max-width: 991px) {
+    .entries-row {
+      padding: 0;
+    }
+
+    .body-content {
+      padding: 2px;
+    }
+
+    .btn {
+      margin-bottom: 10px;
+    }
+  }
 </style>
 
 
@@ -20,8 +39,6 @@
 </div>
 
 <script>
-
-
 
   $(function () {
 
@@ -34,7 +51,7 @@
   function AutoComplete(selector, options) {
     $('.competitor').autocomplete({
       source: options,
-       maxLength : 0,
+      maxLength : 0,
 
       select: function (event, ui) {
         event.preventDefault();
@@ -78,28 +95,36 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>Action</th>
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">Delete</span>
+                  <span class="hidden-lg"></span>
+                </th>
                 <th>Member</th>
-                <th>Captain</th>
-                <th>Referee</th>
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">Captain</span>
+                  <span class="hidden-lg">C</span>
+                </th>
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">Referee</span>
+                  <span class="hidden-lg">R</span>
+                </th>
               </tr>
             </thead>
 
             <tbody data-bind="foreach: Competitors">
-
               <tr>
                 <td>
-                    <a data-bind="click: $parent.DeleteCompetitor, visible: Name().length > 0" class="btn btn-primary btn-sm btn-delete" href="#">Delete</a>
+                  <a data-bind="click: $parent.DeleteCompetitor, visible: Name().length > 0" class="btn btn-primary btn-sm btn-delete" href="#">Delete</a>
                 </td>
                 <td>
-                  <input class="competitor form-control capitalise" data-bind="value: Name" />
+                  <input class="competitor form-control capitalise" data-bind="value: Name, event: { change: $parent.CheckIfFull }" />
                   <input type="hidden" class="competitorId" data-bind="value: CompetitorId" />
                 </td>
                 <td>
-                  <input type="radio" name="TripCaptain" data-bind="attr: {value: CompetitorId}, click: $parent.CheckTripCaptain, checked: $parent.TripCaptain" />
+                  <input type="radio" name="TripCaptain" data-bind="attr: {value: CompetitorId}, click: $parent.CheckTripCaptain, checked: $parent.TripCaptain, visible: Name().length > 0"/>
                 </td>
                 <td>
-                  <input type="checkbox" name="Referee" data-bind="click: $parent.CheckReferee, checked: IsReferee" />
+                  <input type="checkbox" name="Referee" data-bind="click: $parent.CheckReferee, checked: IsReferee, visible: Name().length > 0" />
                 </td>
               </tr>
             </tbody>
@@ -155,6 +180,29 @@
     };
 
 
+    entriesViewModel.CheckIfFull = function () {
+      //alert(entriesViewModel.Competitors().length);
+      //alert(entriesViewModel.Competitors()[0].Name());
+      var full = true;
+
+      for(var i = 0; i < entriesViewModel.Competitors().length; i++)
+      {
+        if(entriesViewModel.Competitors()[i].Name().length == 0)
+        {
+          full = false;
+          break;
+        }
+      }
+
+      if(full)
+      {
+        entriesViewModel.Competitors.push(new CompetitorData("", 0, false, false, false));
+        AutoComplete('.competitor', members);
+      }
+    };
+    
+
+
     entriesViewModel.CheckTripCaptain = function (competitor) {
       competitor.IsReferee(false);
       return true;
@@ -162,9 +210,6 @@
 
 
     entriesViewModel.CheckReferee = function (competitor) {
-
-      //alert(root.CompetitionId);
-      //alert(competitor.parent);
 
       if(entriesViewModel.TripCaptain() == competitor.CompetitorId)
       {
@@ -183,7 +228,7 @@
       {
         $.ajax("/Competitions/DeleteEntry?competitorId=" + entry.CompetitorId + '&competitionId=' + $('#CompetitionId').val(), {
           type: "post", contentType: "application/json",
-          success: function (result) 
+          success: function (result)
           {
             if(Boolean(result.success))
             {
@@ -199,8 +244,8 @@
       $.ajax("/Competitions/SaveEntries", {
         data: ko.toJSON(entriesViewModel),
         type: "post", contentType: "application/json",
-        success: function (result) 
-        { 
+        success: function (result)
+        {
           window.location.replace('/competitions/index') ;
         }
       });
@@ -221,8 +266,6 @@
 
   $(function () {
 
-    AutoComplete('.competitor', members);
-
     //clear the control when user tries to edit but restore previous value if nothing chosen
     $('.competitor').click(function () {
       $(this).attr('previous-value', $(this).val());
@@ -233,6 +276,8 @@
       if (value.length == 0)
         $(this).val($(this).attr('previous-value'));
     });
+
+    AutoComplete('.competitor', members);
 
   })
 
