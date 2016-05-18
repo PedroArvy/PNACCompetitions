@@ -14,6 +14,23 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
+  <style>
+    .table-responsive {
+      border: none;
+      outline:none;
+    }
+
+    @media (max-width: 991px) {
+      .entries-row {
+        padding: 0;
+      }
+
+      .body-content {
+        padding: 2px;
+      }
+    }
+  </style>
+
   <script>
 
     $(function () {
@@ -266,16 +283,25 @@
       <div id="competitors-tab">
 
         <div class="row">
-          <div class="col-md-7">
+          <div class="col-md-7 entries-row">
             <div class="table-responsive">
 
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>Action</th>
+                    <th>
+                      <span class="hidden-sm hidden-xs hidden-md">Delete</span>
+                      <span class="hidden-lg"></span>
+                    </th>
                     <th>Member</th>
-                    <th>Captain</th>
-                    <th>Referee</th>
+                    <th>
+                      <span class="hidden-sm hidden-xs hidden-md">Captain</span>
+                      <span class="hidden-lg">C</span>
+                    </th>
+                    <th>
+                      <span class="hidden-sm hidden-xs hidden-md">Referee</span>
+                      <span class="hidden-lg">R</span>
+                    </th>
                   </tr>
                 </thead>
 
@@ -283,7 +309,8 @@
 
                   <tr>
                     <td>
-                      <a data-bind="click: $parent.DeleteCompetitor, visible: Name().length > 0" class="btn btn-primary btn-sm btn-delete" href="#">Delete</a>
+                      <a data-bind="click: $parent.DeleteCompetitor, visible: Name().length > 0" class="btn btn-primary btn-sm btn-delete hidden-sm hidden-xs hidden-md" href="#">Delete</a>
+                      <a data-bind="click: $parent.DeleteCompetitor, visible: Name().length > 0" href="#" title="Delete the entry" class="hidden-lg"><img src="/content/images/trash-can.png"/></a>
                     </td>
                     <td>
                       <input class="competitor form-control capitalise" data-bind="value: Name" />
