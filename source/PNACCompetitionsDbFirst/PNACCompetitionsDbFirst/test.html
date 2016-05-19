@@ -3,71 +3,74 @@
 <head>
   <meta charset="utf-8">
   <title>jQuery UI Autocomplete - Default functionality</title>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
-  <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="/Scripts/ko-autocomplete.js"></script>
 
   <script>
 
     $(document).ready(function () {
 
-      // Class to represent a row in the seat reservations grid
-      function SeatReservation(name, initialMeal) {
-        var self = this;
-        self.name = ko.observable(name);
-        self.meal = ko.observable(initialMeal);
 
-        self.formattedPrice = ko.computed(function () {
-          var price = self.meal().price;
-          return price ? "$" + price.toFixed(2) : "None";
-        });
-      }
-
-      // Overall viewmodel for this screen, along with initial state
-      function ReservationsViewModel() {
+      function Competitor(competitorId, isReferee)
+      {
         var self = this;
 
+        //self.Name = ko.observable(name);
+        //self.CompetitorId = competitorId;
+        self.IsReferee = ko.observable(isReferee);
 
-        self.Name = ko.observable("harry");
+        self.mySelectedGuid = ko.observable(competitorId);
+        self.tempValue = '';
 
-        // Non-editable catalog data - would come from the server
-        self.availableMeals = [
-            { mealName: "Standard (sandwich)", price: 0 },
-            { mealName: "Premium (lobster)", price: 34.95 },
-            { mealName: "Ultimate (whole zebra)", price: 290 }
-        ];
-
-        // Editable data
-        self.seats = ko.observableArray([
-            new SeatReservation("Steve", self.availableMeals[0]),
-            new SeatReservation("Bert", self.availableMeals[0])
-        ]);
-
-        // Computed data
-        self.totalSurcharge = ko.computed(function () {
-          var total = 0;
-          for (var i = 0; i < self.seats().length; i++)
-            total += self.seats()[i].meal().price;
-          return total;
-        });
-
-        // Operations
-        self.addSeat = function () {
-          self.seats.push(new SeatReservation("", self.availableMeals[0]));
+        self.BlurName = function () {
+          if (self.mySelectedGuid().length == 0)
+            self.mySelectedGuid(self.tempValue);
+          return true;
         }
-        self.removeSeat = function (seat) { self.seats.remove(seat) }
 
-        self.enableDetails = function (obj) {
-          console.log(obj.name());
-        };
 
+        self.FocusName = function () {
+          self.tempValue = self.mySelectedGuid();
+          self.mySelectedGuid('');
+          return true;
+        }
 
       }
 
+      function Person(guid, name, email) {
+        this.guid = ko.observable(guid);
+        this.name = ko.observable(name);
+        this.email = ko.observable(email);
 
-      ko.applyBindings(new ReservationsViewModel());
+        this.displayName = ko.dependentObservable(function () {
+          return this.name() + " [" + this.email() + "]";
+        }, this);
+      }
 
-    })
+      var viewModel = {
+        myPeople: ko.observableArray([
+            new Person("1", "Bob Smith", "bsmith@company.com"),
+            new Person("2", "Bonnie Johnson", "bjohnson@company.com"),
+            new Person("3", "John Daniels", "jdaniels@company.com"),
+            new Person("4", "Deborah Danielson", "ddanielson@company.com"),
+            new Person("5", "John Daniels", "jxdaniels@company.com")
+        ]),
+        mySelectedGuid: ko.observable("3"),
 
+        Competitors: ko.observableArray([
+          new Competitor("3", true),
+          new Competitor("4", false),
+        ])
+
+      };
+
+      ko.applyBindings(viewModel);
+
+    });
 
 
   </script>
@@ -78,35 +81,47 @@
 
 <body>
 
-  <input data-bind="value: Name, event: { mouseover: enableDetails}" />
-
-  <h2>Your seat reservations (<span data-bind="text: seats().length"></span>)</h2>
-
-  <table>
+  <table class="table table-striped">
     <thead>
       <tr>
-        <th>Passenger name</th>
-        <th>Meal</th>
-        <th>Surcharge</th>
-        <th></th>
+        <th>
+          <span class="hidden-sm hidden-xs hidden-md">Delete</span>
+          <span class="hidden-lg"></span>
+        </th>
+        <th>Member</th>
+        <th>
+          <span class="hidden-sm hidden-xs hidden-md">Captain</span>
+          <span class="hidden-lg">C</span>
+        </th>
+        <th>
+          <span class="hidden-sm hidden-xs hidden-md">Referee</span>
+          <span class="hidden-lg">R</span>
+        </th>
       </tr>
     </thead>
 
-    <tbody data-bind="foreach: seats">
+    <tbody data-bind="foreach: Competitors">
       <tr>
-        <td><input data-bind="value: name, event: { mouseover: $root.enableDetails}" /></td>
-        <td><select data-bind="options: $root.availableMeals, value: meal, optionsText: 'mealName'"></select></td>
-        <td data-bind="text: formattedPrice"></td>
-        <td><a href="#" data-bind="click: $root.removeSeat">Remove</a></td>
+        <td>
+          <input data-bind="event: { blur: BlurName }, click: FocusName, jqAuto: { autoFocus: true }, jqAutoSource: $parent.myPeople, jqAutoValue: mySelectedGuid, jqAutoSourceLabel: 'displayName', jqAutoSourceInputValue: 'name', jqAutoSourceValue: 'guid'" />
+          <span data-bind="text:mySelectedGuid"></span>
+        </td>
+
+        <td>
+          <input type="checkbox" name="Referee" data-bind="checked: IsReferee" />
+        </td>
+
       </tr>
     </tbody>
   </table>
 
-  <button data-bind="click: addSeat, enable: seats().length < 5">Reserve another seat</button>
+  <input data-bind="jqAuto: { autoFocus: true }, jqAutoSource: myPeople, jqAutoValue: mySelectedGuid, jqAutoSourceLabel: 'displayName', jqAutoSourceInputValue: 'name', jqAutoSourceValue: 'guid'" />
 
-  <h3 data-bind="visible: totalSurcharge() > 0">
-    Total surcharge: $<span data-bind="text: totalSurcharge().toFixed(2)"></span>
-  </h3>
+
+  <div data-bind="text: mySelectedGuid() ? mySelectedGuid() : 'None selected'"></div>
+
+
+
 
 </body>
 </html>

@@ -293,6 +293,7 @@
     <Content Include="Scripts\pickadate\picker.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ko-autocomplete.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="readme.txt" />
     <Content Include="test2.html" />
