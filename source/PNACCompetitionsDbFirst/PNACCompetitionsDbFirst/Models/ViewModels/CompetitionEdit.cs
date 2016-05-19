@@ -79,12 +79,15 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
       {
         if (json.Length > 0)
           json += ",\n";
-        json += "new CompetitorData('" + entry.Name.Replace("'", "\'") + "', " + entry.CompetitorId + ", " + entry.IsTripCaptain.ToString().ToLower() + ", " + entry.IsReferee.ToString().ToLower() + ")";
+        //json += "new CompetitorData('" + entry.Name.Replace("'", "\'") + "', " + entry.CompetitorId + ", " + entry.IsReferee.ToString().ToLower() + ")";
+        json += "new Person('" + entry.CompetitorId + "', '" + entry.Name.Replace("'", "\'") + "', " + entry.IsReferee.ToString().ToLower() + ")";
       }
 
       //add at least one blank line
       if(json.Length == 0)
-        json = "new CompetitorData('', 0, false, false)";
+        //json = "new CompetitorData('', 0, false, false)";
+        // id, name, isRef
+        json = "new person(0, '', false)";
 
       return json;
     }

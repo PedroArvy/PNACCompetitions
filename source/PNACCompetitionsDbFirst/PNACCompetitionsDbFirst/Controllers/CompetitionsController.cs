@@ -143,7 +143,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.CompetitionEntries = CompetitionEntries(competition);
       }
       else
-        throw new NotImplementedException();
+        throw new UnauthorizedAccessException();
 
       return View(edit);
     }
