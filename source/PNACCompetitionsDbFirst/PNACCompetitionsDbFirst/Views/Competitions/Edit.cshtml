@@ -48,21 +48,6 @@
   });
 
 
-  function AutoComplete(selector, options) {
-    $('.competitor').autocomplete({
-      source: options,
-      maxLength : 0,
-
-      select: function (event, ui) {
-        event.preventDefault();
-        $(this).val(ui.item.label);
-        $(this).next().val(ui.item.value).change();
-      }
-
-    }).focus(function() {
-      $(this).autocomplete('search', $(this).val());
-    });
-  }
 
 </script>
 
@@ -112,21 +97,29 @@
             </thead>
 
             <tbody data-bind="foreach: Competitors">
+
               <tr>
+
                 <td>
-                  <a data-bind="click: $parent.DeleteCompetitor, visible: Name().length > 0" class="btn btn-primary btn-sm btn-delete" href="#">Delete</a>
+                  <a data-bind="click: $parent.DeleteCompetitor, visible: parseInt(mySelectedGuid) > 0" class="btn btn-primary btn-sm btn-delete" href="#">Delete</a>
+                  <span data-bind="text:mySelectedGuid"></span>
                 </td>
+
                 <td>
-                  <input class="competitor form-control capitalise" data-bind="value: Name, event: { change: $parent.CheckIfFull }" />
-                  <input type="hidden" class="competitorId" data-bind="value: CompetitorId" />
+                  <input data-bind="event: { blur: BlurName }, click: FocusName, jqAuto: { autoFocus: true }, jqAutoSource: $parent.myPeople, jqAutoValue: mySelectedGuid, jqAutoSourceLabel: 'displayName', jqAutoSourceInputValue: 'Name', jqAutoSourceValue: 'guid'" />
+                  <input type="hidden" class="competitorId" data-bind="text:mySelectedGuid" />
                 </td>
+
                 <td>
-                  <input type="radio" name="TripCaptain" data-bind="attr: {value: CompetitorId}, click: $parent.CheckTripCaptain, checked: $parent.TripCaptain, visible: Name().length > 0"/>
+                  <input type="radio" name="TripCaptain" data-bind="attr: {value: CompetitorId}, click: $parent.CheckTripCaptain, checked: $parent.TripCaptain, visible: parseInt(CompetitorId) > 0"/>
                 </td>
+
                 <td>
-                  <input type="checkbox" name="Referee" data-bind="click: $parent.CheckReferee, checked: IsReferee, visible: Name().length > 0" />
+                  <input type="checkbox" name="Referee" data-bind="click: $parent.CheckReferee, checked: IsReferee, visible: parseInt(CompetitorId) > 0" />
                 </td>
+
               </tr>
+
             </tbody>
           </table>
 
@@ -153,30 +146,94 @@
 
   $(document).ready(function () {
 
-    // Class to represent a row in the seat reservations grid
-    function CompetitorData(name, competitorId, isTripCaptain, isReferee) {
+    function Competitor(competitorId, isReferee) {
 
       var self = this;
 
-      self.Name = ko.observable(name);
       self.CompetitorId = competitorId;
-      self.IsTripCaptain = ko.observable(competitorId.toString());
-
+      self.Name = ko.observable("abc");
       self.IsReferee = ko.observable(isReferee);
+
+      self.mySelectedGuid = ko.observable(competitorId);
+
+      self.tempValue = '';
+
+      self.BlurName = function () {
+        if (self.mySelectedGuid().length == 0)
+          self.mySelectedGuid(self.tempValue);
+        return true;
+      }
+
+      self.FocusName = function () {
+        self.tempValue = self.mySelectedGuid();
+        self.mySelectedGuid('');
+        return true;
+      }
+
+
+      self.GetCompetitorId = function(){
+        return 4;
+      }
+
+
+      /*
+      self.Name = function () {
+
+        var name = "";
+
+        for(var i = 0; i < competitorArray.length; i++)
+        {
+          if(competitorArray[i].guid == self.mySelectedGuid)
+            name == competitorArray[i].Name;
+        }
+
+        alert(name);
+
+        return true;
+      }
+      */
+
     }
+
+
+    function Person(guid, name, email) {
+
+      this.guid = ko.observable(guid);
+      this.Name = ko.observable(name);
+      this.email = ko.observable(email);
+
+      this.displayName = ko.dependentObservable(function () {
+        return this.Name() + " [" + this.email() + "]";
+      }, this);
+
+    }
+
+    var competitorArray = [
+          new Person("1", "Bob Smith", "bsmith@company.com"),
+          new Person("2", "Bonnie Johnson", "bjohnson@company.com"),
+          new Person("3", "John Daniels", "jdaniels@company.com"),
+          new Person("4", "Deborah Danielson", "ddanielson@company.com"),
+          new Person("5", "John Daniels", "jxdaniels@company.com")
+    ];
 
 
     var entriesViewModel = {
       CompetitionId : @Model.CompetitionId,
       TripCaptain: ko.observable("@Model.TripCaptainId"),
+
+      myPeople: ko.observableArray(competitorArray),
+      mySelectedGuid: ko.observable("3"),
+
       Competitors: ko.observableArray([
-        @Html.Raw(Model.CompetitionEntriesJson())
+        new Competitor("3", true),
+        new Competitor("4", false)
       ])
+
     }
 
+
     entriesViewModel.AddCompetitor = function () {
-      entriesViewModel.Competitors.push(new CompetitorData("", 0, false, false, false));
-      AutoComplete('.competitor', members);
+      entriesViewModel.Competitors.push(new Competitor("", 0, false));
     };
 
 
@@ -196,8 +253,7 @@
 
       if(full)
       {
-        entriesViewModel.Competitors.push(new CompetitorData("", 0, false, false, false));
-        AutoComplete('.competitor', members);
+        entriesViewModel.Competitors.push(new Competitor("", 0, false));
       }
     };
     
@@ -239,6 +295,7 @@
       }
     };
 
+
     entriesViewModel.Save = function () {
 
       $.ajax("/Competitions/SaveEntries", {
@@ -276,8 +333,6 @@
       if (value.length == 0)
         $(this).val($(this).attr('previous-value'));
     });
-
-    AutoComplete('.competitor', members);
 
   })
 

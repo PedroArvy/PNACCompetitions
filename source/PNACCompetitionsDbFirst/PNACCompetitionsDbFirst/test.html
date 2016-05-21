@@ -25,14 +25,11 @@
 
         self.mySelectedGuid = ko.observable(competitorId);
         self.tempValue = '';
-
         self.BlurName = function () {
           if (self.mySelectedGuid().length == 0)
             self.mySelectedGuid(self.tempValue);
           return true;
         }
-
-
         self.FocusName = function () {
           self.tempValue = self.mySelectedGuid();
           self.mySelectedGuid('');
