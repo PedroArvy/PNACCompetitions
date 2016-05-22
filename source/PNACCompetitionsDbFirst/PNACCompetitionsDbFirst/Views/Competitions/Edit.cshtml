@@ -1,4 +1,6 @@
 ﻿@using PNACCompetitionsDbFirst.Models.ViewModels
+@using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
+
 @model CompetitionEdit
 
 @{
@@ -96,35 +98,19 @@
               </tr>
             </thead>
 
-            <tbody data-bind="foreach: Competitors">
+            <tbody id="competitors-body">
 
-              <tr>
-
-                <td>
-                  <a data-bind="click: $parent.DeleteCompetitor, visible: parseInt(mySelectedGuid) > 0" class="btn btn-primary btn-sm btn-delete" href="#">Delete</a>
-                  <span data-bind="text:mySelectedGuid"></span>
-                </td>
-
-                <td>
-                  <input data-bind="event: { blur: BlurName }, click: FocusName, jqAuto: { autoFocus: true }, jqAutoSource: $parent.myPeople, jqAutoValue: mySelectedGuid, jqAutoSourceLabel: 'displayName', jqAutoSourceInputValue: 'Name', jqAutoSourceValue: 'guid'" />
-                  <input type="hidden" class="competitorId" data-bind="text:mySelectedGuid" />
-                </td>
-
-                <td>
-                  <input type="radio" name="TripCaptain" data-bind="attr: {value: CompetitorId}, click: $parent.CheckTripCaptain, checked: $parent.TripCaptain, visible: parseInt(CompetitorId) > 0"/>
-                </td>
-
-                <td>
-                  <input type="checkbox" name="Referee" data-bind="click: $parent.CheckReferee, checked: IsReferee, visible: parseInt(CompetitorId) > 0" />
-                </td>
-
-              </tr>
+@foreach (CompetitorEntry entry in Model.CompetitionEntries)
+{
+  @Html.Raw(Model.EntryRow(entry));
+}
 
             </tbody>
           </table>
 
           <button data-bind="click: Save" class="btn btn-primary btn-sm">Save</button>
           <button data-bind="click: AddCompetitor" class="btn btn-primary btn-sm">Add a competitor</button>
+          <button data-bind="click: Test" class="btn btn-primary btn-sm">Test</button>
 
         </div>
       </div>
@@ -135,9 +121,6 @@
 
 </div>
 
-
-
-
 @section Scripts {
   @Scripts.Render("~/bundles/jqueryval")
 }
@@ -146,195 +129,96 @@
 
   $(document).ready(function () {
 
-    function Competitor(competitorId, isReferee) {
-
-      var self = this;
-
-      self.CompetitorId = competitorId;
-      self.Name = ko.observable("abc");
-      self.IsReferee = ko.observable(isReferee);
-
-      self.mySelectedGuid = ko.observable(competitorId);
-
-      self.tempValue = '';
-
-      self.BlurName = function () {
-        if (self.mySelectedGuid().length == 0)
-          self.mySelectedGuid(self.tempValue);
-        return true;
-      }
-
-      self.FocusName = function () {
-        self.tempValue = self.mySelectedGuid();
-        self.mySelectedGuid('');
-        return true;
-      }
+    $("#dataTable tbody tr").on("click", function () {
+      console.log($(this).text());
+    });
 
 
-      self.GetCompetitorId = function(){
-        return 4;
-      }
-
-
-      /*
-      self.Name = function () {
-
-        var name = "";
-
-        for(var i = 0; i < competitorArray.length; i++)
-        {
-          if(competitorArray[i].guid == self.mySelectedGuid)
-            name == competitorArray[i].Name;
-        }
-
-        alert(name);
-
-        return true;
-      }
-      */
-
-    }
-
-
-    function Person(guid, name, email) {
-
-      this.guid = ko.observable(guid);
-      this.Name = ko.observable(name);
-      this.email = ko.observable(email);
-
-      this.displayName = ko.dependentObservable(function () {
-        return this.Name() + " [" + this.email() + "]";
-      }, this);
-
-    }
-
-    var competitorArray = [
-          new Person("1", "Bob Smith", "bsmith@company.com"),
-          new Person("2", "Bonnie Johnson", "bjohnson@company.com"),
-          new Person("3", "John Daniels", "jdaniels@company.com"),
-          new Person("4", "Deborah Danielson", "ddanielson@company.com"),
-          new Person("5", "John Daniels", "jxdaniels@company.com")
-    ];
-
-
-    var entriesViewModel = {
-      CompetitionId : @Model.CompetitionId,
-      TripCaptain: ko.observable("@Model.TripCaptainId"),
-
-      myPeople: ko.observableArray(competitorArray),
-      mySelectedGuid: ko.observable("3"),
-
-      Competitors: ko.observableArray([
-        new Competitor("3", true),
-        new Competitor("4", false)
-      ])
-
-    }
-
-
-    entriesViewModel.AddCompetitor = function () {
-      entriesViewModel.Competitors.push(new Competitor("", 0, false));
-    };
-
-
-    entriesViewModel.CheckIfFull = function () {
-      //alert(entriesViewModel.Competitors().length);
-      //alert(entriesViewModel.Competitors()[0].Name());
-      var full = true;
-
-      for(var i = 0; i < entriesViewModel.Competitors().length; i++)
+    $(".Referee").on("click", function () {
+      if($(this).parent().parent().find('.TripCaptain').is(':checked'))
       {
-        if(entriesViewModel.Competitors()[i].Name().length == 0)
-        {
-          full = false;
-          break;
-        }
-      }
-
-      if(full)
-      {
-        entriesViewModel.Competitors.push(new Competitor("", 0, false));
-      }
-    };
-    
-
-
-    entriesViewModel.CheckTripCaptain = function (competitor) {
-      competitor.IsReferee(false);
-      return true;
-    };
-
-
-    entriesViewModel.CheckReferee = function (competitor) {
-
-      if(entriesViewModel.TripCaptain() == competitor.CompetitorId)
-      {
-        alert('A trip captain cannot be a referee');
+        alert('The trip captain cannot be a referee');
         return false;
       }
-      else
-        return true;
-
-    };
+    });
 
 
-    entriesViewModel.DeleteCompetitor = function (entry) {
-
-      if(confirm('Are you sure you want to delete \'' + entry.Name() + '\'?'))
-      {
-        $.ajax("/Competitions/DeleteEntry?competitorId=" + entry.CompetitorId + '&competitionId=' + $('#CompetitionId').val(), {
-          type: "post", contentType: "application/json",
-          success: function (result)
-          {
-            if(Boolean(result.success))
-            {
-              entriesViewModel.Competitors.remove(entry);
-            }
-          }
-        });
-      }
-    };
+    $(".TripCaptain").on("click", function () {
+      $(this).parent().parent().find('.Referee').prop('checked', false);
+    });
 
 
-    entriesViewModel.Save = function () {
-
-      $.ajax("/Competitions/SaveEntries", {
-        data: ko.toJSON(entriesViewModel),
-        type: "post", contentType: "application/json",
-        success: function (result)
-        {
-          window.location.replace('/competitions/index') ;
-        }
-      });
-    };
-
-    ko.applyBindings(entriesViewModel);
-
+    AddAutoComplete(".competitorName");
   });
+
+
+  var availableTags = [
+    @Html.Raw(Model.MemberNames)
+  ];
+
+
+  function AddAutoComplete(selector)
+  {
+
+    $(selector).autocomplete({
+      source: availableTags,
+      minLength: 0,
+
+      select: function (event, ui) {
+        $(this).attr('data-val-CompetitorId', ui.item.value);
+        $(this).val(ui.item.label); // save selected id to hidden input
+        AddNew();
+        return false;
+      }
+
+    }).focus(function () {
+      $(this).autocomplete("search", $(this).val());
+    });
+
+
+    $(selector).click(function () {
+      $(this).attr('initial-value', $(this).val());
+    });
+
+
+    $(selector).blur(function () {
+      if($(this).val().length == 0)
+        $(this).val($(this).attr('initial-value'));
+    });
+
+
+  }
+
+
+  function AddNew()
+  {
+    if(CompetitorsFull())
+    {
+      $('#competitors-body').append(@Html.Raw(Model.EntryRowEmpty()));
+      AddAutoComplete(".competitorName");
+    }
+  }
+
+
+  function CompetitorsFull()
+  {
+    var full = true;
+
+    $(".competitorName").each(function (index) {
+
+      if($(this).val().length == 0 && full)
+      {
+        full = false;
+      }
+    });
+
+    return full;
+  }
 
 </script>
 
 
 <script>
-
-  var members = [
-    @Html.Raw(Model.MemberNames)
-  ];
-
-  $(function () {
-
-    //clear the control when user tries to edit but restore previous value if nothing chosen
-    $('.competitor').click(function () {
-      $(this).attr('previous-value', $(this).val());
-      $(this).val('');
-    }).focusout(function () {
-
-      var value = $(this).val();
-      if (value.length == 0)
-        $(this).val($(this).attr('previous-value'));
-    });
-
-  })
 
 
 </script>

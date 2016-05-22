@@ -91,6 +91,12 @@ namespace PNACCompetitionsDbFirst.Controllers
         entries.Add(entrant);
       }
 
+      if(entries.Count == 0)
+      {
+        entrant = new CompetitorEntry() { Name = "", CompetitorId = 0, IsTripCaptain = false, IsReferee = false };
+        entries.Add(entrant);
+      }
+
       return entries;
     }
 

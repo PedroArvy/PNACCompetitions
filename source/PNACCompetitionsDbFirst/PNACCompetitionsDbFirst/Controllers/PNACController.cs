@@ -127,7 +127,8 @@ namespace PNACCompetitionsDbFirst.Controllers
         if (count > 0)
           list += ",\n";
 
-        list += "{ label: \"" +  name + "\", value: \"" + competitor.CompetitorId + "\" }";
+        list += "{value:" + competitor.CompetitorId + ", label : \"" + name + "\"}";
+
         count++;
       }
 

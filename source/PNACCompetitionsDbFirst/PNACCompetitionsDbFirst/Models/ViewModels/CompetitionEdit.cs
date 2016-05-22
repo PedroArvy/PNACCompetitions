@@ -75,23 +75,64 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     {
       string json = "";
 
-      foreach(CompetitorEntry entry in CompetitionEntries)
+      foreach (CompetitorEntry entry in CompetitionEntries)
       {
         if (json.Length > 0)
           json += ",\n";
-        //json += "new CompetitorData('" + entry.Name.Replace("'", "\'") + "', " + entry.CompetitorId + ", " + entry.IsReferee.ToString().ToLower() + ")";
-        json += "new Person('" + entry.CompetitorId + "', '" + entry.Name.Replace("'", "\'") + "', " + entry.IsReferee.ToString().ToLower() + ")";
+
+        json += "new Competitor(\"" + entry.CompetitorId + "\", " + entry.IsReferee.ToString().ToLower() + ")";
       }
 
       //add at least one blank line
-      if(json.Length == 0)
+      if (json.Length == 0)
         //json = "new CompetitorData('', 0, false, false)";
         // id, name, isRef
-        json = "new person(0, '', false)";
+        json = "new Person(0, false)";
 
       return json;
     }
 
+
+    public string EntryRow(CompetitorEntry entry)
+    {
+      string row = "";
+
+      row += "<tr>";
+
+      row += "\n<td>";
+      row += "\n<a href=\"#\">Delete</a>";
+      row += "\n</td>";
+
+      row += "\n<td>";
+      row += "\n<input id=\"competitor-" + entry.CompetitorId + "\" class=\"competitorName\" type=\"text\"/>";
+      row += "\n</td>";
+
+      row += "\n<td>";
+      row += "\n<input type=\"radio\" name=\"TripCaptain\" class=\"TripCaptain\"/>";
+      row += "\n</td>";
+
+      row += "\n<td>";
+
+      row += "\n<input type=\"checkbox\" name=\"Referee\" data-val-CompetitorId=\"" + entry.CompetitorId + "\" class=\"Referee\"/>";
+      row += "\n</td>";
+
+      row += "\n</tr>";
+
+      return row;
+    }
+
+
+    public string EntryRowEmpty()
+    {
+      string row;
+      CompetitorEntry entry = new CompetitorEntry();
+
+      entry.Name = "";
+
+      row = EntryRow(entry).Replace("\n", "");
+
+      return "'" + row + "'";
+    }
 
     #endregion
 
