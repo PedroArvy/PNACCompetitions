@@ -97,14 +97,14 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     {
       string row = "";
 
-      row += "<tr>";
+      row += "<tr class=\"competitor-row\">";
 
       row += "\n<td>";
-      row += "\n<a href=\"#\">Delete</a>";
+      row += "\n<a href=\"#\" class=\"btn btn-primary btn-sm DeleteCompetitor\">Delete</a>";
       row += "\n</td>";
 
       row += "\n<td>";
-      row += "\n<input id=\"competitor-" + entry.CompetitorId + "\" class=\"competitorName\" type=\"text\"/>";
+      row += "\n<input data-val-competitorId=\"" + entry.CompetitorId + "\" class=\"competitorName\" type=\"text\" value=\"" + entry.Name + "\"/>";
       row += "\n</td>";
 
       row += "\n<td>";
@@ -113,7 +113,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
       row += "\n<td>";
 
-      row += "\n<input type=\"checkbox\" name=\"Referee\" data-val-CompetitorId=\"" + entry.CompetitorId + "\" class=\"Referee\"/>";
+      row += "\n<input type=\"checkbox\" name=\"Referee\" class=\"Referee\"/>";
       row += "\n</td>";
 
       row += "\n</tr>";

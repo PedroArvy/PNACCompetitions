@@ -100,17 +100,17 @@
 
             <tbody id="competitors-body">
 
-@foreach (CompetitorEntry entry in Model.CompetitionEntries)
-{
-  @Html.Raw(Model.EntryRow(entry));
-}
+              @foreach (CompetitorEntry entry in Model.CompetitionEntries)
+              {
+                @Html.Raw(Model.EntryRow(entry));
+              }
 
             </tbody>
           </table>
 
-          <button data-bind="click: Save" class="btn btn-primary btn-sm">Save</button>
-          <button data-bind="click: AddCompetitor" class="btn btn-primary btn-sm">Add a competitor</button>
-          <button data-bind="click: Test" class="btn btn-primary btn-sm">Test</button>
+          <button id="Save" class="btn btn-primary btn-sm">Save</button>
+          <button id="AddCompetitor" class="btn btn-primary btn-sm">Add a competitor</button>
+          <button class="btn btn-primary btn-sm">Test</button>
 
         </div>
       </div>
@@ -129,23 +129,59 @@
 
   $(document).ready(function () {
 
-    $("#dataTable tbody tr").on("click", function () {
-      console.log($(this).text());
-    });
+    $(document.body).on('click', '.Referee', function () {
 
-
-    $(".Referee").on("click", function () {
-      if($(this).parent().parent().find('.TripCaptain').is(':checked'))
-      {
+      if ($(this).parent().parent().find('.TripCaptain').is(':checked')) {
         alert('The trip captain cannot be a referee');
         return false;
       }
     });
 
 
-    $(".TripCaptain").on("click", function () {
+    $(document.body).on('click', '.TripCaptain', function () {
       $(this).parent().parent().find('.Referee').prop('checked', false);
     });
+
+    $(document.body).on('click', '.DeleteCompetitor', function () {
+      if(confirm('Are you sure you want to delete this entry?'))
+        $(this).parents('tr').first().remove();
+    });
+
+    //$(document.body).on('blur', '.competitorName', function () {
+
+      //console.log('blur length ' + $(this).val().length);
+      //console.log('blur init val ' + $(this).attr('initial-value'));
+
+      //if ($(this).val().length == 0)
+      //  $(this).val($(this).attr('initial-value'));
+    //});
+
+
+    $('#AddCompetitor').click(function () {
+      AddNewDirect();
+    });
+
+
+    $('#Save').click(function () {
+
+      var json = "a";
+
+      $('.competitor-row').each(function (index) {
+
+        RowJson($(this));
+
+        //alert($(this).find('.competitorName').val());
+      });
+
+    });
+
+
+    function RowJson(row)
+    {
+      var item = $(row).find('.competitorName');
+      alert($(item).val());
+      alert($(item).attr('data-val-competitorId'));
+    }
 
 
     AddAutoComplete(".competitorName");
@@ -157,8 +193,7 @@
   ];
 
 
-  function AddAutoComplete(selector)
-  {
+  function AddAutoComplete(selector) {
 
     $(selector).autocomplete({
       source: availableTags,
@@ -173,41 +208,37 @@
 
     }).focus(function () {
       $(this).autocomplete("search", $(this).val());
+      //$(this).attr('initial-value', $(this).val());
+      //console.log('focus init val ' + $(this).val());
+      //$(this).val('');
+
     });
 
 
-    $(selector).click(function () {
-      $(this).attr('initial-value', $(this).val());
+    $('.competitorName').dblclick(function () {
+      $(this).val('');
     });
-
-
-    $(selector).blur(function () {
-      if($(this).val().length == 0)
-        $(this).val($(this).attr('initial-value'));
-    });
-
 
   }
 
 
-  function AddNew()
-  {
-    if(CompetitorsFull())
-    {
-      $('#competitors-body').append(@Html.Raw(Model.EntryRowEmpty()));
-      AddAutoComplete(".competitorName");
+  function AddNew() {
+    if (CompetitorsFull()) {
+      AddNewDirect();
     }
   }
 
+  function AddNewDirect() {
+    $('#competitors-body').append(@Html.Raw(Model.EntryRowEmpty()));
+    AddAutoComplete(".competitorName");
+  }
 
-  function CompetitorsFull()
-  {
+  function CompetitorsFull() {
     var full = true;
 
     $(".competitorName").each(function (index) {
 
-      if($(this).val().length == 0 && full)
-      {
+      if ($(this).val().length == 0 && full) {
         full = false;
       }
     });
