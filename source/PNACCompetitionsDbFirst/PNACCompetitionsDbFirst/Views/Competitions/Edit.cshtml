@@ -67,7 +67,6 @@
         @Html.AntiForgeryToken()
 
         @Html.EditorFor(m => m)
-        @Html.HiddenFor(c => c.CompetitionId)
       }
 
     </div>
@@ -164,23 +163,79 @@
 
     $('#Save').click(function () {
 
-      var json = "a";
+      var json = '{';
 
-      $('.competitor-row').each(function (index) {
+      var competitors = MakeCompetitors();
 
-        RowJson($(this));
+      json += '"CompetitionId":"' + $('#CompetitionId').val() + '",';
+      json += '"Competitors":' + competitors;
 
-        //alert($(this).find('.competitorName').val());
-      });
+      json += '}';
+
+      SaveEntries(json);
 
     });
 
 
+    function SaveEntries(json)
+    {
+
+      //alert(json);
+      //json = eval(json);
+      //alert(2);
+
+      //json = JSON.stringify(json);
+
+      $.ajax({
+        url: '/Competitions/SaveEntries',
+        method: 'post',
+        data: json,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+      });
+
+    }
+        
+ 
+    function MakeCompetitors()
+    {
+      var json, jsonRows;
+      var competitors = '[';
+      jsonRows = '';
+
+      $('.competitor-row').each(function (index) {
+        json = RowJson($(this));
+
+        if (jsonRows.length > 0)
+          jsonRows += ', ';
+
+        jsonRows += json;
+      });
+
+      competitors += jsonRows;
+      competitors += ']';
+
+      return competitors;
+    }
+
+
     function RowJson(row)
     {
+      var json = '';
       var item = $(row).find('.competitorName');
-      alert($(item).val());
-      alert($(item).attr('data-val-competitorId'));
+
+     // alert($(item).val());
+      //alert($(row).find('.TripCaptain').is(':checked'));
+      //alert($(row).find('.Referee').is(':checked'));
+
+   
+      json += '{"CompetitorId":"' + $(item).attr('data-val-competitorId');
+      json += '", "IsReferee":"' + $(row).find('.Referee').is(':checked').toString();
+      json += '", "IsCaptain":"' + $(row).find('.TripCaptain').is(':checked').toString() + '"}';
+      
+      //alert(json);
+
+      return json;
     }
 
 
@@ -245,11 +300,5 @@
 
     return full;
   }
-
-</script>
-
-
-<script>
-
 
 </script>

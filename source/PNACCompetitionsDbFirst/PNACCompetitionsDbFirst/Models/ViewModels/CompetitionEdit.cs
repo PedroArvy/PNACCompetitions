@@ -54,8 +54,6 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     [Required]
     public string StartTime { get; set; }
 
-    public int TripCaptainId { get; set; }
-
     [Required]
     [MaxLength(100)]
     public string Venue { get; set; }

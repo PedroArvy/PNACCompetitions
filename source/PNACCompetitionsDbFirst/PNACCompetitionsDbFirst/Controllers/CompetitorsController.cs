@@ -273,7 +273,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       CompetitorListItem competitorListItem;
       CompetitorIndex index = new CompetitorIndex();
 
-      index.MemberNames = MakeNames();
+      //index.MemberNames = MakeNames();
 
       index.CompetitorListItems = new List<CompetitorListItem>();
 

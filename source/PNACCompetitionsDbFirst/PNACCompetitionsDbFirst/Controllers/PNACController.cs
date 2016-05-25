@@ -111,31 +111,6 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     #region *********************** Methods **************************
 
-
-    protected string MakeNames()
-    {
-      string list = "";
-      int count = 0;
-      string name;
-
-      List<string> names = new List<string>();
-
-      foreach (Competitor competitor in db.Competitors.OrderBy(c => c.LastName).ThenBy(c => c.FirstName))
-      {
-        name = competitor.FriendlyName().Replace("\"", "");
-
-        if (count > 0)
-          list += ",\n";
-
-        list += "{value:" + competitor.CompetitorId + ", label : \"" + name + "\"}";
-
-        count++;
-      }
-
-      return list;
-    }
-
-
     #endregion
 
 

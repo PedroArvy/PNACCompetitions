@@ -126,8 +126,6 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.StartTime = Format.TimeOnly(competition.Start);
         edit.DayType = competition.DayType;
 
-        edit.MemberNames = MakeNames();
-
         if (competition.DayType == "m")
         {
           edit.EndDate = Format.DateOnly((DateTime)competition.End);
@@ -140,11 +138,6 @@ namespace PNACCompetitionsDbFirst.Controllers
           edit.EndTime = "5:00 PM";
           edit.DayType = "s";
         }
-
-        if (competition.Entries.Any(e => e.IsTripCaptain))
-          edit.TripCaptainId = competition.Entries.Single(e => e.IsTripCaptain).CompetitorId;
-        else
-          edit.TripCaptainId = -1;
 
         edit.CompetitionEntries = CompetitionEntries(competition);
       }
@@ -245,6 +238,12 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
+    public ActionResult New1(CompetitionEntries model)
+    {
+      return null;
+    }
+
+
     [HttpPost]
     public JsonResult SaveEntries(CompetitionEntries model)
     {
@@ -265,9 +264,10 @@ namespace PNACCompetitionsDbFirst.Controllers
               entrant.IsTripCaptain = true;
 
             db.Entries.Add(entrant);
-            db.SaveChanges();
           }
         }
+
+        db.SaveChanges();
       }
       else
         throw new UnauthorizedAccessException("Entries");
