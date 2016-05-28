@@ -351,6 +351,7 @@
     <Content Include="Views\Competitors\Create.cshtml" />
     <Content Include="Views\Competitors\Modified.cshtml" />
     <Content Include="Views\Competitions\Edit-knockout.cshtml" />
+    <Content Include="Views\Competitions\EditEntries.cshtml" />
     <None Include="Web.Debug-Venom.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
