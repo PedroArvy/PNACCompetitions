@@ -34,6 +34,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     #region *********************** Methods **************************
 
+
     private void AssignModel(Competition competition, CompetitionEdit model)
     {
       competition.Venue = model.Venue;
@@ -91,25 +92,29 @@ namespace PNACCompetitionsDbFirst.Controllers
         entries.Add(entrant);
       }
 
-      if(entries.Count == 0)
-      {
-        entrant = new CompetitorEntry() { Name = "", CompetitorId = 0, IsTripCaptain = false, IsReferee = false };
-        entries.Add(entrant);
-      }
+      entrant = new CompetitorEntry() { Name = "", CompetitorId = 0, IsTripCaptain = false, IsReferee = false };
+      entries.Add(entrant);
 
       return entries;
     }
 
 
+    [HttpPost]
     public JsonResult DeleteEntry(int competitorId, int competitionId)
     {
-      if (CanEditCompetition(competitionId) && db.Entries.Any(e => e.CompetitorId == competitorId && e.CompetitionId == competitionId))
+      var json = new { success = "false" };
+
+      if (CanEditCompetition(competitionId))
       {
-        db.Entries.Remove(db.Entries.Single(e => e.CompetitorId == competitorId && e.CompetitionId == competitionId));
-        db.SaveChanges();
+        if (db.Entries.Any(e => e.CompetitorId == competitorId && e.CompetitionId == competitionId))
+        {
+          db.Entries.RemoveRange(db.Entries.Where(e => e.CompetitorId == competitorId && e.CompetitionId == competitionId));
+          db.SaveChanges();
+        }
+        json = new { success = "true" };
       }
 
-      return Json(new { success = "true" }, JsonRequestBehavior.AllowGet);
+      return Json(json, JsonRequestBehavior.AllowGet);
     }
 
 
@@ -125,6 +130,8 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.StartDate = Format.DateOnly(competition.Start);
         edit.StartTime = Format.TimeOnly(competition.Start);
         edit.DayType = competition.DayType;
+
+        edit.MemberNames = MakeNames(competition);
 
         if (competition.DayType == "m")
         {
@@ -162,7 +169,10 @@ namespace PNACCompetitionsDbFirst.Controllers
         return RedirectToAction("Index");
       }
       else if (CanEditCompetition(model.CompetitionId) && !ModelState.IsValid)
+      {
+        edit.MemberNames = MakeNames(competition);
         return View(model);
+      }
       else if (!IsAdmin)
         throw new UnauthorizedAccessException("");
 
@@ -200,6 +210,27 @@ namespace PNACCompetitionsDbFirst.Controllers
         index.CanCreate = Competitor.Admin;
 
       return View(index);
+    }
+
+
+    public string MakeNames(Competition competition)
+    {
+      string name, names = "";
+
+      foreach (Competitor competitor in db.Competitors.OrderBy(c => c.LastName).ThenBy(c => c.FirstName))
+      {
+        if (!competition.Entries.Any(e => e.CompetitorId == competitor.CompetitorId))
+        {
+          if (names.Length != 0)
+            names += ",\n ";
+
+          name = competitor.FriendlyName().Replace("'", "\\'");
+
+          names += "{value:" + competitor.CompetitorId + ", label:'" + name + "'}";
+        }
+      }
+
+      return names;
     }
 
 
@@ -266,16 +297,14 @@ namespace PNACCompetitionsDbFirst.Controllers
             db.Entries.Add(entrant);
           }
         }
-
         db.SaveChanges();
+
       }
       else
         throw new UnauthorizedAccessException("Entries");
 
       return Json(new { success = "Success" }, JsonRequestBehavior.AllowGet);
     }
-
-
 
 
     #endregion
