@@ -2,6 +2,7 @@
 using PNACCompetitionsDbFirst.Entities;
 using PNACCompetitionsDbFirst.Models;
 using PNACCompetitionsDbFirst.Models.ViewModels;
+using PNACCompetitionsDbFirst.Models.ViewModels.Components;
 using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,8 @@ namespace PNACCompetitionsDbFirst.Controllers
         competition.End = DateTime.Parse(model.EndDate + " " + model.EndTime);
 
       competition.DayType = model.DayType;
+
+      competition.EnvironmentId = model.EnvironmentId;
     }
 
 
@@ -99,6 +102,26 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
+    public JsonResult Delete(int id)
+    {
+      var json = new { success = "false" };
+      Competition competition = db.Competitions.Single(c => c.CompetitionId == id);
+
+      if (CanEditCompetition(id))
+      {
+        db.Entries.RemoveRange(db.Entries.Where(e => e.CompetitionId == id));
+        db.SaveChanges();
+
+        db.Competitions.Remove(competition);
+        db.SaveChanges();
+
+        json = new { success = "true" };
+      }
+
+      return Json(json, JsonRequestBehavior.AllowGet);
+    }
+
+
     [HttpPost]
     public JsonResult DeleteEntry(int competitorId, int competitionId)
     {
@@ -118,6 +141,7 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
+    [Authorize]
     public ActionResult Edit(int id)
     {
       Competition competition = db.Competitions.SingleOrDefault(c => c.CompetitionId == id);
@@ -147,6 +171,8 @@ namespace PNACCompetitionsDbFirst.Controllers
         }
 
         edit.CompetitionEntries = CompetitionEntries(competition);
+        edit.Environments = Environments();
+        edit.EnvironmentId = competition.EnvironmentId;
       }
       else
         throw new UnauthorizedAccessException();
@@ -155,11 +181,14 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
+    [Authorize]
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public ActionResult Edit(CompetitionEdit model)
     {
-      CompetitionEdit edit = new CompetitionEdit();
       Competition competition = db.Competitions.SingleOrDefault(c => c.CompetitionId == model.CompetitionId);
+
+      Validate(model);
 
       if (CanEditCompetition(model.CompetitionId) && ModelState.IsValid)
       {
@@ -170,13 +199,31 @@ namespace PNACCompetitionsDbFirst.Controllers
       }
       else if (CanEditCompetition(model.CompetitionId) && !ModelState.IsValid)
       {
-        edit.MemberNames = MakeNames(competition);
+        model.MemberNames = MakeNames(competition);
+        model.Environments = Environments();
+        model.CompetitionEntries = CompetitionEntries(competition);
+
+
         return View(model);
       }
       else if (!IsAdmin)
         throw new UnauthorizedAccessException("");
 
-      return new EmptyResult();
+      throw new Exception("Edit(CompetitionEdit model)");
+
+    }
+
+
+    public List<RadioValue> Environments()
+    {
+      List<RadioValue> environments = new List<RadioValue>();
+
+      foreach (Entities.Environment environment in db.Environments.OrderBy(e => e.Order))
+      {
+        environments.Add(new RadioValue() { Description = environment.Name, Id = environment.EnvironmentId });
+      }
+
+      return environments;
     }
 
 
@@ -213,7 +260,7 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    public string MakeNames(Competition competition)
+    private string MakeNames(Competition competition)
     {
       string name, names = "";
 
@@ -234,13 +281,35 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
+    [Authorize]
     public ActionResult New()
     {
-      CompetitionEdit edit = new CompetitionEdit();
+      CompetitionEdit newCompetition = new CompetitionEdit();
 
-      edit.DayType = "s";
+      if (IsAdmin)
+      {
+        newCompetition.Venue = "";
+        DateTime today = DateTime.Now;
+        int saturday = 6;
+        DateTime nextStaurday = today.AddDays(saturday - (int)today.DayOfWeek);
 
-      return View(edit);
+        newCompetition.StartDate = Format.DateOnly(nextStaurday);
+        newCompetition.StartTime = "6:00am";
+
+        newCompetition.EndDate = Format.DateOnly(nextStaurday.AddDays(1));
+        newCompetition.EndTime = "5:00 PM";
+        newCompetition.DayType = "s";
+
+        newCompetition.Venue = "";
+
+        newCompetition.EnvironmentId = db.Environments.Single(e => e.Name.ToLower().IndexOf("fresh") != -1).EnvironmentId;
+
+        newCompetition.Environments = Environments();
+      }
+      else
+        throw new UnauthorizedAccessException();
+
+      return View(newCompetition);
     }
 
 
@@ -249,23 +318,27 @@ namespace PNACCompetitionsDbFirst.Controllers
     [ValidateAntiForgeryToken]
     public ActionResult New(CompetitionEdit model)
     {
-      CompetitionEdit edit = new CompetitionEdit();
       Competition competition = new Competition();
+      Validate(model);
 
       if (IsAdmin && ModelState.IsValid)
       {
         AssignModel(competition, model);
 
-        //db.Competition.Add(competition);
+        db.Competitions.Add(competition);
         db.SaveChanges();
-        return RedirectToAction("Index");
+        return RedirectToAction("edit", new { id = competition.CompetitionId });
       }
-      else if (IsAdmin && !ModelState.IsValid)
-        return View(model);
       else if (!IsAdmin)
         throw new UnauthorizedAccessException("");
+      else
+      {
+        model.MemberNames = MakeNames(competition);
+        model.Environments = Environments();
+        model.CompetitionEntries = CompetitionEntries(competition);
 
-      return new EmptyResult();
+        return View(model);
+      }
     }
 
 
@@ -282,8 +355,8 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         Entry entrant;
 
-        db.Entries.RemoveRange(db.Entries.Where(e => e.CompetitionId == model.CompetitionId));
-        db.SaveChanges();
+        //db.Entries.RemoveRange(db.Entries.Where(e => e.CompetitionId == model.CompetitionId));
+        //db.SaveChanges();
 
         foreach (CompetitorEntry entry in model.Competitors)
         {
@@ -299,11 +372,36 @@ namespace PNACCompetitionsDbFirst.Controllers
         }
         db.SaveChanges();
 
+
+
       }
       else
         throw new UnauthorizedAccessException("Entries");
 
       return Json(new { success = "Success" }, JsonRequestBehavior.AllowGet);
+    }
+
+
+
+    private void Validate(CompetitionEdit model)
+    {
+      DateTime startDate = DateTime.Parse(model.StartDate);
+
+      if (model.DayType == "m")
+      {
+        DateTime endDate;
+
+        endDate = DateTime.Parse(model.EndDate);
+
+        if ((endDate - startDate).TotalHours < 24)
+        {
+          ModelState.AddModelError("End date", "The end date must be after the start date");
+        }
+        else if ((endDate - startDate).TotalDays > 7)
+        {
+          ModelState.AddModelError("End date", "The competition cannot be over 7 days long");
+        }
+      }
     }
 
 

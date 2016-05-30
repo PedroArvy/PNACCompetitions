@@ -55,8 +55,8 @@
 
 <div id="tabs">
   <ul>
-    <li><a href="#competitors-tab">Competitors</a></li>
     <li><a href="#details-tab">Details</a></li>
+    <li><a href="#competitors-tab">Competitors</a></li>
   </ul>
 
   <div id="details-tab" class="row">
@@ -65,7 +65,6 @@
       @using (Html.BeginForm("Edit", "Competitions", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
       {
         @Html.AntiForgeryToken()
-
         @Html.EditorFor(m => m)
       }
 

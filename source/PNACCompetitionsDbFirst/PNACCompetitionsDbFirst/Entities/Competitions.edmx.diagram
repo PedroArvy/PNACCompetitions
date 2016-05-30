@@ -10,18 +10,19 @@
         <EntityTypeShape EntityType="PNACCompetitionsModel.Catch" Width="1.5" PointX="9.75" PointY="6" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Club" Width="1.5" PointX="0.75" PointY="8.625" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Seasons_dbo_Clubs_ClubId" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Environment" Width="1.5" PointX="8.375" PointY="1.375" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Fish" Width="1.5" PointX="10.625" PointY="1" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_Catches_Fish" />
-        <AssociationConnector Association="PNACCompetitionsModel.FishEnvironments" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Competitor" Width="1.5" PointX="6" PointY="4.625" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_Competitors_AspNetUsers" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Competition" Width="1.5" PointX="6" PointY="10.25" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Entry" Width="1.5" PointX="8.25" PointY="9.75" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitors_CompetitorId" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Competition" Width="1.5" PointX="12.625" PointY="10" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Environment" Width="1.5" PointX="10.375" PointY="10.75" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_Competitions_Environments" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" />
+        <AssociationConnector Association="PNACCompetitionsModel.FishEnvironments" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

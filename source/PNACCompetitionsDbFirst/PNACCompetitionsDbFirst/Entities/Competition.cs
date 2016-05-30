@@ -22,7 +22,7 @@ namespace PNACCompetitionsDbFirst.Entities
     
         public int CompetitionId { get; set; }
         public int ClubId { get; set; }
-        public int Environment { get; set; }
+        public int EnvironmentId { get; set; }
         public Nullable<System.DateTime> End { get; set; }
         public string Name { get; set; }
         public System.DateTime Start { get; set; }
@@ -31,6 +31,7 @@ namespace PNACCompetitionsDbFirst.Entities
         public string WeighInVenue { get; set; }
         public string DayType { get; set; }
     
+        public virtual Environment Environment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Entry> Entries { get; set; }
     }

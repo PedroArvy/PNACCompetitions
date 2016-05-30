@@ -47,7 +47,7 @@
           </Key>
           <Property Name="CompetitionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClubId" Type="int" Nullable="false" />
-          <Property Name="Environment" Type="int" Nullable="false" />
+          <Property Name="EnvironmentId" Type="int" Nullable="false" />
           <Property Name="End" Type="datetime" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
           <Property Name="Start" Type="datetime" Nullable="false" />
@@ -91,6 +91,7 @@
           </Key>
           <Property Name="EnvironmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Fish">
           <Key>
@@ -128,6 +129,18 @@
             </Principal>
             <Dependent Role="Catches">
               <PropertyRef Name="FishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Competitions_Environments">
+          <End Role="Environments" Type="Self.Environments" Multiplicity="1" />
+          <End Role="Competitions" Type="Self.Competitions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Environments">
+              <PropertyRef Name="EnvironmentId" />
+            </Principal>
+            <Dependent Role="Competitions">
+              <PropertyRef Name="EnvironmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -250,6 +263,10 @@
             <End Role="Fish" EntitySet="Fish" />
             <End Role="Catches" EntitySet="Catches" />
           </AssociationSet>
+          <AssociationSet Name="FK_Competitions_Environments" Association="Self.FK_Competitions_Environments">
+            <End Role="Environments" EntitySet="Environments" />
+            <End Role="Competitions" EntitySet="Competitions" />
+          </AssociationSet>
           <AssociationSet Name="FK_Competitors_AspNetUsers" Association="Self.FK_Competitors_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Competitors" EntitySet="Competitors" />
@@ -306,15 +323,10 @@
             <End Role="Club" EntitySet="Clubs" />
             <End Role="Season" EntitySet="Seasons" />
           </AssociationSet>
-          <EntitySet Name="Environments" EntityType="PNACCompetitionsModel.Environment" />
           <EntitySet Name="Fish" EntityType="PNACCompetitionsModel.Fish" />
           <AssociationSet Name="FK_Catches_Fish" Association="PNACCompetitionsModel.FK_Catches_Fish">
             <End Role="Fish" EntitySet="Fish" />
             <End Role="Catch" EntitySet="Catches" />
-          </AssociationSet>
-          <AssociationSet Name="FishEnvironments" Association="PNACCompetitionsModel.FishEnvironments">
-            <End Role="Environment" EntitySet="Environments" />
-            <End Role="Fish" EntitySet="Fish" />
           </AssociationSet>
           <EntitySet Name="Competitors" EntityType="PNACCompetitionsModel.Competitor" />
           <AssociationSet Name="FK_Competitors_AspNetUsers" Association="PNACCompetitionsModel.FK_Competitors_AspNetUsers">
@@ -325,19 +337,28 @@
             <End Role="Club" EntitySet="Clubs" />
             <End Role="Competitor" EntitySet="Competitors" />
           </AssociationSet>
-          <EntitySet Name="Competitions" EntityType="PNACCompetitionsModel.Competition" />
           <EntitySet Name="Entries" EntityType="PNACCompetitionsModel.Entry" />
           <AssociationSet Name="FK_dbo_Catches_dbo_Entries_EntryId" Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId">
             <End Role="Entry" EntitySet="Entries" />
             <End Role="Catch" EntitySet="Catches" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_Entries_dbo_Competitors_CompetitorId" Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitors_CompetitorId">
+            <End Role="Competitor" EntitySet="Competitors" />
+            <End Role="Entry" EntitySet="Entries" />
+          </AssociationSet>
+          <EntitySet Name="Competitions" EntityType="PNACCompetitionsModel.Competition" />
+          <EntitySet Name="Environments" EntityType="PNACCompetitionsModel.Environment" />
+          <AssociationSet Name="FK_Competitions_Environments" Association="PNACCompetitionsModel.FK_Competitions_Environments">
+            <End Role="Environment" EntitySet="Environments" />
+            <End Role="Competition" EntitySet="Competitions" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Entries_dbo_Competitions_CompetitionId" Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId">
             <End Role="Competition" EntitySet="Competitions" />
             <End Role="Entry" EntitySet="Entries" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Entries_dbo_Competitors_CompetitorId" Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitors_CompetitorId">
-            <End Role="Competitor" EntitySet="Competitors" />
-            <End Role="Entry" EntitySet="Entries" />
+          <AssociationSet Name="FishEnvironments" Association="PNACCompetitionsModel.FishEnvironments">
+            <End Role="Environment" EntitySet="Environments" />
+            <End Role="Fish" EntitySet="Fish" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetUser">
@@ -395,14 +416,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Environment">
-          <Key>
-            <PropertyRef Name="EnvironmentId" />
-          </Key>
-          <Property Name="EnvironmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Fish" Relationship="PNACCompetitionsModel.FishEnvironments" FromRole="Environment" ToRole="Fish" />
-        </EntityType>
         <EntityType Name="Fish">
           <Key>
             <PropertyRef Name="FishId" />
@@ -426,10 +439,6 @@
               <PropertyRef Name="FishId" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="FishEnvironments">
-          <End Type="PNACCompetitionsModel.Environment" Role="Environment" Multiplicity="*" />
-          <End Type="PNACCompetitionsModel.Fish" Role="Fish" Multiplicity="*" />
         </Association>
         <EntityType Name="Competitor">
           <Key>
@@ -479,22 +488,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Competition">
-          <Key>
-            <PropertyRef Name="CompetitionId" />
-          </Key>
-          <Property Name="CompetitionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClubId" Type="Int32" Nullable="false" />
-          <Property Name="Environment" Type="Int32" Nullable="false" />
-          <Property Name="End" Type="DateTime" Precision="3" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Venue" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="WeighInTime" Type="DateTime" Precision="3" />
-          <Property Name="WeighInVenue" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="DayType" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="Entries" Relationship="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" FromRole="Competition" ToRole="Entry" />
-        </EntityType>
         <EntityType Name="Entry">
           <Key>
             <PropertyRef Name="EntryId" />
@@ -505,8 +498,8 @@
           <Property Name="IsTripCaptain" Type="Boolean" Nullable="false" />
           <Property Name="IsReferee" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Catches" Relationship="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" FromRole="Entry" ToRole="Catch" />
-          <NavigationProperty Name="Competition" Relationship="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" FromRole="Entry" ToRole="Competition" />
           <NavigationProperty Name="Competitor" Relationship="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitors_CompetitorId" FromRole="Entry" ToRole="Competitor" />
+          <NavigationProperty Name="Competition" Relationship="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" FromRole="Entry" ToRole="Competition" />
         </EntityType>
         <Association Name="FK_dbo_Catches_dbo_Entries_EntryId">
           <End Type="PNACCompetitionsModel.Entry" Role="Entry" Multiplicity="1">
@@ -519,18 +512,6 @@
             </Principal>
             <Dependent Role="Catch">
               <PropertyRef Name="EntryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Entries_dbo_Competitions_CompetitionId">
-          <End Type="PNACCompetitionsModel.Competition" Role="Competition" Multiplicity="1" />
-          <End Type="PNACCompetitionsModel.Entry" Role="Entry" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Competition">
-              <PropertyRef Name="CompetitionId" />
-            </Principal>
-            <Dependent Role="Entry">
-              <PropertyRef Name="CompetitionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -547,6 +528,61 @@
               <PropertyRef Name="CompetitorId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Competition">
+          <Key>
+            <PropertyRef Name="CompetitionId" />
+          </Key>
+          <Property Name="CompetitionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClubId" Type="Int32" Nullable="false" />
+          <Property Name="EnvironmentId" Type="Int32" Nullable="false" />
+          <Property Name="End" Type="DateTime" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Venue" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="WeighInTime" Type="DateTime" Precision="3" />
+          <Property Name="WeighInVenue" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="DayType" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Environment" Relationship="PNACCompetitionsModel.FK_Competitions_Environments" FromRole="Competition" ToRole="Environment" />
+          <NavigationProperty Name="Entries" Relationship="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" FromRole="Competition" ToRole="Entry" />
+        </EntityType>
+        <EntityType Name="Environment">
+          <Key>
+            <PropertyRef Name="EnvironmentId" />
+          </Key>
+          <Property Name="EnvironmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Competitions" Relationship="PNACCompetitionsModel.FK_Competitions_Environments" FromRole="Environment" ToRole="Competition" />
+          <NavigationProperty Name="Fish" Relationship="PNACCompetitionsModel.FishEnvironments" FromRole="Environment" ToRole="Fish" />
+        </EntityType>
+        <Association Name="FK_Competitions_Environments">
+          <End Type="PNACCompetitionsModel.Environment" Role="Environment" Multiplicity="1" />
+          <End Type="PNACCompetitionsModel.Competition" Role="Competition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Environment">
+              <PropertyRef Name="EnvironmentId" />
+            </Principal>
+            <Dependent Role="Competition">
+              <PropertyRef Name="EnvironmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Entries_dbo_Competitions_CompetitionId">
+          <End Type="PNACCompetitionsModel.Competition" Role="Competition" Multiplicity="1" />
+          <End Type="PNACCompetitionsModel.Entry" Role="Entry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competition">
+              <PropertyRef Name="CompetitionId" />
+            </Principal>
+            <Dependent Role="Entry">
+              <PropertyRef Name="CompetitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FishEnvironments">
+          <End Type="PNACCompetitionsModel.Environment" Role="Environment" Multiplicity="*" />
+          <End Type="PNACCompetitionsModel.Fish" Role="Fish" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -603,14 +639,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Environments">
-            <EntityTypeMapping TypeName="PNACCompetitionsModel.Environment">
-              <MappingFragment StoreEntitySet="Environments">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="EnvironmentId" ColumnName="EnvironmentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Fish">
             <EntityTypeMapping TypeName="PNACCompetitionsModel.Fish">
               <MappingFragment StoreEntitySet="Fish">
@@ -622,14 +650,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="FishEnvironments" TypeName="PNACCompetitionsModel.FishEnvironments" StoreEntitySet="FishEnvironments">
-            <EndProperty Name="Fish">
-              <ScalarProperty Name="FishId" ColumnName="FishId" />
-            </EndProperty>
-            <EndProperty Name="Environment">
-              <ScalarProperty Name="EnvironmentId" ColumnName="EnvironmentId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Competitors">
             <EntityTypeMapping TypeName="PNACCompetitionsModel.Competitor">
               <MappingFragment StoreEntitySet="Competitors">
@@ -650,22 +670,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Competitions">
-            <EntityTypeMapping TypeName="PNACCompetitionsModel.Competition">
-              <MappingFragment StoreEntitySet="Competitions">
-                <ScalarProperty Name="DayType" ColumnName="DayType" />
-                <ScalarProperty Name="WeighInVenue" ColumnName="WeighInVenue" />
-                <ScalarProperty Name="WeighInTime" ColumnName="WeighInTime" />
-                <ScalarProperty Name="Venue" ColumnName="Venue" />
-                <ScalarProperty Name="Start" ColumnName="Start" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="End" ColumnName="End" />
-                <ScalarProperty Name="Environment" ColumnName="Environment" />
-                <ScalarProperty Name="ClubId" ColumnName="ClubId" />
-                <ScalarProperty Name="CompetitionId" ColumnName="CompetitionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Entries">
             <EntityTypeMapping TypeName="PNACCompetitionsModel.Entry">
               <MappingFragment StoreEntitySet="Entries">
@@ -677,6 +681,39 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Competitions">
+            <EntityTypeMapping TypeName="PNACCompetitionsModel.Competition">
+              <MappingFragment StoreEntitySet="Competitions">
+                <ScalarProperty Name="DayType" ColumnName="DayType" />
+                <ScalarProperty Name="WeighInVenue" ColumnName="WeighInVenue" />
+                <ScalarProperty Name="WeighInTime" ColumnName="WeighInTime" />
+                <ScalarProperty Name="Venue" ColumnName="Venue" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="End" ColumnName="End" />
+                <ScalarProperty Name="EnvironmentId" ColumnName="EnvironmentId" />
+                <ScalarProperty Name="ClubId" ColumnName="ClubId" />
+                <ScalarProperty Name="CompetitionId" ColumnName="CompetitionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Environments">
+            <EntityTypeMapping TypeName="PNACCompetitionsModel.Environment">
+              <MappingFragment StoreEntitySet="Environments">
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EnvironmentId" ColumnName="EnvironmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FishEnvironments" TypeName="PNACCompetitionsModel.FishEnvironments" StoreEntitySet="FishEnvironments">
+            <EndProperty Name="Fish">
+              <ScalarProperty Name="FishId" ColumnName="FishId" />
+            </EndProperty>
+            <EndProperty Name="Environment">
+              <ScalarProperty Name="EnvironmentId" ColumnName="EnvironmentId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

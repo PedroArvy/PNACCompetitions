@@ -1,0 +1,78 @@
+﻿@using PNACCompetitionsDbFirst.Models.ViewModels
+@using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
+
+@model CompetitionEdit
+
+@{
+  ViewBag.Title = "New competition";
+}
+
+
+<style>
+  body {
+    display: none;
+  }
+
+  .table-responsive {
+    border: none;
+    outline: none;
+  }
+
+  @@media (max-width: 991px) {
+    .entries-row {
+      padding: 0;
+    }
+
+    .body-content {
+      padding: 2px;
+    }
+
+    .btn {
+      margin-bottom: 10px;
+    }
+  }
+</style>
+
+
+<div class="row">
+  <div class="col-md-8">
+    <h2>New Competition</h2>
+  </div>
+</div>
+
+<script>
+
+  $(function () {
+
+    $("#tabs").tabs();
+    $("body").show();
+
+  });
+
+
+
+</script>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#details-tab">Details</a></li>
+  </ul>
+
+  <div id="details-tab" class="row">
+    <div class="col-md-12">
+
+      @using (Html.BeginForm("New", "Competitions", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+      {
+        @Html.AntiForgeryToken()
+        @Html.EditorFor(m => m)
+      }
+
+    </div>
+  </div>
+
+</div>
+
+@section Scripts {
+  @Scripts.Render("~/bundles/jqueryval")
+}
+

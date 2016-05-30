@@ -1,4 +1,5 @@
-﻿using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
+﻿using PNACCompetitionsDbFirst.Models.ViewModels.Components;
+using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,6 +43,12 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public string EndTime { get; set; }
 
 
+    [Required]
+    public int EnvironmentId { get; set; }
+
+    public List<RadioValue> Environments { get; set; }
+
+ 
     public string MemberNames { get; set; }
 
 
