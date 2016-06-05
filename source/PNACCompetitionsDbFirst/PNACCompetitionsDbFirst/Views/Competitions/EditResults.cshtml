@@ -1,0 +1,90 @@
+﻿@using PNACCompetitionsDbFirst.Models.ViewModels
+@using PNACCompetitionsDbFirst.Models.ViewModels.Results;
+
+@model CompetitionResults
+
+
+<div id="results-tab">
+
+  <div class="row">
+
+    <div class="col-md-7">
+      <a href="/Results/New?id=@Model.CompetitonId" class="btn btn-default save-button" style="color:#ffffff;margin-bottom:20px">New</a>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-7">
+
+
+      @if (Model.Results.Count() > 0)
+      {
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">Delete</span>
+                  <span class="hidden-lg"></span>
+                </th>
+                <th>Member</th>
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">Fish</span>
+                  <span class="hidden-lg">F</span>
+                </th>
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">kg</span>
+                  <span class="hidden-lg">W</span>
+                </th>
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">cm</span>
+                  <span class="hidden-lg">L</span>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody id="competitors-body">
+
+              @foreach (CompetitorResult result in Model.Results)
+              {
+                <tr>
+                  <td>@result.CompetitorName</td>
+                  <td>@result.FishName</td>
+
+                  @if (result.LengthOnly)
+                  {
+                    <td>NA</td>
+                  }
+                  else
+                  {
+                    <td>@result.Weight</td>
+                  }
+
+                  <td>@result.Length</td>
+                </tr>
+              }
+
+            </tbody>
+          </table>
+        </div>
+      }
+      else
+      {
+        @:There are no results yet
+      }
+
+    </div>
+  </div>
+
+
+</div>
+
+<script>
+
+  $(document).ready(function () {
+
+  });
+
+
+</script>

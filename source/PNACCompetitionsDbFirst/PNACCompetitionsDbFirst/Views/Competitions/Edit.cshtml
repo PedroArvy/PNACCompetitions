@@ -55,6 +55,7 @@
 
 <div id="tabs">
   <ul>
+    <li><a href="#results-tab">Results</a></li>
     <li><a href="#details-tab">Details</a></li>
     <li><a href="#competitors-tab">Competitors</a></li>
   </ul>
@@ -72,6 +73,7 @@
   </div>
 
   @Html.Partial("/Views/Competitions/EditEntries.cshtml", Model)
+  @Html.Partial("/Views/Competitions/EditResults.cshtml", Model.CompetitionResults)
 
 </div>
 

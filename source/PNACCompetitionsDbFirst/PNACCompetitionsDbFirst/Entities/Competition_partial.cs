@@ -60,6 +60,19 @@ namespace PNACCompetitionsDbFirst.Entities
     #region *********************** Methods **************************
 
 
+    public bool CanAddEntries(Competitor competitor)
+    {
+      bool canAdd = false;
+
+      if (competitor.Admin)
+        canAdd = true;
+      else if (Entries.Any(e => (e.IsReferee || e.IsTripCaptain) && e.CompetitorId == competitor.CompetitorId))
+        canAdd = true;
+
+      return canAdd;
+    }
+
+
     public string WeighInDescription()
     {
       string description = "";

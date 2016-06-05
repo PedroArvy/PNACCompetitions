@@ -4,11 +4,13 @@ using PNACCompetitionsDbFirst.Models;
 using PNACCompetitionsDbFirst.Models.ViewModels;
 using PNACCompetitionsDbFirst.Models.ViewModels.Components;
 using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
+using PNACCompetitionsDbFirst.Models.ViewModels.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+
 
 namespace PNACCompetitionsDbFirst.Controllers
 {
@@ -102,6 +104,15 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
+    private CompetitionResults CompetitionResults(Competition competition)
+    {
+      CompetitionResults results = new CompetitionResults();
+      results.CompetitonId = competition.CompetitionId;
+
+      return results;
+    }
+
+
     public JsonResult Delete(int id)
     {
       var json = new { success = "false" };
@@ -171,6 +182,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         }
 
         edit.CompetitionEntries = CompetitionEntries(competition);
+        edit.CompetitionResults = CompetitionResults(competition);
         edit.Environments = Environments();
         edit.EnvironmentId = competition.EnvironmentId;
       }
@@ -339,12 +351,6 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         return View(model);
       }
-    }
-
-
-    public ActionResult New1(CompetitionEntries model)
-    {
-      return null;
     }
 
 
