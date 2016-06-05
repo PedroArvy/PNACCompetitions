@@ -230,7 +230,7 @@
     <Compile Include="Models\ViewModels\CompetitionIndex.cs" />
     <Compile Include="Models\ViewModels\CompetitorCreate.cs" />
     <Compile Include="Models\ViewModels\Components\RadioValue.cs" />
-    <Compile Include="Models\ViewModels\Result.cs" />
+    <Compile Include="Models\ViewModels\ResultEdit.cs" />
     <Compile Include="Models\ViewModels\Results\CompetitionResults.cs" />
     <Compile Include="Models\ViewModels\Results\CompetitionResult.cs" />
     <Compile Include="Models\ViewModels\Entries\CompetitionEntries.cs" />
@@ -359,6 +359,8 @@
     <Content Include="Views\Competitions\EditEntries.cshtml" />
     <Content Include="Views\Competitions\New.cshtml" />
     <Content Include="Views\Competitions\EditResults.cshtml" />
+    <Content Include="Views\Results\New.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ResultEdit.cshtml" />
     <None Include="Web.Debug-Venom.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,29 @@
+﻿@using PNACCompetitionsDbFirst.Models.ViewModels
+@model ResultEdit
+
+@{
+  ViewBag.Title = "New Result";
+}
+
+<div class="row">
+  <div class="col-md-8">
+    <h2>New Result</h2>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-10">
+
+    @using (Html.BeginForm("New", "Result", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+      @Html.AntiForgeryToken()
+      @Html.EditorFor(r => r)
+    }
+
+  </div>
+</div>
+
+@section Scripts {
+  @Scripts.Render("~/bundles/jqueryval")
+}

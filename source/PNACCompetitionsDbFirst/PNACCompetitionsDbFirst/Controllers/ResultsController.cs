@@ -37,18 +37,41 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     #region *********************** Methods **************************
 
+    private List<Entrant> Entrants(Competition competition)
+    {
+      return competition.Entries.Select(entry => new Entrant { Name = entry.Competitor.FriendlyName(), CompetitorId = entry.CompetitorId }).ToList();
+    }
+
 
     public ActionResult New(int id)
     {
       Competition competition = db.Competitions.Single(c => c.CompetitionId == id);
+      ResultEdit result = new ResultEdit();
 
       if (competition.CanAddEntries(Competitor))
       {
+        result.Entrants = Entrants(competition);
+        result.Species = Species(competition);
+        result.Length = 20;
       }
       else
-        throw new UnauthorizedAccessException("NewEntry");
+        throw new UnauthorizedAccessException("New");
 
-      return null;
+      return View(result);
+    }
+
+
+    private List<Species> Species(Competition competition)
+    {
+      List<Species> species = new List<Models.ViewModels.Species>();
+
+      foreach (Fish fish in db.Fish)
+      {
+        if (fish.HasEnvironment(competition.Environment))
+          species.Add(new Models.ViewModels.Species() { FishId = fish.FishId, Name = fish.Name });
+      }
+
+      return species;
     }
 
 

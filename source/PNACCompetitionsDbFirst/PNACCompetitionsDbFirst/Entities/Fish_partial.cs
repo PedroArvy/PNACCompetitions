@@ -29,6 +29,14 @@ namespace PNACCompetitionsDbFirst.Entities
 
 
     #region *********************** Methods **************************
+
+
+    public bool HasEnvironment(Environment environment)
+    {
+      return Environments.Any(e => e.EnvironmentId == environment.EnvironmentId);
+    }
+
+
     #endregion
 
 
