@@ -1,7 +1,6 @@
-
 USE [PNACCompetitions]
 GO
-/****** Object:  Table [dbo].[Fish]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[Fish]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -29,7 +28,7 @@ INSERT [dbo].[Fish] ([FishId], [Name], [Minimum], [Maximum], [Difficulty]) VALUE
 INSERT [dbo].[Fish] ([FishId], [Name], [Minimum], [Maximum], [Difficulty]) VALUES (100, N'Bream', 28, 45, 1)
 INSERT [dbo].[Fish] ([FishId], [Name], [Minimum], [Maximum], [Difficulty]) VALUES (101, N'Gummy Shark', 50, 200, 3)
 SET IDENTITY_INSERT [dbo].[Fish] OFF
-/****** Object:  Table [dbo].[Excel]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[Excel]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -193,7 +192,7 @@ INSERT [dbo].[Excel] ([Id], [NAME], [F2], [PHONE], [MOBILE], [AREA], [EMAIL]) VA
 INSERT [dbo].[Excel] ([Id], [NAME], [F2], [PHONE], [MOBILE], [AREA], [EMAIL]) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL)
 INSERT [dbo].[Excel] ([Id], [NAME], [F2], [PHONE], [MOBILE], [AREA], [EMAIL]) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL)
 INSERT [dbo].[Excel] ([Id], [NAME], [F2], [PHONE], [MOBILE], [AREA], [EMAIL]) VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL)
-/****** Object:  Table [dbo].[Environments]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[Environments]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -203,6 +202,7 @@ GO
 CREATE TABLE [dbo].[Environments](
 	[EnvironmentId] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [varchar](100) NOT NULL,
+	[Order] [int] NOT NULL,
  CONSTRAINT [PK_Environments] PRIMARY KEY CLUSTERED 
 (
 	[EnvironmentId] ASC
@@ -212,45 +212,25 @@ GO
 SET ANSI_PADDING OFF
 GO
 SET IDENTITY_INSERT [dbo].[Environments] ON
-INSERT [dbo].[Environments] ([EnvironmentId], [Name]) VALUES (1, N'Freshwater')
-INSERT [dbo].[Environments] ([EnvironmentId], [Name]) VALUES (2, N'Estuary')
-INSERT [dbo].[Environments] ([EnvironmentId], [Name]) VALUES (3, N'Saltwater')
+INSERT [dbo].[Environments] ([EnvironmentId], [Name], [Order]) VALUES (1, N'Freshwater', 1)
+INSERT [dbo].[Environments] ([EnvironmentId], [Name], [Order]) VALUES (2, N'Estuary', 3)
+INSERT [dbo].[Environments] ([EnvironmentId], [Name], [Order]) VALUES (3, N'Saltwater', 2)
 SET IDENTITY_INSERT [dbo].[Environments] OFF
-/****** Object:  Table [dbo].[Competitions]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[Competitions](
-	[CompetitionId] [int] IDENTITY(1,1) NOT NULL,
-	[ClubId] [int] NOT NULL,
-	[Environment] [int] NOT NULL,
-	[End] [datetime] NULL,
-	[Name] [varchar](100) NULL,
-	[Start] [datetime] NOT NULL,
-	[Venue] [varchar](100) NOT NULL,
-	[WeighInTime] [datetime] NULL,
-	[WeighInVenue] [varchar](1000) NULL,
-	[DayType] [char](1) NOT NULL,
- CONSTRAINT [PK_dbo.Competitions] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[AspNetRoles](
+	[Id] [nvarchar](128) NOT NULL,
+	[Name] [nvarchar](256) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetRoles] PRIMARY KEY CLUSTERED 
 (
-	[CompetitionId] ASC
+	[Id] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-SET ANSI_PADDING OFF
-GO
-CREATE NONCLUSTERED INDEX [IX_ClubId] ON [dbo].[Competitions] 
-(
-	[ClubId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-GO
-SET IDENTITY_INSERT [dbo].[Competitions] ON
-INSERT [dbo].[Competitions] ([CompetitionId], [ClubId], [Environment], [End], [Name], [Start], [Venue], [WeighInTime], [WeighInVenue], [DayType]) VALUES (21, 24, 1, CAST(0x0000A5D3011826C0 AS DateTime), N'Anazac weekend', CAST(0x0000A5D20062E080 AS DateTime), N'Lake Fyans1', CAST(0x0000A5D40107AC00 AS DateTime), N'At the shed', N'm')
-SET IDENTITY_INSERT [dbo].[Competitions] OFF
-/****** Object:  Table [dbo].[Clubs]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[Clubs]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -271,48 +251,7 @@ GO
 SET IDENTITY_INSERT [dbo].[Clubs] ON
 INSERT [dbo].[Clubs] ([ClubId], [Name]) VALUES (24, N'Preston Northcote Angling Club Test')
 SET IDENTITY_INSERT [dbo].[Clubs] OFF
-/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 05/18/2016 08:26:11 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[AspNetRoles](
-	[Id] [nvarchar](128) NOT NULL,
-	[Name] [nvarchar](256) NOT NULL,
- CONSTRAINT [PK_dbo.AspNetRoles] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-CREATE UNIQUE NONCLUSTERED INDEX [RoleNameIndex] ON [dbo].[AspNetRoles] 
-(
-	[Name] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[__MigrationHistory]    Script Date: 05/18/2016 08:26:11 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_PADDING ON
-GO
-CREATE TABLE [dbo].[__MigrationHistory](
-	[MigrationId] [nvarchar](150) NOT NULL,
-	[ContextKey] [nvarchar](300) NOT NULL,
-	[Model] [varbinary](max) NOT NULL,
-	[ProductVersion] [nvarchar](32) NOT NULL,
- CONSTRAINT [PK_dbo.__MigrationHistory] PRIMARY KEY CLUSTERED 
-(
-	[MigrationId] ASC,
-	[ContextKey] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-SET ANSI_PADDING OFF
-GO
-INSERT [dbo].[__MigrationHistory] ([MigrationId], [ContextKey], [Model], [ProductVersion]) VALUES (N'201605082344577_InitialCreate', N'PNACCompetitionsDbFirst.Models.ApplicationDbContext', 0x1F8B0800000000000400DD5CDB6EE436127D5F60FF41D05376E1B47CD919CC1ADD099CB69D35767CC1B427C8DB802DB1DBC4489422518E8D45BE2C0FF9A4FCC216254A2DF1A24BB7FAE22040E0168B87C5E221592C16E7CFDFFF187FFF12F8D6338E1312D2897D323AB62D4CDDD0237439B153B6F8F683FDFD777FFFDBF8CA0B5EAC9F0AB9332E07356932B19F188BCE1D27719F7080925140DC384CC2051BB961E0202F744E8F8FFFED9C9C3818206CC0B2ACF1A7943212E0EC07FC9C86D4C5114B917F1B7AD84FC477289965A8D61D0A701221174FEC87BB8BE9340C22CC08035D92CBF935891336CA6BDAD6854F106835C3FEC2B610A521435CEEFC7382672C0EE97216C107E43FBE4618E416C84FB0E8CBF94ABC6BB78E4F79B79C55C502CA4D1316063D014FCE849D1CB9FA5AD6B64B3B8225AFC0E2EC95F73AB3E6C4BEF170F6E953E88301E406CFA77ECC8527F66DD9C44512DD61362A2A8E72C8EB18E07E0DE3AFA32AE291D5B9DE51C9ABD3D131FFEFC89AA63E4B633CA1386531F28FAC8774EE13F7BFF8F531FC8AE9E4EC64BE38FBF0EE3DF2CEDEFF0B9FBDABF614FA0A72B50FF0E9210E231C836E7851F6DFB69C7A3D47AE5856ABD4C9AD025C8229625BB7E8E523A64BF60493E7F4836D5D9317EC155F04B93E5302330A2AB138859F77A9EFA3B98FCB72A7B14DFEFF86564FDFBD1FA4D53BF44C96D9D04BEDC3C489615E7DC27E569A3C91289F5EB5F1FE22C4AEE330E0BFEBFCCA4BBFCCC23476796742A3C8238A9798D5B51B3B2BF276A234871A9ED605EAE1539B6BAAD25B2BCA3BB4CE4C289AD8F56C28F4DD6EBB9D19771145307819B5B8459A08D7BC718D2424E0855E7E45A993AE94A2D0D5BFF20A791520E20FB0447668053C950589035CF6F287100889686F9D1F5092C00AE1FD07254F0DAAC39F03A83EC36E1A0371670C05D1D65B7B780A29BE4B83399F0FBB6B6BB0A179FC35BC462E0BE32BCA6B6D8CF73174BF8629BBA2DE2562F833730B40FEF39104DD010651E7C27571925C0399B1370DC1112F006F283B3BED0DC717AB7DBB28531F9140EFA348CBEA974274E5A7E825145FC520A6F3579A54FD182E09EDA66A216A56359768555588F555958375D354489A15CD045AF5CCA506F300B3111ADE05CC600FDF07DC6CF336AD051533CE6085C43F628A6358C6BC07C4188EE96A04BAAC1BFB7016B2E1E38D6E7D6FCA5AFA09F9E9D04DAD351BB24560F8D990C11EFE6CC8D484CFCFC4E35E49878351210CF09DE4F567AEF6392769B6EBE950EBE6AE1BDFCD1A609A2E174912BA249B059A90980868D4F5071FCE6A8F6EE4BD912324D031203AE15B1E7C81BED932A9EEE925F631C3D6859B870CA7287191A79A113AE4F550ACD851358AAD222575E5FEA9B4094CC731AF84F8212881994A2853A705A12E8990DF6A25A966C72D8CF7BD6C432EB9C411A6BCC1564B74695C1F18E10A94ED4883D266A1B153615C33110D5EAB69CCDB5CD8D5B82BF18A9D70B2C57736F052F86F5B2166B3C57640CE66937451C018E4DB0741C559A52B01E483CBA111543A3119082A5CAA9D10B46EB13D10B46E923747D0FC88DA75FCA5F3EAA1D1B37E50DEFDB6DE68AE3D70B3668F03A366EE7B421D063570ACD2F372CE0BF10BD31CCE404F713E4B84AB2B538483CF30AB876C56FEAED60F759A4164123501AE88D6022AAE0715206542F550AE88E5356A27BC881EB045DCAD1156ACFD126C85032A76F59AB42268BE4C95C9D9E9F451F6AC648342F24E87850A8E8610F2E255EF7807A398E2B2AA61BAF8C27DBCE14AC7C4603418A8C5733518A9E8CCE0562AA8D96E259D43D6C725DBC84A92FB64B052D199C1AD2438DA6E248D53D0C32DD8C844F52D7CA0C956443ACADDA62C1B3B792695F830760C2957E35B1445842E2B2958E28B35CBF3AFA6DFCEFA2723053986E3269A9CA452DBB22516C66889A552681A34CDEEC02F114373C4E33C532F50C4B47BAB61F92F9AAC6E9FEA2016FB4021CDFF16E1B3E64BFDDABEAB3A2602EF1A7A1B70EF260BA96BB8A0AF6EF1F438E4A35813C59F867E1A50B3B365AE9DDFE555EBE75F5484B123E9AF38538AE51497B73E0C9D06499D205B18B0D2AF597FD0CC1026D3175E69D5F8264FD58C5204AEAA28A660D6DE06D1E4E0AC3D70B21FD97FDC5A11B633DF44F24A15407CEA8951C97F50C02A65DD51EB292A55CC7A497744290FA50A2915F5D0B29A6D5253B25AB0169EC1A27A89EE2DA8F9255574B5B43BB226D3A40AAD295E035BA3B35CD61D55938C5205D61477C75E65A6C80BEA01EF68C6D3CD205B5A7E18DE6C4F33606C67751C664BACDCF957812A9F7B62895B7D054C7C3F4866194F8483302B8F876CC62C03867945AADD9CD717A4C6EB7E3366ED3ABCB6E837A50398F1FAF177AB2C510E87B248D97A7948940E836371306B7FA4A39CD47211DB2ACC081BFE6BC27030E202A3D92FFED427982FEF85C02DA264811396A780D87090FC20BDED399C77364E9278BEE6606B7A6C531FB31D6473D16714BB4F2856732B36788BB20255C2D637D4C32F13FB7F59ADF32C02C2FFCA3E1F5937C9674A7E49A1E0314EB1F59B9A2B3A4C6E7EF341EC405F5274B7EACDCF5FF2AA47D67D0C33E6DC3A966CB9CE08D7DF57F4D226AFBA81366BBFBA78BB13AAF674418B2A4D88F55F2ACC091BE49542A1E537017AF9475FD5B42F113642D4BC36180A6F10139A5E13AC83657C49E0C14F96BD24E8D759FDCB82755433BE2A20B43F98FCA6A0FB3254D4DCE356A3391FED6249CAECDC9A93BD5182E6BEF72625757BA389AEA667F780DB20057B0D66BCB1ECE5C176474D72F260D8FBA4F6D633920F250979951EB2DFDCE35DA61B375C1DFDA5B28C0F202F4E93E7B3FF5CE25D73CD14D33DF084CC7E19C307463691FDB5FFBCE05D93CD14E63D70B2F5CAFE3D30AEED6BFFDC33D33A6FA17BCFE555D3920C7733BA58705BAE6E1E388713FE3C0412E41E65FEC4529F1CD694D8DAD2E04AC4DCA8392B4D6E5899384ABB8A4473B3FDFA2A36FCC6CE0A99E6660DB99C4D6D8BF5BFB16D21D3DCB62143721F59C6DA1C455DE677CB3AD69428F596B28A6B3D6949626FF3591B2FDADF5212F12046A9CD1EC31DF1DBC9191EC424434E9D1E39C2EA752FEC9D957FB911F6EF842C5710FCDF71A4D8ADED9AA5CC0D5D84C5E62D69548848119A5BCC90075BEA45CCC802B90C8A798C397B239EC5EDF84DC71C7B37F43E6551CAA0CB3898FBB5801777029ADACF12A1EB3A8FEFA32CD961882E809A84C7E6EFE90F29F1BD52EF6B4D4CC800C1BD0B11D1E563C9786477F95A22DD85B42390305FE9143DE220F2012CB9A733F48CD7D10DE8F7112F91FBBA8A009A40DA07A26EF6F12541CB180589C058D5879FC0612F78F9EEFFA07FCEA3C0540000, N'6.1.3-40302')
-/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -336,14 +275,9 @@ CREATE TABLE [dbo].[AspNetUsers](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex] ON [dbo].[AspNetUsers] 
-(
-	[UserName] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-GO
 INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName]) VALUES (N'c06b21c7-36b0-49a5-8763-c11e1a4f8efb', N'peter.antonello@gmail.com', 0, N'ACRN+YCb82Rc9JiscZmbbU0RAo8qOwF4ndPASGQin923wdel9dwVpPOjHd+/LDojcg==', N'9cb2065f-cfa9-49ad-bc8f-702d7fe0c30a', NULL, 0, 0, NULL, 1, 0, N'peter.antonello@gmail.com')
 INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName]) VALUES (N'dcdf6c92-5dd8-499a-8b7d-7bb919e27632', N'petras.surna@yart.com.au', 0, N'ACq839IoTFJYsWx+yy3waQoYMaZvt9ztsn8wpq9J6qD6x8hX6NF5hRJlh62NElp6dA==', N'e76113f8-3528-4a61-8eb8-7a59268ed4ff', NULL, 0, 0, NULL, 1, 0, N'petras.surna@yart.com.au')
-/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -358,17 +292,7 @@ CREATE TABLE [dbo].[AspNetUserRoles](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-CREATE NONCLUSTERED INDEX [IX_RoleId] ON [dbo].[AspNetUserRoles] 
-(
-	[RoleId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-GO
-CREATE NONCLUSTERED INDEX [IX_UserId] ON [dbo].[AspNetUserRoles] 
-(
-	[UserId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -385,12 +309,7 @@ CREATE TABLE [dbo].[AspNetUserLogins](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-CREATE NONCLUSTERED INDEX [IX_UserId] ON [dbo].[AspNetUserLogins] 
-(
-	[UserId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -406,12 +325,7 @@ CREATE TABLE [dbo].[AspNetUserClaims](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-CREATE NONCLUSTERED INDEX [IX_UserId] ON [dbo].[AspNetUserClaims] 
-(
-	[UserId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Competitors]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[Competitors]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -440,11 +354,6 @@ CREATE TABLE [dbo].[Competitors](
 ) ON [PRIMARY]
 GO
 SET ANSI_PADDING OFF
-GO
-CREATE NONCLUSTERED INDEX [IX_ClubId] ON [dbo].[Competitors] 
-(
-	[ClubId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 GO
 SET IDENTITY_INSERT [dbo].[Competitors] ON
 INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (544, 3, 1, 24, N'Fernanda', N'Antonello', N'', NULL, 0, 0, N'', N'9458 1254', N'0415 342 088', N'peter.antonello@gmail.com')
@@ -613,7 +522,36 @@ INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId]
 INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (724, 3, 2, 24, N'Laura', N'Valier D''Abate', N'', NULL, 0, 0, N'Lower Templestowe', N'9850 2530', N'', N'')
 INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (725, 3, 2, 24, N'Natalie', N'Wus', N'', NULL, 0, 0, N'Devon North', N'', N'', N'')
 SET IDENTITY_INSERT [dbo].[Competitors] OFF
-/****** Object:  Table [dbo].[Seasons]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[Competitions]    Script Date: 06/07/2016 09:09:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Competitions](
+	[CompetitionId] [int] IDENTITY(1,1) NOT NULL,
+	[ClubId] [int] NOT NULL,
+	[EnvironmentId] [int] NOT NULL,
+	[End] [datetime] NULL,
+	[Name] [varchar](100) NULL,
+	[Start] [datetime] NOT NULL,
+	[Venue] [varchar](100) NOT NULL,
+	[WeighInTime] [datetime] NULL,
+	[WeighInVenue] [varchar](1000) NULL,
+	[DayType] [char](1) NOT NULL,
+ CONSTRAINT [PK_dbo.Competitions] PRIMARY KEY CLUSTERED 
+(
+	[CompetitionId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+SET IDENTITY_INSERT [dbo].[Competitions] ON
+INSERT [dbo].[Competitions] ([CompetitionId], [ClubId], [EnvironmentId], [End], [Name], [Start], [Venue], [WeighInTime], [WeighInVenue], [DayType]) VALUES (21, 24, 3, CAST(0x0000A5CF011826C0 AS DateTime), N'Anazac weekend', CAST(0x0000A5D20062E080 AS DateTime), N'Lake Fyans1', CAST(0x0000A5D40107AC00 AS DateTime), N'At the shed', N's')
+SET IDENTITY_INSERT [dbo].[Competitions] OFF
+/****** Object:  Table [dbo].[Seasons]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -629,17 +567,12 @@ CREATE TABLE [dbo].[Seasons](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-CREATE NONCLUSTERED INDEX [IX_ClubId] ON [dbo].[Seasons] 
-(
-	[ClubId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-GO
 SET IDENTITY_INSERT [dbo].[Seasons] ON
 INSERT [dbo].[Seasons] ([SeasonId], [ClubId], [End], [Start]) VALUES (142, 24, CAST(0x0000A67800000000 AS DateTime), CAST(0x0000A50A00000000 AS DateTime))
 INSERT [dbo].[Seasons] ([SeasonId], [ClubId], [End], [Start]) VALUES (143, 24, CAST(0x0000A7E500000000 AS DateTime), CAST(0x0000A67800000000 AS DateTime))
 INSERT [dbo].[Seasons] ([SeasonId], [ClubId], [End], [Start]) VALUES (144, 24, CAST(0x0000A95200000000 AS DateTime), CAST(0x0000A7E500000000 AS DateTime))
 SET IDENTITY_INSERT [dbo].[Seasons] OFF
-/****** Object:  Table [dbo].[FishEnvironments]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[FishEnvironments]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -657,7 +590,7 @@ GO
 INSERT [dbo].[FishEnvironments] ([FishId], [EnvironmentId]) VALUES (99, 1)
 INSERT [dbo].[FishEnvironments] ([FishId], [EnvironmentId]) VALUES (100, 2)
 INSERT [dbo].[FishEnvironments] ([FishId], [EnvironmentId]) VALUES (100, 3)
-/****** Object:  Table [dbo].[Entries]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[Entries]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -674,132 +607,119 @@ CREATE TABLE [dbo].[Entries](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-CREATE NONCLUSTERED INDEX [IX_CompetitionId] ON [dbo].[Entries] 
-(
-	[CompetitionId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-GO
-CREATE NONCLUSTERED INDEX [IX_CompetitorId] ON [dbo].[Entries] 
-(
-	[CompetitorId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-GO
 SET IDENTITY_INSERT [dbo].[Entries] ON
-INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (50, 544, 21, 0, 0)
-INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (51, 550, 21, 1, 1)
+INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (99, 692, 21, 0, 0)
+INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (102, 548, 21, 0, 0)
 SET IDENTITY_INSERT [dbo].[Entries] OFF
-/****** Object:  Table [dbo].[Catches]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  Table [dbo].[Catches]    Script Date: 06/07/2016 09:09:45 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Catches](
 	[CatchId] [int] IDENTITY(1,1) NOT NULL,
-	[Cleaned] [bit] NOT NULL,
 	[EntryId] [int] NOT NULL,
 	[FishId] [int] NOT NULL,
-	[Length] [int] NOT NULL,
 	[Recordered] [datetime] NOT NULL,
+	[Cleaned] [bit] NOT NULL,
+	[Length] [int] NOT NULL,
 	[Weight] [float] NOT NULL,
+	[CatchAndRelease] [bit] NOT NULL,
  CONSTRAINT [PK_dbo.Catches] PRIMARY KEY CLUSTERED 
 (
 	[CatchId] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-CREATE NONCLUSTERED INDEX [IX_EntryId] ON [dbo].[Catches] 
-(
-	[EntryId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-GO
-CREATE NONCLUSTERED INDEX [IX_FishRuleId] ON [dbo].[Catches] 
-(
-	[FishId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-GO
-/****** Object:  ForeignKey [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]    Script Date: 05/18/2016 08:26:11 ******/
-ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId] FOREIGN KEY([RoleId])
-REFERENCES [dbo].[AspNetRoles] ([Id])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]
-GO
-/****** Object:  ForeignKey [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]    Script Date: 05/18/2016 08:26:11 ******/
-ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]
-GO
-/****** Object:  ForeignKey [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId]    Script Date: 05/18/2016 08:26:11 ******/
-ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId]
-GO
-/****** Object:  ForeignKey [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  ForeignKey [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId]    Script Date: 06/07/2016 09:09:45 ******/
 ALTER TABLE [dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
 REFERENCES [dbo].[AspNetUsers] ([Id])
 ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[AspNetUserClaims] CHECK CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId]
 GO
-/****** Object:  ForeignKey [FK_Competitors_AspNetUsers]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  ForeignKey [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId]    Script Date: 06/07/2016 09:09:45 ******/
+ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId]
+GO
+/****** Object:  ForeignKey [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]    Script Date: 06/07/2016 09:09:45 ******/
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[AspNetRoles] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]
+GO
+/****** Object:  ForeignKey [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]    Script Date: 06/07/2016 09:09:45 ******/
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]
+GO
+/****** Object:  ForeignKey [FK_Catches_Fish]    Script Date: 06/07/2016 09:09:45 ******/
+ALTER TABLE [dbo].[Catches]  WITH CHECK ADD  CONSTRAINT [FK_Catches_Fish] FOREIGN KEY([FishId])
+REFERENCES [dbo].[Fish] ([FishId])
+GO
+ALTER TABLE [dbo].[Catches] CHECK CONSTRAINT [FK_Catches_Fish]
+GO
+/****** Object:  ForeignKey [FK_dbo.Catches_dbo.Entries_EntryId]    Script Date: 06/07/2016 09:09:45 ******/
+ALTER TABLE [dbo].[Catches]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Catches_dbo.Entries_EntryId] FOREIGN KEY([EntryId])
+REFERENCES [dbo].[Entries] ([EntryId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Catches] CHECK CONSTRAINT [FK_dbo.Catches_dbo.Entries_EntryId]
+GO
+/****** Object:  ForeignKey [FK_Competitions_Environments]    Script Date: 06/07/2016 09:09:45 ******/
+ALTER TABLE [dbo].[Competitions]  WITH CHECK ADD  CONSTRAINT [FK_Competitions_Environments] FOREIGN KEY([EnvironmentId])
+REFERENCES [dbo].[Environments] ([EnvironmentId])
+GO
+ALTER TABLE [dbo].[Competitions] CHECK CONSTRAINT [FK_Competitions_Environments]
+GO
+/****** Object:  ForeignKey [FK_Competitors_AspNetUsers]    Script Date: 06/07/2016 09:09:45 ******/
 ALTER TABLE [dbo].[Competitors]  WITH CHECK ADD  CONSTRAINT [FK_Competitors_AspNetUsers] FOREIGN KEY([AspNetUserId])
 REFERENCES [dbo].[AspNetUsers] ([Id])
 GO
 ALTER TABLE [dbo].[Competitors] CHECK CONSTRAINT [FK_Competitors_AspNetUsers]
 GO
-/****** Object:  ForeignKey [FK_dbo.Competitors_dbo.Clubs_ClubId]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  ForeignKey [FK_dbo.Competitors_dbo.Clubs_ClubId]    Script Date: 06/07/2016 09:09:45 ******/
 ALTER TABLE [dbo].[Competitors]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Competitors_dbo.Clubs_ClubId] FOREIGN KEY([ClubId])
 REFERENCES [dbo].[Clubs] ([ClubId])
 ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Competitors] CHECK CONSTRAINT [FK_dbo.Competitors_dbo.Clubs_ClubId]
 GO
-/****** Object:  ForeignKey [FK_dbo.Seasons_dbo.Clubs_ClubId]    Script Date: 05/18/2016 08:26:11 ******/
-ALTER TABLE [dbo].[Seasons]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Seasons_dbo.Clubs_ClubId] FOREIGN KEY([ClubId])
-REFERENCES [dbo].[Clubs] ([ClubId])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[Seasons] CHECK CONSTRAINT [FK_dbo.Seasons_dbo.Clubs_ClubId]
-GO
-/****** Object:  ForeignKey [FK_FishEnvironments_Environments]    Script Date: 05/18/2016 08:26:11 ******/
-ALTER TABLE [dbo].[FishEnvironments]  WITH CHECK ADD  CONSTRAINT [FK_FishEnvironments_Environments] FOREIGN KEY([EnvironmentId])
-REFERENCES [dbo].[Environments] ([EnvironmentId])
-GO
-ALTER TABLE [dbo].[FishEnvironments] CHECK CONSTRAINT [FK_FishEnvironments_Environments]
-GO
-/****** Object:  ForeignKey [FK_FishEnvironments_Fish]    Script Date: 05/18/2016 08:26:11 ******/
-ALTER TABLE [dbo].[FishEnvironments]  WITH CHECK ADD  CONSTRAINT [FK_FishEnvironments_Fish] FOREIGN KEY([FishId])
-REFERENCES [dbo].[Fish] ([FishId])
-GO
-ALTER TABLE [dbo].[FishEnvironments] CHECK CONSTRAINT [FK_FishEnvironments_Fish]
-GO
-/****** Object:  ForeignKey [FK_dbo.Entries_dbo.Competitions_CompetitionId]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  ForeignKey [FK_dbo.Entries_dbo.Competitions_CompetitionId]    Script Date: 06/07/2016 09:09:45 ******/
 ALTER TABLE [dbo].[Entries]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Entries_dbo.Competitions_CompetitionId] FOREIGN KEY([CompetitionId])
 REFERENCES [dbo].[Competitions] ([CompetitionId])
 GO
 ALTER TABLE [dbo].[Entries] CHECK CONSTRAINT [FK_dbo.Entries_dbo.Competitions_CompetitionId]
 GO
-/****** Object:  ForeignKey [FK_dbo.Entries_dbo.Competitors_CompetitorId]    Script Date: 05/18/2016 08:26:11 ******/
+/****** Object:  ForeignKey [FK_dbo.Entries_dbo.Competitors_CompetitorId]    Script Date: 06/07/2016 09:09:45 ******/
 ALTER TABLE [dbo].[Entries]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Entries_dbo.Competitors_CompetitorId] FOREIGN KEY([CompetitorId])
 REFERENCES [dbo].[Competitors] ([CompetitorId])
 ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[Entries] CHECK CONSTRAINT [FK_dbo.Entries_dbo.Competitors_CompetitorId]
 GO
-/****** Object:  ForeignKey [FK_Catches_Fish]    Script Date: 05/18/2016 08:26:11 ******/
-ALTER TABLE [dbo].[Catches]  WITH CHECK ADD  CONSTRAINT [FK_Catches_Fish] FOREIGN KEY([FishId])
+/****** Object:  ForeignKey [FK_FishEnvironments_Environments]    Script Date: 06/07/2016 09:09:45 ******/
+ALTER TABLE [dbo].[FishEnvironments]  WITH CHECK ADD  CONSTRAINT [FK_FishEnvironments_Environments] FOREIGN KEY([EnvironmentId])
+REFERENCES [dbo].[Environments] ([EnvironmentId])
+GO
+ALTER TABLE [dbo].[FishEnvironments] CHECK CONSTRAINT [FK_FishEnvironments_Environments]
+GO
+/****** Object:  ForeignKey [FK_FishEnvironments_Fish]    Script Date: 06/07/2016 09:09:45 ******/
+ALTER TABLE [dbo].[FishEnvironments]  WITH CHECK ADD  CONSTRAINT [FK_FishEnvironments_Fish] FOREIGN KEY([FishId])
 REFERENCES [dbo].[Fish] ([FishId])
 GO
-ALTER TABLE [dbo].[Catches] CHECK CONSTRAINT [FK_Catches_Fish]
+ALTER TABLE [dbo].[FishEnvironments] CHECK CONSTRAINT [FK_FishEnvironments_Fish]
 GO
-/****** Object:  ForeignKey [FK_dbo.Catches_dbo.Entries_EntryId]    Script Date: 05/18/2016 08:26:11 ******/
-ALTER TABLE [dbo].[Catches]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Catches_dbo.Entries_EntryId] FOREIGN KEY([EntryId])
-REFERENCES [dbo].[Entries] ([EntryId])
+/****** Object:  ForeignKey [FK_dbo.Seasons_dbo.Clubs_ClubId]    Script Date: 06/07/2016 09:09:45 ******/
+ALTER TABLE [dbo].[Seasons]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Seasons_dbo.Clubs_ClubId] FOREIGN KEY([ClubId])
+REFERENCES [dbo].[Clubs] ([ClubId])
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[Catches] CHECK CONSTRAINT [FK_dbo.Catches_dbo.Entries_EntryId]
+ALTER TABLE [dbo].[Seasons] CHECK CONSTRAINT [FK_dbo.Seasons_dbo.Clubs_ClubId]
 GO
