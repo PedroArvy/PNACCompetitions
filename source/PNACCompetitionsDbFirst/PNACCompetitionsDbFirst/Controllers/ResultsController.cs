@@ -37,9 +37,10 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     #region *********************** Methods **************************
 
+
     private List<SelectListItem> Entrants(Competition competition)
     {
-      return competition.Entries.Select(entry => new SelectListItem {  Text = entry.Competitor.FriendlyName(), Value = entry.CompetitorId.ToString() }).ToList();
+      return competition.Entries.Select(entry => new SelectListItem {  Text = entry.Competitor.FriendlyName(), Value = entry.CompetitorId.ToString() }).OrderBy(m => m.Text).ToList();
     }
 
 
@@ -106,7 +107,7 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    private List<SelectListItem> Species(Competition competition)
+    private IEnumerable<SelectListItem> Species(Competition competition)
     {
       List<SelectListItem> items = new List<SelectListItem>();
 
@@ -116,7 +117,7 @@ namespace PNACCompetitionsDbFirst.Controllers
           items.Add(new SelectListItem { Value = fish.FishId.ToString(), Text = fish.Name });
       }
 
-      return items;
+      return items.OrderBy(m => m.Text);
     }
 
 

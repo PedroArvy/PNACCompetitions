@@ -22,13 +22,12 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public int CompetitionId { get; set; }
 
     [Display(Name = "Competitor")]
-    [Required(ErrorMessage = "You need to select an entrant")]
+    [Required(ErrorMessage = "You need to select a competitor")]
     public int EntrantId { get; set; }
 
     public List<SelectListItem> Entrants { get; set; }
 
     [Display(Name = "Length (cm)")]
-    [Required(ErrorMessage = "You need to select a length")]
     public int Length { get; set; }
     public List<SelectListItem> Lengths { get; set; }
 
@@ -37,7 +36,6 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public string CatchAndRelease {get; set;}
 
     [Display(Name = "Quantity")]
-    [Required(ErrorMessage = "You need to select a quantity")]
     [Range(1, 100, ErrorMessage = "You need to select a quantity")]
     public int Quantity { get; set; }
     public List<SelectListItem> Numbers { get; set; }
@@ -45,10 +43,10 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     [Display(Name = "Fish")]
     [Required(ErrorMessage = "You need to select a fish")]
     public int FishId { get; set; }
-    public List<SelectListItem> Fish { get; set; }
+    public IEnumerable<SelectListItem> Fish { get; set; }
 
     [Display(Name = "Weight (kg)")]
-    [Range(0.1, 200, ErrorMessage = "You need to select a weight")]
+    [Range(0.1, 200, ErrorMessage = "You need to select a valid weight between 0.1kg and 200kg")]
     public double Weight { get; set; }
 
 

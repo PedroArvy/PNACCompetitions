@@ -2,6 +2,76 @@
 @model ResultEdit
 
 
+<script>
+
+  $(document).ready(function () {
+
+    $('.CatchAndKill, .CatchAndRelease').hide();
+    CatchReleaseFields();
+
+      $('.integer').focus(function () {
+        if ($(this).val() == '0')
+          $(this).val('');
+      });
+
+      $('.integer').focusout(function () {
+        if ($(this).val().length == 0)
+          $(this).val('0');
+      });
+
+
+      $('.CatchAndReleaseRadio').click(function () {
+        CatchReleaseFields();
+      });
+
+
+      $('#Quantity').change(function () {
+        ShowHideLength();
+      });
+
+
+
+      function CatchReleaseFields()
+      {
+        if ($('#CatchAndRelease').is(':checked'))
+          ShowCatchReleaseFields();
+        else if ($('#CatchAndKill').is(':checked'))
+          CatchAndKillFields();
+      }
+
+
+      function ShowCatchReleaseFields() {
+
+
+        $('.CatchAndKill').hide();
+        $('.CatchAndRelease').show();
+
+        $('#LengthDiv').show();
+      }
+
+
+      function CatchAndKillFields() {
+
+        $('.CatchAndRelease').hide();
+        $('.CatchAndKill').show();
+
+        ShowHideLength();
+      }
+
+
+      function ShowHideLength()
+      {
+        if ($('#Quantity').val().length == 0 || $('#Quantity').val() == '1')
+          $('#LengthDiv').show();
+        else
+          $('#LengthDiv').hide();
+      }
+
+
+    });
+
+</script>
+
 
 <div class="form-group">
   <div class="col-md-10">
@@ -19,13 +89,13 @@
     @Html.LabelFor(m => m.CatchAndRelease, new { @class = "pnac-label" })
   </div>
   <div class="col-md-10 radio-list">
-    <input type="radio" name="@nameof(Model.CatchAndRelease)" value="Yes"/>Yes
-    <input type="radio" name="@nameof(Model.CatchAndRelease)" value="No"/>No
+    <input type="radio" id="CatchAndRelease" name="@nameof(Model.CatchAndRelease)" value="Yes" class="CatchAndReleaseRadio"/>Yes
+    <input type="radio" id="CatchAndKill" name="@nameof(Model.CatchAndRelease)" value="No" class="CatchAndReleaseRadio"/>No
     <div>@Html.ValidationMessageFor(m => m.CatchAndRelease)</div>
   </div>
 </div>
 
-<div class="form-group">
+<div class="form-group CatchAndKill CatchAndRelease">
   <div class="col-md-10">
     @Html.LabelFor(m => m.FishId, new { @class = "pnac-label" })
   </div>
@@ -36,7 +106,7 @@
 </div>
 
 
-<div class="form-group">
+<div class="form-group CatchAndKill">
   <div class="col-md-10">
     @Html.LabelFor(m => m.Quantity, new { @class = "pnac-label" })
   </div>
@@ -47,7 +117,12 @@
 </div>
 
 
-<div class="form-group">
+<div class="form-group CatchAndRelease">
+  <input type="hidden" name="@nameof(Model.Quantity)" value="1" />
+</div>
+
+
+<div id="LengthDiv" class="form-group CatchAndKill CatchAndRelease">
   <div class="col-md-10">
     @Html.LabelFor(m => m.Length, new { @class = "pnac-label" })
   </div>
@@ -58,12 +133,12 @@
 </div>
 
 
-<div class="form-group">
+<div class="form-group CatchAndKill">
   <div class="col-md-10">
     @Html.LabelFor(m => m.Weight, new { @class = "pnac-label" })
   </div>
   <div class="col-md-10">
-    @Html.TextBoxFor(m => m.Weight)
+    @Html.TextBoxFor(m => m.Weight, new { @class = "integer"})
     <div>@Html.ValidationMessageFor(m => m.Weight)</div>
   </div>
 </div>

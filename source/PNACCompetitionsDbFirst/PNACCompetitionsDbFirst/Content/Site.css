@@ -123,3 +123,9 @@ table a.DeleteCompetitor{
 .radio-list input[type="radio"]:not(:first-child){
   margin-left:10px;
 }
+
+
+.CatchAndKill, .CatchAndRelease
+{
+  display:none;
+}
