@@ -49,10 +49,10 @@
               @foreach (CompetitorResult result in Model.Results)
               {
                 <tr>
-                  <td>@result.CompetitorName</td>
+                  <td>@result.EntryName</td>
                   <td>@result.FishName</td>
 
-                  @if (result.LengthOnly)
+                  @if (result.CatchAndRelease)
                   {
                     <td>NA</td>
                   }

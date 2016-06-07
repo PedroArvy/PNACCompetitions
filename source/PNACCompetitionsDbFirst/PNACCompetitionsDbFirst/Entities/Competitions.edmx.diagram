@@ -7,22 +7,22 @@
       <Diagram DiagramId="84abb98dede6479fbad2e97fe6b763de" Name="Diagram1" ZoomLevel="84">
         <EntityTypeShape EntityType="PNACCompetitionsModel.Season" Width="1.5" PointX="2.25" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.AspNetUser" Width="1.5" PointX="3.75" PointY="3.75" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Catch" Width="1.5" PointX="9.75" PointY="6" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Club" Width="1.5" PointX="0.75" PointY="8.625" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Seasons_dbo_Clubs_ClubId" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Fish" Width="1.5" PointX="10.625" PointY="1" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_Catches_Fish" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Competitor" Width="1.5" PointX="6" PointY="4.625" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_Competitors_AspNetUsers" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Competitors_dbo_Clubs_ClubId" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Entry" Width="1.5" PointX="8.25" PointY="9.75" />
-        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitors_CompetitorId" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Competition" Width="1.5" PointX="12.625" PointY="10" />
         <EntityTypeShape EntityType="PNACCompetitionsModel.Environment" Width="1.5" PointX="10.375" PointY="10.75" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_Competitions_Environments" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" />
         <AssociationConnector Association="PNACCompetitionsModel.FishEnvironments" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Catch" Width="1.5" PointX="12.875" PointY="5.125" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_Catches_Fish" />
+        <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

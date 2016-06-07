@@ -20,10 +20,12 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels.Results
 
     public bool CatchAndRelease { get; set; }
 
-    public string EntryId { get; set; }
+    public int EntryId { get; set; }
+    public string EntryName { get; set; }
     public List<Entry> Entries { get; set; }
 
     public int FishId { get; set; }
+    public string FishName { get; set; }
     public List<Fish> PossibleFish { get; set; }
 
     /// <summary>
@@ -34,7 +36,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels.Results
     /// <summary>
     /// If catch and release don't show and set to 1
     /// </summary>
-    public int Number { get; set; } = 1
+    public int Number { get; set; } = 1;
 
     /// <summary>
     /// kg
