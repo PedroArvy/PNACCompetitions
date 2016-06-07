@@ -52,7 +52,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         result.CompetitionId = id;
         result.Entrants = Entrants(competition);
-        result.Species = Species(competition);
+        result.Fish = Species(competition);
         result.Lengths = NumericalList(20, 200);
         result.Numbers = NumericalList(1, 50);
       }
@@ -78,7 +78,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         else
         {
           result.Entrants = Entrants(competition);
-          result.Species = Species(competition);
+          result.Fish = Species(competition);
           result.Lengths = NumericalList(20, 200);
           result.Numbers = NumericalList(1, 50);
 
@@ -106,17 +106,17 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    private List<Species> Species(Competition competition)
+    private List<SelectListItem> Species(Competition competition)
     {
-      List<Species> species = new List<Models.ViewModels.Species>();
+      List<SelectListItem> items = new List<SelectListItem>();
 
       foreach (Fish fish in db.Fish)
       {
         if (fish.HasEnvironment(competition.Environment))
-          species.Add(new Models.ViewModels.Species() { FishId = fish.FishId, Name = fish.Name });
+          items.Add(new SelectListItem { Value = fish.FishId.ToString(), Text = fish.Name });
       }
 
-      return species;
+      return items;
     }
 
 

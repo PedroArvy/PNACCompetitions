@@ -42,7 +42,10 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public int Quantity { get; set; }
     public List<SelectListItem> Numbers { get; set; }
 
-    public List<Species> Species { get; set; }
+    [Display(Name = "Fish")]
+    [Required(ErrorMessage = "You need to select a fish")]
+    public int FishId { get; set; }
+    public List<SelectListItem> Fish { get; set; }
 
     [Display(Name = "Weight (kg)")]
     [Range(0.1, 200, ErrorMessage = "You need to select a weight")]
