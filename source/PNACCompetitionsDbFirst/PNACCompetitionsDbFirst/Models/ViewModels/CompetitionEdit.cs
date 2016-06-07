@@ -15,6 +15,9 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
   public class CompetitionEdit
   {
     #region *********************** Constants ************************
+
+    public enum TABS { DETAILS = 0, COMPETITORS = 1, RESULTS = 2};
+
     #endregion
 
 
@@ -64,6 +67,10 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     [Required]
     public string StartTime { get; set; }
 
+
+    public TABS TabId { get; set; }
+
+
     [Required]
     [MaxLength(100)]
     public string Venue { get; set; }
@@ -77,6 +84,21 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
 
     #region *********************** Methods **************************
+
+
+    public string ActiveTab()
+    {
+      string active = "-1";
+
+      switch(TabId)
+      {
+        case TABS.COMPETITORS: active = ((int)TABS.COMPETITORS).ToString(); break;
+        case TABS.DETAILS: active = ((int)TABS.DETAILS).ToString(); break;
+        case TABS.RESULTS: active = ((int)TABS.RESULTS).ToString(); break;
+      }
+
+      return active;
+    }
 
 
     public string CompetitionEntriesJson()
@@ -108,7 +130,12 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
       row += "<tr class=\"competitor-row\">";
 
       row += "\n<td>";
-      row += "\n<a href=\"#\" class=\"btn btn-primary btn-sm DeleteCompetitor\">Delete</a>";
+
+      if(!string.IsNullOrWhiteSpace(entry.Name))
+        row += "\n<a href=\"#\" class=\"btn btn-primary btn-sm DeleteCompetitor white-button\">Delete</a>";
+      else
+        row += "\n<a href=\"#\" class=\"btn btn-primary btn-sm DeleteCompetitor white-button\" style=\"display:none\">Delete</a>";
+
       row += "\n</td>";
 
       row += "\n<td>";

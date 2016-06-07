@@ -70,11 +70,11 @@
               <td class="table-action">
                 @if (competitor.CanEdit)
                 {
-                  @Html.ActionLink("Edit", "Edit", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm" })
+                  @Html.ActionLink("Edit", "Edit", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm white-button" })
 
                   if (competitor.IsAdmin)
                   {
-                    @Html.ActionLink("Delete", "Delete", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm", onclick = "return DeleteCompetitor(" + competitor.CompetitorId + ")" })
+                    @Html.ActionLink("Delete", "Delete", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm white-button", onclick = "return DeleteCompetitor(" + competitor.CompetitorId + ")" })
                   }
                 }
                 else if (competitor.CanCreatePassword)

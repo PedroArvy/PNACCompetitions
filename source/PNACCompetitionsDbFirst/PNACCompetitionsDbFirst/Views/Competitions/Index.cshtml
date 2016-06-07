@@ -72,8 +72,8 @@
                 <td class="table-action">
                   @if (competition.CanEdit)
                   {
-                    @Html.ActionLink("Edit", "Edit", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm" })
-                    @Html.ActionLink("Delete", "Delete", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm", onclick = "return DeleteCompetition(" + competition.CompetitionId + ")" })
+                    @Html.ActionLink("Edit", "Edit", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm white-button" })
+                    @Html.ActionLink("Delete", "Delete", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm white-button", onclick = "return DeleteCompetition(" + competition.CompetitionId + ")" })
                   }
                 </td>
               }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-
+using static PNACCompetitionsDbFirst.Models.ViewModels.CompetitionEdit;
 
 namespace PNACCompetitionsDbFirst.Controllers
 {
@@ -108,6 +108,7 @@ namespace PNACCompetitionsDbFirst.Controllers
     {
       CompetitionResults results = new CompetitionResults();
       results.CompetitonId = competition.CompetitionId;
+      results.Catches = Results(competition);
 
       return results;
     }
@@ -153,7 +154,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
 
     [Authorize]
-    public ActionResult Edit(int id)
+    public ActionResult Edit(int id, int ? tabId)
     {
       Competition competition = db.Competitions.SingleOrDefault(c => c.CompetitionId == id);
       CompetitionEdit edit = new CompetitionEdit();
@@ -185,6 +186,9 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.CompetitionResults = CompetitionResults(competition);
         edit.Environments = Environments();
         edit.EnvironmentId = competition.EnvironmentId;
+
+        if (tabId != null)
+          edit.TabId = (TABS)tabId;
       }
       else
         throw new UnauthorizedAccessException();
@@ -351,6 +355,32 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         return View(model);
       }
+    }
+
+
+    private List<CompetitorResult> Results(Competition competition)
+    {
+      List<CompetitorResult> results = new List<CompetitorResult>();
+
+      foreach (Entry entry in competition.Entries)
+      {
+        results.AddRange(Results(entry));
+      }
+
+      return results;
+    }
+
+
+    private List<CompetitorResult> Results(Entry entry)
+    {
+      List<CompetitorResult> results = new List<CompetitorResult>();
+
+      foreach (Catch @catch in entry.Catches)
+      {
+        results.Add(new CompetitorResult() { CatchAndRelease = @catch.CatchAndRelease, CatchId = @catch.CatchId, CompetitorName = entry.Competitor.FriendlyName(), EntryId = entry.EntryId, FishName = @catch.Fish.Name, Length = @catch.Length, Number = @catch.Number, Weight = (float)@catch.Weight });
+      }
+
+      return results;
     }
 
 

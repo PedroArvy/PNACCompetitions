@@ -44,8 +44,8 @@
 
   $(function () {
 
-    $("#tabs").tabs();
-    $("body").show();
+    $('#tabs').tabs({ active: @Model.ActiveTab() });
+    $('body').show();
 
   });
 
@@ -55,9 +55,10 @@
 
 <div id="tabs">
   <ul>
-    <li><a href="#results-tab">Results</a></li>
     <li><a href="#details-tab">Details</a></li>
     <li><a href="#competitors-tab">Competitors</a></li>
+    <li><a href="#catches-tab">Catches</a></li>
+    <li><a href="#results-tab">Results</a></li>
   </ul>
 
   <div id="details-tab" class="row">
@@ -73,7 +74,9 @@
   </div>
 
   @Html.Partial("/Views/Competitions/EditEntries.cshtml", Model)
+  @Html.Partial("/Views/Competitions/EditCatches.cshtml", Model.CompetitionResults)
   @Html.Partial("/Views/Competitions/EditResults.cshtml", Model.CompetitionResults)
+
 
 </div>
 

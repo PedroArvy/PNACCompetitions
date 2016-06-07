@@ -111,7 +111,7 @@ a.btn {
   color:#ffffff;
 }
 
-table a.DeleteCompetitor{
+table .ui-widget-content a.white-button{
   color:#ffffff;
 }
 
@@ -128,4 +128,12 @@ table a.DeleteCompetitor{
 .CatchAndKill, .CatchAndRelease
 {
   display:none;
+}
+
+.ui-widget-content a {
+    color: #ffffff;
+}
+
+.ui-widget-content a.white-button {
+    color: #ffffff;
 }

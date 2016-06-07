@@ -1,5 +1,5 @@
 ﻿@using PNACCompetitionsDbFirst.Models.ViewModels
-@model ResultEdit
+@model CatchEdit
 
 
 <script>
@@ -9,66 +9,70 @@
     $('.CatchAndKill, .CatchAndRelease').hide();
     CatchReleaseFields();
 
-      $('.integer').focus(function () {
-        if ($(this).val() == '0')
-          $(this).val('');
-      });
-
-      $('.integer').focusout(function () {
-        if ($(this).val().length == 0)
-          $(this).val('0');
-      });
-
-
-      $('.CatchAndReleaseRadio').click(function () {
-        CatchReleaseFields();
-      });
-
-
-      $('#Quantity').change(function () {
-        ShowHideLength();
-      });
-
-
-
-      function CatchReleaseFields()
-      {
-        if ($('#CatchAndRelease').is(':checked'))
-          ShowCatchReleaseFields();
-        else if ($('#CatchAndKill').is(':checked'))
-          CatchAndKillFields();
-      }
-
-
-      function ShowCatchReleaseFields() {
-
-
-        $('.CatchAndKill').hide();
-        $('.CatchAndRelease').show();
-
-        $('#LengthDiv').show();
-      }
-
-
-      function CatchAndKillFields() {
-
-        $('.CatchAndRelease').hide();
-        $('.CatchAndKill').show();
-
-        ShowHideLength();
-      }
-
-
-      function ShowHideLength()
-      {
-        if ($('#Quantity').val().length == 0 || $('#Quantity').val() == '1')
-          $('#LengthDiv').show();
-        else
-          $('#LengthDiv').hide();
-      }
-
-
+    $('.integer').focus(function () {
+      if ($(this).val() == '0')
+        $(this).val('');
     });
+
+    $('.integer').focusout(function () {
+      if ($(this).val().length == 0)
+        $(this).val('0');
+    });
+
+
+    $('.CatchAndReleaseRadio').click(function () {
+      CatchReleaseFields();
+    });
+
+
+    $('#SaveAndNew').click(function () {
+      $('#GoToNew').val('true');
+      return true;
+    });
+
+
+    $('#Quantity').change(function () {
+      ShowHideLength();
+    });
+
+
+
+    function CatchReleaseFields() {
+      if ($('#CatchAndRelease').is(':checked'))
+        ShowCatchReleaseFields();
+      else if ($('#CatchAndKill').is(':checked'))
+        CatchAndKillFields();
+    }
+
+
+    function ShowCatchReleaseFields() {
+
+
+      $('.CatchAndKill').hide();
+      $('.CatchAndRelease').show();
+
+      $('#LengthDiv').show();
+    }
+
+
+    function CatchAndKillFields() {
+
+      $('.CatchAndRelease').hide();
+      $('.CatchAndKill').show();
+
+      ShowHideLength();
+    }
+
+
+    function ShowHideLength() {
+      if ($('#Quantity').val().length == 0 || $('#Quantity').val() == '1')
+        $('#LengthDiv').show();
+      else
+        $('#LengthDiv').hide();
+    }
+
+
+  });
 
 </script>
 
@@ -89,8 +93,10 @@
     @Html.LabelFor(m => m.CatchAndRelease, new { @class = "pnac-label" })
   </div>
   <div class="col-md-10 radio-list">
-    <input type="radio" id="CatchAndRelease" name="@nameof(Model.CatchAndRelease)" value="Yes" class="CatchAndReleaseRadio"/>Yes
-    <input type="radio" id="CatchAndKill" name="@nameof(Model.CatchAndRelease)" value="No" class="CatchAndReleaseRadio"/>No
+
+    @Html.RadioButtonFor(x => x.CatchAndRelease, "Yes", new { @class = "CatchAndReleaseRadio", id = "CatchAndRelease" })Yes
+    @Html.RadioButtonFor(x => x.CatchAndRelease, "No", new { @class = "CatchAndReleaseRadio", id = "CatchAndKill" })No
+
     <div>@Html.ValidationMessageFor(m => m.CatchAndRelease)</div>
   </div>
 </div>
@@ -112,13 +118,7 @@
   </div>
   <div class="col-md-10">
     @Html.DropDownListFor(m => m.Quantity, Model.Numbers, "Please select")
-    <div>@Html.ValidationMessageFor(m => m.Quantity)</div>
   </div>
-</div>
-
-
-<div class="form-group CatchAndRelease">
-  <input type="hidden" name="@nameof(Model.Quantity)" value="1" />
 </div>
 
 
@@ -128,7 +128,6 @@
   </div>
   <div class="col-md-10">
     @Html.DropDownListFor(m => m.Length, Model.Lengths, "Please select")
-    <div>@Html.ValidationMessageFor(m => m.Length)</div>
   </div>
 </div>
 
@@ -139,17 +138,18 @@
   </div>
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.Weight, new { @class = "integer"})
-    <div>@Html.ValidationMessageFor(m => m.Weight)</div>
   </div>
 </div>
 
 @Html.HiddenFor(m => m.CompetitionId)
+@Html.HiddenFor(m => m.CatchId)
+@Html.HiddenFor(m => m.GoToNew)
 
 
 <div class="form-group">
   <div class="col-md-10">
     <input type="submit" class="btn btn-default save-button" value="Save" />
-    <input type="submit" class="btn btn-default save-button not-first-button" value="Save and new" />
-    <a href="/fish/index" class="btn btn-default save-button not-first-button">Back to all results</a>
+    <input id="SaveAndNew" type="submit" class="btn btn-default save-button not-first-button" value="Save and new" />
+    <a href="/Competitions/Edit/@Model.CompetitionId?tabId=@((int)PNACCompetitionsDbFirst.Models.ViewModels.CompetitionEdit.TABS.RESULTS)" class="btn btn-default save-button not-first-button">Back to all catches</a>
   </div>
 </div>

@@ -20,6 +20,8 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels.Results
 
     public bool CatchAndRelease { get; set; }
 
+    public int CatchId { get; set; }
+
     public int EntryId { get; set; }
     public string CompetitorName { get; set; }
 

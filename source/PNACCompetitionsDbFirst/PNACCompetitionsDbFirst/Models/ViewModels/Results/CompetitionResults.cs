@@ -10,7 +10,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels.Results
 
     public int CompetitonId { get; set; }
 
-    public List<CompetitorResult> Results { get; set; } = new List<CompetitorResult>();
+    public List<CompetitorResult> Catches { get; set; }
 
   }
 }

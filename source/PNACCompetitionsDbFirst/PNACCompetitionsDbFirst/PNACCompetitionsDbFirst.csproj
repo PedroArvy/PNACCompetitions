@@ -170,7 +170,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ResultsController.cs" />
+    <Compile Include="Controllers\CatchesController.cs" />
     <Compile Include="Controllers\CompetitorsController.cs" />
     <Compile Include="Controllers\CompetitionsController.cs" />
     <Compile Include="Controllers\FishController.cs" />
@@ -225,12 +225,12 @@
       <DependentUpon>Competitions.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Format.cs" />
+    <Compile Include="Models\ViewModels\CatchEdit.cs" />
     <Compile Include="Models\ViewModels\CompetitionEdit.cs" />
     <Compile Include="Models\ViewModels\CompetitionListItem.cs" />
     <Compile Include="Models\ViewModels\CompetitionIndex.cs" />
     <Compile Include="Models\ViewModels\CompetitorCreate.cs" />
     <Compile Include="Models\ViewModels\Components\RadioValue.cs" />
-    <Compile Include="Models\ViewModels\ResultEdit.cs" />
     <Compile Include="Models\ViewModels\Results\EditResult.cs" />
     <Compile Include="Models\ViewModels\Results\CompetitionResults.cs" />
     <Compile Include="Models\ViewModels\Entries\CompetitionEntries.cs" />
@@ -359,9 +359,13 @@
     <Content Include="Views\Competitions\Edit-knockout.cshtml" />
     <Content Include="Views\Competitions\EditEntries.cshtml" />
     <Content Include="Views\Competitions\New.cshtml" />
-    <Content Include="Views\Competitions\EditResults.cshtml" />
     <Content Include="Views\Results\New.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\ResultEdit.cshtml" />
+    <Content Include="Views\Results\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CatchEdit.cshtml" />
+    <Content Include="Views\Catches\Edit.cshtml" />
+    <Content Include="Views\Catches\New.cshtml" />
+    <Content Include="Views\Competitions\EditCatches.cshtml" />
+    <Content Include="Views\Competitions\EditResults.cshtml" />
     <None Include="Web.Debug-Venom.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

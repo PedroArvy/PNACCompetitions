@@ -48,7 +48,6 @@
         <div class="form-group">
 
             <button id="Save" class="btn btn-primary save-button">Save</button>
-            <a href="/Competitions/Index" class="btn btn-default save-button not-first-button">Back to all competitions</a>
      
         </div>
 
@@ -134,6 +133,7 @@
         {
           success = true;
         }
+
       }).fail(function () {
         alert('error');
       }).always(function () {
@@ -210,6 +210,10 @@
       select: function (event, ui) {
         $(this).attr('data-val-CompetitorId', ui.item.value);
         $(this).val(ui.item.label); // save selected id to hidden input
+
+        //show the Delete button in case it was hidden
+        $(this).parents('.competitor-row').first().find('.DeleteCompetitor').show();
+
 
         if(AddNew())
         {

@@ -4,12 +4,12 @@
 @model CompetitionResults
 
 
-<div id="results-tab">
+<div id="catches-tab">
 
   <div class="row">
 
     <div class="col-md-7">
-      <a href="/Results/New?id=@Model.CompetitonId" class="btn btn-default save-button" style="color:#ffffff;margin-bottom:20px">New</a>
+      <a href="/Catches/New?id=@Model.CompetitonId" class="btn btn-default save-button" style="color:#ffffff;margin-bottom:20px">New</a>
     </div>
   </div>
 
@@ -18,14 +18,14 @@
     <div class="col-md-7">
 
 
-      @if (Model.Results.Count() > 0)
+      @if (Model.Catches.Count() > 0)
       {
         <div class="table-responsive">
           <table class="table table-striped">
             <thead>
               <tr>
                 <th>
-                  <span class="hidden-sm hidden-xs hidden-md">Delete</span>
+                  <span class="hidden-sm hidden-xs hidden-md">Action</span>
                   <span class="hidden-lg"></span>
                 </th>
                 <th>Member</th>
@@ -46,9 +46,15 @@
 
             <tbody id="competitors-body">
 
-              @foreach (CompetitorResult result in Model.Results)
+              @foreach (CompetitorResult result in Model.Catches)
               {
                 <tr>
+
+                  <td>
+                    @Html.ActionLink("Edit", "Edit", "Catches", new { id = result.CatchId }, new { @class = "btn btn-primary btn-sm white-button" })
+                    @Html.ActionLink("Delete", "Delete", "Catches", new { id = result.CatchId }, new { @class = "btn btn-primary btn-sm white-button" })
+                  </td>
+
                   <td>@result.CompetitorName</td>
                   <td>@result.FishName</td>
 
@@ -61,7 +67,15 @@
                     <td>@result.Weight</td>
                   }
 
-                  <td>@result.Length</td>
+                  @if (result.Length > 0)
+                  {
+                    <td>@result.Length</td>
+                  }
+                  else
+                  {
+                    <td>NA</td>
+                  }
+
                 </tr>
               }
 
@@ -80,11 +94,4 @@
 
 </div>
 
-<script>
 
-  $(document).ready(function () {
-
-  });
-
-
-</script>
