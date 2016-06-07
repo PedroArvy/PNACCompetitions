@@ -15,7 +15,7 @@
 <div class="row">
   <div class="col-md-10">
 
-    @using (Html.BeginForm("New", "Result", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("New", "Results", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
       @Html.AntiForgeryToken()
       @Html.EditorFor(r => r)

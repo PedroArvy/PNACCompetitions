@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PNACCompetitionsDbFirst.Models.ViewModels
 {
@@ -18,19 +19,33 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     #region *********************** Properties ***********************
 
+    public int CompetitionId { get; set; }
+
     [Display(Name = "Competitor")]
+    [Required(ErrorMessage = "You need to select an entrant")]
     public int EntrantId { get; set; }
 
-    public List<Entrant> Entrants { get; set; }
+    public List<SelectListItem> Entrants { get; set; }
 
+    [Display(Name = "Length (cm)")]
+    [Required(ErrorMessage = "You need to select a length")]
     public int Length { get; set; }
+    public List<SelectListItem> Lengths { get; set; }
 
-    public bool LengthOnly {get; set;}
+    [Display(Name = "Catch and release?")]
+    [Required(ErrorMessage = "You need to select a value for Catch and Release")]
+    public string CatchAndRelease {get; set;}
 
-    public int Number { get; set; }
+    [Display(Name = "Quantity")]
+    [Required(ErrorMessage = "You need to select a quantity")]
+    [Range(1, 100, ErrorMessage = "You need to select a quantity")]
+    public int Quantity { get; set; }
+    public List<SelectListItem> Numbers { get; set; }
 
     public List<Species> Species { get; set; }
 
+    [Display(Name = "Weight (kg)")]
+    [Range(0.1, 200, ErrorMessage = "You need to select a weight")]
     public double Weight { get; set; }
 
 

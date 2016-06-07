@@ -21,12 +21,9 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels.Results
     public bool CatchAndRelease { get; set; }
 
     public int EntryId { get; set; }
-    public string EntryName { get; set; }
-    public List<Entry> Entries { get; set; }
+    public string CompetitorName { get; set; }
 
-    public int FishId { get; set; }
     public string FishName { get; set; }
-    public List<Fish> PossibleFish { get; set; }
 
     /// <summary>
     /// only if 1 fish and catch and release

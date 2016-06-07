@@ -1,124 +1,419 @@
-﻿<!doctype html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>jQuery UI Autocomplete - Default functionality</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Result</title>
+  <link href="/Content/bootstrap.css" rel="stylesheet" />
+  <link href="/Content/site.css" rel="stylesheet" />
+
+  <script src="/Scripts/modernizr-2.6.2.js"></script>
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <script src="/Scripts/ko-autocomplete.js"></script>
 
   <script>
 
-    $(document).ready(function () {
+    $(function () {
 
-
-      function Competitor(competitorId, isReferee)
-      {
-        var self = this;
-
-        //self.Name = ko.observable(name);
-        //self.CompetitorId = competitorId;
-        self.IsReferee = ko.observable(isReferee);
-
-        self.mySelectedGuid = ko.observable(competitorId);
-        self.tempValue = '';
-        self.BlurName = function () {
-          if (self.mySelectedGuid().length == 0)
-            self.mySelectedGuid(self.tempValue);
-          return true;
-        }
-        self.FocusName = function () {
-          self.tempValue = self.mySelectedGuid();
-          self.mySelectedGuid('');
-          return true;
-        }
-
-      }
-
-      function Person(guid, name, email) {
-        this.guid = ko.observable(guid);
-        this.name = ko.observable(name);
-        this.email = ko.observable(email);
-
-        this.displayName = ko.dependentObservable(function () {
-          return this.name() + " [" + this.email() + "]";
-        }, this);
-      }
-
-      var viewModel = {
-        myPeople: ko.observableArray([
-            new Person("1", "Bob Smith", "bsmith@company.com"),
-            new Person("2", "Bonnie Johnson", "bjohnson@company.com"),
-            new Person("3", "John Daniels", "jdaniels@company.com"),
-            new Person("4", "Deborah Danielson", "ddanielson@company.com"),
-            new Person("5", "John Daniels", "jxdaniels@company.com")
-        ]),
-        mySelectedGuid: ko.observable("3"),
-
-        Competitors: ko.observableArray([
-          new Competitor("3", true),
-          new Competitor("4", false),
-        ])
-
-      };
-
-      ko.applyBindings(viewModel);
+      $('.capitalise').change(function () {
+        $(this).val(toTitleCase($(this).val()));
+      });
 
     });
 
+    function toTitleCase(str) {
+      return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+    }
 
   </script>
 
-
 </head>
-
-
 <body>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Application name</a>
+      </div>
+      <div class="navbar-collapse collapse">
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>
-          <span class="hidden-sm hidden-xs hidden-md">Delete</span>
-          <span class="hidden-lg"></span>
-        </th>
-        <th>Member</th>
-        <th>
-          <span class="hidden-sm hidden-xs hidden-md">Captain</span>
-          <span class="hidden-lg">C</span>
-        </th>
-        <th>
-          <span class="hidden-sm hidden-xs hidden-md">Referee</span>
-          <span class="hidden-lg">R</span>
-        </th>
-      </tr>
-    </thead>
+        <ul class="nav navbar-nav">
+          <li><a href="/">Leader Board</a></li>
+          <li><a href="/Competitors">Members</a></li>
+          <li><a href="/Competitions">Competitions</a></li>
 
-    <tbody data-bind="foreach: Competitors">
-      <tr>
-        <td>
-          <input data-bind="event: { blur: BlurName }, click: FocusName, jqAuto: { autoFocus: true }, jqAutoSource: $parent.myPeople, jqAutoValue: mySelectedGuid, jqAutoSourceLabel: 'displayName', jqAutoSourceInputValue: 'name', jqAutoSourceValue: 'guid'" />
-          <span data-bind="text:mySelectedGuid"></span>
-        </td>
+          <li><a href="/Fish">Fish</a></li>
 
-        <td>
-          <input type="checkbox" name="Referee" data-bind="checked: IsReferee" />
-        </td>
-
-      </tr>
-    </tbody>
-  </table>
-
-  <input data-bind="jqAuto: { autoFocus: true }, jqAutoSource: myPeople, jqAutoValue: mySelectedGuid, jqAutoSourceLabel: 'displayName', jqAutoSourceInputValue: 'name', jqAutoSourceValue: 'guid'" />
+          <!--
+          <li><a href="/Home/About">About</a></li>
+          <li><a href="/Home/Contact">Contact</a></li>
+          -->
+        </ul>
 
 
-  <div data-bind="text: mySelectedGuid() ? mySelectedGuid() : 'None selected'"></div>
+        <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post">
+          <input name="__RequestVerificationToken" type="hidden" value="b9H7I3Yo7HZEKBBbd943_ndVSpImgBy29pj5HPcmobSYYunypx6uA8xwnKGaNIoF843N92V3raIvSX1ZvTo7hxi8wo1LOyh_41G5nVnK-VBjqrKCE5vcg2c__sUP45q2uCcG1TUgs61uAFWUOLZxSQ2" />    <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/Manage" title="Manage">Hello petras.surna@yart.com.au!</a>
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+          </ul>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container body-content">
 
 
 
+    <div class="row">
+      <div class="col-md-8">
+        <h2>New Result</h2>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-10">
+
+        <form action="/Result/New" class="form-horizontal" method="post" role="form">
+          <input name="__RequestVerificationToken" type="hidden" value="OGXo6kNs2pQfOmKCQiZRBllD9O8_h6zWWGhgo3cU1rvBGeuxJTOv2mZbRLPIMkMspBui3RrbXsBTx6AT-4Ikc5yhROgPnlQKXYHSfi__PdHou5H621s2dBLbw3fpJb31ADlUNUQTCY1HcWZcH09dww2" />
+          <input name="__RequestVerificationToken" type="hidden" value="egupyru9iKuanee2VPyag1UDH5rAbXjjCu6F0NYj3OuR0EG2P_N3nBg7X2pNib-hBvoC39wsqip1NvdNljwsssHUwPF5bZFP5Uwl4Nm0YGwvZ643qHAyCsEj7WTScnNY8S1VwJsE4KXTB4vdoS5wXw2" />
+
+          <div class="form-group">
+            <div class="col-md-10">
+              <label class="pnac-label" for="EntrantId">Competitor</label>
+            </div>
+            <div class="col-md-10">
+              <select data-val="true" data-val-number="The field Competitor must be a number." data-val-required="You need to select an entrant" id="EntrantId" name="EntrantId">
+                <option value="">Please select</option>
+                <option value="692">Barbara Braidwood</option>
+                <option value="548">Ian Axford</option>
+              </select>
+              <span class="field-validation-valid" data-valmsg-for="EntrantId" data-valmsg-replace="true"></span>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="col-md-10">
+              <label class="pnac-label" for="CatchAndRelease">Catch and release?</label>
+            </div>
+            <div class="col-md-10 radio-list">
+              <input type="radio" name="CatchAndRelease" value="Yes" />Yes
+              <input type="radio" name="CatchAndRelease" value="No" />No
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="col-md-10">
+              <label class="pnac-label" for="Quantity">Quantity</label>
+            </div>
+            <div class="col-md-10">
+              <select data-val="true" data-val-number="The field Quantity must be a number." data-val-required="You need to select a quantity" id="Quantity" name="Quantity">
+                <option value="">Please select</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+                <option value="33">33</option>
+                <option value="34">34</option>
+                <option value="35">35</option>
+                <option value="36">36</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+                <option value="41">41</option>
+                <option value="42">42</option>
+                <option value="43">43</option>
+                <option value="44">44</option>
+                <option value="45">45</option>
+                <option value="46">46</option>
+                <option value="47">47</option>
+                <option value="48">48</option>
+                <option value="49">49</option>
+                <option value="50">50</option>
+              </select>
+              <span class="field-validation-valid" data-valmsg-for="Quantity" data-valmsg-replace="true"></span>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="col-md-10">
+              <label class="pnac-label" for="Length">Length (cm)</label>
+            </div>
+            <div class="col-md-10">
+              <select data-val="true" data-val-number="The field Length (cm) must be a number." data-val-required="You need to select a length" id="Length" name="Length">
+                <option value="">Please select</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+                <option value="33">33</option>
+                <option value="34">34</option>
+                <option value="35">35</option>
+                <option value="36">36</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+                <option value="41">41</option>
+                <option value="42">42</option>
+                <option value="43">43</option>
+                <option value="44">44</option>
+                <option value="45">45</option>
+                <option value="46">46</option>
+                <option value="47">47</option>
+                <option value="48">48</option>
+                <option value="49">49</option>
+                <option value="50">50</option>
+                <option value="51">51</option>
+                <option value="52">52</option>
+                <option value="53">53</option>
+                <option value="54">54</option>
+                <option value="55">55</option>
+                <option value="56">56</option>
+                <option value="57">57</option>
+                <option value="58">58</option>
+                <option value="59">59</option>
+                <option value="60">60</option>
+                <option value="61">61</option>
+                <option value="62">62</option>
+                <option value="63">63</option>
+                <option value="64">64</option>
+                <option value="65">65</option>
+                <option value="66">66</option>
+                <option value="67">67</option>
+                <option value="68">68</option>
+                <option value="69">69</option>
+                <option value="70">70</option>
+                <option value="71">71</option>
+                <option value="72">72</option>
+                <option value="73">73</option>
+                <option value="74">74</option>
+                <option value="75">75</option>
+                <option value="76">76</option>
+                <option value="77">77</option>
+                <option value="78">78</option>
+                <option value="79">79</option>
+                <option value="80">80</option>
+                <option value="81">81</option>
+                <option value="82">82</option>
+                <option value="83">83</option>
+                <option value="84">84</option>
+                <option value="85">85</option>
+                <option value="86">86</option>
+                <option value="87">87</option>
+                <option value="88">88</option>
+                <option value="89">89</option>
+                <option value="90">90</option>
+                <option value="91">91</option>
+                <option value="92">92</option>
+                <option value="93">93</option>
+                <option value="94">94</option>
+                <option value="95">95</option>
+                <option value="96">96</option>
+                <option value="97">97</option>
+                <option value="98">98</option>
+                <option value="99">99</option>
+                <option value="100">100</option>
+                <option value="101">101</option>
+                <option value="102">102</option>
+                <option value="103">103</option>
+                <option value="104">104</option>
+                <option value="105">105</option>
+                <option value="106">106</option>
+                <option value="107">107</option>
+                <option value="108">108</option>
+                <option value="109">109</option>
+                <option value="110">110</option>
+                <option value="111">111</option>
+                <option value="112">112</option>
+                <option value="113">113</option>
+                <option value="114">114</option>
+                <option value="115">115</option>
+                <option value="116">116</option>
+                <option value="117">117</option>
+                <option value="118">118</option>
+                <option value="119">119</option>
+                <option value="120">120</option>
+                <option value="121">121</option>
+                <option value="122">122</option>
+                <option value="123">123</option>
+                <option value="124">124</option>
+                <option value="125">125</option>
+                <option value="126">126</option>
+                <option value="127">127</option>
+                <option value="128">128</option>
+                <option value="129">129</option>
+                <option value="130">130</option>
+                <option value="131">131</option>
+                <option value="132">132</option>
+                <option value="133">133</option>
+                <option value="134">134</option>
+                <option value="135">135</option>
+                <option value="136">136</option>
+                <option value="137">137</option>
+                <option value="138">138</option>
+                <option value="139">139</option>
+                <option value="140">140</option>
+                <option value="141">141</option>
+                <option value="142">142</option>
+                <option value="143">143</option>
+                <option value="144">144</option>
+                <option value="145">145</option>
+                <option value="146">146</option>
+                <option value="147">147</option>
+                <option value="148">148</option>
+                <option value="149">149</option>
+                <option value="150">150</option>
+                <option value="151">151</option>
+                <option value="152">152</option>
+                <option value="153">153</option>
+                <option value="154">154</option>
+                <option value="155">155</option>
+                <option value="156">156</option>
+                <option value="157">157</option>
+                <option value="158">158</option>
+                <option value="159">159</option>
+                <option value="160">160</option>
+                <option value="161">161</option>
+                <option value="162">162</option>
+                <option value="163">163</option>
+                <option value="164">164</option>
+                <option value="165">165</option>
+                <option value="166">166</option>
+                <option value="167">167</option>
+                <option value="168">168</option>
+                <option value="169">169</option>
+                <option value="170">170</option>
+                <option value="171">171</option>
+                <option value="172">172</option>
+                <option value="173">173</option>
+                <option value="174">174</option>
+                <option value="175">175</option>
+                <option value="176">176</option>
+                <option value="177">177</option>
+                <option value="178">178</option>
+                <option value="179">179</option>
+                <option value="180">180</option>
+                <option value="181">181</option>
+                <option value="182">182</option>
+                <option value="183">183</option>
+                <option value="184">184</option>
+                <option value="185">185</option>
+                <option value="186">186</option>
+                <option value="187">187</option>
+                <option value="188">188</option>
+                <option value="189">189</option>
+                <option value="190">190</option>
+                <option value="191">191</option>
+                <option value="192">192</option>
+                <option value="193">193</option>
+                <option value="194">194</option>
+                <option value="195">195</option>
+                <option value="196">196</option>
+                <option value="197">197</option>
+                <option value="198">198</option>
+                <option value="199">199</option>
+                <option value="200">200</option>
+              </select>
+              <span class="field-validation-valid" data-valmsg-for="Length" data-valmsg-replace="true"></span>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="col-md-10">
+              <label class="pnac-label" for="Weight">Weight (kg)</label>
+            </div>
+            <div class="col-md-10">
+              <input data-val="true" data-val-number="The field Weight (kg) must be a number." data-val-required="The Weight (kg) field is required." id="Weight" name="Weight" type="text" value="0" />
+              <span class="field-validation-valid" data-valmsg-for="Weight" data-valmsg-replace="true"></span>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="col-md-10">
+              <input type="submit" class="btn btn-default save-button" value="Save" />
+              <input type="submit" class="btn btn-default save-button not-first-button" value="Save and new" />
+              <a href="/fish/index" class="btn btn-default save-button not-first-button">Back to all results</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <hr />
+    <footer>
+      <p>&copy; 2016 - <a href="http://www.yart.com.au" target="_blank">Yart</a> business automation</p>
+    </footer>
+  </div>
+
+  <script src="/Scripts/bootstrap.js"></script>
+  <script src="/Scripts/respond.js"></script>
+
+
+  <script src="/Scripts/jquery.validate.js"></script>
+  <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+
+  <!-- Visual Studio Browser Link -->
+  <script type="application/json" id="__browserLink_initializationData">
+    {"appName":"Firefox","requestId":"0f5e6f3dc44b43fcae7a2fdd1b1fc935"}
+  </script>
+  <script type="text/javascript" src="http://localhost:1769/d18958590cf14befb0039bd969d35217/browserLink" async="async"></script>
+  <!-- End Browser Link -->
 
 </body>
 </html>

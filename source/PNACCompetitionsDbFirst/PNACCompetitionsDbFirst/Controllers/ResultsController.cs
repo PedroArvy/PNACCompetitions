@@ -37,9 +37,9 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     #region *********************** Methods **************************
 
-    private List<Entrant> Entrants(Competition competition)
+    private List<SelectListItem> Entrants(Competition competition)
     {
-      return competition.Entries.Select(entry => new Entrant { Name = entry.Competitor.FriendlyName(), CompetitorId = entry.CompetitorId }).ToList();
+      return competition.Entries.Select(entry => new SelectListItem {  Text = entry.Competitor.FriendlyName(), Value = entry.CompetitorId.ToString() }).ToList();
     }
 
 
@@ -50,14 +50,59 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       if (competition.CanAddEntries(Competitor))
       {
+        result.CompetitionId = id;
         result.Entrants = Entrants(competition);
         result.Species = Species(competition);
-        result.Length = 20;
+        result.Lengths = NumericalList(20, 200);
+        result.Numbers = NumericalList(1, 50);
       }
       else
         throw new UnauthorizedAccessException("New");
 
       return View(result);
+    }
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult New(ResultEdit result)
+    {
+      Competition competition = db.Competitions.Single(c => c.CompetitionId == result.CompetitionId);
+
+      if (competition.CanAddEntries(Competitor))
+      {
+        if(ModelState.IsValid)
+        {
+          return View(result);
+        }
+        else
+        {
+          result.Entrants = Entrants(competition);
+          result.Species = Species(competition);
+          result.Lengths = NumericalList(20, 200);
+          result.Numbers = NumericalList(1, 50);
+
+          return View(result);
+        }
+      }
+      else
+        throw new UnauthorizedAccessException("New");
+
+    }
+
+
+    private List<SelectListItem> NumericalList(int min, int max)
+    {
+      SelectListItem item;
+      List<SelectListItem> items = new List<SelectListItem>();
+
+      for(int i = min; i <= max; i++)
+      {
+        item = new SelectListItem() { Text = i.ToString(), Value = i.ToString() };
+        items.Add(item);
+      }
+
+      return items;
     }
 
 

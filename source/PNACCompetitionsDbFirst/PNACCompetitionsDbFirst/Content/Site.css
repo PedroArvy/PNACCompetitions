@@ -52,7 +52,7 @@ a.btn {
   margin-top: 20px;
 }
 
-.back-button {
+.not-first-button {
   margin-left: 10px;
 }
 
@@ -105,7 +105,7 @@ a.btn {
   color: red;
 }
 
-.save-button, a.back-button.btn-default, a.btn.btn-delete {
+.save-button, a.not-first-button.btn-default, a.btn.btn-delete {
   background-color: #428bca;
   border-color: #357ebd;
   color:#ffffff;
@@ -117,4 +117,9 @@ table a.DeleteCompetitor{
 
 .radio-label{
   margin-right:10px;
+}
+
+
+.radio-list input[type="radio"]:not(:first-child){
+  margin-left:10px;
 }
