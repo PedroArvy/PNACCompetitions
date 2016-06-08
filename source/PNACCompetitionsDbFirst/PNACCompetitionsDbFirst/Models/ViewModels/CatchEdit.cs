@@ -21,6 +21,8 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     public int CatchId { get; set; }
 
+    public bool Cleaned { get; set; }
+
     public int CompetitionId { get; set; }
 
     [Display(Name = "Competitor")]

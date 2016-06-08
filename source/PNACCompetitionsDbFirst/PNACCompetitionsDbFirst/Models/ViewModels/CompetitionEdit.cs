@@ -27,6 +27,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     #region *********************** Properties ***********************
 
+    public bool Begun { get; set; }
 
     public List<CompetitorEntry> CompetitionEntries { get; set; }
 

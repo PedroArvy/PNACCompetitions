@@ -163,6 +163,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         edit.CompetitionId = competition.CompetitionId;
         edit.Venue = competition.Venue;
+        edit.Begun = (DateTime.Now - competition.Start).TotalMinutes > 0;
         edit.StartDate = Format.DateOnly(competition.Start);
         edit.StartTime = Format.TimeOnly(competition.Start);
         edit.DayType = competition.DayType;
@@ -218,7 +219,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         model.MemberNames = MakeNames(competition);
         model.Environments = Environments();
         model.CompetitionEntries = CompetitionEntries(competition);
-
+        model.CompetitionResults = CompetitionResults(competition);
 
         return View(model);
       }
@@ -276,7 +277,7 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    private string MakeNames(Competition competition)
+    protected string MakeNames(Competition competition)
     {
       string name, names = "";
 

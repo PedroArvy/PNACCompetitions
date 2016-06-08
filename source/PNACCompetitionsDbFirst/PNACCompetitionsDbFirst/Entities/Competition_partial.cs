@@ -73,6 +73,48 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
+    public List<Catch> Catches()
+    {
+      List<Catch> catches = new List<Catch>();
+
+      foreach(Entry entry in Entries)
+      {
+        catches.AddRange(entry.Catches);
+      }
+
+      return catches;
+    }
+
+
+    public List<Competitor> Competitors()
+    {
+      List<Competitor> competitors = new List<Competitor>();
+
+      foreach(Entry entry in Entries.Where(e =>e.Competitor.CompetitorType != (int)PNACCompetitionsDbFirst.Entities.Competitor.COMPETITOR_TYPE.NON_MEMBER))
+      {
+        if (!competitors.Contains(entry.Competitor))
+          competitors.Add(entry.Competitor);
+      }
+
+      return competitors;
+    }
+
+
+    public List<LengthResult> LengthResults()
+    {
+      LengthResult result;
+      List<LengthResult> results = new List<LengthResult>();
+
+      foreach (Catch @catch in Catches().Where(c => c.Length != 0))
+      {
+        result = new LengthResult() {  Competition = this, Fish = @catch.Fish, CompetitorId = @catch.Entry.CompetitorId, Name = @catch.Entry.Competitor.FriendlyName(), Length = @catch.Length };
+        results.Add(result);
+      }
+
+      return results;
+    }
+
+
     public string WeighInDescription()
     {
       string description = "";
@@ -85,10 +127,75 @@ namespace PNACCompetitionsDbFirst.Entities
       return description;
     }
 
+
+    public List<WeightResult> WeightResults()
+    {
+      WeightResult result;
+      List<WeightResult> results = new List<WeightResult>();
+      int count = 0;
+      int points = 0;
+
+      foreach (Competitor competitor in Competitors())
+      {
+        result = new WeightResult() { CompetitorId = competitor.CompetitorId, Name = competitor.FriendlyName(), Weight = competitor.Weight(this) };
+        results.Add(result);
+      }
+
+      foreach (WeightResult result1 in results.OrderByDescending(r => r.Weight))
+      {
+        if (count == 0)
+          points = 40;
+        else if (count == 1)
+          points = 35;
+        else if (count == 2)
+          points = 32;
+        else if (count == 3)
+          points = 30;
+        else
+          points--;
+
+        result1.Points = points;
+        count++;
+      }
+
+      return results;
+    }
+
+
     #endregion
 
 
     #region *********************** Interfaces ***********************
     #endregion
   }
+
+
+  public class LengthResult
+  {
+    public Competition Competition { get; set; }
+
+    public int CompetitorId { get; set; }
+
+    public Fish Fish { get; set; }
+
+    public string Name { get; set; }
+
+    public double Length { get; set; }
+
+    public double Points { get; set; }
+  }
+
+
+  public class WeightResult
+  {
+    public int CompetitorId { get; set; }
+
+    public string Name { get; set; }
+
+    public double Weight { get; set; }
+
+    public double Points { get; set; }
+  }
+
+
 }

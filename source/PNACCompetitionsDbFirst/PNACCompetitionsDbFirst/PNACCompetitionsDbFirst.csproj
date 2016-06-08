@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CatchesController.cs" />
+    <Compile Include="Controllers\SeasonsController.cs" />
     <Compile Include="Controllers\CompetitorsController.cs" />
     <Compile Include="Controllers\CompetitionsController.cs" />
     <Compile Include="Controllers\FishController.cs" />
@@ -250,6 +251,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\ViewModels\Results\ListResult.cs" />
+    <Compile Include="Models\ViewModels\SeasonEdit.cs" />
+    <Compile Include="Models\ViewModels\SeasonsIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sample.cs" />
     <Compile Include="Startup.cs" />
@@ -260,6 +263,7 @@
     <Content Include="Content\pickadate\default.css" />
     <Content Include="Content\pickadate\default.time.css" />
     <Content Include="Content\pickadate\default.date.css" />
+    <Content Include="Content\jquery-ui.1.11.4.css" />
     <Content Include="Entities\Competitions.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Competitions.edmx</DependentUpon>
@@ -285,15 +289,13 @@
     </Content>
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="Properties\PublishProfiles\Release.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-ui.1.11.4.min.js" />
+    <Content Include="Scripts\jquery-2.2.3.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\ko-autocomplete.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\pickadate\legacy.js" />
     <Content Include="Scripts\pickadate\picker.time.js" />
@@ -365,7 +367,11 @@
     <Content Include="Views\Catches\Edit.cshtml" />
     <Content Include="Views\Catches\New.cshtml" />
     <Content Include="Views\Competitions\EditCatches.cshtml" />
-    <Content Include="Views\Competitions\EditResults.cshtml" />
+    <Content Include="Views\Competitions\LengthResults.cshtml" />
+    <Content Include="Views\Competitions\WeightResults.cshtml" />
+    <Content Include="Views\Seasons\Index.cshtml" />
+    <Content Include="Views\Seasons\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SeasonEdit.cshtml" />
     <None Include="Web.Debug-Venom.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -379,7 +385,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

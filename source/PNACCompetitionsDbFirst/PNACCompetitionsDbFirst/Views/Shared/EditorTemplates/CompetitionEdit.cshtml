@@ -17,6 +17,15 @@
   </div>
 </div>
 
+
+<div class="form-group">
+  <div class="col-md-10">
+    @Html.RadioButtonFor(m => m.DayType, "s") <label for="1" class="radio-label">Single day</label>
+    @Html.RadioButtonFor(m => m.DayType, "m") <label for="1" class="radio-label">Multi day</label>
+  </div>
+</div>
+
+
 <div class="form-group">
   <div class="col-md-10">
     @Html.LabelFor(m => m.StartDate, new { @class = "pnac-label" })
@@ -35,28 +44,6 @@
   <div class="col-md-10">
     @Html.TextBoxFor(m => m.StartTime, new { @class = "timepicker" })
     @Html.ValidationMessageFor(m => m.StartTime)
-  </div>
-</div>
-
-
-
-<div class="form-group">
-  <div class="col-md-10">
-
-    @foreach (RadioValue value in Model.Environments)
-    {
-      @Html.RadioButtonFor(m => m.EnvironmentId, value.Id)
-      <label for="@value.Id" class="radio-label">@value.Description</label>
-    }
-
-  </div>
-</div>
-
-
-<div class="form-group">
-  <div class="col-md-10">
-    @Html.RadioButtonFor(m => m.DayType, "s") <label for="1" class="radio-label">Single day</label>
-    @Html.RadioButtonFor(m => m.DayType, "m") <label for="1" class="radio-label">Multi day</label>
   </div>
 </div>
 
@@ -81,6 +68,20 @@
   </div>
 </div>
 
+
+<div class="form-group">
+  <div class="col-md-10">
+
+    @foreach (RadioValue value in Model.Environments)
+    {
+      @Html.RadioButtonFor(m => m.EnvironmentId, value.Id)
+      <label for="@value.Id" class="radio-label">@value.Description</label>
+    }
+
+  </div>
+</div>
+
+
 <div class="form-group">
   <div class="col-md-10">
     <input type="submit" class="btn btn-default save-button" value="Save" />
@@ -102,21 +103,16 @@
 <script>
 
   var $input = $('.datepicker').pickadate({
-    format: 'dddd d mmm yyyy',
-    formatSubmit: 'dddd d mmm yyyy',
-    // min: [2015, 7, 14],
-    //container: '#datepicker-container',
-    //editable: true,
+    format: '@PNACCompetitionsDbFirst.Models.Format.DATE_FORMAT_JS',
+    formatSubmit: '@PNACCompetitionsDbFirst.Models.Format.DATE_FORMAT_JS',
     closeOnSelect: false,
     closeOnClear: false,
   })
+  
+  var picker = $input.pickadate('picker');
 
-  var picker = $input.pickadate('picker')
-
-  var $input = $('.timepicker').pickatime({})
-  var timepicker = $input.pickatime('picker')
-
-
+  var $input = $('.timepicker').pickatime({});
+  var timepicker = $input.pickatime('picker');
 
   $(document).ready(function () {
 
@@ -137,7 +133,7 @@
     @if(Model.DayType == "s")
     {
       @:$(".multi-day").hide();
-            }
+    }
 
 
   });

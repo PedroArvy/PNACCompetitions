@@ -29,6 +29,25 @@ namespace PNACCompetitionsDbFirst.Entities
 
     #region *********************** Methods **************************
 
+
+    /// <summary>
+    /// Complete the Points for the List<LengthResult>
+    /// </summary>
+    /// <param name="results"></param>
+    public void Add(List<LengthResult> results)
+    {
+      int smaller, greater;
+
+      foreach(LengthResult result in results)
+      {
+        smaller = this.Catches.Where(c => c.FishId == result.Fish.FishId && result.Length > c.Length).Count();
+        greater = this.Catches.Where(c => c.FishId == result.Fish.FishId && result.Length < c.Length).Count();
+
+        result.Points = 100 * smaller / (smaller + greater);
+      }
+    }
+
+
     /// <summary>
     /// Clean up competitors after import from Tony Coon's Excel
     /// </summary>

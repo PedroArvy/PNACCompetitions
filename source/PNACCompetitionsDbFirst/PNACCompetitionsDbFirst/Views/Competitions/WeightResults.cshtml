@@ -1,0 +1,54 @@
+﻿@using PNACCompetitionsDbFirst.Models.ViewModels
+@using PNACCompetitionsDbFirst.Models.ViewModels.Results;
+
+@model CompetitionResults
+
+
+<div id="weightresults-tab">
+
+
+  <div class="row">
+    <div class="col-md-7">
+
+
+      @if (Model.Catches.Count() > 0)
+      {
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">Rank</span>
+                  <span class="hidden-lg">R</span>
+                </th>
+
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">Name</span>
+                  <span class="hidden-lg">N</span>
+                </th>
+
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">Weight Points</span>
+                  <span class="hidden-lg">P</span>
+                </th>
+
+
+              </tr>
+            </thead>
+
+            <tbody id="results-body"></tbody>
+
+          </table>
+        </div>
+      }
+      else
+      {
+        @:There are no results yet
+      }
+
+    </div>
+  </div>
+
+</div>
+

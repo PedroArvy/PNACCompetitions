@@ -8,6 +8,11 @@ namespace PNACCompetitionsDbFirst.Models
   public class Format
   {
     #region *********************** Constants ************************
+
+    public const string DATE_FORMAT_CS = "dddd, d MMMM yyyy";
+    public const string DATE_FORMAT_JS = "dddd, d mmmm yyyy";
+
+
     #endregion
 
 
@@ -64,7 +69,7 @@ namespace PNACCompetitionsDbFirst.Models
       if (theDate == null)
         theDate = new DateTime();
 
-      return theDate.ToString("dddd d MMM yyyy");
+      return theDate.ToString(DATE_FORMAT_CS);
     }
 
 

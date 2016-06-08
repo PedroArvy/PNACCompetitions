@@ -54,6 +54,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         result.Quantity = @catch.Number;
         result.Weight = @catch.Weight;
         result.CatchAndRelease = @catch.CatchAndRelease == true ? "Yes" : "No";
+        result.Cleaned = @catch.Cleaned;
       }
       else
         throw new UnauthorizedAccessException("New");
@@ -64,28 +65,28 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(CatchEdit result)
+    public ActionResult Edit(CatchEdit catchEdit)
     {
-      Catch @catch = db.Catches.Single(c => c.CatchId == result.CatchId);
+      Catch @catch = db.Catches.Single(c => c.CatchId == catchEdit.CatchId);
 
       if (@catch.Entry.Competition.CanAddEntries(Competitor))
       {
-        Validate(result);
+        Validate(catchEdit);
 
         if (ModelState.IsValid)
         {
-          Populate(result, @catch);
+          Populate(catchEdit, @catch);
           db.SaveChanges();
 
-          if(result.GoToNew)
+          if(catchEdit.GoToNew)
             return RedirectToAction("New", "Catches", new { id = @catch.Entry.CompetitionId });
           else
             return RedirectToAction("Edit", "Competitions", new { id = @catch.Entry.CompetitionId, tabid = (int)CompetitionEdit.TABS.RESULTS });
         }
         else
         {
-          Populate(result, @catch.Entry.Competition);
-          return View(result);
+          Populate(catchEdit, @catch.Entry.Competition);
+          return View(catchEdit);
         }
       }
       else
@@ -102,50 +103,51 @@ namespace PNACCompetitionsDbFirst.Controllers
     public ActionResult New(int id)
     {
       Competition competition = db.Competitions.Single(c => c.CompetitionId == id);
-      CatchEdit result = new CatchEdit();
+      CatchEdit @catch = new CatchEdit();
 
       if (competition.CanAddEntries(Competitor))
       {
-        Populate(result, competition);
+        Populate(@catch, competition);
+        @catch.Cleaned = true;
       }
       else
         throw new UnauthorizedAccessException("New");
 
-      return View(result);
+      return View(@catch);
     }
 
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult New(CatchEdit result)
+    public ActionResult New(CatchEdit catchEdit)
     {
-      Competition competition = db.Competitions.Single(c => c.CompetitionId == result.CompetitionId);
+      Competition competition = db.Competitions.Single(c => c.CompetitionId == catchEdit.CompetitionId);
 
       if (competition.CanAddEntries(Competitor))
       {
-        Validate(result);
+        Validate(catchEdit);
         Catch @catch = new Catch();
 
         if (ModelState.IsValid)
         {
-          Populate(result, @catch);
+          Populate(catchEdit, @catch);
 
           db.Catches.Add(@catch);
           db.SaveChanges();
 
-          if (result.GoToNew)
+          if (catchEdit.GoToNew)
             return RedirectToAction("New", "Catches", new { id = @catch.Entry.CompetitionId });
           else
             return RedirectToAction("Edit", "Competitions", new { id = competition.CompetitionId, tabid = (int)CompetitionEdit.TABS.RESULTS });
         }
         else
         {
-          result.Entrants = Entrants(competition);
-          result.Fish = Species(competition);
-          result.Lengths = NumericalList(20, 200);
-          result.Numbers = NumericalList(1, 50);
+          catchEdit.Entrants = Entrants(competition);
+          catchEdit.Fish = Species(competition);
+          catchEdit.Lengths = NumericalList(20, 200);
+          catchEdit.Numbers = NumericalList(1, 50);
 
-          return View(result);
+          return View(catchEdit);
         }
       }
       else
@@ -168,36 +170,37 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    private void Populate(CatchEdit result, Competition competition)
+    private void Populate(CatchEdit catchEdit, Competition competition)
     {
-      result.CompetitionId = competition.CompetitionId;
-      result.Entrants = Entrants(competition);
-      result.Fish = Species(competition);
-      result.Lengths = NumericalList(20, 200);
-      result.Numbers = NumericalList(1, 50);
+      catchEdit.CompetitionId = competition.CompetitionId;
+      catchEdit.Entrants = Entrants(competition);
+      catchEdit.Fish = Species(competition);
+      catchEdit.Lengths = NumericalList(20, 200);
+      catchEdit.Numbers = NumericalList(1, 50);
     }
 
 
-    private void Populate(CatchEdit result, Catch @catch)
+    private void Populate(CatchEdit catchEdit, Catch @catch)
     {
-      @catch.EntryId = result.EntrantId;
-      @catch.FishId = result.FishId;
+      @catch.EntryId = catchEdit.EntrantId;
+      @catch.FishId = catchEdit.FishId;
       @catch.Date = DateTime.Now;
-      @catch.CatchAndRelease = result.CatchAndRelease.ToLower() == "yes" ? true : false;
+      @catch.CatchAndRelease = catchEdit.CatchAndRelease.ToLower() == "yes" ? true : false;
+      @catch.Cleaned = catchEdit.Cleaned;
 
       if (@catch.CatchAndRelease)
       {
         @catch.Number = 1;
         @catch.Weight = 0;
-        @catch.Length = result.Length;
+        @catch.Length = catchEdit.Length;
       }
       else
       {
-        @catch.Number = (int)result.Quantity;
-        @catch.Weight = result.Weight;
+        @catch.Number = (int)catchEdit.Quantity;
+        @catch.Weight = catchEdit.Weight;
 
         if (@catch.Number == 1)
-          @catch.Length = result.Length;
+          @catch.Length = catchEdit.Length;
       }
     }
 
@@ -216,31 +219,30 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    private void Validate(CatchEdit result)
+    private void Validate(CatchEdit catchEdit)
     {
-      bool catchAndRelease = result.CatchAndRelease.ToLower() == "yes" ? true : false;
+      bool catchAndRelease = catchEdit.CatchAndRelease.ToLower() == "yes" ? true : false;
 
       if (catchAndRelease)
       {
-        if (result.Length <= 0)
+        if (catchEdit.Length <= 0)
           ModelState.AddModelError("length", "You need to enter a length");
       }
       else
       {
-        if (result.Quantity <= 0)
+        if (catchEdit.Quantity <= 0)
           ModelState.AddModelError("quantity", "You need to enter a quantity");
 
-        if (result.Weight <= 0.1 || result.Weight > 200)
+        if (catchEdit.Weight <= 0.1 || catchEdit.Weight > 200)
           ModelState.AddModelError("length", "You need to enter a weight between 0.1kg and 200kg");
       }
     }
-
-
 
     #endregion
 
 
     #region *********************** Interfaces ***********************
     #endregion
+
   }
 }

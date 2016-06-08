@@ -13,16 +13,16 @@ namespace PNACCompetitionsDbFirst.Entities
     public enum COMPETITOR_TYPE
     {
       [Display(Name = "Select")]
-      UNASSIGNED,
+      UNASSIGNED = 0,
 
       [Display(Name = "Non member")]
-      NON_MEMBER,
+      NON_MEMBER = 1,
 
       [Display(Name = "Junior")]
-      JUNIOR,
+      JUNIOR = 2,
 
       [Display(Name = "Senior")]
-      SENIOR
+      SENIOR = 3
     };
 
     public enum GENDER
@@ -94,6 +94,35 @@ namespace PNACCompetitionsDbFirst.Entities
       name += " " + LastName.Trim();
 
       return name;
+    }
+
+
+    public double Weight(Competition competition)
+    {
+      double points = 0;
+
+      foreach(Entry entry in competition.Entries.Where(e => e.CompetitionId == competition.CompetitionId && e.CompetitorId == CompetitorId))
+      {
+        points += Weight(entry);
+      }
+
+      return points;
+    }
+
+
+    private double Weight(Entry entry)
+    {
+      double points = 0;
+
+      foreach(Catch @catch in entry.Catches.Where(c => c.CatchAndRelease == false))
+      {
+        if(!@catch.Cleaned)
+          points += 0.9* @catch.Weight;
+        else
+          points += @catch.Weight;
+      }
+
+      return points;
     }
 
     #endregion

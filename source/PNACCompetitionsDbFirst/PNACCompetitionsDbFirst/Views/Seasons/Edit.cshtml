@@ -1,0 +1,65 @@
+﻿@using PNACCompetitionsDbFirst.Models.ViewModels
+@model SeasonEdit
+
+@{
+  ViewBag.Title = "Edit Season";
+}
+
+
+@section meta
+{
+
+  <link rel="stylesheet" href="/Content/pickadate/default.css" />
+  <link rel="stylesheet" href="/Content/pickadate/default.date.css" />
+  <link rel="stylesheet" href="/Content/pickadate/default.time.css" />
+  <script src="/scripts/pickadate/picker.js"></script>
+  <script src="/scripts/pickadate/picker.date.js"></script>
+  <script src="/scripts/pickadate/picker.time.js"></script>
+  <script src="/scripts/pickadate/legacy.js"></script>
+
+  <script>
+
+    $(function () {
+
+      var $input = $('.datepicker').pickadate({
+
+        format: '@PNACCompetitionsDbFirst.Models.Format.DATE_FORMAT_JS',
+        formatSubmit: '@PNACCompetitionsDbFirst.Models.Format.DATE_FORMAT_JS',
+        closeOnSelect: false,
+        closeOnClear: false
+
+      });
+
+      var picker = $input.pickadate('picker')
+
+    });
+    
+
+  </script>
+}
+
+
+<div class="row">
+  <div class="col-md-8">
+    <h2>Edit Season</h2>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-10">
+
+    @using (Html.BeginForm("Edit", "Season", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+      @Html.AntiForgeryToken()
+      @Html.EditorFor(m => m)
+    }
+
+  </div>
+</div>
+
+@section Scripts {
+  @Scripts.Render("~/bundles/jqueryval")
+}
+
+

@@ -57,8 +57,28 @@
   <ul>
     <li><a href="#details-tab">Details</a></li>
     <li><a href="#competitors-tab">Competitors</a></li>
-    <li><a href="#catches-tab">Catches</a></li>
-    <li><a href="#results-tab">Results</a></li>
+
+    @if (Model.Begun)
+    {
+      <li><a href="#catches-tab">Catches</a></li>
+      <li><a href="#length-results-tab">Length Results</a></li>
+      <li><a href="#weightresults-tab">Weight Results</a></li>
+    }
+    else
+    {
+      <script>
+
+        $(function () {
+
+          $('#catches-tab').hide();
+          $('#length-results-tab').hide();
+          $('#weightresults-tab').hide();
+
+        });
+
+      </script>
+    }
+
   </ul>
 
   <div id="details-tab" class="row">
@@ -68,6 +88,7 @@
       {
         @Html.AntiForgeryToken()
         @Html.EditorFor(m => m)
+        @Html.HiddenFor(m => m.Begun)
       }
 
     </div>
@@ -75,8 +96,8 @@
 
   @Html.Partial("/Views/Competitions/EditEntries.cshtml", Model)
   @Html.Partial("/Views/Competitions/EditCatches.cshtml", Model.CompetitionResults)
-  @Html.Partial("/Views/Competitions/EditResults.cshtml", Model.CompetitionResults)
-
+  @Html.Partial("/Views/Competitions/LengthResults.cshtml", Model.CompetitionResults)
+  @Html.Partial("/Views/Competitions/WeightResults.cshtml", Model.CompetitionResults)
 
 </div>
 

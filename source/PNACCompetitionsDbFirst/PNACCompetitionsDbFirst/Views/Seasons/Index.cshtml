@@ -1,0 +1,64 @@
+﻿@using PNACCompetitionsDbFirst.Entities;
+@using PNACCompetitionsDbFirst.Models.ViewModels;
+@model SeasonsIndex
+
+@{
+  ViewBag.Title = "Seasons";
+}
+
+<script>
+
+</script>
+
+<div class="row">
+  <div class="col-md-4">
+    <h2 class="section-title">Seasons</h2>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="table-responsive">
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+
+            @if (Model.CanEdit)
+            {
+              <th>Action</th>
+            }
+
+            <th>Start</th>
+            <th>End</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          @foreach (Season season in Model.Seasons.OrderByDescending(s => s.End))
+          {
+            <tr>
+
+              @if (Model.CanEdit)
+              {
+                <td>
+                  @Html.ActionLink("Edit", "Edit", "Seasons", new { id = season.SeasonId }, new { @class = "btn btn-primary btn-sm white-button" })
+                  @Html.ActionLink("Delete", "Delete", "Seasons", new { id = season.SeasonId }, new { @class = "btn btn-primary btn-sm white-button", onclick = "return DeleteSeason(" + season.SeasonId + ")" })
+                </td>
+              }
+
+              <td>@season.Start.ToString(PNACCompetitionsDbFirst.Models.Format.DATE_FORMAT_CS)</td>
+              <td>@season.End.ToString(PNACCompetitionsDbFirst.Models.Format.DATE_FORMAT_CS)</td>
+
+            </tr>
+          }
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

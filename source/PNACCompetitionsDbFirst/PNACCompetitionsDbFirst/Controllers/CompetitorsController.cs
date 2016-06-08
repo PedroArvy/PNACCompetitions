@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
+using static PNACCompetitionsDbFirst.Entities.Competition;
 
 namespace PNACCompetitionsDbFirst.Controllers
 {
@@ -36,11 +37,25 @@ namespace PNACCompetitionsDbFirst.Controllers
     #region *********************** Methods **************************
 
 
+    private void AssignErrors(Competitor competitor, CompetitorEdit model)
+    {
+      if (string.IsNullOrWhiteSpace(model.Email) && (!string.IsNullOrWhiteSpace(model.Password) || !string.IsNullOrWhiteSpace(model.ConfirmPassword)))
+        ModelState.AddModelError("Password", "You need to provide an email address to assign a password");
+
+      if (!string.IsNullOrWhiteSpace(competitor.AspNetUserId) && string.IsNullOrWhiteSpace(model.Email))
+        ModelState.AddModelError("Email", "You need to provide an email address");
+
+      if (!string.IsNullOrWhiteSpace(model.Password) && model.Password != model.ConfirmPassword)
+        ModelState.AddModelError("Password", "Password and confirm password do not match");
+    }
+
+
     private void AssignModel(Competitor competitor, CompetitorEdit model)
     {
       competitor.FirstName = model.FirstName;
       competitor.NickName = model.NickName;
       competitor.LastName = model.LastName;
+      competitor.Email = model.Email;
 
       if (competitor.AspNetUser != null)
         competitor.AspNetUser.Email = model.Email;
@@ -179,7 +194,9 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         if (competitor.AspNetUser != null && competitor.AspNetUser.Email != null)
           edit.Email = competitor.AspNetUser.Email;
-
+        else
+          edit.Email = competitor.Email;
+       
         edit.Admin = competitor.Admin;
         edit.CompetitorType = competitor.CompetitorType;
         edit.Gender = competitor.Gender;
@@ -204,19 +221,6 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    private void AssignErrors(Competitor competitor, CompetitorEdit model)
-    {
-      if (string.IsNullOrWhiteSpace(model.Email) && (!string.IsNullOrWhiteSpace(model.Password) || !string.IsNullOrWhiteSpace(model.ConfirmPassword)))
-        ModelState.AddModelError("Password", "You need to provide an email address to assign a password");
-
-      if (!string.IsNullOrWhiteSpace(competitor.AspNetUserId) && string.IsNullOrWhiteSpace(model.Email))
-        ModelState.AddModelError("Email", "You need to provide an email address");
-
-      if (!string.IsNullOrWhiteSpace(model.Password) && model.Password != model.ConfirmPassword)
-        ModelState.AddModelError("Password", "Password and confirm password do not match");
-    }
-
-
     [HttpPost]
     public async Task<ActionResult> Edit(CompetitorEdit model)
     {
@@ -229,9 +233,9 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         AssignModel(competitor, model);
 
-        AspNetUser member = db.AspNetUsers.SingleOrDefault(u => u.UserName == model.Email.Trim());
+        AspNetUser aspNetUser = db.AspNetUsers.SingleOrDefault(u => u.UserName == model.Email.Trim());
 
-        if(member == null)
+        if (aspNetUser == null)
         {
           var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
           var result = UserManager.CreateAsync(user, model.Password);
@@ -244,11 +248,14 @@ namespace PNACCompetitionsDbFirst.Controllers
           UserManager.AddPassword(user.Id, model.Password);
         }
 
-        competitor.AspNetUser.Email = model.Email;
-        competitor.AspNetUser.UserName = model.Email;
+        if(aspNetUser != null)
+        {
+          competitor.AspNetUser.Email = model.Email;
+          competitor.AspNetUser.UserName = model.Email;
+        }
 
         db.SaveChanges();
-        return RedirectToAction("Modified");
+        return RedirectToAction("Index");
       }
       else if (CanEdit(competitor) && !ModelState.IsValid)
         return View(model);
@@ -259,23 +266,12 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    private void AddNewMember(string email, string password)
-    {
-      UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
-
-      userManager.AddPassword(email, password);
-
-    }
-
-
     public ActionResult Index()
     {
       CompetitorListItem competitorListItem;
-      CompetitorIndex index = new CompetitorIndex();
+      CompetitorIndex model = new CompetitorIndex();
 
-      //index.MemberNames = MakeNames();
-
-      index.CompetitorListItems = new List<CompetitorListItem>();
+      model.CompetitorListItems = new List<CompetitorListItem>();
 
       IEnumerable<Competitor> competitors = null;
 
@@ -283,7 +279,6 @@ namespace PNACCompetitionsDbFirst.Controllers
         competitors = db.Competitors.OrderBy(c => c.LastName);
       else
         competitors = db.Competitors.Where(c => c.Hide == false).OrderBy(c => c.LastName);
-
 
       foreach (Competitor competitor in competitors)
       {
@@ -307,13 +302,33 @@ namespace PNACCompetitionsDbFirst.Controllers
         if (Competitor != null && !string.IsNullOrEmpty(Competitor.AspNetUserId) && Competitor.AspNetUserId == competitor.AspNetUserId)
           competitorListItem.IsLoggedIn = true;
 
-        index.CompetitorListItems.Add(competitorListItem);
+        model.CompetitorListItems.Add(competitorListItem);
       }
 
       if (Competitor != null)
-        index.CanCreate = Competitor.Admin;
+        model.CanCreate = Competitor.Admin;
 
-      return View(index);
+      model.MemberNames = MakeNames();
+
+      return View(model);
+    }
+
+
+
+    protected string MakeNames()
+    {
+      string name, names = "";
+
+      foreach (Competitor competitor in db.Competitors.OrderBy(c => c.LastName).ThenBy(c => c.FirstName))
+      {
+        if (names.Length != 0)
+          names += ",\n ";
+
+        name = competitor.FriendlyName().Replace("'", "\\'");
+        names += "{value:" + competitor.CompetitorId + ", label:'" + name + "'}";
+      }
+
+      return names;
     }
 
 
@@ -331,6 +346,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         edit.ShowAdmin = true;
         edit.ShowCompetitorType = true;
+        edit.CompetitorType = (int)COMPETITOR_TYPE.SENIOR;
       }
 
       return View(edit);
@@ -345,8 +361,14 @@ namespace PNACCompetitionsDbFirst.Controllers
       CompetitorEdit edit = new CompetitorEdit();
       Competitor competitor = new Competitor();
 
-      if (db.Competitors.Any(c => c.AspNetUser.Email.ToLower() == model.Email.ToLower()))
+      if (db.Competitors.Any(c => c.AspNetUser.Email.ToLower() == model.Email.ToLower() && model.Email.ToLower().Length > 0))
         ModelState.AddModelError("Email", "There is already a user with this email address");
+
+      if (db.Competitors.Any(c => c.FirstName.ToLower() == model.FirstName.ToLower() && c.LastName.ToLower() == model.LastName.ToLower()))
+      {
+        ModelState.AddModelError(nameof(model.FirstName), "There is already a user with this name");
+        ModelState.AddModelError(nameof(model.LastName), "There is already a user with this name");
+      }
 
       if (Competitor.Admin && ModelState.IsValid)
       {
@@ -358,9 +380,10 @@ namespace PNACCompetitionsDbFirst.Controllers
           var result = await UserManager.CreateAsync(user, model.Password);
         }
 
-        AspNetUser aspNetUser = db.AspNetUsers.Single(a => a.Email == model.Email);
-        competitor.AspNetUser = aspNetUser;
+        AspNetUser aspNetUser = db.AspNetUsers.SingleOrDefault(a => a.Email == model.Email);
 
+        if(aspNetUser != null)
+          competitor.AspNetUser = aspNetUser;
 
         competitor.ClubId = db.Clubs.First().ClubId;
 
