@@ -361,8 +361,6 @@
     <Content Include="Views\Competitions\Edit-knockout.cshtml" />
     <Content Include="Views\Competitions\EditEntries.cshtml" />
     <Content Include="Views\Competitions\New.cshtml" />
-    <Content Include="Views\Results\New.cshtml" />
-    <Content Include="Views\Results\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CatchEdit.cshtml" />
     <Content Include="Views\Catches\Edit.cshtml" />
     <Content Include="Views\Catches\New.cshtml" />
