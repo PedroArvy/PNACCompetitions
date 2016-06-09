@@ -38,6 +38,32 @@ namespace PNACCompetitionsDbFirst.Controllers
     #region *********************** Methods **************************
 
 
+    [Authorize]
+    public JsonResult Delete(int id)
+    {
+      bool success = false;
+      Catch @catch = db.Catches.SingleOrDefault(s => s.CatchId == id);
+
+      if (IsAdmin)
+      {
+        if(@catch != null)
+        {
+          db.Catches.Remove(@catch);
+          db.SaveChanges();
+        }
+
+        success = true;
+      }
+      else
+      {
+        throw new UnauthorizedAccessException();
+      }
+
+      return Json(new { success = success.ToString().ToLower() }, JsonRequestBehavior.AllowGet);
+    }
+
+
+
     public ActionResult Edit(int id)
     {
       Catch @catch = db.Catches.Single(c => c.CatchId == id);

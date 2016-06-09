@@ -38,20 +38,21 @@
 
 
     function CatchReleaseFields() {
+
       if ($('#CatchAndRelease').is(':checked'))
         ShowCatchReleaseFields();
       else if ($('#CatchAndKill').is(':checked'))
         CatchAndKillFields();
+
     }
 
 
     function ShowCatchReleaseFields() {
 
-
       $('.CatchAndKill').hide();
       $('.CatchAndRelease').show();
-
       $('#LengthDiv').show();
+
     }
 
 
@@ -117,7 +118,7 @@
   </div>
   <div class="col-md-10">
     @Html.DropDownListFor(m => m.FishId, Model.Fish, "Please select")
-    <div>@Html.ValidationMessageFor(m => m.Fish)</div>
+    <div>@Html.ValidationMessageFor(m => m.FishId)</div>
   </div>
 </div>
 

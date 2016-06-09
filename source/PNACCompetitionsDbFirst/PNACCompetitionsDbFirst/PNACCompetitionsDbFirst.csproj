@@ -370,6 +370,7 @@
     <Content Include="Views\Seasons\Index.cshtml" />
     <Content Include="Views\Seasons\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SeasonEdit.cshtml" />
+    <Content Include="Views\Seasons\New.cshtml" />
     <None Include="Web.Debug-Venom.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

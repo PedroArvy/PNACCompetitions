@@ -6,9 +6,36 @@
   ViewBag.Title = "Seasons";
 }
 
+
 <script>
 
+  function DeleteSeason(id) {
+
+    if (confirm('Are you sure you want to delete this season?')) {
+
+      $.ajax("/Seasons/Delete?id=" + id)
+
+        .done(function (msg) {
+
+          alert(msg.success);
+
+          if (msg.success == 'true') {
+            $('#row-' + id).hide('slow');
+          }
+
+        })
+        .fail(function () {
+          alert("DeleteSeason error");
+        })
+
+    }
+
+    return false;
+  }
+
 </script>
+
+
 
 <div class="row">
   <div class="col-md-4">
@@ -20,6 +47,8 @@
 <div class="row">
   <div class="col-md-8">
     <div class="table-responsive">
+
+      <a href="/Seasons/New" class="btn btn-primary btn-sm">New</a>
 
       <table class="table table-striped">
         <thead>
@@ -40,7 +69,7 @@
 
           @foreach (Season season in Model.Seasons.OrderByDescending(s => s.End))
           {
-            <tr>
+            <tr id="row-@season.SeasonId">
 
               @if (Model.CanEdit)
               {

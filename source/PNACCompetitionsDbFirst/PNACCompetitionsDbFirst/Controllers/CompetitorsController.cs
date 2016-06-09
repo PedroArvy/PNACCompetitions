@@ -154,7 +154,6 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-
     [Authorize]
     public JsonResult Delete(int id)
     {
@@ -176,8 +175,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         success = false;
       }
 
-
-      return Json(new { success = success.ToString().ToString().ToLower() }, JsonRequestBehavior.AllowGet);
+      return Json(new { success = success.ToString().ToLower() }, JsonRequestBehavior.AllowGet);
     }
 
 
