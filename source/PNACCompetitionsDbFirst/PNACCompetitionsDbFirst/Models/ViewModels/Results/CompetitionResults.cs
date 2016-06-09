@@ -7,11 +7,11 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels.Results
 {
   public class CompetitionResults
   {
+    public List<CompetitorResult> Catches { get; set; }
 
     public int CompetitonId { get; set; }
 
-    public List<CompetitorResult> Catches { get; set; }
-
+    public bool ShowDay { get; set; }
   }
 }
 

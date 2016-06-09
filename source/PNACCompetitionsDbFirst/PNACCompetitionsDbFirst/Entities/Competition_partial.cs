@@ -77,7 +77,7 @@ namespace PNACCompetitionsDbFirst.Entities
     {
       List<Catch> catches = new List<Catch>();
 
-      foreach(Entry entry in Entries)
+      foreach (Entry entry in Entries)
       {
         catches.AddRange(entry.Catches);
       }
@@ -90,13 +90,41 @@ namespace PNACCompetitionsDbFirst.Entities
     {
       List<Competitor> competitors = new List<Competitor>();
 
-      foreach(Entry entry in Entries.Where(e =>e.Competitor.CompetitorType != (int)PNACCompetitionsDbFirst.Entities.Competitor.COMPETITOR_TYPE.NON_MEMBER))
+      foreach (Entry entry in Entries.Where(e => e.Competitor.CompetitorType != (int)PNACCompetitionsDbFirst.Entities.Competitor.COMPETITOR_TYPE.NON_MEMBER))
       {
         if (!competitors.Contains(entry.Competitor))
           competitors.Add(entry.Competitor);
       }
 
       return competitors;
+    }
+
+
+    public DateTime EndDateTime()
+    {
+      DateTime end = DateTime.Now;
+
+      if (End != null)
+      {
+        end = (DateTime)End;
+      }
+      else
+      {
+        end = Start.AddDays(1);
+        end = new DateTime(end.Year, end.Month, end.Day);
+      }
+
+      return end;
+    }
+
+
+    /// <summary>
+    /// True if the competition is finished
+    /// </summary>
+    /// <returns></returns>
+    public bool Finished()
+    {
+      return (DateTime.Now - EndDateTime()).TotalSeconds > 0;
     }
 
 
@@ -107,11 +135,38 @@ namespace PNACCompetitionsDbFirst.Entities
 
       foreach (Catch @catch in Catches().Where(c => c.Length != 0))
       {
-        result = new LengthResult() {  Competition = this, Fish = @catch.Fish, CompetitorId = @catch.Entry.CompetitorId, Name = @catch.Entry.Competitor.FriendlyName(), Length = @catch.Length };
+        result = new LengthResult() { Competition = this, Fish = @catch.Fish, CompetitorId = @catch.Entry.CompetitorId, Name = @catch.Entry.Competitor.FriendlyName(), Length = @catch.Length };
         results.Add(result);
       }
 
       return results;
+    }
+
+
+    public DateTime NextCatchDate()
+    {
+      DateTime theDate = DateTime.Now;
+
+      if(Finished())
+      {
+        if(Catches().Count > 0)
+        {
+          theDate = Catches().OrderByDescending(c => c.Date).First().Date;
+        }
+        else
+        {
+          theDate = Start;
+        }
+      }
+      else
+      {
+        if (Catches().Count > 0)
+        {
+          theDate = Catches().OrderByDescending(c => c.Date).First().Date;
+        }
+      }
+
+      return theDate;
     }
 
 

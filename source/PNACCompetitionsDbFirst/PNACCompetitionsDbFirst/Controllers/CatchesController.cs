@@ -67,25 +67,37 @@ namespace PNACCompetitionsDbFirst.Controllers
     public ActionResult Edit(int id)
     {
       Catch @catch = db.Catches.Single(c => c.CatchId == id);
-      CatchEdit result = new CatchEdit();
+      CatchEdit model = new CatchEdit();
 
       if (@catch.Entry.Competition.CanAddEntries(Competitor))
       {
-        Populate(result, @catch.Entry.Competition);
+        Populate(model, @catch.Entry.Competition);
 
-        result.CatchId = @catch.CatchId;
-        result.EntrantId = @catch.EntryId;
-        result.FishId = @catch.FishId;
-        result.Length = @catch.Length;
-        result.Quantity = @catch.Number;
-        result.Weight = @catch.Weight;
-        result.CatchAndRelease = @catch.CatchAndRelease == true ? "Yes" : "No";
-        result.Cleaned = @catch.Cleaned;
+        model.CatchId = @catch.CatchId;
+        model.EntrantId = @catch.EntryId;
+        model.FishId = @catch.FishId;
+        model.Length = @catch.Length;
+        model.Quantity = @catch.Number;
+        model.Weight = @catch.Weight;
+        model.CatchAndRelease = @catch.CatchAndRelease == true ? "Yes" : "No";
+        model.Cleaned = @catch.Cleaned;
+        model.Date = @catch.Date.ToString(PNACCompetitionsDbFirst.Models.Format.DATE_FORMAT_CS);
+
+        if(model.Quantity > 1)
+        {
+          model.Heaviest = @catch.Heaviest;
+          model.Longest = @catch.Longest;
+        }
+        else
+        {
+          model.Heaviest = 0;
+          model.Longest = 0;
+        }
       }
       else
         throw new UnauthorizedAccessException("New");
 
-      return View(result);
+      return View(model);
     }
 
 
@@ -135,6 +147,13 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         Populate(@catch, competition);
         @catch.Cleaned = true;
+        @catch.Quantity = 1;
+
+        if(competition.Catches().Count > 0)
+          @catch.FishId = competition.Catches().OrderByDescending(c => c.Date).First().FishId;
+
+        DateTime theDate = competition.NextCatchDate();
+        @catch.Date = theDate.ToString(PNACCompetitionsDbFirst.Models.Format.DATE_FORMAT_CS);
       }
       else
         throw new UnauthorizedAccessException("New");
@@ -162,7 +181,7 @@ namespace PNACCompetitionsDbFirst.Controllers
           db.SaveChanges();
 
           if (catchEdit.GoToNew)
-            return RedirectToAction("New", "Catches", new { id = @catch.Entry.CompetitionId });
+            return RedirectToAction("New", "Catches", new { id = competition.CompetitionId });
           else
             return RedirectToAction("Edit", "Competitions", new { id = competition.CompetitionId, tabid = (int)CompetitionEdit.TABS.RESULTS });
         }
@@ -210,7 +229,7 @@ namespace PNACCompetitionsDbFirst.Controllers
     {
       @catch.EntryId = catchEdit.EntrantId;
       @catch.FishId = catchEdit.FishId;
-      @catch.Date = DateTime.Now;
+      @catch.Date = Convert.ToDateTime(catchEdit.Date);
       @catch.CatchAndRelease = catchEdit.CatchAndRelease.ToLower() == "yes" ? true : false;
       @catch.Cleaned = catchEdit.Cleaned;
 
@@ -218,15 +237,29 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         @catch.Number = 1;
         @catch.Weight = 0;
-        @catch.Length = catchEdit.Length;
+        @catch.Length = (int)catchEdit.Length;
       }
       else
       {
         @catch.Number = (int)catchEdit.Quantity;
         @catch.Weight = catchEdit.Weight;
 
-        if (@catch.Number == 1)
-          @catch.Length = catchEdit.Length;
+        if (@catch.Number == 1 && catchEdit.Length != null)
+          @catch.Length = (int)catchEdit.Length;
+      }
+
+      if(!@catch.CatchAndRelease && @catch.Number <= 1)
+      {
+        @catch.Heaviest = 0;
+        @catch.Longest = 0;
+      }
+      else
+      {
+        if(catchEdit.Heaviest != null)
+          @catch.Heaviest = (double)catchEdit.Heaviest;
+
+        if(catchEdit.Longest != null)
+          @catch.Longest = (int)catchEdit.Longest;
       }
     }
 
@@ -248,19 +281,32 @@ namespace PNACCompetitionsDbFirst.Controllers
     private void Validate(CatchEdit catchEdit)
     {
       bool catchAndRelease = catchEdit.CatchAndRelease.ToLower() == "yes" ? true : false;
+      Fish fish = db.Fish.Single(f => f.FishId == catchEdit.FishId);
 
       if (catchAndRelease)
       {
         if (catchEdit.Length <= 0)
-          ModelState.AddModelError("length", "You need to enter a length");
+          ModelState.AddModelError("Length", "You need to enter a length");
+
+        if (catchEdit.Length <= fish.Minimum)
+          ModelState.AddModelError("Length", "The minimum size for " + fish.Name + " is " + fish.Minimum + "cm");
       }
       else
       {
         if (catchEdit.Quantity <= 0)
-          ModelState.AddModelError("quantity", "You need to enter a quantity");
+          ModelState.AddModelError("Quantity", "You need to enter a quantity");
 
-        if (catchEdit.Weight <= 0.1 || catchEdit.Weight > 200)
-          ModelState.AddModelError("length", "You need to enter a weight between 0.1kg and 200kg");
+        if (catchEdit.Weight == 0 && (catchEdit.Length == null || catchEdit.Length == 0))
+          ModelState.AddModelError("Weight", "You need to enter a weight or a length");
+
+        if (catchEdit.Weight != 0 && (catchEdit.Weight <= 0.1 || catchEdit.Weight > 200))
+          ModelState.AddModelError("Weight", "You need to enter a weight between 0.1kg and 200kg");
+
+        if (catchEdit.Quantity > 1 && catchEdit.Heaviest > catchEdit.Weight)
+          ModelState.AddModelError("Heaviest", "The heaviest fish cannot be greater than the total weight!");
+
+        if (catchEdit.Length != null && (int)catchEdit.Length <= fish.Minimum)
+          ModelState.AddModelError("Length", "The minimum size for " + fish.Name + " is " + fish.Minimum + "cm");
       }
     }
 

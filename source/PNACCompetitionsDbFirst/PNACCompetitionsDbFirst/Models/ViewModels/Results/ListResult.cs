@@ -22,6 +22,8 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels.Results
 
     public int CatchId { get; set; }
 
+    public DateTime Date { get; set; }
+
     public int EntryId { get; set; }
     public string CompetitorName { get; set; }
 

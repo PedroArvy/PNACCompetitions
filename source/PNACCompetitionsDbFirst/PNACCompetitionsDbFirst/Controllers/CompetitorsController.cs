@@ -344,6 +344,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         edit.ShowAdmin = true;
         edit.ShowCompetitorType = true;
+        edit.Gender = (int)Competitor.GENDER.MALE;
         edit.CompetitorType = (int)COMPETITOR_TYPE.SENIOR;
       }
 
