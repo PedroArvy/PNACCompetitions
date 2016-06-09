@@ -86,6 +86,32 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
+    private List<CompetitorCatch> Catches(Competition competition)
+    {
+      List<CompetitorCatch> results = new List<CompetitorCatch>();
+
+      foreach (Entry entry in competition.Entries)
+      {
+        results.AddRange(Catches(entry));
+      }
+
+      return results;
+    }
+
+
+    private List<CompetitorCatch> Catches(Entry entry)
+    {
+      List<CompetitorCatch> results = new List<CompetitorCatch>();
+
+      foreach (Catch @catch in entry.Catches)
+      {
+        results.Add(new CompetitorCatch() { CatchAndRelease = @catch.CatchAndRelease, Date = @catch.Date, CatchId = @catch.CatchId, CompetitorName = entry.Competitor.FriendlyName(), EntryId = entry.EntryId, FishName = @catch.Fish.Name, Length = @catch.Length, Number = @catch.Number, Weight = (float)@catch.Weight });
+      }
+
+      return results;
+    }
+
+
     private List<CompetitorEntry> CompetitionEntries(Competition competition)
     {
       CompetitorEntry entrant;
@@ -104,11 +130,11 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    private CompetitionResults CompetitionResults(Competition competition)
+    private CompetitionCatches CompetitionResults(Competition competition)
     {
-      CompetitionResults results = new CompetitionResults();
+      CompetitionCatches results = new CompetitionCatches();
       results.CompetitonId = competition.CompetitionId;
-      results.Catches = Results(competition);
+      results.Catches = Catches(competition);
       results.ShowDay = competition.DayType == "m";
 
       return results;
@@ -331,9 +357,7 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    [HttpPost]
-    [AllowAnonymous]
-    [ValidateAntiForgeryToken]
+    [Authorize, HttpPost, ValidateAntiForgeryToken]
     public ActionResult New(CompetitionEdit model)
     {
       Competition competition = new Competition();
@@ -360,33 +384,13 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    private List<CompetitorResult> Results(Competition competition)
+    public ActionResult Results(int id)
     {
-      List<CompetitorResult> results = new List<CompetitorResult>();
-
-      foreach (Entry entry in competition.Entries)
-      {
-        results.AddRange(Results(entry));
-      }
-
-      return results;
+      return View();
     }
 
 
-    private List<CompetitorResult> Results(Entry entry)
-    {
-      List<CompetitorResult> results = new List<CompetitorResult>();
-
-      foreach (Catch @catch in entry.Catches)
-      {
-        results.Add(new CompetitorResult() { CatchAndRelease = @catch.CatchAndRelease, Date = @catch.Date, CatchId = @catch.CatchId, CompetitorName = entry.Competitor.FriendlyName(), EntryId = entry.EntryId, FishName = @catch.Fish.Name, Length = @catch.Length, Number = @catch.Number, Weight = (float)@catch.Weight });
-      }
-
-      return results;
-    }
-
-
-    [HttpPost]
+    [Authorize, HttpPost]
     public JsonResult SaveEntries(CompetitionEntries model)
     {
       if (CanEditCompetition(model.CompetitionId))
@@ -409,9 +413,6 @@ namespace PNACCompetitionsDbFirst.Controllers
           }
         }
         db.SaveChanges();
-
-
-
       }
       else
         throw new UnauthorizedAccessException("Entries");

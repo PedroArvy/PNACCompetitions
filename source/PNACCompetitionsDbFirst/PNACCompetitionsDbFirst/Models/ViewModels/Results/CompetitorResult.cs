@@ -6,7 +6,7 @@ using System.Web;
 
 namespace PNACCompetitionsDbFirst.Models.ViewModels.Results
 {
-  public class CompetitorResult
+  public class CompetitorCatch
   {
     #region *********************** Constants ************************
     #endregion

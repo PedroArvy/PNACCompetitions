@@ -74,6 +74,7 @@
                   {
                     @Html.ActionLink("Edit", "Edit", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm white-button" })
                     @Html.ActionLink("Delete", "Delete", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm white-button", onclick = "return DeleteCompetition(" + competition.CompetitionId + ")" })
+                    @Html.ActionLink("Results", "Results", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm white-button" })
                   }
                 </td>
               }

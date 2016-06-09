@@ -31,7 +31,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     public List<CompetitorEntry> CompetitionEntries { get; set; }
 
-    public CompetitionResults CompetitionResults { get; set; }
+    public CompetitionCatches CompetitionResults { get; set; }
 
 
     public int CompetitionId { get; set; }

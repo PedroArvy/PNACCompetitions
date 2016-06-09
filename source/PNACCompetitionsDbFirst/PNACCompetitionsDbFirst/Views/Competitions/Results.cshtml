@@ -1,0 +1,64 @@
+﻿@using PNACCompetitionsDbFirst.Models.ViewModels
+@using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
+
+@model CompetitionEdit
+
+@{
+  ViewBag.Title = "Results";
+}
+
+
+<style>
+  body {
+    display: none;
+  }
+
+  .table-responsive {
+    border: none;
+    outline: none;
+  }
+
+  @@media (max-width: 991px) {
+    .entries-row {
+      padding: 0;
+    }
+
+    .body-content {
+      padding: 2px;
+    }
+
+    .btn {
+      margin-bottom: 10px;
+    }
+  }
+</style>
+
+
+<div class="row">
+  <div class="col-md-8">
+    <h2>Results</h2>
+  </div>
+</div>
+
+<script>
+
+
+</script>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#details-tab">Length</a></li>
+    <li><a href="#competitors-tab">Weight</a></li>
+    <li><a href="#competitors-tab">Fish</a></li>
+  </ul>
+
+
+  @Html.Partial("/Views/Competitions/LengthResults.cshtml", Model.CompetitionResults)
+  @Html.Partial("/Views/Competitions/WeightResults.cshtml", Model.CompetitionResults)
+
+</div>
+
+@section Scripts {
+  @Scripts.Render("~/bundles/jqueryval")
+}
+

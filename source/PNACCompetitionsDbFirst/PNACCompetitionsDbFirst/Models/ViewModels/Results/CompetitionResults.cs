@@ -5,9 +5,9 @@ using System.Web;
 
 namespace PNACCompetitionsDbFirst.Models.ViewModels.Results
 {
-  public class CompetitionResults
+  public class CompetitionCatches
   {
-    public List<CompetitorResult> Catches { get; set; }
+    public List<CompetitorCatch> Catches { get; set; }
 
     public int CompetitonId { get; set; }
 
