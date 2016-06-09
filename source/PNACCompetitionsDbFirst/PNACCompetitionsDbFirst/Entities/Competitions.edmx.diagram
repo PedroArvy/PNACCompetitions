@@ -20,7 +20,7 @@
         <AssociationConnector Association="PNACCompetitionsModel.FK_Competitions_Environments" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Entries_dbo_Competitions_CompetitionId" />
         <AssociationConnector Association="PNACCompetitionsModel.FishEnvironments" />
-        <EntityTypeShape EntityType="PNACCompetitionsModel.Catch" Width="1.5" PointX="12.875" PointY="5.125" />
+        <EntityTypeShape EntityType="PNACCompetitionsModel.Catch" Width="1.5" PointX="12.875" PointY="4.875" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_Catches_Fish" />
         <AssociationConnector Association="PNACCompetitionsModel.FK_dbo_Catches_dbo_Entries_EntryId" />
         </Diagram>

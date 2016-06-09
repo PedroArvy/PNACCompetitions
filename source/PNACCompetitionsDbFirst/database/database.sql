@@ -1,7 +1,81 @@
-
+USE [master]
+GO
+/****** Object:  Database [PNACCompetitions]    Script Date: 9/06/2016 1:44:33 PM ******/
+CREATE DATABASE [PNACCompetitions]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'PNACCompetitions', FILENAME = N'c:\Program Files\Microsoft SQL Server\MSSQL11.SQLEXPRESS\MSSQL\DATA\PNACCompetitions.mdf' , SIZE = 4160KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'PNACCompetitions_log', FILENAME = N'c:\Program Files\Microsoft SQL Server\MSSQL11.SQLEXPRESS\MSSQL\DATA\PNACCompetitions_log.ldf' , SIZE = 1040KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+ALTER DATABASE [PNACCompetitions] SET COMPATIBILITY_LEVEL = 110
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [PNACCompetitions].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [PNACCompetitions] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET AUTO_CLOSE ON 
+GO
+ALTER DATABASE [PNACCompetitions] SET AUTO_CREATE_STATISTICS ON 
+GO
+ALTER DATABASE [PNACCompetitions] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [PNACCompetitions] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [PNACCompetitions] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [PNACCompetitions] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [PNACCompetitions] SET READ_COMMITTED_SNAPSHOT ON 
+GO
+ALTER DATABASE [PNACCompetitions] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [PNACCompetitions] SET  MULTI_USER 
+GO
+ALTER DATABASE [PNACCompetitions] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [PNACCompetitions] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [PNACCompetitions] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [PNACCompetitions] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
 USE [PNACCompetitions]
 GO
-/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -16,7 +90,7 @@ CREATE TABLE [dbo].[AspNetRoles](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -33,7 +107,7 @@ CREATE TABLE [dbo].[AspNetUserClaims](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -51,7 +125,7 @@ CREATE TABLE [dbo].[AspNetUserLogins](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -67,7 +141,7 @@ CREATE TABLE [dbo].[AspNetUserRoles](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -92,7 +166,7 @@ CREATE TABLE [dbo].[AspNetUsers](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Catches]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[Catches]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -106,6 +180,9 @@ CREATE TABLE [dbo].[Catches](
 	[Number] [int] NOT NULL,
 	[Weight] [float] NOT NULL,
 	[Length] [int] NOT NULL,
+	[Heaviest] [float] NOT NULL,
+	[Longest] [int] NOT NULL,
+	[Cleaned] [bit] NOT NULL,
  CONSTRAINT [PK_dbo.Catches] PRIMARY KEY CLUSTERED 
 (
 	[CatchId] ASC
@@ -113,7 +190,7 @@ CREATE TABLE [dbo].[Catches](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Clubs]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[Clubs]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -132,7 +209,7 @@ CREATE TABLE [dbo].[Clubs](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Competitions]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[Competitions]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -159,7 +236,7 @@ CREATE TABLE [dbo].[Competitions](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Competitors]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[Competitors]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -190,7 +267,7 @@ CREATE TABLE [dbo].[Competitors](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Entries]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[Entries]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -208,7 +285,7 @@ CREATE TABLE [dbo].[Entries](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Environments]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[Environments]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -228,7 +305,7 @@ CREATE TABLE [dbo].[Environments](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Excel]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[Excel]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -244,7 +321,7 @@ CREATE TABLE [dbo].[Excel](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Fish]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[Fish]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -266,7 +343,7 @@ CREATE TABLE [dbo].[Fish](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[FishEnvironments]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[FishEnvironments]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -282,7 +359,7 @@ CREATE TABLE [dbo].[FishEnvironments](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Seasons]    Script Date: 7/06/2016 11:52:35 AM ******/
+/****** Object:  Table [dbo].[Seasons]    Script Date: 9/06/2016 1:44:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -313,7 +390,7 @@ GO
 SET IDENTITY_INSERT [dbo].[Competitions] ON 
 
 GO
-INSERT [dbo].[Competitions] ([CompetitionId], [ClubId], [EnvironmentId], [End], [Name], [Start], [Venue], [WeighInTime], [WeighInVenue], [DayType]) VALUES (21, 24, 3, CAST(0x0000A5CF011826C0 AS DateTime), N'Anazac weekend', CAST(0x0000A5D20062E080 AS DateTime), N'Lake Fyans1', CAST(0x0000A5D40107AC00 AS DateTime), N'At the shed', N's')
+INSERT [dbo].[Competitions] ([CompetitionId], [ClubId], [EnvironmentId], [End], [Name], [Start], [Venue], [WeighInTime], [WeighInVenue], [DayType]) VALUES (21, 24, 3, CAST(0x0000A5CF011826C0 AS DateTime), N'Anazac weekend', CAST(0x0000A5D20062E080 AS DateTime), N'Lake Fyans', CAST(0x0000A5D40107AC00 AS DateTime), N'At the shed', N's')
 GO
 SET IDENTITY_INSERT [dbo].[Competitions] OFF
 GO
@@ -478,7 +555,7 @@ INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId]
 GO
 INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (624, 3, 1, 24, N'Rod', N'Mason', N'', NULL, 0, 0, N'Glenroy', N'', N'0412 112 024', N'rmason@cashtronics.com.au')
 GO
-INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (625, 3, 1, 24, N'Gordon', N'McDonald', N'', NULL, 0, 0, N'Pascoe Vale', N'', N'0414 713 693', N'mactrac@hotmail.com')
+INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (625, 3, 1, 24, N'Gordon', N'McDonald', N'Flash', NULL, 0, 0, N'Pascoe Vale', NULL, N'0414 713 693', N'mactrac@hotmail.com')
 GO
 INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (626, 3, 1, 24, N'Heath', N'McKinna', N'', NULL, 0, 0, N'Craigieburn', N'', N'0450 891 241', N'heath_mckinna@yahoo.com ')
 GO
@@ -646,14 +723,34 @@ INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId]
 GO
 INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (725, 3, 2, 24, N'Natalie', N'Wus', N'', NULL, 0, 0, N'Devon North', N'', N'', N'')
 GO
+INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (726, 1, 1, 24, N'Craig', N'Scott', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (727, 1, 1, 24, N'Anthony', N'Francis', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (728, 1, 1, 24, N'C', N'Scott', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL)
+GO
 SET IDENTITY_INSERT [dbo].[Competitors] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Entries] ON 
 
 GO
-INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (99, 692, 21, 0, 0)
+INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (103, 576, 21, 0, 0)
 GO
-INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (102, 548, 21, 0, 0)
+INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (104, 664, 21, 0, 0)
+GO
+INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (105, 551, 21, 0, 0)
+GO
+INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (106, 625, 21, 0, 0)
+GO
+INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (107, 557, 21, 0, 0)
+GO
+INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (108, 617, 21, 0, 0)
+GO
+INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (109, 619, 21, 0, 0)
+GO
+INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (110, 726, 21, 0, 0)
+GO
+INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (111, 727, 21, 0, 0)
 GO
 SET IDENTITY_INSERT [dbo].[Entries] OFF
 GO

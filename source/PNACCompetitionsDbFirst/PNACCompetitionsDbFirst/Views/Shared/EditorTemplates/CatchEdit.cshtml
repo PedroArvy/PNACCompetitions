@@ -1,6 +1,13 @@
 ﻿@using PNACCompetitionsDbFirst.Models.ViewModels
 @model CatchEdit
 
+<link rel="stylesheet" href="/Content/pickadate/default.css" />
+<link rel="stylesheet" href="/Content/pickadate/default.date.css" />
+<link rel="stylesheet" href="/Content/pickadate/default.time.css" />
+<script src="/scripts/pickadate/picker.js"></script>
+<script src="/scripts/pickadate/picker.date.js"></script>
+<script src="/scripts/pickadate/picker.time.js"></script>
+<script src="/scripts/pickadate/legacy.js"></script>
 
 <script>
 
@@ -8,6 +15,11 @@
 
     $('.CatchAndKill, .CatchAndRelease').hide();
     CatchReleaseFields();
+
+    @if(Model.Quantity > 1)
+    {
+      @:$('.MoreThanOne').show();
+        }
 
     $('.integer').focus(function () {
       if ($(this).val() == '0')
@@ -35,6 +47,15 @@
       ShowHideLength();
     });
 
+
+    var $input = $('.datepicker').pickadate({
+      format: '@PNACCompetitionsDbFirst.Models.Format.DATE_FORMAT_JS',
+      formatSubmit: '@PNACCompetitionsDbFirst.Models.Format.DATE_FORMAT_JS',
+      closeOnSelect: false,
+      closeOnClear: false,
+    })
+
+    var picker = $input.pickadate('picker');
 
 
     function CatchReleaseFields() {
@@ -66,10 +87,18 @@
 
 
     function ShowHideLength() {
-      if ($('#Quantity').val().length == 0 || $('#Quantity').val() == '1')
+      if ($('#Quantity').val().length == 0 || $('#Quantity').val() == '1') {
         $('#LengthDiv').show();
-      else
+        $('.MoreThanOne').hide();
+        $('#weight-label').html('Weight');
+      }
+      else {
         $('#LengthDiv').hide();
+        $('.MoreThanOne').show();
+        $('#weight-label').html('Total Weight of ' + $('#Quantity').val() + ' fish');
+        $('#longest-label').html('Longest of ' + $('#Quantity').val() + ' fish (if known)');
+        $('#heaviest-label').html('Heaviest of ' + $('#Quantity').val() + ' fish (if known)');
+      }
     }
 
 
@@ -85,6 +114,16 @@
   <div class="col-md-10">
     @Html.DropDownListFor(m => m.EntrantId, Model.Entrants, "Please select")
     <div>@Html.ValidationMessageFor(m => m.EntrantId)</div>
+  </div>
+</div>
+
+
+<div class="form-group">
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.Date, new { @class = "pnac-label", id = "weight-label" })
+  </div>
+  <div class="col-md-10">
+    @Html.TextBoxFor(m => m.Date, new { @class = "datepicker" }) 
   </div>
 </div>
 
@@ -138,19 +177,40 @@
     @Html.LabelFor(m => m.Length, new { @class = "pnac-label" })
   </div>
   <div class="col-md-10">
-    @Html.DropDownListFor(m => m.Length, Model.Lengths, "Please select")
+    @Html.DropDownListFor(m => m.Length, Model.Lengths, "Please select") cm
   </div>
 </div>
 
 
 <div class="form-group CatchAndKill">
   <div class="col-md-10">
-    @Html.LabelFor(m => m.Weight, new { @class = "pnac-label" })
+    @Html.LabelFor(m => m.Weight, new { @class = "pnac-label", id="weight-label" })
   </div>
   <div class="col-md-10">
-    @Html.TextBoxFor(m => m.Weight, new { @class = "integer"})
+    @Html.TextBoxFor(m => m.Weight, new { @class = "integer"}) kg
   </div>
 </div>
+
+
+<div class="form-group MoreThanOne">
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.Heaviest, new { @class = "pnac-label", id = "heaviest-label" })
+  </div>
+  <div class="col-md-10">
+    @Html.TextBoxFor(m => m.Heaviest, new { @class = "integer" }) kg
+  </div>
+</div>
+
+
+<div class="form-group MoreThanOne">
+  <div class="col-md-10">
+    @Html.LabelFor(m => m.Longest, new { @class = "pnac-label", id = "longest-label" })
+  </div>
+  <div class="col-md-10">
+    @Html.DropDownListFor(m => m.Longest, Model.Lengths, "Please select") cm
+  </div>
+</div>
+
 
 @Html.HiddenFor(m => m.CompetitionId)
 @Html.HiddenFor(m => m.CatchId)

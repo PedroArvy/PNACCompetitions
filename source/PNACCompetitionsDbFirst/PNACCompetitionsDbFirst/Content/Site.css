@@ -137,3 +137,8 @@ table .ui-widget-content a.white-button{
 .ui-widget-content a.white-button {
     color: #ffffff;
 }
+
+.MoreThanOne
+{
+  display:none;
+}
