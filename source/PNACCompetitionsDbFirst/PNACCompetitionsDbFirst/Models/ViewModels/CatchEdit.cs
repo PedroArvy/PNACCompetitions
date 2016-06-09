@@ -49,13 +49,13 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public List<SelectListItem> Lengths { get; set; }
 
     [Display(Name = "Longest")]
-    public int Longest { get; set; }
+    public int ? Longest { get; set; }
 
 
     public bool GoToNew { get; set; }
 
     [Display(Name = "Heaviest")]
-    public double Heaviest { get; set; }
+    public double ? Heaviest { get; set; }
 
 
     [Display(Name = "Quantity")]

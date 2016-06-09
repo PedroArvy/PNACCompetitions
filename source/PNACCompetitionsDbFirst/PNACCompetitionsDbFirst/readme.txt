@@ -5,7 +5,7 @@ Leader board - 1.5
 Competitors - 1, 1.75, 0.75, 2, 1
 Competitions - 3, 1, 1.5, 0.75, 0.75
 Fish - 1
-Catches - 2, 2.5, 2, 1.5
+Catches - 2, 2.5, 2, 1.5, 1
 Seasons - 2
 
 

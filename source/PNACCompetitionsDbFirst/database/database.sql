@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [PNACCompetitions]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Database [PNACCompetitions]    Script Date: 9/06/2016 5:38:46 PM ******/
 CREATE DATABASE [PNACCompetitions]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -75,7 +75,7 @@ ALTER DATABASE [PNACCompetitions] SET TARGET_RECOVERY_TIME = 0 SECONDS
 GO
 USE [PNACCompetitions]
 GO
-/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -90,7 +90,7 @@ CREATE TABLE [dbo].[AspNetRoles](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -107,7 +107,7 @@ CREATE TABLE [dbo].[AspNetUserClaims](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -125,7 +125,7 @@ CREATE TABLE [dbo].[AspNetUserLogins](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -141,7 +141,7 @@ CREATE TABLE [dbo].[AspNetUserRoles](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -166,7 +166,7 @@ CREATE TABLE [dbo].[AspNetUsers](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Catches]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[Catches]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -190,7 +190,7 @@ CREATE TABLE [dbo].[Catches](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Clubs]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[Clubs]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -209,7 +209,7 @@ CREATE TABLE [dbo].[Clubs](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Competitions]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[Competitions]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -236,7 +236,7 @@ CREATE TABLE [dbo].[Competitions](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Competitors]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[Competitors]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -267,7 +267,7 @@ CREATE TABLE [dbo].[Competitors](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Entries]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[Entries]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -285,7 +285,7 @@ CREATE TABLE [dbo].[Entries](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Environments]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[Environments]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -305,7 +305,7 @@ CREATE TABLE [dbo].[Environments](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Excel]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[Excel]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -321,7 +321,7 @@ CREATE TABLE [dbo].[Excel](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Fish]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[Fish]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -343,7 +343,7 @@ CREATE TABLE [dbo].[Fish](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[FishEnvironments]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[FishEnvironments]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -359,7 +359,7 @@ CREATE TABLE [dbo].[FishEnvironments](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Seasons]    Script Date: 9/06/2016 1:44:33 PM ******/
+/****** Object:  Table [dbo].[Seasons]    Script Date: 9/06/2016 5:38:46 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -380,6 +380,53 @@ INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [Se
 GO
 INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName]) VALUES (N'dcdf6c92-5dd8-499a-8b7d-7bb919e27632', N'petras.surna@yart.com.au', 0, N'ACq839IoTFJYsWx+yy3waQoYMaZvt9ztsn8wpq9J6qD6x8hX6NF5hRJlh62NElp6dA==', N'e76113f8-3528-4a61-8eb8-7a59268ed4ff', NULL, 0, 0, NULL, 1, 0, N'petras.surna@yart.com.au')
 GO
+SET IDENTITY_INSERT [dbo].[Catches] ON 
+
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (3, 103, 97, CAST(0x0000A5F100000000 AS DateTime), 0, 1, 0.845, 44, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (4, 109, 97, CAST(0x0000A5F100000000 AS DateTime), 0, 1, 1.545, 56, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (5, 112, 97, CAST(0x0000A5F100000000 AS DateTime), 0, 1, 0.615, 42, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (6, 111, 97, CAST(0x0000A5F100000000 AS DateTime), 0, 1, 0.555, 41, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (7, 111, 97, CAST(0x0000A5F100000000 AS DateTime), 0, 1, 0, 46, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (8, 104, 102, CAST(0x0000A5F100000000 AS DateTime), 1, 1, 0, 36, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (9, 107, 102, CAST(0x0000A5F100000000 AS DateTime), 0, 1, 0.6, 36, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (10, 109, 102, CAST(0x0000A5F100000000 AS DateTime), 0, 1, 0.4, 33, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (11, 103, 97, CAST(0x0000A5F200000000 AS DateTime), 0, 1, 0.515, 39, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (12, 104, 97, CAST(0x0000A5F200000000 AS DateTime), 1, 1, 0, 54, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (13, 105, 97, CAST(0x0000A5F200000000 AS DateTime), 1, 1, 0, 42, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (14, 106, 97, CAST(0x0000A5F200000000 AS DateTime), 0, 1, 0.71, 41, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (15, 108, 97, CAST(0x0000A5F200000000 AS DateTime), 1, 1, 0, 48, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (16, 108, 97, CAST(0x0000A5F200000000 AS DateTime), 1, 1, 0, 43, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (17, 109, 97, CAST(0x0000A5F200000000 AS DateTime), 0, 1, 0.665, 42, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (18, 108, 98, CAST(0x0000A5F200000000 AS DateTime), 1, 1, 0, 36, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (19, 104, 97, CAST(0x0000A5F300000000 AS DateTime), 1, 1, 0, 42, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (20, 105, 102, CAST(0x0000A5F300000000 AS DateTime), 0, 1, 0.455, 33, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (21, 106, 98, CAST(0x0000A5F300000000 AS DateTime), 0, 1, 0.75, 46, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (22, 112, 98, CAST(0x0000A5F300000000 AS DateTime), 0, 1, 0, 39, 0, 0, 1)
+GO
+INSERT [dbo].[Catches] ([CatchId], [EntryId], [FishId], [Date], [CatchAndRelease], [Number], [Weight], [Length], [Heaviest], [Longest], [Cleaned]) VALUES (23, 112, 102, CAST(0x0000A5F300000000 AS DateTime), 0, 1, 0, 31, 0, 0, 1)
+GO
+SET IDENTITY_INSERT [dbo].[Catches] OFF
+GO
 SET IDENTITY_INSERT [dbo].[Clubs] ON 
 
 GO
@@ -390,7 +437,7 @@ GO
 SET IDENTITY_INSERT [dbo].[Competitions] ON 
 
 GO
-INSERT [dbo].[Competitions] ([CompetitionId], [ClubId], [EnvironmentId], [End], [Name], [Start], [Venue], [WeighInTime], [WeighInVenue], [DayType]) VALUES (21, 24, 3, CAST(0x0000A5CF011826C0 AS DateTime), N'Anazac weekend', CAST(0x0000A5D20062E080 AS DateTime), N'Lake Fyans', CAST(0x0000A5D40107AC00 AS DateTime), N'At the shed', N's')
+INSERT [dbo].[Competitions] ([CompetitionId], [ClubId], [EnvironmentId], [End], [Name], [Start], [Venue], [WeighInTime], [WeighInVenue], [DayType]) VALUES (21, 24, 1, CAST(0x0000A5F3011826C0 AS DateTime), N'Anazac weekend', CAST(0x0000A5F10062E080 AS DateTime), N'Lake Fyans', CAST(0x0000A5D40107AC00 AS DateTime), N'At the shed', N'm')
 GO
 SET IDENTITY_INSERT [dbo].[Competitions] OFF
 GO
@@ -723,8 +770,6 @@ INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId]
 GO
 INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (725, 3, 2, 24, N'Natalie', N'Wus', N'', NULL, 0, 0, N'Devon North', N'', N'', N'')
 GO
-INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (726, 1, 1, 24, N'Craig', N'Scott', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL)
-GO
 INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (727, 1, 1, 24, N'Anthony', N'Francis', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL)
 GO
 INSERT [dbo].[Competitors] ([CompetitorId], [CompetitorType], [Gender], [ClubId], [FirstName], [LastName], [NickName], [AspNetUserId], [Admin], [Hide], [Suburb], [Phone], [Mobile], [Email]) VALUES (728, 1, 1, 24, N'C', N'Scott', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL)
@@ -748,9 +793,9 @@ INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCapta
 GO
 INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (109, 619, 21, 0, 0)
 GO
-INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (110, 726, 21, 0, 0)
-GO
 INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (111, 727, 21, 0, 0)
+GO
+INSERT [dbo].[Entries] ([EntryId], [CompetitorId], [CompetitionId], [IsTripCaptain], [IsReferee]) VALUES (112, 728, 21, 0, 0)
 GO
 SET IDENTITY_INSERT [dbo].[Entries] OFF
 GO
@@ -1062,9 +1107,9 @@ GO
 SET IDENTITY_INSERT [dbo].[Fish] ON 
 
 GO
-INSERT [dbo].[Fish] ([FishId], [Name], [Minimum], [Maximum], [Difficulty]) VALUES (97, N'Brown trout', 0, 0, 0)
+INSERT [dbo].[Fish] ([FishId], [Name], [Minimum], [Maximum], [Difficulty]) VALUES (97, N'Brown trout', 30, 140, 1)
 GO
-INSERT [dbo].[Fish] ([FishId], [Name], [Minimum], [Maximum], [Difficulty]) VALUES (98, N'Rainbow trout', 0, 0, 0)
+INSERT [dbo].[Fish] ([FishId], [Name], [Minimum], [Maximum], [Difficulty]) VALUES (98, N'Rainbow trout', 30, 140, 1)
 GO
 INSERT [dbo].[Fish] ([FishId], [Name], [Minimum], [Maximum], [Difficulty]) VALUES (99, N'Murray cod', 20, 200, 2)
 GO
@@ -1072,13 +1117,21 @@ INSERT [dbo].[Fish] ([FishId], [Name], [Minimum], [Maximum], [Difficulty]) VALUE
 GO
 INSERT [dbo].[Fish] ([FishId], [Name], [Minimum], [Maximum], [Difficulty]) VALUES (101, N'Gummy Shark', 50, 200, 3)
 GO
+INSERT [dbo].[Fish] ([FishId], [Name], [Minimum], [Maximum], [Difficulty]) VALUES (102, N'Redfin', 25, 60, 1)
+GO
 SET IDENTITY_INSERT [dbo].[Fish] OFF
+GO
+INSERT [dbo].[FishEnvironments] ([FishId], [EnvironmentId]) VALUES (97, 1)
+GO
+INSERT [dbo].[FishEnvironments] ([FishId], [EnvironmentId]) VALUES (98, 1)
 GO
 INSERT [dbo].[FishEnvironments] ([FishId], [EnvironmentId]) VALUES (99, 1)
 GO
 INSERT [dbo].[FishEnvironments] ([FishId], [EnvironmentId]) VALUES (100, 2)
 GO
 INSERT [dbo].[FishEnvironments] ([FishId], [EnvironmentId]) VALUES (100, 3)
+GO
+INSERT [dbo].[FishEnvironments] ([FishId], [EnvironmentId]) VALUES (102, 1)
 GO
 SET IDENTITY_INSERT [dbo].[Seasons] ON 
 

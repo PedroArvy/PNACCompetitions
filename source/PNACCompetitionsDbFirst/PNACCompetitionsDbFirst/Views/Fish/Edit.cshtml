@@ -17,8 +17,6 @@
 
     @using (Html.BeginForm("Edit", "Fish", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
-      @Html.AntiForgeryToken()
-
       @Html.EditorFor(m => m)
     }
 

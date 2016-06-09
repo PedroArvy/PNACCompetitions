@@ -109,6 +109,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       CompetitionResults results = new CompetitionResults();
       results.CompetitonId = competition.CompetitionId;
       results.Catches = Results(competition);
+      results.ShowDay = competition.DayType == "m";
 
       return results;
     }
@@ -378,7 +379,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       foreach (Catch @catch in entry.Catches)
       {
-        results.Add(new CompetitorResult() { CatchAndRelease = @catch.CatchAndRelease, CatchId = @catch.CatchId, CompetitorName = entry.Competitor.FriendlyName(), EntryId = entry.EntryId, FishName = @catch.Fish.Name, Length = @catch.Length, Number = @catch.Number, Weight = (float)@catch.Weight });
+        results.Add(new CompetitorResult() { CatchAndRelease = @catch.CatchAndRelease, Date = @catch.Date, CatchId = @catch.CatchId, CompetitorName = entry.Competitor.FriendlyName(), EntryId = entry.EntryId, FishName = @catch.Fish.Name, Length = @catch.Length, Number = @catch.Number, Weight = (float)@catch.Weight });
       }
 
       return results;
