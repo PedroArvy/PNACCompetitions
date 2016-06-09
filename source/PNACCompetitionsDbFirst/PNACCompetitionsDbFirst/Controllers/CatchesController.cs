@@ -42,7 +42,7 @@ namespace PNACCompetitionsDbFirst.Controllers
     public JsonResult Delete(int id)
     {
       bool success = false;
-      Catch @catch = db.Catches.SingleOrDefault(s => s.CatchId == id);
+      Catch @catch = db.Catches.Single(s => s.CatchId == id);
 
       if (IsAdmin)
       {
