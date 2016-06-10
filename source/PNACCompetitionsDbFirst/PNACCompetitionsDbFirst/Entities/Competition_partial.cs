@@ -61,6 +61,30 @@ namespace PNACCompetitionsDbFirst.Entities
     #region *********************** Methods **************************
 
 
+    /// <summary>
+    /// Complete the Points for the List<LengthResult>
+    /// </summary>
+    /// <param name="results"></param>
+    private void AddPoints(List<LengthResult> results, IQueryable<Catch> catches)
+    {
+      int smaller, greater;
+
+      if (results.Count > 0)
+      {
+        foreach (LengthResult result in results)
+        {
+          if (result.Competition.CompetitionId != CompetitionId)
+            throw new Exception("AddPoints");
+
+          smaller = catches.Where(c => c.Date <= EndDateTime() && c.FishId == result.Fish.FishId && result.Length > c.Length).Count();
+          greater = catches.Where(c => c.Date <= EndDateTime() && c.FishId == result.Fish.FishId && result.Length < c.Length).Count();
+
+          result.Points = 100 * smaller / (smaller + greater);
+        }
+      }
+    }
+
+
     public bool CanAddEntries(Competitor competitor)
     {
       bool canAdd = false;
@@ -133,16 +157,24 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
-    public List<LengthResult> LengthResults()
+    public List<LengthResult> LengthResults(IQueryable<Catch> catches)
     {
       LengthResult result;
       List<LengthResult> results = new List<LengthResult>();
 
-      foreach (Catch @catch in Catches().Where(c => c.Length != 0))
+      foreach (Catch @catch in catches.Where(c => c.CatchAndRelease && c.Length != 0))
       {
         result = new LengthResult() { Competition = this, Fish = @catch.Fish, CompetitorId = @catch.Entry.CompetitorId, Name = @catch.Entry.Competitor.FriendlyName(), Length = @catch.Length };
         results.Add(result);
       }
+
+      foreach (Catch @catch in catches.Where(c => c.CatchAndRelease && c.Longest != 0))
+      {
+        result = new LengthResult() { Competition = this, Fish = @catch.Fish, CompetitorId = @catch.Entry.CompetitorId, Name = @catch.Entry.Competitor.FriendlyName(), Length = @catch.Longest };
+        results.Add(result);
+      }
+
+      AddPoints(results, catches);
 
       return results;
     }

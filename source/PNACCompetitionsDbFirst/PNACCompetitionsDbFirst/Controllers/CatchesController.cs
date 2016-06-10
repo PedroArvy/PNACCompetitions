@@ -290,6 +290,15 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         if (catchEdit.Length <= fish.Minimum)
           ModelState.AddModelError("Length", "The minimum size for " + fish.Name + " is " + fish.Minimum + "cm");
+
+        if(catchEdit.Heaviest != 0)
+          ModelState.AddModelError("Heaviest", "Heaviest must be 0 if catch and release");
+
+        if (catchEdit.Longest != 0)
+          ModelState.AddModelError("Longest", "Longest must be 0 if catch and release");
+
+        if (catchEdit.Quantity != 1)
+          ModelState.AddModelError("Quantity", "Quantity must be 1 if catch and release");
       }
       else
       {

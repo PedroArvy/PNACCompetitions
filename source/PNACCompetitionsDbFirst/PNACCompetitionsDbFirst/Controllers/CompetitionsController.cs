@@ -387,10 +387,11 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     public ActionResult Results(int id)
     {
+      Competition competition = db.Competitions.Single(c => c.CompetitionId == id);
       ResultsIndex index = new ResultsIndex();
 
-      index.LengthResults = new List<LengthResult>();
-      index.WeightResults = new List<WeightResult>();
+      index.LengthResults = competition.LengthResults(db.Catches.Where(c => c.Entry.CompetitionId == id));
+      index.WeightResults = competition.WeightResults();
 
       return View(index);
     }
