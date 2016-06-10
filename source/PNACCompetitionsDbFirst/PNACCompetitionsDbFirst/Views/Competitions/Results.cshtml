@@ -1,37 +1,54 @@
 ﻿@using PNACCompetitionsDbFirst.Models.ViewModels
-@using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
+@using PNACCompetitionsDbFirst.Models.ViewModels.Results;
 
-@model CompetitionEdit
+@model ResultsIndex
 
 @{
   ViewBag.Title = "Results";
 }
 
 
-<style>
-  body {
-    display: none;
-  }
+@section meta{
 
-  .table-responsive {
-    border: none;
-    outline: none;
-  }
-
-  @@media (max-width: 991px) {
-    .entries-row {
-      padding: 0;
+  <style>
+    body {
+      display: none;
     }
 
-    .body-content {
-      padding: 2px;
+    .table-responsive {
+      border: none;
+      outline: none;
     }
 
-    .btn {
-      margin-bottom: 10px;
+    @@media (max-width: 991px) {
+      .entries-row {
+        padding: 0;
+      }
+
+      .body-content {
+        padding: 2px;
+      }
+
+      .btn {
+        margin-bottom: 10px;
+      }
     }
-  }
-</style>
+  </style>
+
+
+  <script>
+
+    $(function () {
+
+      $('#tabs').tabs();
+      $('body').show();
+
+    });
+
+  </script>
+
+}
+
 
 
 <div class="row">
@@ -47,14 +64,14 @@
 
 <div id="tabs">
   <ul>
-    <li><a href="#details-tab">Length</a></li>
-    <li><a href="#competitors-tab">Weight</a></li>
-    <li><a href="#competitors-tab">Fish</a></li>
+    <li><a href="#length-tab">Length</a></li>
+    <li><a href="#weight-tab">Weight</a></li>
+    <li><a href="#fish-tab">Fish</a></li>
   </ul>
 
 
-  @Html.Partial("/Views/Competitions/LengthResults.cshtml", Model.CompetitionResults)
-  @Html.Partial("/Views/Competitions/WeightResults.cshtml", Model.CompetitionResults)
+  @Html.Partial("/Views/Competitions/LengthResults.cshtml", Model.LengthResults)
+  @Html.Partial("/Views/Competitions/WeightResults.cshtml", Model.WeightResults)
 
 </div>
 

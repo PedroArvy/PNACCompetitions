@@ -1,4 +1,5 @@
 ﻿using PNACCompetitionsDbFirst.Models;
+using PNACCompetitionsDbFirst.Models.ViewModels.Results;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -100,6 +101,10 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
+    /// <summary>
+    /// The End of the Competition whether it is single or multi day
+    /// </summary>
+    /// <returns></returns>
     public DateTime EndDateTime()
     {
       DateTime end = DateTime.Now;
@@ -222,34 +227,6 @@ namespace PNACCompetitionsDbFirst.Entities
 
     #region *********************** Interfaces ***********************
     #endregion
-  }
-
-
-  public class LengthResult
-  {
-    public Competition Competition { get; set; }
-
-    public int CompetitorId { get; set; }
-
-    public Fish Fish { get; set; }
-
-    public string Name { get; set; }
-
-    public double Length { get; set; }
-
-    public double Points { get; set; }
-  }
-
-
-  public class WeightResult
-  {
-    public int CompetitorId { get; set; }
-
-    public string Name { get; set; }
-
-    public double Weight { get; set; }
-
-    public double Points { get; set; }
   }
 
 

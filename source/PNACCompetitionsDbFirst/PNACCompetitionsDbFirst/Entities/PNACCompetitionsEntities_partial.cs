@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using PNACCompetitionsDbFirst.Models;
+using PNACCompetitionsDbFirst.Models.ViewModels.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,12 +39,21 @@ namespace PNACCompetitionsDbFirst.Entities
     {
       int smaller, greater;
 
-      foreach(LengthResult result in results)
+      if (results.Count > 0)
       {
-        smaller = this.Catches.Where(c => c.FishId == result.Fish.FishId && result.Length > c.Length).Count();
-        greater = this.Catches.Where(c => c.FishId == result.Fish.FishId && result.Length < c.Length).Count();
+        Competition competition = Competitions.Single(c => c.CompetitionId == results.First().Competition.CompetitionId);
 
-        result.Points = 100 * smaller / (smaller + greater);
+        foreach (LengthResult result in results)
+        {
+          if(result.Competition.CompetitionId != competition.CompetitionId)
+            competition = Competitions.Single(c => c.CompetitionId == result.Competition.CompetitionId);
+
+          smaller = this.Catches.Where(c => c.Date <= competition.EndDateTime() && c.FishId == result.Fish.FishId && result.Length > c.Length).Count();
+          greater = this.Catches.Where(c => c.Date <= competition.EndDateTime() && c.FishId == result.Fish.FishId && result.Length < c.Length).Count();
+
+          result.Points = 100 * smaller / (smaller + greater);
+        }
+
       }
     }
 

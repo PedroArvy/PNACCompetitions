@@ -1,7 +1,7 @@
 ﻿@using PNACCompetitionsDbFirst.Models.ViewModels
-@using PNACCompetitionsDbFirst.Models.ViewModels.Results;
+@using PNACCompetitionsDbFirst.Models.ViewModels.Catches;
 
-@model CompetitionResults
+@model CompetitionCatches
 
 
 
@@ -81,7 +81,7 @@
 
             <tbody id="competitors-body">
 
-              @foreach (CompetitorResult result in Model.Catches.OrderByDescending(c => c.Date).ThenByDescending(c => c.CatchId))
+              @foreach (CompetitorCatch result in Model.Catches.OrderByDescending(c => c.Date).ThenByDescending(c => c.CatchId))
               {
                 <tr id="row-@result.CatchId">
 

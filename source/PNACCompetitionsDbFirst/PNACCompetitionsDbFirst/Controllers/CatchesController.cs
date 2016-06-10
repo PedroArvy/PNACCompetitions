@@ -4,7 +4,7 @@ using PNACCompetitionsDbFirst.Models;
 using PNACCompetitionsDbFirst.Models.ViewModels;
 using PNACCompetitionsDbFirst.Models.ViewModels.Components;
 using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
-using PNACCompetitionsDbFirst.Models.ViewModels.Results;
+using PNACCompetitionsDbFirst.Models.ViewModels.Catches;
 using System;
 using System.Collections.Generic;
 using System.Linq;

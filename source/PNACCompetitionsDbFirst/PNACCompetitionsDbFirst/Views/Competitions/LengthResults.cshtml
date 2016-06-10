@@ -1,17 +1,15 @@
 ﻿@using PNACCompetitionsDbFirst.Models.ViewModels
 @using PNACCompetitionsDbFirst.Models.ViewModels.Results;
 
-@model CompetitionCatches
+@model List<LengthResult>
 
-
-<div id="length-results-tab">
+<div id="length-tab">
 
 
   <div class="row">
     <div class="col-md-7">
 
-
-      @if (Model.Catches.Count() > 0)
+      @if (Model.Count() > 0)
       {
         <div class="table-responsive">
           <table class="table table-striped">
@@ -43,11 +41,10 @@
       }
       else
       {
-        @:There are no results yet
+        @:There are no length results yet
       }
 
     </div>
   </div>
-
 </div>
 

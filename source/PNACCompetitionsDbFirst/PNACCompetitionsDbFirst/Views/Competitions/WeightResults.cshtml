@@ -1,17 +1,17 @@
 ﻿@using PNACCompetitionsDbFirst.Models.ViewModels
 @using PNACCompetitionsDbFirst.Models.ViewModels.Results;
 
-@model CompetitionResults
+@model List<WeightResult>
 
 
-<div id="weightresults-tab">
+<div id="weight-tab">
 
 
   <div class="row">
     <div class="col-md-7">
 
 
-      @if (Model.Catches.Count() > 0)
+      @if (Model.Count() > 0)
       {
         <div class="table-responsive">
           <table class="table table-striped">
@@ -44,11 +44,10 @@
       }
       else
       {
-        @:There are no results yet
+        @:There are no weight results yet
       }
 
     </div>
   </div>
-
 </div>
 

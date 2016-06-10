@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace PNACCompetitionsDbFirst.Models.ViewModels.Results
+namespace PNACCompetitionsDbFirst.Models.ViewModels.Catches
 {
   public class CompetitorCatch
   {

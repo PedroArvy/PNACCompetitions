@@ -1,6 +1,6 @@
 ﻿using PNACCompetitionsDbFirst.Models.ViewModels.Components;
 using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
-using PNACCompetitionsDbFirst.Models.ViewModels.Results;
+using PNACCompetitionsDbFirst.Models.ViewModels.Catches;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,7 +31,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     public List<CompetitorEntry> CompetitionEntries { get; set; }
 
-    public CompetitionCatches CompetitionResults { get; set; }
+    public CompetitionCatches CompetitionCatches { get; set; }
 
 
     public int CompetitionId { get; set; }

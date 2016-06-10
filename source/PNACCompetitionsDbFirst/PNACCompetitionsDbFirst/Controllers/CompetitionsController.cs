@@ -4,13 +4,14 @@ using PNACCompetitionsDbFirst.Models;
 using PNACCompetitionsDbFirst.Models.ViewModels;
 using PNACCompetitionsDbFirst.Models.ViewModels.Components;
 using PNACCompetitionsDbFirst.Models.ViewModels.Entries;
-using PNACCompetitionsDbFirst.Models.ViewModels.Results;
+using PNACCompetitionsDbFirst.Models.ViewModels.Catches;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using static PNACCompetitionsDbFirst.Models.ViewModels.CompetitionEdit;
+using PNACCompetitionsDbFirst.Models.ViewModels.Results;
 
 namespace PNACCompetitionsDbFirst.Controllers
 {
@@ -211,7 +212,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         }
 
         edit.CompetitionEntries = CompetitionEntries(competition);
-        edit.CompetitionResults = CompetitionResults(competition);
+        edit.CompetitionCatches = CompetitionResults(competition);
         edit.Environments = Environments();
         edit.EnvironmentId = competition.EnvironmentId;
 
@@ -246,7 +247,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         model.MemberNames = MakeNames(competition);
         model.Environments = Environments();
         model.CompetitionEntries = CompetitionEntries(competition);
-        model.CompetitionResults = CompetitionResults(competition);
+        model.CompetitionCatches = CompetitionResults(competition);
 
         return View(model);
       }
@@ -386,7 +387,12 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     public ActionResult Results(int id)
     {
-      return View();
+      ResultsIndex index = new ResultsIndex();
+
+      index.LengthResults = new List<LengthResult>();
+      index.WeightResults = new List<WeightResult>();
+
+      return View(index);
     }
 
 

@@ -227,12 +227,13 @@
     </Compile>
     <Compile Include="Models\Format.cs" />
     <Compile Include="Models\ViewModels\CatchEdit.cs" />
+    <Compile Include="Models\ViewModels\Catches\CompetitionCatches.cs" />
+    <Compile Include="Models\ViewModels\Catches\CompetitorCatch.cs" />
     <Compile Include="Models\ViewModels\CompetitionEdit.cs" />
     <Compile Include="Models\ViewModels\CompetitionListItem.cs" />
     <Compile Include="Models\ViewModels\CompetitionIndex.cs" />
     <Compile Include="Models\ViewModels\CompetitorCreate.cs" />
     <Compile Include="Models\ViewModels\Components\RadioValue.cs" />
-    <Compile Include="Models\ViewModels\Results\CompetitionResults.cs" />
     <Compile Include="Models\ViewModels\Entries\CompetitionEntries.cs" />
     <Compile Include="Models\ViewModels\Entries\CompetitorEntry.cs" />
     <Compile Include="Models\ViewModels\FishListItem.cs" />
@@ -249,7 +250,10 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
-    <Compile Include="Models\ViewModels\Results\CompetitorResult.cs" />
+    <Compile Include="Models\ViewModels\Results\FishResult.cs" />
+    <Compile Include="Models\ViewModels\Results\LengthResult.cs" />
+    <Compile Include="Models\ViewModels\Results\ResultsIndex.cs" />
+    <Compile Include="Models\ViewModels\Results\WeightResult.cs" />
     <Compile Include="Models\ViewModels\SeasonEdit.cs" />
     <Compile Include="Models\ViewModels\SeasonsIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
