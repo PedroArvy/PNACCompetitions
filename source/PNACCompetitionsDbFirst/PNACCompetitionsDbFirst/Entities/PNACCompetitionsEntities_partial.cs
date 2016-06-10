@@ -19,8 +19,6 @@ namespace PNACCompetitionsDbFirst.Entities
 
 
     #region *********************** Properties ***********************
-
-
     #endregion
 
 

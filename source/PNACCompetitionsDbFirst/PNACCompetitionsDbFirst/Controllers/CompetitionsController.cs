@@ -419,6 +419,7 @@ namespace PNACCompetitionsDbFirst.Controllers
             db.Entries.Add(entrant);
           }
         }
+
         db.SaveChanges();
       }
       else
@@ -426,7 +427,6 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       return Json(new { success = "Success" }, JsonRequestBehavior.AllowGet);
     }
-
 
 
     private void Validate(CompetitionEdit model)

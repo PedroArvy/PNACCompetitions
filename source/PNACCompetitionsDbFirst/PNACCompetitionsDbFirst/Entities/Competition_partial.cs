@@ -79,7 +79,10 @@ namespace PNACCompetitionsDbFirst.Entities
           smaller = catches.Where(c => c.Date <= EndDateTime() && c.FishId == result.Fish.FishId && result.Length > c.Length).Count();
           greater = catches.Where(c => c.Date <= EndDateTime() && c.FishId == result.Fish.FishId && result.Length < c.Length).Count();
 
-          result.Points = 100 * smaller / (smaller + greater);
+          if (smaller + greater == 0 || smaller == 0)
+            result.Points = 50;
+          else
+            result.Points = 100 * smaller / (smaller + greater);
         }
       }
     }
@@ -159,6 +162,7 @@ namespace PNACCompetitionsDbFirst.Entities
 
     public List<LengthResult> LengthResults(IQueryable<Catch> catches)
     {
+      int count = 0, points = 40;
       LengthResult result;
       List<LengthResult> results = new List<LengthResult>();
 
@@ -168,13 +172,31 @@ namespace PNACCompetitionsDbFirst.Entities
         results.Add(result);
       }
 
-      foreach (Catch @catch in catches.Where(c => c.CatchAndRelease && c.Longest != 0))
+      foreach (Catch @catch in catches.Where(c => !c.CatchAndRelease && c.Longest != 0))
       {
         result = new LengthResult() { Competition = this, Fish = @catch.Fish, CompetitorId = @catch.Entry.CompetitorId, Name = @catch.Entry.Competitor.FriendlyName(), Length = @catch.Longest };
         results.Add(result);
       }
 
       AddPoints(results, catches);
+
+
+      foreach (LengthResult result1 in results.OrderByDescending(r => r.Length))
+      {
+        if (count == 0)
+          points = 40;
+        else if (count == 1)
+          points = 35;
+        else if (count == 2)
+          points = 32;
+        else if (count == 3)
+          points = 30;
+        else
+          points--;
+
+        result1.Points = points;
+        count++;
+      }
 
       return results;
     }
