@@ -7,31 +7,50 @@
   ViewBag.Title = "Edit " + @Model.Venue;
 }
 
+@section meta
+{
+<script type="text/javascript" src="~/Scripts/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="~/Scripts/tablesorter.js"></script>
 
-<style>
-  body {
-    display: none;
-  }
-
-  .table-responsive {
-    border: none;
-    outline: none;
-  }
-
-  @@media (max-width: 991px) {
-    .entries-row {
-      padding: 0;
+  <style>
+    body {
+      display: none;
     }
 
-    .body-content {
-      padding: 2px;
+    .table-responsive {
+      border: none;
+      outline: none;
     }
 
-    .btn {
-      margin-bottom: 10px;
+    @@media (max-width: 991px) {
+      .entries-row {
+        padding: 0;
+      }
+
+      .body-content {
+        padding: 2px;
+      }
+
+      .btn {
+        margin-bottom: 10px;
+      }
     }
-  }
-</style>
+  </style>
+
+
+  <script>
+    $(document).ready(function() {
+
+      $('#tabs').tabs({ active: @Model.ActiveTab() });
+      $('body').show();
+
+    });
+  </script>
+
+}
+
+
+
 
 
 <div class="row">
@@ -39,19 +58,6 @@
     <h2>Edit @Model.Venue</h2>
   </div>
 </div>
-
-<script>
-
-  $(function () {
-
-    $('#tabs').tabs({ active: @Model.ActiveTab() });
-    $('body').show();
-
-  });
-
-
-
-</script>
 
 <div id="tabs">
   <ul>
@@ -66,7 +72,7 @@
     {
       <script>
 
-        $(function () {
+        $(document).ready(function() {
 
           $('#catches-tab').hide();
 

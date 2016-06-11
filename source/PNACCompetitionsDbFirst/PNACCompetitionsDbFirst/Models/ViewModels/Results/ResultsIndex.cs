@@ -18,8 +18,8 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels.Results
 
     #region *********************** Properties ***********************
 
-    public List<LengthResult> LengthResults { get; set; }
-    public List<WeightResult> WeightResults { get; set; }
+    public IEnumerable<Result> LengthResults { get; set; }
+    public List<Result> WeightResults { get; set; }
     public List<FishResult> FishResults { get; set; }
 
     #endregion

@@ -86,7 +86,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       return canEdit;
     }
 
-
+    
     private List<CompetitorCatch> Catches(Competition competition)
     {
       List<CompetitorCatch> results = new List<CompetitorCatch>();
@@ -98,19 +98,46 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       return results;
     }
+    
 
-
+    
     private List<CompetitorCatch> Catches(Entry entry)
     {
+      int points, smaller, bigger;
       List<CompetitorCatch> results = new List<CompetitorCatch>();
+      DateTime end = entry.Competition.EndDateTime();
+      CompetitorCatch competitorCatch;
+      Competition competition = entry.Competition;
 
       foreach (Catch @catch in entry.Catches)
       {
-        results.Add(new CompetitorCatch() { CatchAndRelease = @catch.CatchAndRelease, Date = @catch.Date, CatchId = @catch.CatchId, CompetitorName = entry.Competitor.FriendlyName(), EntryId = entry.EntryId, FishName = @catch.Fish.Name, Length = @catch.Length, Number = @catch.Number, Weight = (float)@catch.Weight });
+        points = entry.Competition.LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
+        competitorCatch = new CompetitorCatch();
+
+        competitorCatch.CatchId = @catch.CatchId;
+        competitorCatch.Date = @catch.Date;
+        competitorCatch.CompetitorName = entry.Competitor.FriendlyName();
+        competitorCatch.FishName = @catch.Fish.Name;
+
+        if(@catch.Length != 0)
+          competitorCatch.Length = @catch.Length.ToString();
+        else
+          competitorCatch.Length = "NA";
+
+        if (!@catch.CatchAndRelease && @catch.Weight != 0)
+          competitorCatch.Weight = @catch.Weight.ToString();
+        else
+          competitorCatch.Weight = "NA";
+
+        competitorCatch.Points = competition.LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
+        competitorCatch.LengthFormula = "100x" + smaller.ToString() + "/(" + smaller.ToString() + "+" + bigger.ToString() + ")";
+ 
+        results.Add(competitorCatch);
       }
 
       return results;
     }
+    
 
 
     private List<CompetitorEntry> CompetitionEntries(Competition competition)
@@ -130,7 +157,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       return entries;
     }
 
-
+    
     private CompetitionCatches CompetitionResults(Competition competition)
     {
       CompetitionCatches results = new CompetitionCatches();
@@ -140,6 +167,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       return results;
     }
+    
 
 
     public JsonResult Delete(int id)
@@ -182,7 +210,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
 
     [Authorize]
-    public ActionResult Edit(int id, int ? tabId)
+    public ActionResult Edit(int id, int? tabId)
     {
       Competition competition = db.Competitions.SingleOrDefault(c => c.CompetitionId == id);
       CompetitionEdit edit = new CompetitionEdit();
@@ -390,8 +418,8 @@ namespace PNACCompetitionsDbFirst.Controllers
       Competition competition = db.Competitions.Single(c => c.CompetitionId == id);
       ResultsIndex index = new ResultsIndex();
 
-      index.LengthResults = competition.LengthResults(db.Catches.Where(c => c.Entry.CompetitionId == id));
-      index.WeightResults = competition.WeightResults();
+      index.LengthResults = competition.LengthResults();
+      //index.WeightResults = competition.WeightResults();
 
       return View(index);
     }

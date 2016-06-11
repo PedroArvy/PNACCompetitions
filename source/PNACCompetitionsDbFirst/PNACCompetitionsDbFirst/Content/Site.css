@@ -142,3 +142,18 @@ table .ui-widget-content a.white-button{
 {
   display:none;
 }
+
+
+  table.tablesorter th span  {
+    background-image: url('/content/images/bg.gif');
+    background-repeat: no-repeat;
+    background-position-x: right center;
+  }
+
+  table.tablesorter th span.asc  {
+    background-image: url('/content/images/asc.gif');
+  }
+
+    table.tablesorter th span.desc  {
+    background-image: url('/content/images/desc.gif');
+  }

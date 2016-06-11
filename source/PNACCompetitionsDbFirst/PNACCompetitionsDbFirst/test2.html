@@ -34,7 +34,7 @@
   </style>
   <script>
 
-    $(function () {
+    $(document).ready(function() {
 
       $('.capitalise').change(function () {
         $(this).val(toTitleCase($(this).val()));
@@ -100,7 +100,7 @@
 
 
 
-      $(function () {
+      $(document).ready(function() {
 
         $("#tabs").tabs();
         $("body").show();
@@ -536,7 +536,7 @@
     { label: "Natalie Wus", value: "725" }
       ];
 
-      $(function () {
+      $(document).ready(function() {
 
         AutoComplete('.competitor', members);
 

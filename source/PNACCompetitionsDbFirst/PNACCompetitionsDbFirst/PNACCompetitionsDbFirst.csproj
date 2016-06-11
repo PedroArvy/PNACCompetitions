@@ -251,9 +251,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\ViewModels\Results\FishResult.cs" />
-    <Compile Include="Models\ViewModels\Results\LengthResult.cs" />
+    <Compile Include="Models\ViewModels\Results\Result.cs" />
     <Compile Include="Models\ViewModels\Results\ResultsIndex.cs" />
-    <Compile Include="Models\ViewModels\Results\WeightResult.cs" />
     <Compile Include="Models\ViewModels\SeasonEdit.cs" />
     <Compile Include="Models\ViewModels\SeasonsIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -263,6 +262,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\asc.gif" />
+    <Content Include="Content\images\bg.gif" />
+    <Content Include="Content\images\desc.gif" />
     <Content Include="Content\pickadate\default.css" />
     <Content Include="Content\pickadate\default.time.css" />
     <Content Include="Content\pickadate\default.date.css" />
@@ -295,6 +297,8 @@
     <Content Include="Scripts\jquery-ui.1.11.4.min.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\tablesorter.js" />
+    <Content Include="Scripts\jquery.tablesorter.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

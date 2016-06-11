@@ -31,10 +31,27 @@
                   <span class="hidden-lg">P</span>
                 </th>
 
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">Competition Points</span>
+                  <span class="hidden-lg">P</span>
+                </th>
+
               </tr>
             </thead>
 
-            <tbody id="results-body"></tbody>
+            <tbody id="results-body">
+
+              @foreach (LengthResult result in Model)
+              {
+                <tr>
+                  <td>@result.Rank</td>
+                  <td>@result.CompetitorName</td>
+                  <td>@result.LengthPoints</td>
+                  <td>@result.CompetitionPoints</td>
+                </tr>
+              }
+
+            </tbody>
 
           </table>
         </div>

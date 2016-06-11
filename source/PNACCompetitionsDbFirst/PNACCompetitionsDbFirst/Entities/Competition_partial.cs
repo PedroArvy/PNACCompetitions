@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 
 namespace PNACCompetitionsDbFirst.Entities
 {
@@ -61,31 +60,49 @@ namespace PNACCompetitionsDbFirst.Entities
     #region *********************** Methods **************************
 
 
+    private void AddCompetitionPoints(IEnumerable<Result> results)
+    {
+      int count = 0;
+      int points = 0;
+
+      foreach (Result result in results)
+      {
+        if (count == 0)
+          points = 40;
+        else if (count == 1)
+          points = 35;
+        else if (count == 2)
+          points = 32;
+        else if (count == 3)
+          points = 30;
+        else
+          points--;
+
+        result.Points = points;
+        count++;
+      }
+    }
+
+
     /// <summary>
     /// Complete the Points for the List<LengthResult>
     /// </summary>
     /// <param name="results"></param>
-    private void AddPoints(List<LengthResult> results, IQueryable<Catch> catches)
+    /*
+    private void AddLengthPoints(List<LengthResult> results, List<Catch> catches)
     {
-      int smaller, greater;
+      int smaller, bigger;
+      DateTime end = EndDateTime();
 
       if (results.Count > 0)
       {
         foreach (LengthResult result in results)
         {
-          if (result.Competition.CompetitionId != CompetitionId)
-            throw new Exception("AddPoints");
-
-          smaller = catches.Where(c => c.Date <= EndDateTime() && c.FishId == result.Fish.FishId && result.Length > c.Length).Count();
-          greater = catches.Where(c => c.Date <= EndDateTime() && c.FishId == result.Fish.FishId && result.Length < c.Length).Count();
-
-          if (smaller + greater == 0 || smaller == 0)
-            result.Points = 50;
-          else
-            result.Points = 100 * smaller / (smaller + greater);
+          result.LengthPoints = CatchPoints(result.Length, result.Fish, catches, out smaller, out bigger);
         }
       }
     }
+    */
 
 
     public bool CanAddEntries(Competitor competitor)
@@ -112,7 +129,6 @@ namespace PNACCompetitionsDbFirst.Entities
 
       return catches;
     }
-
 
     public List<Competitor> Competitors()
     {
@@ -160,43 +176,81 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
-    public List<LengthResult> LengthResults(IQueryable<Catch> catches)
+
+    public List<CompetitionPoint> LengthPoints()
     {
-      int count = 0, points = 40;
-      LengthResult result;
-      List<LengthResult> results = new List<LengthResult>();
+      List<CompetitionPoint> points = new List<Entities.CompetitionPoint>();
+      CompetitionPoint point;
+      int smaller, bigger;
+
+      foreach (Catch @catch in Catches())
+      {
+        point = points.SingleOrDefault(p => p.Competitor.CompetitorId == @catch.Entry.CompetitorId);
+
+        if (point == null)
+        {
+          point = new CompetitionPoint();
+          point.Competitor = @catch.Entry.Competitor;
+          point.Value = LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
+          points.Add(point);
+        }
+        else
+          point.Value += LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
+      }
+
+      Rank(points);
+
+      return points;
+    }
+
+
+    public int LengthPoints(int length, Fish fish, out int smaller, out int bigger)
+    {
+      int points = 0;
+      DateTime end = EndDateTime();
+      List<Catch> catches = Catches();
+
+      smaller = catches.Where(c => c.Date <= end && c.FishId == fish.FishId && length >= c.Length).Count();
+      bigger = catches.Where(c => c.Date <= end && c.FishId == fish.FishId && length < c.Length).Count();
+
+      if (smaller + bigger == 0 || smaller == 0)
+        points = 50;
+      else
+        points = 100 * smaller / (smaller + bigger);
+
+      return points;
+    }
+
+
+    public IEnumerable<Result> LengthResults()
+    {
+      Result result;
+      List<Result> results = new List<Result>();
+      /*
+      List<Catch> catches = Catches();
 
       foreach (Catch @catch in catches.Where(c => c.CatchAndRelease && c.Length != 0))
       {
-        result = new LengthResult() { Competition = this, Fish = @catch.Fish, CompetitorId = @catch.Entry.CompetitorId, Name = @catch.Entry.Competitor.FriendlyName(), Length = @catch.Length };
+        result = new LengthResult() { Competition = this, Fish = @catch.Fish, CompetitorName = @catch.Entry.Competitor.FriendlyName(), Length = @catch.Length };
         results.Add(result);
       }
 
-      foreach (Catch @catch in catches.Where(c => !c.CatchAndRelease && c.Longest != 0))
+      foreach (Catch @catch in catches.Where(c => !c.CatchAndRelease))
       {
-        result = new LengthResult() { Competition = this, Fish = @catch.Fish, CompetitorId = @catch.Entry.CompetitorId, Name = @catch.Entry.Competitor.FriendlyName(), Length = @catch.Longest };
+        result = new LengthResult() { Competition = this, Fish = @catch.Fish, CompetitorName = @catch.Entry.Competitor.FriendlyName() };
+
+        if (@catch.Number == 1)
+          result.Length = @catch.Length;
+        else if (@catch.Number >= 1)
+          result.Length = @catch.Longest;
+
         results.Add(result);
       }
 
-      AddPoints(results, catches);
-
-
-      foreach (LengthResult result1 in results.OrderByDescending(r => r.Length))
-      {
-        if (count == 0)
-          points = 40;
-        else if (count == 1)
-          points = 35;
-        else if (count == 2)
-          points = 32;
-        else if (count == 3)
-          points = 30;
-        else
-          points--;
-
-        result1.Points = points;
-        count++;
-      }
+      AddLengthPoints(results, catches);
+      AddCompetitionPoints(results.OrderByDescending(r => r.Length));
+      Rank(results);
+      */
 
       return results;
     }
@@ -206,9 +260,9 @@ namespace PNACCompetitionsDbFirst.Entities
     {
       DateTime theDate = DateTime.Now;
 
-      if(Finished())
+      if (Finished())
       {
-        if(Catches().Count > 0)
+        if (Catches().Count > 0)
         {
           theDate = Catches().OrderByDescending(c => c.Date).First().Date;
         }
@@ -229,6 +283,48 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
+    private void Rank(List<CompetitionPoint> points)
+    {
+      int rank = 1;
+      int value = 40;
+
+      foreach (CompetitionPoint point in points.OrderBy(p => p.Value))
+      {
+        point.Order = rank;
+        point.CompetitionPoints = value;
+
+        if (value == 40)
+          value = 35;
+        else if (value == 35)
+          value = 32;
+        else if (value == 32)
+          value = 30;
+        else
+          value--;
+      }
+    }
+
+
+    public List<Result> Results()
+    {
+      Result result;
+      List<Result> results = new List<Result>();
+
+      /*
+      foreach (Competitor competitor in Competitors())
+      {
+        result = new Result() { CompetitorId = competitor.CompetitorId, CompetitorName = competitor.FriendlyName(), Weight = competitor.Weight(this) };
+        results.Add(result);
+      }
+      */
+
+      //AddCompetitionPoints(results.OrderByDescending(r => r.Weight));
+      Rank(results);
+
+      return results;
+    }
+
+
     public string WeighInDescription()
     {
       string description = "";
@@ -242,40 +338,6 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
-    public List<WeightResult> WeightResults()
-    {
-      WeightResult result;
-      List<WeightResult> results = new List<WeightResult>();
-      int count = 0;
-      int points = 0;
-
-      foreach (Competitor competitor in Competitors())
-      {
-        result = new WeightResult() { CompetitorId = competitor.CompetitorId, Name = competitor.FriendlyName(), Weight = competitor.Weight(this) };
-        results.Add(result);
-      }
-
-      foreach (WeightResult result1 in results.OrderByDescending(r => r.Weight))
-      {
-        if (count == 0)
-          points = 40;
-        else if (count == 1)
-          points = 35;
-        else if (count == 2)
-          points = 32;
-        else if (count == 3)
-          points = 30;
-        else
-          points--;
-
-        result1.Points = points;
-        count++;
-      }
-
-      return results;
-    }
-
-
     #endregion
 
 
@@ -283,5 +345,13 @@ namespace PNACCompetitionsDbFirst.Entities
     #endregion
   }
 
+
+  public class CompetitionPoint
+  {
+    public Competitor Competitor { get; set; }
+    public int CompetitionPoints { get; set; }
+    public int Order { get; set; }
+    public int Value { get; set; }
+  }
 
 }

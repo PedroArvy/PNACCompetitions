@@ -29,7 +29,9 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     public bool Begun { get; set; }
 
+
     public List<CompetitorEntry> CompetitionEntries { get; set; }
+
 
     public CompetitionCatches CompetitionCatches { get; set; }
 

@@ -64,6 +64,23 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
+    public int LengthForPoints()
+    {
+      int length = Length;
+
+      if (!CatchAndRelease && Number > 1)
+        length = Longest;
+
+      return length;
+    }
+
+
+    public static double PowerN(double n)
+    {
+      return Math.Pow(2, Math.Pow(FACTOR, n));
+    }
+
+
     public int TrialPoints()
     {
       int value = 0;
@@ -74,11 +91,6 @@ namespace PNACCompetitionsDbFirst.Entities
       return value;
     }
 
-
-    public static double PowerN(double n)
-    {
-      return Math.Pow(2, Math.Pow(FACTOR, n));
-    }
 
     #endregion
 

@@ -281,7 +281,20 @@ namespace PNACCompetitionsDbFirst.Controllers
     private void Validate(CatchEdit catchEdit)
     {
       bool catchAndRelease = catchEdit.CatchAndRelease.ToLower() == "yes" ? true : false;
+      Competition competition = db.Competitions.Single(c => c.CompetitionId == catchEdit.CompetitionId);
       Fish fish = db.Fish.Single(f => f.FishId == catchEdit.FishId);
+
+
+      if(Convert.ToDateTime(catchEdit.Date) > competition.EndDateTime())
+      {
+        if (competition.DayType == "s")
+          ModelState.AddModelError("Date", "The catch date must be " + competition.Start.ToString(Format.DATE_FORMAT_CS));
+        else if (competition.DayType == "m")
+          ModelState.AddModelError("Date", "The catch date must be between " + competition.Start.ToString(Format.DATE_FORMAT_CS) + " and " + competition.EndDateTime().ToString(Format.DATE_FORMAT_CS));
+        else
+          throw new Exception();
+      }
+
 
       if (catchAndRelease)
       {

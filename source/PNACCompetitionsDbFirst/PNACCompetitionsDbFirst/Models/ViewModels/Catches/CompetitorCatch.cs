@@ -18,31 +18,21 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels.Catches
 
     #region *********************** Properties ***********************
 
-    public bool CatchAndRelease { get; set; }
-
     public int CatchId { get; set; }
 
     public DateTime Date { get; set; }
 
-    public int EntryId { get; set; }
     public string CompetitorName { get; set; }
 
     public string FishName { get; set; }
 
-    /// <summary>
-    /// only if 1 fish and catch and release
-    /// </summary>
-    public int Length { get; set; }
+    public string Length { get; set; }
 
-    /// <summary>
-    /// If catch and release don't show and set to 1
-    /// </summary>
-    public int Number { get; set; } = 1;
+    public string LengthFormula { get; set; }
 
-    /// <summary>
-    /// kg
-    /// </summary>
-    public float Weight { get; set; }
+    public int Points { get; set; }
+
+    public string Weight { get; set; }
     
     #endregion
 

@@ -71,7 +71,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     return this
   }
 
-  $(function () {
+  $(document).ready(function() {
     $.support.transition = transitionEnd()
   })
 
