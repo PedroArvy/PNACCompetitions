@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using static PNACCompetitionsDbFirst.Models.ViewModels.CompetitionEdit;
-using PNACCompetitionsDbFirst.Models.ViewModels.Results;
+
 
 namespace PNACCompetitionsDbFirst.Controllers
 {
@@ -51,21 +51,6 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       competition.EnvironmentId = model.EnvironmentId;
     }
-
-
-    private bool CanEdit(Competitor competitor)
-    {
-      /*
-      bool canEdit = false;
-
-      if (Competitor != null && (Competitor.CompetitorId == competitor.CompetitorId || Competitor.Admin))
-        canEdit = true;
-
-      return canEdit;
-      */
-      return false;
-    }
-
 
 
     private bool CanEditCompetition(int competitionId)
@@ -241,6 +226,11 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         edit.CompetitionEntries = CompetitionEntries(competition);
         edit.CompetitionCatches = CompetitionResults(competition);
+        edit.LengthPoints = competition.LengthPoints();
+        edit.WeightPoints = competition.WeightPoints();
+        edit.HeaviestFish = competition.HeaviestFish();
+        edit.LongestFish = competition.LongestFish();
+
         edit.Environments = Environments();
         edit.EnvironmentId = competition.EnvironmentId;
 
@@ -274,8 +264,13 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         model.MemberNames = MakeNames(competition);
         model.Environments = Environments();
+
         model.CompetitionEntries = CompetitionEntries(competition);
         model.CompetitionCatches = CompetitionResults(competition);
+        model.LengthPoints = competition.LengthPoints();
+        model.WeightPoints = competition.WeightPoints();
+        model.HeaviestFish = competition.HeaviestFish();
+        model.LongestFish = competition.LongestFish();
 
         return View(model);
       }
@@ -410,18 +405,6 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         return View(model);
       }
-    }
-
-
-    public ActionResult Results(int id)
-    {
-      Competition competition = db.Competitions.Single(c => c.CompetitionId == id);
-      ResultsIndex index = new ResultsIndex();
-
-      index.LengthResults = competition.LengthResults();
-      //index.WeightResults = competition.WeightResults();
-
-      return View(index);
     }
 
 

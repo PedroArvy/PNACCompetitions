@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using static PNACCompetitionsDbFirst.Entities.Competitor;
+using PNACCompetitionsDbFirst.Entities;
 
 namespace PNACCompetitionsDbFirst.Models.ViewModels
 {
@@ -16,7 +17,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
   {
     #region *********************** Constants ************************
 
-    public enum TABS { DETAILS = 0, COMPETITORS = 1, RESULTS = 2};
+    public enum TABS { DETAILS = 0, COMPETITORS = 1, CATCHES = 2, RESULTS = 3, WEIGHT_RESULTS = 4, FISH_RESULTS = 5};
 
     #endregion
 
@@ -57,7 +58,16 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     public List<RadioValue> Environments { get; set; }
 
- 
+
+    public List<ExtremeFish> HeaviestFish { get; set; }
+
+
+    public List<CompetitionPoint> LengthPoints { get; set; }
+
+
+    public List<ExtremeFish> LongestFish { get; set; }
+
+
     public string MemberNames { get; set; }
 
 
@@ -79,6 +89,9 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public string Venue { get; set; }
 
 
+    public List<CompetitionPoint> WeightPoints { get; set; }
+
+
     #endregion
 
 
@@ -97,7 +110,11 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
       {
         case TABS.COMPETITORS: active = ((int)TABS.COMPETITORS).ToString(); break;
         case TABS.DETAILS: active = ((int)TABS.DETAILS).ToString(); break;
+        case TABS.CATCHES: active = ((int)TABS.CATCHES).ToString(); break;
         case TABS.RESULTS: active = ((int)TABS.RESULTS).ToString(); break;
+
+        default:
+          throw new Exception("ActiveTab");
       }
 
       return active;

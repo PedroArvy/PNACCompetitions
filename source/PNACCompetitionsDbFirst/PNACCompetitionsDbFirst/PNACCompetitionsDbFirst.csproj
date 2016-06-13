@@ -250,9 +250,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
-    <Compile Include="Models\ViewModels\Results\FishResult.cs" />
-    <Compile Include="Models\ViewModels\Results\Result.cs" />
-    <Compile Include="Models\ViewModels\Results\ResultsIndex.cs" />
     <Compile Include="Models\ViewModels\SeasonEdit.cs" />
     <Compile Include="Models\ViewModels\SeasonsIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -372,13 +369,13 @@
     <Content Include="Views\Catches\Edit.cshtml" />
     <Content Include="Views\Catches\New.cshtml" />
     <Content Include="Views\Competitions\EditCatches.cshtml" />
-    <Content Include="Views\Competitions\LengthResults.cshtml" />
-    <Content Include="Views\Competitions\WeightResults.cshtml" />
     <Content Include="Views\Seasons\Index.cshtml" />
     <Content Include="Views\Seasons\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SeasonEdit.cshtml" />
     <Content Include="Views\Seasons\New.cshtml" />
     <Content Include="Views\Competitions\Results.cshtml" />
+    <Content Include="Views\Competitions\ResultsTable.cshtml" />
+    <Content Include="Views\Competitions\ExtremeTable.cshtml" />
     <None Include="Web.Debug-Venom.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

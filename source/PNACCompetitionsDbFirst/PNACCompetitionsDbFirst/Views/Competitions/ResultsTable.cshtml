@@ -1,0 +1,45 @@
+﻿@using PNACCompetitionsDbFirst.Entities;
+
+@{
+  Layout = null;
+}
+
+@model List<CompetitionPoint>
+
+@if (Model.Count() > 0)
+{
+  <div class="table-responsive">
+    <table class="table table-striped tablesorter">
+      <thead>
+        <tr>
+          <th>
+            <span class="hidden-sm hidden-xs hidden-md ">Rank</span>
+            <span class="hidden-lg">R</span>
+          </th>
+          <th>
+            <span class="hidden-sm hidden-xs hidden-md ">Name</span>
+            <span class="hidden-lg">N</span>
+          </th>
+
+          <th>
+            <span class="hidden-sm hidden-xs hidden-md">Points</span>
+            <span class="hidden-lg">LP</span>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody id="length-results-body">
+
+        @foreach (CompetitionPoint point in Model.OrderByDescending(m => m.CompetitionPoints).ThenBy(m => m.Competitor.ShortName()))
+        {
+          <tr>
+            <td>@point.Order</td>
+            <td>@point.Competitor.ShortName()</td>
+            <td>@point.CompetitionPoints (@point.Value@point.Unit)</td>
+          </tr>
+        }
+
+      </tbody>
+    </table>
+  </div>
+}

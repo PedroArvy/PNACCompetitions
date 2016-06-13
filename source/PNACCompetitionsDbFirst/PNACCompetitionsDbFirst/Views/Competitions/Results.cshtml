@@ -1,81 +1,47 @@
 ﻿@using PNACCompetitionsDbFirst.Models.ViewModels
-@using PNACCompetitionsDbFirst.Models.ViewModels.Results;
+@using PNACCompetitionsDbFirst.Models.ViewModels.Catches;
+@using PNACCompetitionsDbFirst.Entities;
 
-@model ResultsIndex
-
-@{
-  ViewBag.Title = "Results";
-}
+@model CompetitionEdit
 
 
-@section meta{
+<div id="results-tab">
 
-  <style>
-    body {
-      display: none;
-    }
+  <div class="row">
+    <div class="col-md-12">
 
-    .table-responsive {
-      border: none;
-      outline: none;
-    }
+      <div style="float:left">
+        <h2>Length Results</h2>
+        @Html.Partial("/Views/Competitions/ResultsTable.cshtml", @Model.LengthPoints)
+      </div>
 
-    @@media (max-width: 991px) {
-      .entries-row {
-        padding: 0;
-      }
+      <div style="float:left;margin-left:50px">
+        <h2>Weight Results</h2>
+        @Html.Partial("/Views/Competitions/ResultsTable.cshtml", @Model.WeightPoints)
+      </div>
 
-      .body-content {
-        padding: 2px;
-      }
-
-      .btn {
-        margin-bottom: 10px;
-      }
-    }
-  </style>
-
-
-  <script>
-
-    $(document).ready(function() {
-
-      $('#tabs').tabs();
-      $('body').show();
-
-    });
-
-  </script>
-
-}
-
-
-
-<div class="row">
-  <div class="col-md-8">
-    <h2>Results</h2>
+    </div>
   </div>
+
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <div style="float:left">
+        <h2>Longest Fish</h2>
+        @Html.Partial("/Views/Competitions/ExtremeTable.cshtml", @Model.LongestFish)
+      </div>
+
+      <div style="float:left;margin-left:50px">
+        <h2>Heaviest Fish</h2>
+        @Html.Partial("/Views/Competitions/ExtremeTable.cshtml", @Model.HeaviestFish)
+      </div>
+
+    </div>
+  </div>
+
+
+
 </div>
 
-<script>
-
-
-</script>
-
-<div id="tabs">
-  <ul>
-    <li><a href="#length-tab">Length</a></li>
-    <li><a href="#weight-tab">Weight</a></li>
-    <li><a href="#fish-tab">Fish</a></li>
-  </ul>
-
-
-  @Html.Partial("/Views/Competitions/LengthResults.cshtml", Model.LengthResults)
-  @Html.Partial("/Views/Competitions/WeightResults.cshtml", Model.WeightResults)
-
-</div>
-
-@section Scripts {
-  @Scripts.Render("~/bundles/jqueryval")
-}
 

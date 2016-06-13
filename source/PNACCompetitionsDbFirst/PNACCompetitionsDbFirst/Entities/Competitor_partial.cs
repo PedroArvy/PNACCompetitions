@@ -86,7 +86,7 @@ namespace PNACCompetitionsDbFirst.Entities
     {
       string name = FirstName.Trim();
 
-      if(!string.IsNullOrWhiteSpace(NickName))
+      if (!string.IsNullOrWhiteSpace(NickName))
       {
         name += " \"" + NickName.Trim() + "\"";
       }
@@ -97,11 +97,30 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
+    public bool IsMember()
+    {
+      return CompetitorType == (int)COMPETITOR_TYPE.SENIOR;
+    }
+
+
+    public string ShortName()
+    {
+      string name = FriendlyName();
+
+      if (!string.IsNullOrWhiteSpace(NickName))
+      {
+        name = NickName;
+      }
+
+      return name;
+    }
+
+
     public double Weight(Competition competition)
     {
       double points = 0;
 
-      foreach(Entry entry in competition.Entries.Where(e => e.CompetitionId == competition.CompetitionId && e.CompetitorId == CompetitorId))
+      foreach (Entry entry in competition.Entries.Where(e => e.CompetitionId == competition.CompetitionId && e.CompetitorId == CompetitorId))
       {
         points += Weight(entry);
       }
@@ -114,10 +133,10 @@ namespace PNACCompetitionsDbFirst.Entities
     {
       double points = 0;
 
-      foreach(Catch @catch in entry.Catches.Where(c => c.CatchAndRelease == false))
+      foreach (Catch @catch in entry.Catches.Where(c => c.CatchAndRelease == false))
       {
-        if(!@catch.Cleaned)
-          points += 0.9* @catch.Weight;
+        if (!@catch.Cleaned)
+          points += 0.9 * @catch.Weight;
         else
           points += @catch.Weight;
       }

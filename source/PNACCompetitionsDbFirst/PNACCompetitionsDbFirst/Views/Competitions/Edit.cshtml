@@ -62,11 +62,13 @@
 <div id="tabs">
   <ul>
     <li><a href="#details-tab">Details</a></li>
+
     <li><a href="#competitors-tab">Competitors</a></li>
 
     @if (Model.Begun)
     {
       <li><a href="#catches-tab">Catches</a></li>
+      <li><a href="#results-tab">Results</a></li>
     }
     else
     {
@@ -98,6 +100,8 @@
 
   @Html.Partial("/Views/Competitions/EditEntries.cshtml", Model)
   @Html.Partial("/Views/Competitions/EditCatches.cshtml", Model.CompetitionCatches)
+  @Html.Partial("/Views/Competitions/Results.cshtml", Model)
+
 
 </div>
 

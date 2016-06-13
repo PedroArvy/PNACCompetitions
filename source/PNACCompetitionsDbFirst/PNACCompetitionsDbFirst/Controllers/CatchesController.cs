@@ -119,7 +119,7 @@ namespace PNACCompetitionsDbFirst.Controllers
           if(catchEdit.GoToNew)
             return RedirectToAction("New", "Catches", new { id = @catch.Entry.CompetitionId });
           else
-            return RedirectToAction("Edit", "Competitions", new { id = @catch.Entry.CompetitionId, tabid = (int)CompetitionEdit.TABS.RESULTS });
+            return RedirectToAction("Edit", "Competitions", new { id = @catch.Entry.CompetitionId, tabid = (int)CompetitionEdit.TABS.CATCHES });
         }
         else
         {
@@ -183,7 +183,7 @@ namespace PNACCompetitionsDbFirst.Controllers
           if (catchEdit.GoToNew)
             return RedirectToAction("New", "Catches", new { id = competition.CompetitionId });
           else
-            return RedirectToAction("Edit", "Competitions", new { id = competition.CompetitionId, tabid = (int)CompetitionEdit.TABS.RESULTS });
+            return RedirectToAction("Edit", "Competitions", new { id = competition.CompetitionId, tabid = (int)CompetitionEdit.TABS.CATCHES });
         }
         else
         {

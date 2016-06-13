@@ -33,6 +33,18 @@ namespace PNACCompetitionsDbFirst.Entities
 
     #region *********************** Methods **************************
 
+
+    public double CleanedWeight()
+    {
+      double weight = Weight;
+
+      if (!Cleaned)
+        weight *= 0.9;
+
+      return weight;
+    }
+
+
     public double FormulaPoints()
     {
       double value = 0;
@@ -52,13 +64,27 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
+    public double HeaviestFish()
+    {
+      double heaviest = Weight;
+
+      if (!CatchAndRelease && Number > 1)
+        heaviest = Heaviest;
+
+      if (!Cleaned)
+        heaviest *= 0.9;
+
+      return heaviest;
+    }
+
+
     public LeaderBoardLineItem LeaderBoardLineItem()
     {
       LeaderBoardLineItem item = new LeaderBoardLineItem();
 
       item.Name = Entry.Competitor.FriendlyName();
       item.FormulaPoints = (int)Math.Round(FormulaPoints());
-      item.TrialPoints = TrialPoints();
+      //item.TrialPoints = TrialPoints();
 
       return item;
     }
@@ -78,17 +104,6 @@ namespace PNACCompetitionsDbFirst.Entities
     public static double PowerN(double n)
     {
       return Math.Pow(2, Math.Pow(FACTOR, n));
-    }
-
-
-    public int TrialPoints()
-    {
-      int value = 0;
-
-      if (Length > Fish.Minimum)
-        value = 5 + Length - Fish.Minimum;
-
-      return value;
     }
 
 

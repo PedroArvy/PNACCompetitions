@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using PNACCompetitionsDbFirst.Models;
-using PNACCompetitionsDbFirst.Models.ViewModels.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
