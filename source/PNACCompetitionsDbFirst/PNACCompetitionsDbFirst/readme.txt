@@ -7,7 +7,7 @@ Competitions - 3, 1, 1.5, 0.75, 0.75
 Fish - 1
 Catches - 2, 2.5, 2, 1.5, 1
 Seasons - 2
-Results - 1.25, 3.5
+Results - 1.25, 3.5, 3
 
 Knockout - 2.5, 2
 
