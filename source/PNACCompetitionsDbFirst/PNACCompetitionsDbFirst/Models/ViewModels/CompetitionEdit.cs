@@ -59,6 +59,10 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public List<RadioValue> Environments { get; set; }
 
 
+    [Display(Name = "Is this a go anywhere competition?")]
+    public bool GoAnywhere { get; set; }
+
+
     public List<ExtremeFish> HeaviestFish { get; set; }
 
 

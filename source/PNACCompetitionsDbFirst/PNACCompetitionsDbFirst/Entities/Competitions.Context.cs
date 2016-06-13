@@ -31,8 +31,8 @@ namespace PNACCompetitionsDbFirst.Entities
         public virtual DbSet<Fish> Fish { get; set; }
         public virtual DbSet<Competitor> Competitors { get; set; }
         public virtual DbSet<Entry> Entries { get; set; }
-        public virtual DbSet<Competition> Competitions { get; set; }
         public virtual DbSet<Environment> Environments { get; set; }
         public virtual DbSet<Catch> Catches { get; set; }
+        public virtual DbSet<Competition> Competitions { get; set; }
     }
 }

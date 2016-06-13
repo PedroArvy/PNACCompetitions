@@ -27,8 +27,8 @@ namespace PNACCompetitionsDbFirst.Entities
         public bool IsReferee { get; set; }
     
         public virtual Competitor Competitor { get; set; }
-        public virtual Competition Competition { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Catch> Catches { get; set; }
+        public virtual Competition Competition { get; set; }
     }
 }

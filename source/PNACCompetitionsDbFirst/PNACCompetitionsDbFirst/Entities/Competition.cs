@@ -30,6 +30,7 @@ namespace PNACCompetitionsDbFirst.Entities
         public Nullable<System.DateTime> WeighInTime { get; set; }
         public string WeighInVenue { get; set; }
         public string DayType { get; set; }
+        public bool GoAnywhere { get; set; }
     
         public virtual Environment Environment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -41,6 +41,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     private void AssignModel(Competition competition, CompetitionEdit model)
     {
+      competition.GoAnywhere = model.GoAnywhere;
       competition.Venue = model.Venue;
       competition.Start = DateTime.Parse(model.StartDate + " " + model.StartTime);
 
@@ -204,6 +205,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       {
         edit.CompetitionId = competition.CompetitionId;
         edit.Venue = competition.Venue;
+        edit.GoAnywhere = competition.GoAnywhere;
         edit.Begun = (DateTime.Now - competition.Start).TotalMinutes > 0;
         edit.StartDate = Format.DateOnly(competition.Start);
         edit.StartTime = Format.TimeOnly(competition.Start);
