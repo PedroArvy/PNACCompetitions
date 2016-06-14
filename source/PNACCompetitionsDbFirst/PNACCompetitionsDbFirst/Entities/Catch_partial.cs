@@ -78,18 +78,6 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
-    public LeaderBoardLineItem LeaderBoardLineItem()
-    {
-      LeaderBoardLineItem item = new LeaderBoardLineItem();
-
-      item.Name = Entry.Competitor.FriendlyName();
-      item.FormulaPoints = (int)Math.Round(FormulaPoints());
-      //item.TrialPoints = TrialPoints();
-
-      return item;
-    }
-
-
     public int LengthForPoints()
     {
       int length = Length;

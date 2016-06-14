@@ -361,7 +361,7 @@ namespace PNACCompetitionsDbFirst.Entities
   public class LeaderBoardItem
   {
     public Competitor Competitor { get; set; }
-    public int Order { get; set; }
+    public int Rank { get; set; }
     public double Points { get; set; }
   }
 

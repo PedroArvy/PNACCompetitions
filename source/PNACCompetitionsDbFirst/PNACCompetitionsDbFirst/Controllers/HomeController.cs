@@ -48,24 +48,9 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     public ActionResult Index()
     {
-      List<LeaderBoardLineItem> items = new List<LeaderBoardLineItem>();
+      List<LeaderBoardItem> items = db.LeaderBoardLength(db.Current());
 
-      LeaderBoardLineItem item;
-
-      foreach (Catch @catch in db.Catches)
-      {
-        item = @catch.LeaderBoardLineItem();
-        items.Add(item);
-      }
-
-      int count = 1;
-      foreach (LeaderBoardLineItem item_ in items.OrderBy(i => i.TrialPoints))
-      {
-        item_.Order = count;
-        count++;
-      }
-
-      return View(items.OrderBy(i => i.Order));
+      return View(items.OrderBy(i => i.Rank));
     }
 
 

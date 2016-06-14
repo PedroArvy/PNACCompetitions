@@ -69,14 +69,29 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
+    public Season Current()
+    {
+      DateTime now = DateTime.Now;
+      return Seasons.SingleOrDefault(s => s.Start <= now && now <= s.End);
+    }
+
+
     public List<LeaderBoardItem> LeaderBoardLength(Season season)
     {
       List<LeaderBoardItem> items = new List<LeaderBoardItem>();
       List<CompetitionPoint> lengthPoints;
+      int rank = 1;
 
       foreach (Competition competition in SeasonCompetitions(season))
       {
         lengthPoints = competition.LengthPoints();
+        AddLengthPoints(lengthPoints, items);
+      }
+
+      foreach(LeaderBoardItem item in items.OrderByDescending(l => l.Points))
+      {
+        item.Rank = rank;
+        rank++;
       }
 
       return items;

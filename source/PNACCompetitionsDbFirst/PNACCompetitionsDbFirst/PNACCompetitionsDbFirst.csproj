@@ -242,7 +242,6 @@
     <Compile Include="Models\ViewModels\FishEdit.cs" />
     <Compile Include="Models\ViewModels\CompetitorIndex.cs" />
     <Compile Include="Models\ViewModels\CompetitorListItem.cs" />
-    <Compile Include="Models\ViewModels\LeaderBoardLineItem.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
