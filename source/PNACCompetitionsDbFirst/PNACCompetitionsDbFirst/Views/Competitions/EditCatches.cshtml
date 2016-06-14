@@ -43,7 +43,7 @@
 
 
   <div class="row">
-    <div class="col-md-10">
+    <div class="col-md-12">
 
 
       @if (Model.Catches.Count() > 0)
@@ -53,35 +53,45 @@
             <thead>
               <tr>
                 <th>
-                  <span class="hidden-sm hidden-xs hidden-md ">Action</span>
+                  <span class="hidden-sm hidden-xs hidden-md">Action</span>
                   <span class="hidden-lg">A</span>
                 </th>
                 @if (Model.ShowDay)
                 {
                   <th>
                     <span class="hidden-sm hidden-xs hidden-md ">Day</span>
+                    <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
                     <span class="hidden-lg">D</span>
                   </th>
                 }
-                <th>Member</th>
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">Member</span>
+                  <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
+                  <span class="hidden-lg">F</span>
+                </th>
                 <th>
                   <span class="hidden-sm hidden-xs hidden-md">Fish</span>
+                  <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
                   <span class="hidden-lg">F</span>
                 </th>
                 <th>
                   <span class="hidden-sm hidden-xs hidden-md">kg</span>
+                  <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
                   <span class="hidden-lg">W</span>
                 </th>
                 <th>
                   <span class="hidden-sm hidden-xs hidden-md">cm</span>
+                  <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
                   <span class="hidden-lg">L</span>
                 </th>
                 <th>
                   <span class="hidden-sm hidden-xs hidden-md">Length formula</span>
+                  <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
                   <span class="hidden-lg">F</span>
                 </th>
-                                <th>
+                <th>
                   <span class="hidden-sm hidden-xs hidden-md">Length points</span>
+                  <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
                   <span class="hidden-lg">LP</span>
                 </th>
               </tr>
