@@ -72,7 +72,6 @@ namespace PNACCompetitionsDbFirst.Entities
     public List<LeaderBoardItem> LeaderBoardLength(Season season)
     {
       List<LeaderBoardItem> items = new List<LeaderBoardItem>();
-
       List<CompetitionPoint> lengthPoints;
 
       foreach (Competition competition in SeasonCompetitions(season))
