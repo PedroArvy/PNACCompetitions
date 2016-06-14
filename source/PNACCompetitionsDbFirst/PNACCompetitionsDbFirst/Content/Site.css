@@ -141,25 +141,28 @@ table .ui-widget-content a.white-button {
   display: none;
 }
 
-.tablesorter-image
-{
+.tablesorter-image {
   background-image: url('/content/images/bg.gif');
   background-repeat: no-repeat;
   background-position: right center;
   display: block;
-  width:20px;
-  height:15px;
-  margin-top:3px;
+  width: 20px;
+  height: 15px;
+  margin-top: 3px;
 }
 
 table.tablesorter th span {
-  float:left;
+  float: left; 
 }
 
   table.tablesorter th span.asc {
     background-image: url('/content/images/asc.gif');
+    background-repeat: no-repeat;
+    background-position: right center;
   }
 
   table.tablesorter th span.desc {
     background-image: url('/content/images/desc.gif');
+    background-repeat: no-repeat;
+    background-position: right center;
   }

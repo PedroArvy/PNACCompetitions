@@ -68,19 +68,16 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     [MaxLength(30)]
     public string Mobile { get; set; }
 
-
     [Display(Name = "Home phone (landline)")]
     [DataType(DataType.PhoneNumber)]
     [MaxLength(30)]
     public string Phone { get; set; }
-
 
     public bool ShowAdmin { get; set; }
 
     public bool ShowHidden { get; set; }
 
     public bool ShowCompetitorType { get; set; }
-
 
     public string Suburb { get; set; }
 
