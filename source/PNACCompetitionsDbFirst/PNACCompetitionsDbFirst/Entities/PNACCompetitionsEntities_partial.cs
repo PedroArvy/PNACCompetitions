@@ -28,6 +28,28 @@ namespace PNACCompetitionsDbFirst.Entities
     #region *********************** Methods **************************
 
 
+    private void AddLengthPoints(List<CompetitionPoint> lengthPoints, List<LeaderBoardItem> items)
+    {
+      LeaderBoardItem nextItem;
+
+      foreach (LeaderBoardItem item in items)
+      {
+        nextItem = items.SingleOrDefault(p => p.Competitor.CompetitorId == item.Competitor.CompetitorId);
+
+        if (nextItem == null)
+        {
+          nextItem = new LeaderBoardItem();
+          nextItem.Competitor = item.Competitor;
+          nextItem.Points = item.Points;
+        }
+        else
+        {
+          nextItem.Points += item.Points;
+        }
+      }
+    }
+
+
     /// <summary>
     /// Clean up competitors after import from Tony Coon's Excel
     /// </summary>
@@ -44,6 +66,27 @@ namespace PNACCompetitionsDbFirst.Entities
       }
 
       SaveChanges();
+    }
+
+
+    public List<LeaderBoardItem> LeaderBoardLength(Season season)
+    {
+      List<LeaderBoardItem> items = new List<LeaderBoardItem>();
+
+      List<CompetitionPoint> lengthPoints;
+
+      foreach (Competition competition in SeasonCompetitions(season))
+      {
+        lengthPoints = competition.LengthPoints();
+      }
+
+      return items;
+    }
+
+
+    public IQueryable<Competition> SeasonCompetitions(Season season)
+    {
+      return Competitions.Where(c => c.Start > season.Start && c.Start < season.End);
     }
 
 

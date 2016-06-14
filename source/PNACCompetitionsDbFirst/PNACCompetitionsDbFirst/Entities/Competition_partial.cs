@@ -83,6 +83,7 @@ namespace PNACCompetitionsDbFirst.Entities
       return catches;
     }
 
+
     public List<Competitor> Competitors()
     {
       List<Competitor> competitors = new List<Competitor>();
@@ -186,11 +187,12 @@ namespace PNACCompetitionsDbFirst.Entities
           point.Competitor = @catch.Entry.Competitor;
           point.Value = LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
           points.Add(point);
-
         }
         else
           point.Value += LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
       }
+
+      points = points.OrderBy(p => p.CompetitionPoints).Take(5).ToList();
 
       Rank(points);
 
@@ -353,6 +355,14 @@ namespace PNACCompetitionsDbFirst.Entities
 
     #region *********************** Interfaces ***********************
     #endregion
+  }
+
+
+  public class LeaderBoardItem
+  {
+    public Competitor Competitor { get; set; }
+    public int Order { get; set; }
+    public double Points { get; set; }
   }
 
 
