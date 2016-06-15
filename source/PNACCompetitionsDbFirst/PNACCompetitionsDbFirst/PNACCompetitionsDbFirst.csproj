@@ -375,6 +375,7 @@
     <Content Include="Views\Competitions\Results.cshtml" />
     <Content Include="Views\Competitions\ResultsTable.cshtml" />
     <Content Include="Views\Competitions\ExtremeTable.cshtml" />
+    <Content Include="Views\Home\LeaderBoard.cshtml" />
     <None Include="Web.Debug-Venom.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

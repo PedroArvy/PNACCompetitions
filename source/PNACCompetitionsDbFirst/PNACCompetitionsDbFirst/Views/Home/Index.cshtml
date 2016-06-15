@@ -1,5 +1,5 @@
-﻿@using PNACCompetitionsDbFirst.Models.ViewModels;
-@model IEnumerable<PNACCompetitionsDbFirst.Models.ViewModels.LeaderBoardLineItem>
+﻿@using PNACCompetitionsDbFirst.Entities;
+@model IEnumerable<LeaderBoardItem>
   
 @{
   ViewBag.Title = "Leader Board";
@@ -12,31 +12,19 @@
 </div>
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Competitor</th>
-            <th>Points</th>
-            <th>Formula Points</th>
-          </tr>
-        </thead>
-        <tbody>
 
-          @foreach (LeaderBoardLineItem item in Model)
-          {
-            <tr>
-              <td>@item.Order</td>
-              <td>@item.Name</td>
-              <td>@item.TrialPoints</td>
-              <td>@item.FormulaPoints</td>
-            </tr>
-          }
+      <div style="float:left">
+        <h3>Length</h3>
+        @Html.Partial("/Views/Home/LeaderBoard.cshtml", Model)
+      </div>
 
-        </tbody>
-      </table>
+      <div style="margin-left:60px;float:left">
+        <h3>Weight</h3>
+        @Html.Partial("/Views/Home/LeaderBoard.cshtml", Model)
+      </div>
+
     </div>
   </div>
 </div>

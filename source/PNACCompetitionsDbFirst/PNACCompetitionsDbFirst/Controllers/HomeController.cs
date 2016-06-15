@@ -35,6 +35,32 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     #region *********************** Methods **************************
 
+
+    public ActionResult About()
+    {
+      ViewBag.Message = "Your application description page.";
+
+      return View();
+    }
+
+
+    public ActionResult Contact()
+    {
+      ViewBag.Message = "Your contact page.";
+
+      return View();
+    }
+
+
+    public ActionResult Index()
+    {
+      List<LeaderBoardItem> length = db.LengthPoints(db.Current());
+      List<LeaderBoardItem> weight = db.WeightPoints(db.Current());
+
+      return View(length.OrderBy(i => i.Rank));
+    }
+
+
     public ActionResult Menu()
     {
       MenuViewModel menu = new MenuViewModel();
@@ -45,28 +71,6 @@ namespace PNACCompetitionsDbFirst.Controllers
       return PartialView(menu);
     }
 
-
-    public ActionResult Index()
-    {
-      List<LeaderBoardItem> items = db.LeaderBoardLength(db.Current());
-
-      return View(items.OrderBy(i => i.Rank));
-    }
-
-
-    public ActionResult About()
-    {
-      ViewBag.Message = "Your application description page.";
-
-      return View();
-    }
-
-    public ActionResult Contact()
-    {
-      ViewBag.Message = "Your contact page.";
-
-      return View();
-    }
 
     #endregion
 

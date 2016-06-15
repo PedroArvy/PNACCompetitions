@@ -179,17 +179,20 @@ namespace PNACCompetitionsDbFirst.Entities
 
       foreach (Catch @catch in Catches().Where(c => c.Entry.Competitor.IsMember()))
       {
-        point = points.SingleOrDefault(p => p.Competitor.CompetitorId == @catch.Entry.CompetitorId);
-
-        if (point == null)
+        if(@catch.LengthForPoints() > 0)
         {
-          point = new CompetitionPoint();
-          point.Competitor = @catch.Entry.Competitor;
-          point.Value = LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
-          points.Add(point);
+          point = points.SingleOrDefault(p => p.Competitor.CompetitorId == @catch.Entry.CompetitorId);
+
+          if (point == null)
+          {
+            point = new CompetitionPoint();
+            point.Competitor = @catch.Entry.Competitor;
+            point.Value = LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
+            points.Add(point);
+          }
+          else
+            point.Value += LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
         }
-        else
-          point.Value += LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
       }
 
       points = points.OrderBy(p => p.CompetitionPoints).Take(5).ToList();

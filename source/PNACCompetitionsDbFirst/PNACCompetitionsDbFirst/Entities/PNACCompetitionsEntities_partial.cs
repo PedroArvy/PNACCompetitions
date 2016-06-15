@@ -28,23 +28,24 @@ namespace PNACCompetitionsDbFirst.Entities
     #region *********************** Methods **************************
 
 
-    private void AddLengthPoints(List<CompetitionPoint> lengthPoints, List<LeaderBoardItem> items)
+    private void AddPoints(List<CompetitionPoint> points, List<LeaderBoardItem> items)
     {
       LeaderBoardItem nextItem;
 
-      foreach (LeaderBoardItem item in items)
+      foreach (CompetitionPoint point in points)
       {
-        nextItem = items.SingleOrDefault(p => p.Competitor.CompetitorId == item.Competitor.CompetitorId);
+        nextItem = items.SingleOrDefault(p => p.Competitor.CompetitorId == point.Competitor.CompetitorId);
 
         if (nextItem == null)
         {
           nextItem = new LeaderBoardItem();
-          nextItem.Competitor = item.Competitor;
-          nextItem.Points = item.Points;
+          nextItem.Competitor = point.Competitor;
+          nextItem.Points = point.CompetitionPoints;
+          items.Add(nextItem);
         }
         else
         {
-          nextItem.Points += item.Points;
+          nextItem.Points += point.CompetitionPoints;
         }
       }
     }
@@ -76,7 +77,7 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
-    public List<LeaderBoardItem> LeaderBoardLength(Season season)
+    public List<LeaderBoardItem> LengthPoints(Season season)
     {
       List<LeaderBoardItem> items = new List<LeaderBoardItem>();
       List<CompetitionPoint> lengthPoints;
@@ -85,7 +86,7 @@ namespace PNACCompetitionsDbFirst.Entities
       foreach (Competition competition in SeasonCompetitions(season))
       {
         lengthPoints = competition.LengthPoints();
-        AddLengthPoints(lengthPoints, items);
+        AddPoints(lengthPoints, items);
       }
 
       foreach(LeaderBoardItem item in items.OrderByDescending(l => l.Points))
@@ -101,6 +102,28 @@ namespace PNACCompetitionsDbFirst.Entities
     public IQueryable<Competition> SeasonCompetitions(Season season)
     {
       return Competitions.Where(c => c.Start > season.Start && c.Start < season.End);
+    }
+
+
+    public List<LeaderBoardItem> WeightPoints(Season season)
+    {
+      List<LeaderBoardItem> items = new List<LeaderBoardItem>();
+      List<CompetitionPoint> weightPoints;
+      int rank = 1;
+
+      foreach (Competition competition in SeasonCompetitions(season))
+      {
+        weightPoints = competition.WeightPoints();
+        AddPoints(weightPoints, items);
+      }
+
+      foreach (LeaderBoardItem item in items.OrderByDescending(l => l.Points))
+      {
+        item.Rank = rank;
+        rank++;
+      }
+
+      return items;
     }
 
 

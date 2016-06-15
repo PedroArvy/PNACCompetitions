@@ -10,15 +10,23 @@
   <div class="row">
     <div class="col-md-12">
 
-      <div style="float:left">
-        <h2>Length Results</h2>
-        @Html.Partial("/Views/Competitions/ResultsTable.cshtml", @Model.LengthPoints)
-      </div>
 
-      <div style="float:left;margin-left:50px">
-        <h2>Weight Results</h2>
-        @Html.Partial("/Views/Competitions/ResultsTable.cshtml", @Model.WeightPoints)
-      </div>
+      @if (Model.LengthPoints.Count() > 0)
+      {
+        <div style="float:left">
+          <h2>Length Results</h2>
+          @Html.Partial("/Views/Competitions/ResultsTable.cshtml", @Model.LengthPoints)
+        </div>
+      }
+
+
+      @if (Model.WeightPoints.Count() > 0)
+      {
+        <div style="float:left">
+          <h2>Weight Results</h2>
+          @Html.Partial("/Views/Competitions/ResultsTable.cshtml", @Model.WeightPoints)
+        </div>
+      }
 
     </div>
   </div>
@@ -27,15 +35,22 @@
   <div class="row">
     <div class="col-md-12">
 
-      <div style="float:left">
-        <h2>Longest Fish</h2>
-        @Html.Partial("/Views/Competitions/ExtremeTable.cshtml", @Model.LongestFish)
-      </div>
+      @if (Model.LongestFish.Count() > 0)
+      {
+        <div style="float:left">
+          <h2>Longest Fish</h2>
+          @Html.Partial("/Views/Competitions/ExtremeTable.cshtml", @Model.LongestFish)
+        </div>
+      }
 
-      <div style="float:left;margin-left:50px">
-        <h2>Heaviest Fish</h2>
-        @Html.Partial("/Views/Competitions/ExtremeTable.cshtml", @Model.HeaviestFish)
-      </div>
+      @if (Model.HeaviestFish.Count() > 0)
+      {
+        <div style="float:left">
+          <h2>Heaviest Fish</h2>
+          @Html.Partial("/Views/Competitions/ExtremeTable.cshtml", @Model.HeaviestFish)
+        </div>
+      }
+
 
     </div>
   </div>
@@ -43,5 +58,3 @@
 
 
 </div>
-
-
