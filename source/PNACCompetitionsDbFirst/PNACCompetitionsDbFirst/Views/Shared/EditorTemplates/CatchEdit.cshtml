@@ -90,14 +90,14 @@
       if ($('#Quantity').val().length == 0 || $('#Quantity').val() == '1') {
         $('#LengthDiv').show();
         $('.MoreThanOne').hide();
-        $('#weight-label').html('Weight');
+        $('#weight-label').html('Weight (kg)');
       }
       else {
         $('#LengthDiv').hide();
         $('.MoreThanOne').show();
-        $('#weight-label').html('Total Weight of ' + $('#Quantity').val() + ' fish');
-        $('#longest-label').html('Longest of ' + $('#Quantity').val() + ' fish (if known)');
-        $('#heaviest-label').html('Heaviest of ' + $('#Quantity').val() + ' fish (if known)');
+        $('#weight-label').html('Total Weight of ' + $('#Quantity').val() + ' fish (kg)');
+        $('#longest-label').html('Longest of ' + $('#Quantity').val() + ' fish (kg) if known');
+        $('#heaviest-label').html('Heaviest of ' + $('#Quantity').val() + ' fish (kg) if known');
       }
     }
 
@@ -108,31 +108,31 @@
 
 
 <div class="form-group">
-  <div class="col-md-10">
+  <div class="col-md-8">
     @Html.LabelFor(m => m.EntrantId, new { @class = "pnac-label" })
   </div>
-  <div class="col-md-10">
-    @Html.DropDownListFor(m => m.EntrantId, Model.Entrants, "Please select")
+  <div class="col-md-8">
+    @Html.DropDownListFor(m => m.EntrantId, Model.Entrants, "Please select", new { @class = "form-control" })
     <div>@Html.ValidationMessageFor(m => m.EntrantId)</div>
   </div>
 </div>
 
 
 <div class="form-group">
-  <div class="col-md-10">
+  <div class="col-md-8">
     @Html.LabelFor(m => m.Date, new { @class = "pnac-label" })
   </div>
-  <div class="col-md-10">
+  <div class="col-md-8">
     @Html.TextBoxFor(m => m.Date, new { @class = "datepicker" }) 
   </div>
 </div>
 
 
 <div class="form-group">
-  <div class="col-md-10">
+  <div class="col-md-8">
     @Html.LabelFor(m => m.CatchAndRelease, new { @class = "pnac-label" })
   </div>
-  <div class="col-md-10 radio-list">
+  <div class="col-md-8 radio-list">
 
     @Html.RadioButtonFor(x => x.CatchAndRelease, "Yes", new { @class = "CatchAndReleaseRadio", id = "CatchAndRelease" })Yes
     @Html.RadioButtonFor(x => x.CatchAndRelease, "No", new { @class = "CatchAndReleaseRadio", id = "CatchAndKill" })No
@@ -143,7 +143,7 @@
 
 <div class="form-group CatchAndKill">
 
-  <div class="col-md-10">
+  <div class="col-md-8">
     @Html.CheckBoxFor(m => m.Cleaned)
     @Html.LabelFor(m => m.Cleaned, new { @class = "pnac-label" })
   </div>
@@ -152,62 +152,60 @@
 
 
 <div class="form-group CatchAndKill CatchAndRelease">
-  <div class="col-md-10">
+  <div class="col-md-8">
     @Html.LabelFor(m => m.FishId, new { @class = "pnac-label" })
   </div>
-  <div class="col-md-10">
-    @Html.DropDownListFor(m => m.FishId, Model.Fish, "Please select")
+  <div class="col-md-8">
+    @Html.DropDownListFor(m => m.FishId, Model.Fish, "Please select", new { @class = "form-control" })
     <div>@Html.ValidationMessageFor(m => m.FishId)</div>
   </div>
 </div>
 
 
 <div class="form-group CatchAndKill">
-  <div class="col-md-10">
+  <div class="col-md-8">
     @Html.LabelFor(m => m.Quantity, new { @class = "pnac-label" })
   </div>
-  <div class="col-md-10">
-    @Html.DropDownListFor(m => m.Quantity, Model.Numbers, "Please select")
+  <div class="col-md-8">
+    @Html.DropDownListFor(m => m.Quantity, Model.Numbers, "Please select", new { @class = "form-control number-select" })
   </div>
 </div>
 
 
 <div id="LengthDiv" class="form-group CatchAndKill CatchAndRelease">
-  <div class="col-md-10">
+  <div class="col-md-8">
     @Html.LabelFor(m => m.Length, new { @class = "pnac-label" })
   </div>
-  <div class="col-md-10">
-    @Html.DropDownListFor(m => m.Length, Model.Lengths, "Please select") cm
+  <div class="col-md-8">
+    @Html.DropDownListFor(m => m.Length, Model.Lengths, "Please select", new { @class = "form-control number-select" })
   </div>
 </div>
 
 
 <div class="form-group CatchAndKill">
-  <div class="col-md-10">
+  <div class="col-md-8">
     @Html.LabelFor(m => m.Weight, new { @class = "pnac-label", id="weight-label" })
   </div>
-  <div class="col-md-10">
-    @Html.TextBoxFor(m => m.Weight, new { @class = "integer"}) kg
-  </div>
+  <div class="col-md-8">@Html.TextBoxFor(m => m.Weight, new { @class = "integer form-control number" })</div>
 </div>
 
 
 <div class="form-group MoreThanOne">
-  <div class="col-md-10">
+  <div class="col-md-8">
     @Html.LabelFor(m => m.Heaviest, new { @class = "pnac-label", id = "heaviest-label" })
   </div>
-  <div class="col-md-10">
-    @Html.TextBoxFor(m => m.Heaviest, new { @class = "integer" }) kg
+  <div class="col-md-8">
+    @Html.TextBoxFor(m => m.Heaviest, new { @class = "integer form-control number" })
   </div>
 </div>
 
 
 <div class="form-group MoreThanOne">
-  <div class="col-md-10">
+  <div class="col-md-8">
     @Html.LabelFor(m => m.Longest, new { @class = "pnac-label", id = "longest-label" })
   </div>
-  <div class="col-md-10">
-    @Html.DropDownListFor(m => m.Longest, Model.Lengths, "Please select") cm
+  <div class="col-md-8">
+    @Html.DropDownListFor(m => m.Longest, Model.Lengths, "Please select", new { @class = "form-control number-select" }) 
   </div>
 </div>
 
@@ -218,7 +216,7 @@
 
 
 <div class="form-group">
-  <div class="col-md-10">
+  <div class="col-md-8">
     <input type="submit" class="btn btn-default save-button" value="Save" />
     <input id="SaveAndNew" type="submit" class="btn btn-default save-button not-first-button" value="Save and new" />
     <a href="/Competitions/Edit/@Model.CompetitionId?tabId=@((int)PNACCompetitionsDbFirst.Models.ViewModels.CompetitionEdit.TABS.RESULTS)" class="btn btn-default save-button not-first-button">Back to all catches</a>

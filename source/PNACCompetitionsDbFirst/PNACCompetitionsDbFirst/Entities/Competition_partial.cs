@@ -171,7 +171,7 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
-    public List<CompetitionPoint> LengthPoints()
+    public List<CompetitionPoint> LengthPoints(IQueryable<Catch> allPreviousCatches)
     {
       List<CompetitionPoint> points = new List<Entities.CompetitionPoint>();
       CompetitionPoint point;
@@ -187,11 +187,11 @@ namespace PNACCompetitionsDbFirst.Entities
           {
             point = new CompetitionPoint();
             point.Competitor = @catch.Entry.Competitor;
-            point.Value = LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
+            point.Value = LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger, allPreviousCatches);
             points.Add(point);
           }
           else
-            point.Value += LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
+            point.Value += LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger, allPreviousCatches);
         }
       }
 
@@ -203,14 +203,13 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
-    public int LengthPoints(int length, Fish fish, out int smaller, out int bigger)
+    public int LengthPoints(int length, Fish fish, out int smaller, out int bigger, IQueryable<Catch> allPreviousCatches)
     {
       int points = 0;
       DateTime end = EndDateTime();
-      List<Catch> catches = Catches();
 
-      smaller = catches.Where(c => c.Date <= end && c.FishId == fish.FishId && length >= c.Length).Count();
-      bigger = catches.Where(c => c.Date <= end && c.FishId == fish.FishId && length < c.Length).Count();
+      smaller = allPreviousCatches.Where(c => c.Date <= end && c.FishId == fish.FishId && length >= c.Length).Count();
+      bigger = allPreviousCatches.Where(c => c.Date <= end && c.FishId == fish.FishId && length < c.Length).Count();
 
       if (smaller + bigger == 0 || smaller == 0)
         points = 50;

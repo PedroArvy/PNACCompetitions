@@ -164,7 +164,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
       row += "\n</td>";
 
       row += "\n<td>";
-      row += "\n<input data-val-competitorId=\"" + entry.CompetitorId + "\" class=\"competitorName\" type=\"text\" value=\"" + entry.Name + "\"/>";
+      row += "\n<input data-val-competitorId=\"" + entry.CompetitorId + "\" class=\"competitorName form-control\" type=\"text\" value=\"" + entry.Name + "\"/>";
       row += "\n</td>";
 
       row += "\n<td>";

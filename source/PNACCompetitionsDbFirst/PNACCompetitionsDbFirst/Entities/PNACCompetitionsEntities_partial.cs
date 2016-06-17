@@ -85,7 +85,7 @@ namespace PNACCompetitionsDbFirst.Entities
 
       foreach (Competition competition in SeasonCompetitions(season))
       {
-        lengthPoints = competition.LengthPoints();
+        lengthPoints = competition.LengthPoints(PreviousCatches(competition));
         AddPoints(lengthPoints, items);
       }
 
@@ -96,6 +96,13 @@ namespace PNACCompetitionsDbFirst.Entities
       }
 
       return items;
+    }
+
+
+    public IQueryable<Catch> PreviousCatches(Competition competition)
+    {
+      DateTime date = competition.EndDateTime();
+      return Catches.Where(c => c.Date <= date);
     }
 
 

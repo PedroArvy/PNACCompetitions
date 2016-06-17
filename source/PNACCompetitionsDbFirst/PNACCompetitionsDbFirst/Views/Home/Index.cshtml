@@ -1,6 +1,6 @@
-﻿@using PNACCompetitionsDbFirst.Entities;
-@model IEnumerable<LeaderBoardItem>
-  
+﻿@using PNACCompetitionsDbFirst.Models.ViewModels;
+@model LeaderBoard
+
 @{
   ViewBag.Title = "Leader Board";
 }
@@ -17,12 +17,12 @@
 
       <div style="float:left">
         <h3>Length</h3>
-        @Html.Partial("/Views/Home/LeaderBoard.cshtml", Model)
+        @Html.Partial("/Views/Home/LeaderBoard.cshtml", Model.Length)
       </div>
 
       <div style="margin-left:60px;float:left">
         <h3>Weight</h3>
-        @Html.Partial("/Views/Home/LeaderBoard.cshtml", Model)
+        @Html.Partial("/Views/Home/LeaderBoard.cshtml", Model.Weight)
       </div>
 
     </div>

@@ -94,10 +94,12 @@ namespace PNACCompetitionsDbFirst.Controllers
       DateTime end = entry.Competition.EndDateTime();
       CompetitorCatch competitorCatch;
       Competition competition = entry.Competition;
+      Dictionary<int, IQueryable<Catch>> catches = new Dictionary<int, IQueryable<Catch>>();
+      IQueryable<Catch> previousCatches = db.PreviousCatches(competition);
 
       foreach (Catch @catch in entry.Catches)
       {
-        points = entry.Competition.LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
+        points = entry.Competition.LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger, previousCatches);
         competitorCatch = new CompetitorCatch();
 
         competitorCatch.CatchId = @catch.CatchId;
@@ -115,7 +117,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         else
           competitorCatch.Weight = "NA";
 
-        competitorCatch.Points = competition.LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger);
+        competitorCatch.Points = competition.LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger, previousCatches);
         competitorCatch.LengthFormula = "100x" + smaller.ToString() + "/(" + smaller.ToString() + "+" + bigger.ToString() + ")";
  
         results.Add(competitorCatch);
@@ -228,7 +230,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         edit.CompetitionEntries = CompetitionEntries(competition);
         edit.CompetitionCatches = CompetitionResults(competition);
-        edit.LengthPoints = competition.LengthPoints();
+        edit.LengthPoints = competition.LengthPoints(db.PreviousCatches(competition));
         edit.WeightPoints = competition.WeightPoints();
         edit.HeaviestFish = competition.HeaviestFish();
         edit.LongestFish = competition.LongestFish();
@@ -269,7 +271,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         model.CompetitionEntries = CompetitionEntries(competition);
         model.CompetitionCatches = CompetitionResults(competition);
-        model.LengthPoints = competition.LengthPoints();
+        model.LengthPoints = competition.LengthPoints(db.PreviousCatches(competition));
         model.WeightPoints = competition.WeightPoints();
         model.HeaviestFish = competition.HeaviestFish();
         model.LongestFish = competition.LongestFish();

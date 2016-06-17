@@ -54,10 +54,12 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     public ActionResult Index()
     {
-      List<LeaderBoardItem> length = db.LengthPoints(db.Current());
-      List<LeaderBoardItem> weight = db.WeightPoints(db.Current());
+      LeaderBoard board = new LeaderBoard();
 
-      return View(length.OrderBy(i => i.Rank));
+      board.Length = db.LengthPoints(db.Current()).OrderBy(p => p.Rank);
+      board.Weight = db.WeightPoints(db.Current()).OrderBy(p => p.Rank);
+
+      return View(board);
     }
 
 

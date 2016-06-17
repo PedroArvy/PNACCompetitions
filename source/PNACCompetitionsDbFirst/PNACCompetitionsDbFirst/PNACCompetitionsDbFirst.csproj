@@ -249,6 +249,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
+    <Compile Include="Models\ViewModels\LeaderBoard.cs" />
     <Compile Include="Models\ViewModels\SeasonEdit.cs" />
     <Compile Include="Models\ViewModels\SeasonsIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

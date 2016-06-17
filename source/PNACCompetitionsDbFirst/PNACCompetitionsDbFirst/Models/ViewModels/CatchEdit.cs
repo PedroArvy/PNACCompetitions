@@ -44,17 +44,17 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public List<SelectListItem> Entrants { get; set; }
 
 
-    [Display(Name = "Length")]
+    [Display(Name = "Length (cm)")]
     public int ? Length { get; set; }
     public List<SelectListItem> Lengths { get; set; }
 
-    [Display(Name = "Longest")]
+    [Display(Name = "Longest (cm)")]
     public int ? Longest { get; set; }
 
 
     public bool GoToNew { get; set; }
 
-    [Display(Name = "Heaviest")]
+    [Display(Name = "Heaviest (kg)")]
     public double ? Heaviest { get; set; }
 
 
@@ -69,7 +69,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public IEnumerable<SelectListItem> Fish { get; set; }
 
 
-    [Display(Name = "Weight")]
+    [Display(Name = "Weight (kg)")]
     public double Weight { get; set; }
 
 

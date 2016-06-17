@@ -166,3 +166,15 @@ table.tablesorter th span {
     background-repeat: no-repeat;
     background-position: right center;
   }
+
+
+  .form-control.number
+  {
+    width:150px;
+  }
+
+  .form-control.number-select
+  {
+    width:150px;
+  }
+
