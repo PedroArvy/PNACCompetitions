@@ -72,7 +72,7 @@
               @if (Model.CanEdit)
               {
                 <td>
-                  @Html.ActionLink("Edit", "Edit", "Seasons", new { id = season.SeasonId }, new { @class = "btn btn-primary btn-sm white-button" })
+                  @Html.ActionLink("View", "Edit", "Seasons", new { id = season.SeasonId }, new { @class = "btn btn-primary btn-sm white-button" })
                   @Html.ActionLink("Delete", "Delete", "Seasons", new { id = season.SeasonId }, new { @class = "btn btn-primary btn-sm white-button", onclick = "return DeleteSeason(" + season.SeasonId + ")" })
                 </td>
               }

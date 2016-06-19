@@ -74,7 +74,7 @@
               <td class="table-action">
                 @if (competitor.CanEdit)
                 {
-                  @Html.ActionLink("Edit", "Edit", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm white-button" })
+                  @Html.ActionLink("View", "Edit", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm white-button" })
 
                   if (competitor.IsAdmin)
                   {
