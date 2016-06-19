@@ -1,6 +1,7 @@
 ﻿using PNACCompetitionsDbFirst.Controllers;
 using PNACCompetitionsDbFirst.Entities;
 using PNACCompetitionsDbFirst.Models.ViewModels;
+using PNACCompetitionsDbFirst.Models.ViewModels.Caught;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,24 @@ namespace PNACCompetitionsDbFirst.Controllers
         canEdit = true;
 
       return canEdit;
+    }
+
+
+    public ActionResult Caught(int id)
+    {
+      Catch theCatch = db.Catches.Single(c => c.CatchId == id);
+      PNACCompetitionsDbFirst.Models.ViewModels.Caught.Index index = new Index();
+
+      FishCaught caught;
+      index.Species = theCatch.Fish.Name;
+
+      foreach (Catch @catch in db.Catches.Where(c => c.Date <= theCatch.Entry.Competition.EndDateTime()))
+      {
+        caught = new FishCaught() { CompetitorName = @catch.Entry.Competitor.FriendlyName(), Date = @catch.Date, FishName = @catch.Fish.Name, Length = @catch.Length, Weight = @catch.Weight };
+        index.Caught.Add(caught);
+      }
+
+      return View(index);
     }
 
 

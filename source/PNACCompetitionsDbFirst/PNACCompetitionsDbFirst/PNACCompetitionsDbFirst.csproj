@@ -229,6 +229,7 @@
     <Compile Include="Models\ViewModels\CatchEdit.cs" />
     <Compile Include="Models\ViewModels\Catches\CompetitionCatches.cs" />
     <Compile Include="Models\ViewModels\Catches\CompetitorCatch.cs" />
+    <Compile Include="Models\ViewModels\Caught\Index.cs" />
     <Compile Include="Models\ViewModels\CompetitionEdit.cs" />
     <Compile Include="Models\ViewModels\CompetitionListItem.cs" />
     <Compile Include="Models\ViewModels\CompetitionIndex.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Models\ViewModels\Components\RadioValue.cs" />
     <Compile Include="Models\ViewModels\Entries\CompetitionEntries.cs" />
     <Compile Include="Models\ViewModels\Entries\CompetitorEntry.cs" />
+    <Compile Include="Models\ViewModels\Caught\FishCaught.cs" />
     <Compile Include="Models\ViewModels\FishListItem.cs" />
     <Compile Include="Models\ViewModels\FishIndex.cs" />
     <Compile Include="Models\ViewModels\CompetitorEdit.cs" />
@@ -377,6 +379,7 @@
     <Content Include="Views\Competitions\ResultsTable.cshtml" />
     <Content Include="Views\Competitions\ExtremeTable.cshtml" />
     <Content Include="Views\Home\LeaderBoard.cshtml" />
+    <Content Include="Views\Fish\Caught.cshtml" />
     <None Include="Web.Debug-Venom.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

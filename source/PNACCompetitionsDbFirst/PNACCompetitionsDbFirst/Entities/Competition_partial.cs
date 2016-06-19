@@ -100,6 +100,7 @@ namespace PNACCompetitionsDbFirst.Entities
 
     /// <summary>
     /// The End of the Competition whether it is single or multi day
+    /// Do not use End as this may be null in single day competitions
     /// </summary>
     /// <returns></returns>
     public DateTime EndDateTime()
@@ -209,7 +210,7 @@ namespace PNACCompetitionsDbFirst.Entities
       DateTime end = EndDateTime();
 
       smaller = allPreviousCatches.Where(c => c.Date <= end && c.FishId == fish.FishId && length >= c.Length).Count();
-      bigger = allPreviousCatches.Where(c => c.Date <= end && c.FishId == fish.FishId && length < c.Length).Count();
+      bigger = allPreviousCatches.Where(c => c.Date <= end && c.FishId == fish.FishId && length <= c.Length).Count();
 
       if (smaller + bigger == 0 || smaller == 0)
         points = 50;
