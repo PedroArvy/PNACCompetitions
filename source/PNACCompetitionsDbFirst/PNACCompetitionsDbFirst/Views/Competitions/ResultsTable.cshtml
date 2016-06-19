@@ -38,7 +38,7 @@
           <tr>
             <td>@point.Order</td>
             <td>@point.Competitor.ShortName()</td>
-            <td>@point.CompetitionPoints (@point.Value@point.Unit)</td>
+            <td>@point.CompetitionPoints (@Math.Round(point.Value, 2)@point.Unit)</td>
           </tr>
         }
 

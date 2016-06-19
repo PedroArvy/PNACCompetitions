@@ -64,7 +64,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public bool GoAnywhere { get; set; }
 
 
-    public List<ExtremeFish> HeaviestFish { get; set; }
+    public List<HeaviestFish> HeaviestFish { get; set; }
 
 
     public List<CompetitionPoint> LengthPoints { get; set; }

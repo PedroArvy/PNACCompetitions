@@ -112,13 +112,13 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
-    public List<LeaderBoardItem> WeightPoints(Season season)
+    public List<LeaderBoardItem> WeightPoints(Season season, Fish.ENVIRONMENT environment)
     {
       List<LeaderBoardItem> items = new List<LeaderBoardItem>();
       List<CompetitionPoint> weightPoints;
       int rank = 1;
 
-      foreach (Competition competition in SeasonCompetitions(season))
+      foreach (Competition competition in SeasonCompetitions(season).Where(c => c.EnvironmentId == (int)environment))
       {
         weightPoints = competition.WeightPoints();
         AddPoints(weightPoints, items);

@@ -13,7 +13,7 @@
 
   <script>
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
       $('.capitalise').change(function () {
         $(this).val(toTitleCase($(this).val()));
@@ -60,4 +60,10 @@
   @Scripts.Render("~/bundles/bootstrap")
   @RenderSection("scripts", required: false)
 </body>
+
+
+<script type="text/javascript" src="~/Scripts/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="~/Scripts/tablesorter.js"></script>
+
+
 </html>

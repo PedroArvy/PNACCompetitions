@@ -1,5 +1,6 @@
 ﻿using PNACCompetitionsDbFirst.Controllers;
 using PNACCompetitionsDbFirst.Entities;
+using PNACCompetitionsDbFirst.Models;
 using PNACCompetitionsDbFirst.Models.ViewModels;
 using PNACCompetitionsDbFirst.Models.ViewModels.Caught;
 using System;
@@ -43,13 +44,13 @@ namespace PNACCompetitionsDbFirst.Controllers
       fish.Environments.ToList().RemoveRange(0, fish.Environments.Count());
 
       if (model.EnvironmentFreshwater)
-        fish.Environments.Add(db.Environments.Single(e => e.EnvironmentId == Fish.FRESHWATER));
+        fish.Environments.Add(db.Environments.Single(e => e.EnvironmentId == (int)Fish.ENVIRONMENT.FRESHWATER));
 
       if (model.EnvironmentEstuary)
-        fish.Environments.Add(db.Environments.Single(e => e.EnvironmentId == Fish.ESTUARY));
+        fish.Environments.Add(db.Environments.Single(e => e.EnvironmentId == (int)Fish.ENVIRONMENT.ESTUARY));
 
       if (model.EnvironmentSaltwater)
-        fish.Environments.Add(db.Environments.Single(e => e.EnvironmentId == Fish.SALTWATER));
+        fish.Environments.Add(db.Environments.Single(e => e.EnvironmentId == (int)Fish.ENVIRONMENT.SALTWATER));
     }
 
 
@@ -64,18 +65,28 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    public ActionResult Caught(int id)
+    public ActionResult Caught(int catchId)
     {
-      Catch theCatch = db.Catches.Single(c => c.CatchId == id);
+      Catch theCatch = db.Catches.Single(c => c.CatchId == catchId);
       PNACCompetitionsDbFirst.Models.ViewModels.Caught.Index index = new Index();
+      DateTime end = theCatch.Entry.Competition.EndDateTime();
 
       FishCaught caught;
       index.Species = theCatch.Fish.Name;
 
-      foreach (Catch @catch in db.Catches.Where(c => c.Date <= theCatch.Entry.Competition.EndDateTime()))
+      index.Title = Format.TitleCase(theCatch.Fish.Name + " Caught Before " + end.ToString("d MMMM yyyy"));
+
+      foreach (Catch @catch in db.Catches.Where(c => c.FishId == theCatch.FishId && c.Date <= end))
       {
-        caught = new FishCaught() { CompetitorName = @catch.Entry.Competitor.FriendlyName(), Date = @catch.Date, FishName = @catch.Fish.Name, Length = @catch.Length, Weight = @catch.Weight };
-        index.Caught.Add(caught);
+        caught = new FishCaught() { CompetitorName = @catch.Entry.Competitor.FriendlyName(), Competition = @catch.Entry.Competition.Venue, Date = @catch.Date, Length = @catch.LengthForPoints() };
+
+        if (@catch.Number == 1)
+          caught.Weight = @catch.Weight;
+        else
+          caught.Weight = @catch.Heaviest;
+
+        if(caught.Length != 0 && caught.Weight != 0)
+          index.Caught.Add(caught);
       }
 
       return View(index);
@@ -95,9 +106,9 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.Maximum = fish.Maximum;
         edit.Difficulty = fish.Difficulty;
 
-        edit.EnvironmentFreshwater = fish.Environments.Any(e => e.EnvironmentId == Fish.FRESHWATER);
-        edit.EnvironmentEstuary = fish.Environments.Any(e => e.EnvironmentId == Fish.ESTUARY);
-        edit.EnvironmentSaltwater = fish.Environments.Any(e => e.EnvironmentId == Fish.SALTWATER);
+        edit.EnvironmentFreshwater = fish.Environments.Any(e => e.EnvironmentId == (int)Fish.ENVIRONMENT.FRESHWATER);
+        edit.EnvironmentEstuary = fish.Environments.Any(e => e.EnvironmentId == (int)Fish.ENVIRONMENT.ESTUARY);
+        edit.EnvironmentSaltwater = fish.Environments.Any(e => e.EnvironmentId == (int)Fish.ENVIRONMENT.SALTWATER);
 
       }
       else

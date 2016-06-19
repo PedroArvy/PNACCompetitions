@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -79,6 +80,13 @@ namespace PNACCompetitionsDbFirst.Models
         theDate = new DateTime();
 
       return theDate.ToString("h:mm tt");
+    }
+
+
+    public static string TitleCase(string str)
+    {
+      TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
+      return myTI.ToTitleCase(str);
     }
 
     #endregion

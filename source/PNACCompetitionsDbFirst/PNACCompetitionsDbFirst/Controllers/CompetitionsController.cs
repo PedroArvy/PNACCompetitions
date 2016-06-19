@@ -89,7 +89,8 @@ namespace PNACCompetitionsDbFirst.Controllers
     
     private List<CompetitorCatch> Catches(Entry entry)
     {
-      int points, smaller, bigger;
+      int equal, smaller, total;
+      double points;
       List<CompetitorCatch> results = new List<CompetitorCatch>();
       DateTime end = entry.Competition.EndDateTime();
       CompetitorCatch competitorCatch;
@@ -99,7 +100,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       foreach (Catch @catch in entry.Catches)
       {
-        points = entry.Competition.LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger, previousCatches);
+        points = entry.Competition.LengthPoints(@catch.CatchId, @catch.LengthForPoints(), @catch.Fish, out smaller, out total, out equal, previousCatches);
         competitorCatch = new CompetitorCatch();
 
         competitorCatch.CatchId = @catch.CatchId;
@@ -107,8 +108,10 @@ namespace PNACCompetitionsDbFirst.Controllers
         competitorCatch.CompetitorName = entry.Competitor.FriendlyName();
         competitorCatch.FishName = @catch.Fish.Name;
 
-        if(@catch.Length != 0)
+        if (@catch.Length != 0)
           competitorCatch.Length = @catch.Length.ToString();
+        else if (@catch.Longest != 0)
+          competitorCatch.Length = @catch.Longest.ToString();
         else
           competitorCatch.Length = "NA";
 
@@ -117,9 +120,13 @@ namespace PNACCompetitionsDbFirst.Controllers
         else
           competitorCatch.Weight = "NA";
 
-        competitorCatch.Points = competition.LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger, previousCatches);
-        competitorCatch.LengthFormula = "100x" + smaller.ToString() + "/(" + smaller.ToString() + "+" + bigger.ToString() + ")";
- 
+        competitorCatch.Points = competition.LengthPoints(@catch.CatchId, @catch.LengthForPoints(), @catch.Fish, out smaller, out total, out equal, previousCatches);
+
+        if(equal != 0)
+          competitorCatch.LengthFormula = "100x(" + smaller.ToString() + "+0.5x" + equal + ")/" + total.ToString();
+        else
+          competitorCatch.LengthFormula = "100x" + smaller.ToString() + "/" + total.ToString();
+
         results.Add(competitorCatch);
       }
 

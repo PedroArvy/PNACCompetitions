@@ -380,6 +380,7 @@
     <Content Include="Views\Competitions\ExtremeTable.cshtml" />
     <Content Include="Views\Home\LeaderBoard.cshtml" />
     <Content Include="Views\Fish\Caught.cshtml" />
+    <Content Include="Views\Competitions\HeaviestTable.cshtml" />
     <None Include="Web.Debug-Venom.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -131,10 +131,10 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
-    public List<ExtremeFish> HeaviestFish()
+    public List<HeaviestFish> HeaviestFish()
     {
-      List<ExtremeFish> heaviestList = new List<ExtremeFish>();
-      ExtremeFish heaviest, next;
+      List<HeaviestFish> heaviestList = new List<HeaviestFish>();
+      HeaviestFish heaviest, next;
       double weight;
 
       foreach (Catch @catch in Catches())
@@ -148,10 +148,16 @@ namespace PNACCompetitionsDbFirst.Entities
 
         if (weight != 0)
         {
-          next = new ExtremeFish();
+          next = new HeaviestFish();
           next.Competitor = @catch.Entry.Competitor;
           next.Fish = @catch.Fish;
           next.Value = weight;
+
+          if (@catch.Number == 1)
+            next.Length = @catch.Length;
+          else
+            next.Length = @catch.Longest;
+
           next.Units = "kg";
 
           if (heaviest == null)
@@ -176,11 +182,11 @@ namespace PNACCompetitionsDbFirst.Entities
     {
       List<CompetitionPoint> points = new List<Entities.CompetitionPoint>();
       CompetitionPoint point;
-      int smaller, bigger;
+      int smaller, total, equal;
 
       foreach (Catch @catch in Catches().Where(c => c.Entry.Competitor.IsMember()))
       {
-        if(@catch.LengthForPoints() > 0)
+        if (@catch.LengthForPoints() > 0)
         {
           point = points.SingleOrDefault(p => p.Competitor.CompetitorId == @catch.Entry.CompetitorId);
 
@@ -188,11 +194,11 @@ namespace PNACCompetitionsDbFirst.Entities
           {
             point = new CompetitionPoint();
             point.Competitor = @catch.Entry.Competitor;
-            point.Value = LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger, allPreviousCatches);
+            point.Value = LengthPoints(@catch.CatchId, @catch.LengthForPoints(), @catch.Fish, out smaller, out total, out equal, allPreviousCatches);
             points.Add(point);
           }
           else
-            point.Value += LengthPoints(@catch.LengthForPoints(), @catch.Fish, out smaller, out bigger, allPreviousCatches);
+            point.Value += LengthPoints(@catch.CatchId, @catch.LengthForPoints(), @catch.Fish, out smaller, out total, out equal, allPreviousCatches);
         }
       }
 
@@ -204,18 +210,32 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
-    public int LengthPoints(int length, Fish fish, out int smaller, out int bigger, IQueryable<Catch> allPreviousCatches)
+    public double LengthPoints(int catchId, int length, Fish fish, out int smaller, out int total, out int equal, IQueryable<Catch> allPreviousCatches)
     {
-      int points = 0;
+      double points = 0;
       DateTime end = EndDateTime();
+      smaller = total = equal = 0;
 
-      smaller = allPreviousCatches.Where(c => c.Date <= end && c.FishId == fish.FishId && length >= c.Length).Count();
-      bigger = allPreviousCatches.Where(c => c.Date <= end && c.FishId == fish.FishId && length <= c.Length).Count();
+      if (fish.FishId == 100)
+      {
+      }
 
-      if (smaller + bigger == 0 || smaller == 0)
-        points = 50;
-      else
-        points = 100 * smaller / (smaller + bigger);
+      if (catchId == 46)
+      {
+      }
+
+      if (length > 0)
+      {
+        smaller = allPreviousCatches.Where(c => c.Length != 0 && c.Date <= end && c.FishId == fish.FishId && length > c.Length).Count() +
+          allPreviousCatches.Where(c => c.Longest != 0 && c.Date <= end && c.FishId == fish.FishId && length > c.Longest).Count();
+
+        equal = allPreviousCatches.Where(c => c.Length != 0 && c.Date <= end && c.FishId == fish.FishId && length == c.Length).Count() +
+          allPreviousCatches.Where(c => c.Longest != 0 && c.Date <= end && c.FishId == fish.FishId && length == c.Longest).Count();
+
+        total = allPreviousCatches.Where(c => (c.Length != 0 || c.Longest != 0) && c.Date <= end && c.FishId == fish.FishId).Count();
+
+        points = 100*(smaller + 0.5 * equal) / total;
+      }
 
       return points;
     }
@@ -236,7 +256,7 @@ namespace PNACCompetitionsDbFirst.Entities
 
         length = @catch.LengthForPoints();
 
-        if(length != 0)
+        if (length != 0)
         {
           next = new ExtremeFish();
           next.Competitor = @catch.Entry.Competitor;
@@ -244,7 +264,7 @@ namespace PNACCompetitionsDbFirst.Entities
           next.Value = length;
           next.Units = "cm";
 
-          if(longest == null)
+          if (longest == null)
             longestList.Add(next);
           else if (longest.Value < @catch.Length)
           {
@@ -387,4 +407,8 @@ namespace PNACCompetitionsDbFirst.Entities
     public string Units { get; set; }
   }
 
+  public class HeaviestFish : ExtremeFish
+  {
+    public int Length { get; set; }
+  }
 }

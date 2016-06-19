@@ -3,8 +3,6 @@
 
 @model CompetitionCatches
 
-
-
 <script>
 
   function DeleteCatch(id) {
@@ -114,12 +112,39 @@
                   }
 
                   <td>@result.CompetitorName</td>
-                  <td>@result.FishName</td>
+                  <td>@Html.ActionLink(@result.FishName, "Caught", "Fish", new { catchId = @result.CatchId }, new { @class = "caught-link-cell" })</td>
                   <td>@result.Weight</td>
                   <td>@result.Length</td>
-                  <td>@result.LengthFormula</td>
-                  <td>@result.Points</td>
+                  
+                  <td>
 
+                    @{
+                      if (@result.Points == 0)
+                      {
+                        <text>NA</text>
+                      }
+                      else
+                      {
+                        @result.LengthFormula
+                      }
+                    }
+                  
+                  </td>
+                  
+                  <td>
+
+                    @{
+                      if (@result.Points == 0)
+                      {
+                        <text>NA</text>
+                      }
+                      else
+                      {
+                        @Math.Round(result.Points, 0)
+                      }
+                    }
+                 
+                  </td>
                 </tr>
               }
 
@@ -127,8 +152,8 @@
           </table>
         </div>
       }
-      else
-      {
+                  else
+                  {
         @:There are no catches yet
       }
 

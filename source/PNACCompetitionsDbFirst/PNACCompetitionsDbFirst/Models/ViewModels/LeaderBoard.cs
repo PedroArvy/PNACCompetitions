@@ -20,7 +20,11 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     public IEnumerable<LeaderBoardItem> Length { get; set; }
 
-    public IEnumerable<LeaderBoardItem> Weight { get; set; }
+    public IEnumerable<LeaderBoardItem> WeightEstuary { get; set; }
+
+    public IEnumerable<LeaderBoardItem> WeightFresh { get; set; }
+
+    public IEnumerable<LeaderBoardItem> WeightSaltwater { get; set; }
 
     #endregion
 

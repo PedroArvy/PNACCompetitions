@@ -152,7 +152,7 @@ table .ui-widget-content a.white-button {
 }
 
 table.tablesorter th span {
-  float: left; 
+  float: left;
 }
 
   table.tablesorter th span.asc {
@@ -168,13 +168,26 @@ table.tablesorter th span {
   }
 
 
-  .form-control.number
-  {
-    width:150px;
-  }
+.form-control.number {
+  width: 150px;
+}
 
-  .form-control.number-select
-  {
-    width:150px;
-  }
+.form-control.number-select {
+  width: 150px;
+}
 
+.numerical-column {
+  text-align: right;
+}
+
+.ui-widget-content a.caught-link-cell
+{
+  text-decoration:underline;
+  color:blue;
+}
+
+
+.leader-board{
+  margin-left:50px;
+  float:left;
+}

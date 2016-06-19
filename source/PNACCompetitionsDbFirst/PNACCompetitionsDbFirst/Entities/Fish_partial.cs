@@ -9,9 +9,7 @@ namespace PNACCompetitionsDbFirst.Entities
   {
     #region *********************** Constants ************************
 
-    public const int FRESHWATER = 1;
-    public const int ESTUARY = 2;
-    public const int SALTWATER = 3;
+    public enum ENVIRONMENT { FRESHWATER = 1, ESTUARY = 2, SALTWATER = 3 }
 
     #endregion
 

@@ -1,0 +1,126 @@
+﻿@using PNACCompetitionsDbFirst.Entities;
+@using PNACCompetitionsDbFirst.Models.ViewModels.Caught;
+
+@model Index
+
+@{
+  ViewBag.Title = "Fish Caught";
+}
+
+<div class="row">
+  <div class="col-md-6">
+    <h2 class="section-title">@Html.Raw(Model.Title)</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-10">
+    <div class="table-responsive">
+
+      <div>@Model.MaximumLength()</div>
+      <div style="margin-bottom:20px">@Model.MaximumWeight()</div>
+
+      <div>Average Length : @Model.AverageLength() cm</div>
+      <div style="margin-bottom:20px">Average Weight : @Model.AverageWeight() kg</div>
+
+      <table class="table table-striped tablesorter">
+        <thead>
+          <tr>
+
+            <th>
+              <span class="hidden-sm hidden-xs hidden-md ">Order</span>
+              <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
+              <span class="hidden-lg">O</span>
+            </th>
+
+            <th>
+              <span class="hidden-sm hidden-xs hidden-md ">Date</span>
+              <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
+              <span class="hidden-lg">D</span>
+            </th>
+
+            <th>
+              <span class="hidden-sm hidden-xs hidden-md ">Competition</span>
+              <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
+              <span class="hidden-lg">C</span>
+
+            </th>
+
+            <th>
+              <span class="hidden-sm hidden-xs hidden-md ">Competitor</span>
+              <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
+              <span class="hidden-lg">C</span>
+            </th>
+
+            <th>
+              <span class="hidden-sm hidden-xs hidden-md ">Length (cm)</span>
+              <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
+              <span class="hidden-lg">L</span>
+            </th>
+
+            <th>
+              <span class="hidden-sm hidden-xs hidden-md ">Weight (kg)</span>
+              <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
+              <span class="hidden-lg">W</span>
+            </th>
+
+          </tr>
+        </thead>
+        <tbody>
+
+          @{
+            int order = 0;
+          }
+
+
+          @foreach (FishCaught fish in Model.Caught.OrderByDescending(f => f.Date))
+          {
+            {
+              order++;
+            }
+
+            <tr>
+
+              <td>@order.</td>
+              <td>@fish.Date.ToString(PNACCompetitionsDbFirst.Models.Format.DATE_FORMAT_CS)</td>
+              <td>@fish.Competition</td>
+              <td>@fish.CompetitorName</td>
+
+              <td>
+
+                @{
+                  if (@fish.Length == 0)
+                  {
+                    <text>NA</text>
+                  }
+                  else
+                  {
+                    @fish.Length
+                  }
+                }
+
+              </td>
+
+              <td>
+
+                @{
+                  if (@fish.Weight == 0)
+                  {
+                    <text>NA</text>
+                  }
+                  else
+                  {
+                    @fish.Weight
+                  }
+                }
+
+              </td>
+            </tr>
+
+                  }
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

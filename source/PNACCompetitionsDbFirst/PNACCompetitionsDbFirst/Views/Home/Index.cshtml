@@ -20,9 +20,19 @@
         @Html.Partial("/Views/Home/LeaderBoard.cshtml", Model.Length)
       </div>
 
-      <div style="margin-left:60px;float:left">
-        <h3>Weight</h3>
-        @Html.Partial("/Views/Home/LeaderBoard.cshtml", Model.Weight)
+      <div class="leader-board">
+        <h3>Weight Fresh</h3>
+        @Html.Partial("/Views/Home/LeaderBoard.cshtml", Model.WeightFresh)
+      </div>
+
+      <div class="leader-board">
+        <h3>Weight Estuary</h3>
+        @Html.Partial("/Views/Home/LeaderBoard.cshtml", Model.WeightEstuary)
+      </div>
+
+      <div class="leader-board">
+        <h3>Weight Saltwater</h3>
+        @Html.Partial("/Views/Home/LeaderBoard.cshtml", Model.WeightSaltwater)
       </div>
 
     </div>

@@ -4,13 +4,12 @@
 @model CompetitionEdit
 
 @{
-  ViewBag.Title = "Edit " + @Model.Venue;
+  ViewBag.Title = @Model.Venue;
 }
 
 @section meta
 {
-<script type="text/javascript" src="~/Scripts/jquery.tablesorter.min.js"></script>
-<script type="text/javascript" src="~/Scripts/tablesorter.js"></script>
+
 
   <style>
     body {

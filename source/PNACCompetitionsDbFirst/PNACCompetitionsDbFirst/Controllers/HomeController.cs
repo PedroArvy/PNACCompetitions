@@ -57,7 +57,10 @@ namespace PNACCompetitionsDbFirst.Controllers
       LeaderBoard board = new LeaderBoard();
 
       board.Length = db.LengthPoints(db.Current()).OrderBy(p => p.Rank);
-      board.Weight = db.WeightPoints(db.Current()).OrderBy(p => p.Rank);
+
+      board.WeightFresh = db.WeightPoints(db.Current(), Fish.ENVIRONMENT.FRESHWATER).OrderBy(p => p.Rank);
+      board.WeightSaltwater = db.WeightPoints(db.Current(), Fish.ENVIRONMENT.SALTWATER).OrderBy(p => p.Rank);
+      board.WeightEstuary = db.WeightPoints(db.Current(), Fish.ENVIRONMENT.ESTUARY).OrderBy(p => p.Rank);
 
       return View(board);
     }

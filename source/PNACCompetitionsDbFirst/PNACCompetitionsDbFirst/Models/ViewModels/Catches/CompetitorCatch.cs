@@ -30,7 +30,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels.Catches
 
     public string LengthFormula { get; set; }
 
-    public int Points { get; set; }
+    public double Points { get; set; }
 
     public string Weight { get; set; }
     
