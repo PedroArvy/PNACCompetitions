@@ -1,0 +1,25 @@
+﻿@using PNACCompetitionsDbFirst.Entities;
+@model IEnumerable<Catch>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Fish</th>
+      <th>Competitor</th>
+      <th>Points</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    @foreach (LeaderBoardItem item in Model)
+    {
+      <tr>
+        <td>@item.Rank</td>
+        <td>@item.Competitor.FriendlyName()</td>
+        <td>@item.Points</td>
+      </tr>
+    }
+
+  </tbody>
+</table>

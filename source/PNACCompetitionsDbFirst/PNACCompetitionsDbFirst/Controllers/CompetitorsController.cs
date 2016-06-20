@@ -94,6 +94,12 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
+    public ActionResult Catches(int id)
+    {
+      return View(db.Catches.Where(c => c.Entry.CompetitorId == id));
+    }
+
+
     public ActionResult Create(int id)
     {
       CompetitorCreate model = new CompetitorCreate();
@@ -299,6 +305,9 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         if (Competitor != null && !string.IsNullOrEmpty(Competitor.AspNetUserId) && Competitor.AspNetUserId == competitor.AspNetUserId)
           competitorListItem.IsLoggedIn = true;
+
+        if (db.Catches.Any(c => c.Entry.CompetitorId == competitor.CompetitorId))
+          competitorListItem.HasCatches = true;
 
         model.CompetitorListItems.Add(competitorListItem);
       }

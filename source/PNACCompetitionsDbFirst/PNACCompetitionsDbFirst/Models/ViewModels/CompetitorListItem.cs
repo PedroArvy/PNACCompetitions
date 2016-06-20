@@ -10,6 +10,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public bool CanCreatePassword { get; set; }
     public int CompetitorId { get; set; }
     public bool CanEdit { get; set; }
+    public bool HasCatches { get; set; }
     public bool Hide { get; set; }
     public bool IsAdmin { get; set; }
     public bool IsLoggedIn { get; set; }

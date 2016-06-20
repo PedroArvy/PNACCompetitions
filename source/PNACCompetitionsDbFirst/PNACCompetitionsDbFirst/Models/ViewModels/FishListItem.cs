@@ -18,6 +18,7 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
     #region *********************** Properties ***********************
 
+    public bool Caught { get; set; }
     public double Difficulty { get; set; }
     public int FishId { get; set; }
     public string Name { get; set; }

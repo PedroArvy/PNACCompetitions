@@ -8,11 +8,10 @@ Fish - 1
 Catches - 2, 2.5, 2, 1.5, 1
 Seasons - 2
 Results - 1.25, 3.5, 3, 0.5
+Caught - 1, 1
 
 Knockout - 2.5, 2
 
 EntriesAjax - 0.5, 3, 1, 2.5, 0.5
 
-Tidy up - 2
-
-
+Tidy up - 2, 3, 1

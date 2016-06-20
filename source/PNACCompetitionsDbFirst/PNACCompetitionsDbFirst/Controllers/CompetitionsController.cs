@@ -72,7 +72,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       return canEdit;
     }
 
-    
+
     private List<CompetitorCatch> Catches(Competition competition)
     {
       List<CompetitorCatch> results = new List<CompetitorCatch>();
@@ -84,9 +84,9 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       return results;
     }
-    
 
-    
+
+
     private List<CompetitorCatch> Catches(Entry entry)
     {
       int equal, smaller, total;
@@ -122,7 +122,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         competitorCatch.Points = competition.LengthPoints(@catch.CatchId, @catch.LengthForPoints(), @catch.Fish, out smaller, out total, out equal, previousCatches);
 
-        if(equal != 0)
+        if (equal != 0)
           competitorCatch.LengthFormula = "100x(" + smaller.ToString() + "+0.5x" + equal + ")/" + total.ToString();
         else
           competitorCatch.LengthFormula = "100x" + smaller.ToString() + "/" + total.ToString();
@@ -132,7 +132,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       return results;
     }
-    
+
 
 
     private List<CompetitorEntry> CompetitionEntries(Competition competition)
@@ -152,7 +152,7 @@ namespace PNACCompetitionsDbFirst.Controllers
       return entries;
     }
 
-    
+
     private CompetitionCatches CompetitionResults(Competition competition)
     {
       CompetitionCatches results = new CompetitionCatches();
@@ -162,7 +162,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       return results;
     }
-    
+
 
 
     public JsonResult Delete(int id)
@@ -204,52 +204,46 @@ namespace PNACCompetitionsDbFirst.Controllers
     }
 
 
-    [Authorize]
     public ActionResult Edit(int id, int? tabId)
     {
       Competition competition = db.Competitions.SingleOrDefault(c => c.CompetitionId == id);
       CompetitionEdit edit = new CompetitionEdit();
 
-      if (CanEditCompetition(id))
+      edit.CanEdit = CanEditCompetition(id);
+      edit.CompetitionId = competition.CompetitionId;
+      edit.Venue = competition.Venue;
+      edit.GoAnywhere = competition.GoAnywhere;
+      edit.Begun = (DateTime.Now - competition.Start).TotalMinutes > 0;
+      edit.StartDate = Format.DateOnly(competition.Start);
+      edit.StartTime = Format.TimeOnly(competition.Start);
+      edit.DayType = competition.DayType;
+      edit.MemberNames = MakeNames(competition);
+
+      if (competition.DayType == "m")
       {
-        edit.CompetitionId = competition.CompetitionId;
-        edit.Venue = competition.Venue;
-        edit.GoAnywhere = competition.GoAnywhere;
-        edit.Begun = (DateTime.Now - competition.Start).TotalMinutes > 0;
-        edit.StartDate = Format.DateOnly(competition.Start);
-        edit.StartTime = Format.TimeOnly(competition.Start);
-        edit.DayType = competition.DayType;
-
-        edit.MemberNames = MakeNames(competition);
-
-        if (competition.DayType == "m")
-        {
-          edit.EndDate = Format.DateOnly((DateTime)competition.End);
-          edit.EndTime = Format.TimeOnly((DateTime)competition.End);
-          edit.DayType = "m";
-        }
-        else
-        {
-          edit.EndDate = Format.DateOnly(competition.Start.AddDays(1));
-          edit.EndTime = "5:00 PM";
-          edit.DayType = "s";
-        }
-
-        edit.CompetitionEntries = CompetitionEntries(competition);
-        edit.CompetitionCatches = CompetitionResults(competition);
-        edit.LengthPoints = competition.LengthPoints(db.PreviousCatches(competition));
-        edit.WeightPoints = competition.WeightPoints();
-        edit.HeaviestFish = competition.HeaviestFish();
-        edit.LongestFish = competition.LongestFish();
-
-        edit.Environments = Environments();
-        edit.EnvironmentId = competition.EnvironmentId;
-
-        if (tabId != null)
-          edit.TabId = (TABS)tabId;
+        edit.EndDate = Format.DateOnly((DateTime)competition.End);
+        edit.EndTime = Format.TimeOnly((DateTime)competition.End);
+        edit.DayType = "m";
       }
       else
-        throw new UnauthorizedAccessException();
+      {
+        edit.EndDate = Format.DateOnly(competition.Start.AddDays(1));
+        edit.EndTime = "5:00 PM";
+        edit.DayType = "s";
+      }
+
+      edit.CompetitionEntries = CompetitionEntries(competition);
+      edit.CompetitionCatches = CompetitionResults(competition);
+      edit.LengthPoints = competition.LengthPoints(db.PreviousCatches(competition));
+      edit.WeightPoints = competition.WeightPoints();
+      edit.HeaviestFish = competition.HeaviestFish();
+      edit.LongestFish = competition.LongestFish();
+
+      edit.Environments = Environments();
+      edit.EnvironmentId = competition.EnvironmentId;
+
+      if (tabId != null)
+        edit.TabId = (TABS)tabId;
 
       return View(edit);
     }

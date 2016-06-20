@@ -264,6 +264,7 @@
     <Content Include="Content\images\asc.gif" />
     <Content Include="Content\images\bg.gif" />
     <Content Include="Content\images\desc.gif" />
+    <Content Include="Content\images\fish.png" />
     <Content Include="Content\pickadate\default.css" />
     <Content Include="Content\pickadate\default.time.css" />
     <Content Include="Content\pickadate\default.date.css" />
@@ -381,6 +382,7 @@
     <Content Include="Views\Home\LeaderBoard.cshtml" />
     <Content Include="Views\Fish\Caught.cshtml" />
     <Content Include="Views\Competitions\HeaviestTable.cshtml" />
+    <Content Include="Views\Competitors\Catches.cshtml" />
     <None Include="Web.Debug-Venom.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

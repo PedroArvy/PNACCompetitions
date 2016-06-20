@@ -1,7 +1,7 @@
 ﻿@using PNACCompetitionsDbFirst.Models.ViewModels
 @using PNACCompetitionsDbFirst.Models.ViewModels.Catches;
 
-@model CompetitionCatches
+@model CompetitionEdit
 
 <script>
 
@@ -32,29 +32,38 @@
 
 <div id="catches-tab">
 
-  <div class="row">
+  @if (Model.CanEdit)
+  {
+    <div class="row">
 
-    <div class="col-md-7">
-      <a href="/Catches/New?id=@Model.CompetitonId" class="btn btn-default save-button" style="color:#ffffff;margin-bottom:20px">New</a>
+      <div class="col-md-7">
+        <a href="/Catches/New?id=@Model.CompetitionCatches.CompetitonId" class="btn btn-default save-button" style="color:#ffffff;margin-bottom:20px">New</a>
+      </div>
+
     </div>
-  </div>
+  }
 
 
   <div class="row">
     <div class="col-md-12">
 
 
-      @if (Model.Catches.Count() > 0)
+      @if (Model.CompetitionCatches.Catches.Count() > 0)
       {
         <div class="table-responsive">
           <table class="table table-striped tablesorter">
             <thead>
               <tr>
-                <th>
-                  <span class="hidden-sm hidden-xs hidden-md">Action</span>
-                  <span class="hidden-lg">A</span>
-                </th>
-                @if (Model.ShowDay)
+
+                @if (Model.CanEdit)
+                {
+                  <th>
+                    <span class="hidden-sm hidden-xs hidden-md">Action</span>
+                    <span class="hidden-lg">A</span>
+                  </th>
+                }
+
+                @if (Model.CompetitionCatches.ShowDay)
                 {
                   <th>
                     <span class="hidden-sm hidden-xs hidden-md ">Day</span>
@@ -97,16 +106,20 @@
 
             <tbody id="competitors-body">
 
-              @foreach (CompetitorCatch result in Model.Catches.OrderByDescending(c => c.Date).ThenByDescending(c => c.CatchId))
+              @foreach (CompetitorCatch result in Model.CompetitionCatches.Catches.OrderByDescending(c => c.Date).ThenByDescending(c => c.CatchId))
               {
                 <tr id="row-@result.CatchId">
 
-                  <td>
-                    @Html.ActionLink("View", "Edit", "Catches", new { id = result.CatchId }, new { @class = "btn btn-primary btn-sm white-button" })
-                    <a href="#" class="btn btn-primary btn-sm white-button" onclick="return DeleteCatch(@result.CatchId)">Delete</a>
-                  </td>
+                  @if (Model.CanEdit)
+                  {
+                    <td>
+                      @Html.ActionLink("View", "Edit", "Catches", new { id = result.CatchId }, new { @class = "btn btn-primary btn-sm white-button" })
+                      <a href="#" class="btn btn-primary btn-sm white-button" onclick="return DeleteCatch(@result.CatchId)">Delete</a>
+                    </td>
+                  }
 
-                  @if (Model.ShowDay)
+
+                  @if (Model.CompetitionCatches.ShowDay)
                   {
                     <td>@result.Date.ToString("ddd")</td>
                   }
@@ -115,7 +128,7 @@
                   <td>@Html.ActionLink(@result.FishName, "Caught", "Fish", new { catchId = @result.CatchId }, new { @class = "caught-link-cell" })</td>
                   <td>@result.Weight</td>
                   <td>@result.Length</td>
-                  
+
                   <td>
 
                     @{
@@ -128,9 +141,9 @@
                         @result.LengthFormula
                       }
                     }
-                  
+
                   </td>
-                  
+
                   <td>
 
                     @{
@@ -143,18 +156,18 @@
                         @Math.Round(result.Points, 0)
                       }
                     }
-                 
+
                   </td>
                 </tr>
-              }
+                      }
 
             </tbody>
           </table>
         </div>
-      }
-                  else
-                  {
-        @:There are no catches yet
+                      }
+                      else
+                      {
+                        @:There are no catches yet
       }
 
     </div>
@@ -162,5 +175,3 @@
 
 
 </div>
-
-

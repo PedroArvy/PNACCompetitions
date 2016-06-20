@@ -31,6 +31,9 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public bool Begun { get; set; }
 
 
+    public bool CanEdit { get; set; }
+
+
     public List<CompetitorEntry> CompetitionEntries { get; set; }
 
 
@@ -154,14 +157,17 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
 
       row += "<tr class=\"competitor-row\">";
 
-      row += "\n<td>";
+      if(CanEdit)
+      {
+        row += "\n<td>";
 
-      if(!string.IsNullOrWhiteSpace(entry.Name))
-        row += "\n<a href=\"#\" class=\"btn btn-primary btn-sm DeleteCompetitor white-button\">Delete</a>";
-      else
-        row += "\n<a href=\"#\" class=\"btn btn-primary btn-sm DeleteCompetitor white-button\" style=\"display:none\">Delete</a>";
+        if (!string.IsNullOrWhiteSpace(entry.Name))
+          row += "\n<a href=\"#\" class=\"btn btn-primary btn-sm DeleteCompetitor white-button\">Delete</a>";
+        else
+          row += "\n<a href=\"#\" class=\"btn btn-primary btn-sm DeleteCompetitor white-button\" style=\"display:none\">Delete</a>";
 
-      row += "\n</td>";
+        row += "\n</td>";
+      }
 
       row += "\n<td>";
       row += "\n<input data-val-competitorId=\"" + entry.CompetitorId + "\" class=\"competitorName form-control\" type=\"text\" value=\"" + entry.Name + "\"/>";

@@ -191,3 +191,32 @@ table.tablesorter th span {
   margin-left:50px;
   float:left;
 }
+
+#members td.name{
+  vertical-align:middle;
+}
+
+.navbar-inverse, .btn-primary, .btn-primary:hover {
+    background-color: #7f0000;
+    border:0px;
+}
+
+.btn-primary:hover {
+    color: #999999;
+    border:0px;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #ffffff;
+}
+
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #ffffff;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #999999;
+}
+
+

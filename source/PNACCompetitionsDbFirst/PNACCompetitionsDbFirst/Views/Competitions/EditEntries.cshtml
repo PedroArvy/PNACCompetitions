@@ -13,10 +13,14 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>
-                <span class="hidden-sm hidden-xs hidden-md">Delete</span>
-                <span class="hidden-lg"></span>
-              </th>
+              @if (Model.CanEdit)
+              {
+                <th>
+                  <span class="hidden-sm hidden-xs hidden-md">Delete</span>
+                  <span class="hidden-lg"></span>
+                </th>
+              }
+
               <th>Member</th>
               <th>
                 <span class="hidden-sm hidden-xs hidden-md">Captain</span>
@@ -44,12 +48,12 @@
           <button class="btn btn-primary btn-sm">Test</button>
         *@
 
-
-        <div class="form-group">
-
+        @if (Model.CanEdit)
+        {
+          <div class="form-group">
             <button id="Save" class="btn btn-primary save-button">Save</button>
-     
-        </div>
+          </div>
+        }
 
       </div>
     </div>

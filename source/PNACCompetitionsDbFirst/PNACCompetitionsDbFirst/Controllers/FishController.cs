@@ -71,12 +71,21 @@ namespace PNACCompetitionsDbFirst.Controllers
       PNACCompetitionsDbFirst.Models.ViewModels.Caught.Index index = new Index();
       DateTime end = theCatch.Entry.Competition.EndDateTime();
 
-      FishCaught caught;
       index.Species = theCatch.Fish.Name;
 
       index.Title = Format.TitleCase(theCatch.Fish.Name + " Caught Before " + end.ToString("d MMMM yyyy"));
 
-      foreach (Catch @catch in db.Catches.Where(c => c.FishId == theCatch.FishId && c.Date <= end))
+      Caught(index, end, theCatch.FishId);
+
+      return View(index);
+    }
+
+
+    private void Caught(Index index, DateTime end, int fishId)
+    {
+      FishCaught caught;
+
+      foreach (Catch @catch in db.Catches.Where(c => c.FishId == fishId && c.Date <= end))
       {
         caught = new FishCaught() { CompetitorName = @catch.Entry.Competitor.FriendlyName(), Competition = @catch.Entry.Competition.Venue, Date = @catch.Date, Length = @catch.LengthForPoints() };
 
@@ -85,11 +94,24 @@ namespace PNACCompetitionsDbFirst.Controllers
         else
           caught.Weight = @catch.Heaviest;
 
-        if(caught.Length != 0 && caught.Weight != 0)
+        if (caught.Length != 0 && caught.Weight != 0)
           index.Caught.Add(caught);
       }
+    }
 
-      return View(index);
+
+    public ActionResult CaughtFish(int fishId)
+    {
+      PNACCompetitionsDbFirst.Models.ViewModels.Caught.Index index = new Index();
+      Fish fish = db.Fish.Single(f => f.FishId == fishId);
+      DateTime end = DateTime.Now;
+
+      index.Species = fish.Name;
+      index.Title = Format.TitleCase(fish.Name + " Caught Before " + end.ToString("d MMMM yyyy"));
+
+      Caught(index, end, fishId);
+
+      return View("/Views/Fish/Caught.cshtml", index);
     }
 
 
@@ -152,6 +174,9 @@ namespace PNACCompetitionsDbFirst.Controllers
       foreach (Fish fish_ in db.Fish.OrderBy(c => c.Name))
       {
         fishListItem = new FishListItem() { FishId = fish_.FishId, Name = fish_.Name, Difficulty = fish_.Difficulty, Maximum = fish_.Maximum, Minimum = fish_.Minimum };
+
+        if (db.Catches.Any(c => c.FishId == fish_.FishId))
+          fishListItem.Caught = true;
 
         index.FishListItems.Add(fishListItem);
       }

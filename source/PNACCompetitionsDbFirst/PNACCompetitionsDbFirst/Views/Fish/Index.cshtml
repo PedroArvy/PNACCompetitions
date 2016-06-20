@@ -24,10 +24,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            @if (Model.CanCreate)
-            {
-              <th>Action</th>
-            }
+            <th>Action</th>
             <th>Name</th>
             <th>Minimum</th>
             <th>Maximum</th>
@@ -41,15 +38,21 @@
           {
             <tr>
 
-              @if (Model.CanCreate)
-              {
-                <td class="table-action">
+              <td class="table-action">
 
+                @if (Model.CanCreate)
+                {
                   @Html.ActionLink("View", "Edit", "Fish", new { id = fish.FishId }, new { @class = "btn btn-primary btn-sm" })
                   @Html.ActionLink("Delete", "Delete", "Fish", new { id = fish.FishId }, new { @class = "btn btn-primary btn-sm" })
+                }
 
-                </td>
-              }
+                @if (fish.Caught)
+                {
+                  @Html.ActionLink("History", "CaughtFish", "Fish", new { fishId = fish.FishId }, new { @class = "btn btn-primary btn-sm" })
+                }
+
+              </td>
+
 
               <td>@fish.Name</td>
               <td>@fish.Minimum</td>

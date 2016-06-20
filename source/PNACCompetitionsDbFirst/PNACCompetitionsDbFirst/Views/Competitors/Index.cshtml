@@ -57,7 +57,7 @@
         @Html.ActionLink("New", "New", "Competitors", new { }, new { @class = "btn btn-primary btn-sm" })
       }
 
-      <table class="table table-striped">
+      <table id="members" class="table table-striped">
         <thead>
           <tr>
             <th>Action</th>
@@ -76,10 +76,18 @@
                 {
                   @Html.ActionLink("View", "Edit", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm white-button" })
 
-                  if (competitor.IsAdmin)
+                  if (Model.CanCreate)
                   {
                     @Html.ActionLink("Delete", "Delete", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm white-button", onclick = "return DeleteCompetitor(" + competitor.CompetitorId + ")" })
                   }
+
+                                  @*
+    if(competitor.HasCatches)
+    {
+      <a href="/Competitors/Catches?id=@competitor.CompetitorId"><img src="~/Content/images/fish.png" width="30" border="0"/></a>
+    }
+                                  *@
+
                 }
                 else if (competitor.CanCreatePassword)
                 {
@@ -87,7 +95,6 @@
                 }
 
               </td>
-
 
               <td class="name">@Model.NameToDisplay(competitor)</td>
 

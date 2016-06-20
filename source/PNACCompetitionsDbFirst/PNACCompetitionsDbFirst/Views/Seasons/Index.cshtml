@@ -46,7 +46,11 @@
   <div class="col-md-8">
     <div class="table-responsive">
 
-      <a href="/Seasons/New" class="btn btn-primary btn-sm">New</a>
+      @if (Model.CanEdit)
+      {
+        <a href="/Seasons/New" class="btn btn-primary btn-sm">New</a>
+      }
+
 
       <table class="table table-striped">
         <thead>

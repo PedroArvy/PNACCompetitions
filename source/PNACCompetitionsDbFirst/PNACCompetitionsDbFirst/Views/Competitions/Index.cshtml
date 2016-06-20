@@ -16,8 +16,7 @@
 
         .done(function (msg) {
 
-          if (msg.success == 'true')
-          {
+          if (msg.success == 'true') {
             $('#row-' + id).hide('slow');
           }
 
@@ -40,7 +39,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-10">
+  <div class="col-md-8">
     <div class="table-responsive">
 
       @if (Model.CanCreate)
@@ -51,10 +50,8 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            @if (Model.CompetitionListItems.Any(c => c.CanEdit))
-            {
-              <th>Action</th>
-            }
+
+            <th>Action</th>
             <th>Venue</th>
             <th>Start</th>
             <th>End</th>
@@ -67,16 +64,16 @@
           {
             <tr id="row-@competition.CompetitionId">
 
-              @if (Model.CompetitionListItems.Any(c => c.CanEdit))
-              {
-                <td class="table-action">
-                  @if (competition.CanEdit)
-                  {
-                    @Html.ActionLink("View", "Edit", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm white-button" })
-                    @Html.ActionLink("Delete", "Delete", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm white-button", onclick = "return DeleteCompetition(" + competition.CompetitionId + ")" })
-                  }
-                </td>
-              }
+
+              <td class="table-action">
+                @Html.ActionLink("View", "Edit", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm white-button" })
+
+                @if (competition.CanEdit)
+                {
+                  @Html.ActionLink("Delete", "Delete", "Competitions", new { id = competition.CompetitionId }, new { @class = "btn btn-primary btn-sm white-button", onclick = "return DeleteCompetition(" + competition.CompetitionId + ")" })
+                }
+              </td>
+
 
               <td>@competition.Venue</td>
               <td>@Format.DateAndTime(competition.Start)</td>
