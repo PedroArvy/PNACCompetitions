@@ -12,6 +12,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using PNACCompetitionsDbFirst.Models;
 using PNACCompetitionsDbFirst.Entities;
+using System.Net.Mail;
 
 namespace PNACCompetitionsDbFirst
 {
@@ -19,8 +20,34 @@ namespace PNACCompetitionsDbFirst
   {
     public Task SendAsync(IdentityMessage message)
     {
+      Send(message.Destination, "do_not_reply@prestonac.com.au", "Preston Angling Club", message.Subject, message.Body, true);
+
       // Plug in your email service here to send an email.
       return Task.FromResult(0);
+    }
+
+
+    public void Send(string to, string email_from, string name_from, string subject, string body, bool isHtml)
+    {
+      if (string.IsNullOrEmpty(to) || string.IsNullOrEmpty(email_from))
+        return;
+
+      MailAddress toAddress = new MailAddress(to);
+      MailAddress fromAddress = new MailAddress(email_from, (name_from != null) ? name_from : "");
+      MailMessage message = new MailMessage(fromAddress, toAddress);
+      message.Subject = subject;
+      message.Body = body;
+      message.IsBodyHtml = isHtml;
+      SmtpClient client = new SmtpClient();
+
+      try
+      {
+        client.Send(message);
+      }
+      catch
+      {
+      }
+
     }
   }
 

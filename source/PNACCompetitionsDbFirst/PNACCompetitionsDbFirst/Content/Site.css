@@ -106,8 +106,7 @@ a.btn {
 }
 
 .save-button, a.not-first-button.btn-default, a.btn.btn-delete {
-  background-color: #428bca;
-  border-color: #357ebd;
+  border-color: #7f0000;
   color: #ffffff;
 }
 
@@ -196,13 +195,19 @@ table.tablesorter th span {
   vertical-align:middle;
 }
 
-.navbar-inverse, .btn-primary, .btn-primary:hover {
+#thebody .navbar-inverse, .btn-primary, .save-button {
     background-color: #7f0000;
     border:0px;
 }
 
-.btn-primary:hover {
+#thebody .save-button:hover {
+    background-color: #7f0000;
+    border:0px;
+}
+
+#thebody .white-button:hover, .btn-primary:hover {
     color: #999999;
+    background-color: #7f0000;
     border:0px;
 }
 

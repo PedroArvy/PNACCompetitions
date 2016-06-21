@@ -232,19 +232,18 @@ namespace PNACCompetitionsDbFirst.Controllers
       Competitor competitor = db.Competitors.SingleOrDefault(c => c.CompetitorId == model.CompetitorId);
 
       AssignErrors(competitor, model);
-
+      
       if (CanEdit(competitor) && ModelState.IsValid)
       {
         AssignModel(competitor, model);
-
         AspNetUser aspNetUser = db.AspNetUsers.SingleOrDefault(u => u.UserName == model.Email.Trim());
-
+        
         if (aspNetUser == null)
         {
           var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
           var result = UserManager.CreateAsync(user, model.Password);
         }
-        else
+        else if(!string.IsNullOrWhiteSpace(model.Password))
         {
           var user = await UserManager.FindByNameAsync(model.Email);
 
@@ -260,6 +259,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         db.SaveChanges();
         return RedirectToAction("Index");
+        
       }
       else if (CanEdit(competitor) && !ModelState.IsValid)
         return View(model);

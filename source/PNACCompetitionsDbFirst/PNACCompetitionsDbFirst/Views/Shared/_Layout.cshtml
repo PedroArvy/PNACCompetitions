@@ -31,7 +31,7 @@
 
 
 </head>
-<body>
+<body id="thebody">
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -40,7 +40,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        @Html.ActionLink("Preston Northcote Angling Club", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <a href="http://www.prestonac.com.au" class="navbar-brand" target="_blank">Preston Northcote Angling Club</a>
       </div>
       <div class="navbar-collapse collapse">
         @Html.Action("Menu", "Home")
