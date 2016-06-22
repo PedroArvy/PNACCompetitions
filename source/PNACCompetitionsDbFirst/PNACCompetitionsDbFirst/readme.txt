@@ -3,6 +3,7 @@ Setup - 4
 
 Leader board - 1.5
 Competitors - 1, 1.75, 0.75, 2, 1 | 6.5
+Competitors fish - 2
 Competitions - 3, 1, 1.5, 0.75, 0.75 | 7
 Fish - 1
 Catches - 2, 2.5, 2, 1.5, 1 | 9

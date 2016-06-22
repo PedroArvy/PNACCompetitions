@@ -220,7 +220,7 @@ namespace PNACCompetitionsDbFirst.Entities
       {
       }
 
-      if (catchId == 46)
+      if (catchId == 23)
       {
       }
 
