@@ -233,6 +233,7 @@
     <Compile Include="Models\ViewModels\CompetitionEdit.cs" />
     <Compile Include="Models\ViewModels\CompetitionListItem.cs" />
     <Compile Include="Models\ViewModels\CompetitionIndex.cs" />
+    <Compile Include="Models\ViewModels\CompetitorCatches.cs" />
     <Compile Include="Models\ViewModels\CompetitorCreate.cs" />
     <Compile Include="Models\ViewModels\Components\RadioValue.cs" />
     <Compile Include="Models\ViewModels\Entries\CompetitionEntries.cs" />

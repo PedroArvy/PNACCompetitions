@@ -24,6 +24,39 @@ namespace PNACCompetitionsDbFirst.Entities
 
 
     #region *********************** Properties ***********************
+
+
+    public double HeaviestFish
+    {
+      get
+      {
+        double heaviest = Weight;
+
+        if (!CatchAndRelease && Number > 1)
+          heaviest = Heaviest;
+
+        if (!Cleaned)
+          heaviest *= 0.9;
+
+        return heaviest;
+      }
+    }
+
+
+    public int LengthForPoints
+    {
+      get
+      {
+        int length = Length;
+
+        if (!CatchAndRelease && Number > 1)
+          length = Longest;
+
+        return length;
+      }
+    }
+
+
     #endregion
 
 
@@ -61,31 +94,6 @@ namespace PNACCompetitionsDbFirst.Entities
       }
 
       return value;
-    }
-
-
-    public double HeaviestFish()
-    {
-      double heaviest = Weight;
-
-      if (!CatchAndRelease && Number > 1)
-        heaviest = Heaviest;
-
-      if (!Cleaned)
-        heaviest *= 0.9;
-
-      return heaviest;
-    }
-
-
-    public int LengthForPoints()
-    {
-      int length = Length;
-
-      if (!CatchAndRelease && Number > 1)
-        length = Longest;
-
-      return length;
     }
 
 

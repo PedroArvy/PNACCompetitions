@@ -100,7 +100,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       foreach (Catch @catch in entry.Catches)
       {
-        points = entry.Competition.LengthPoints(@catch.CatchId, @catch.LengthForPoints(), @catch.Fish, out smaller, out total, out equal, previousCatches);
+        points = entry.Competition.LengthPoints(@catch.CatchId, @catch.LengthForPoints, @catch.Fish, out smaller, out total, out equal, previousCatches);
         competitorCatch = new CompetitorCatch();
 
         competitorCatch.CatchId = @catch.CatchId;
@@ -120,7 +120,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         else
           competitorCatch.Weight = "NA";
 
-        competitorCatch.Points = competition.LengthPoints(@catch.CatchId, @catch.LengthForPoints(), @catch.Fish, out smaller, out total, out equal, previousCatches);
+        competitorCatch.Points = competition.LengthPoints(@catch.CatchId, @catch.LengthForPoints, @catch.Fish, out smaller, out total, out equal, previousCatches);
 
         if (equal != 0)
           competitorCatch.LengthFormula = "100x(" + smaller.ToString() + "+0.5x" + equal + ")/" + total.ToString();

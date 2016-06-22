@@ -96,7 +96,14 @@ namespace PNACCompetitionsDbFirst.Controllers
 
     public ActionResult Catches(int id)
     {
-      return View(db.Catches.Where(c => c.Entry.CompetitorId == id));
+      CompetitorCatches model = new CompetitorCatches();
+
+      Competitor competitor = db.Competitors.Single(c => c.CompetitorId == id);
+
+      model.Catches = db.Catches.Where(c => c.Entry.CompetitorId == id);
+      model.Name = competitor.FriendlyName();
+
+      return View(model);
     }
 
 

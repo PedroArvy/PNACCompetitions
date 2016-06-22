@@ -1,25 +1,73 @@
 ﻿@using PNACCompetitionsDbFirst.Entities;
-@model IEnumerable<Catch>
+@using PNACCompetitionsDbFirst.Models;
+@using PNACCompetitionsDbFirst.Models.ViewModels;
+@model CompetitorCatches
 
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Fish</th>
-      <th>Competitor</th>
-      <th>Points</th>
-    </tr>
-  </thead>
-  <tbody>
+<div class="row">
+  <div class="col-md-6">
+    <h2 class="section-title">@Model.Name Catches</h2>
+  </div>
+</div>
 
-    @foreach (LeaderBoardItem item in Model)
-    {
-      <tr>
-        <td>@item.Rank</td>
-        <td>@item.Competitor.FriendlyName()</td>
-        <td>@item.Points</td>
-      </tr>
-    }
 
-  </tbody>
-</table>
+<div class="row">
+  <div class="col-md-8">
+    <div class="table-responsive">
+
+      <table class="table table-striped tablesorter">
+        <thead>
+          <tr>
+
+            <th>
+              <span class="hidden-sm hidden-xs hidden-md ">Fish</span>
+              <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
+              <span class="hidden-lg">F</span>
+            </th>
+
+            <th>
+              <span class="hidden-sm hidden-xs hidden-md ">Length (cm)</span>
+              <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
+              <span class="hidden-lg">L</span>
+            </th>
+
+            <th>
+              <span class="hidden-sm hidden-xs hidden-md ">Weight (kg)</span>
+              <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
+              <span class="hidden-lg">W</span>
+            </th>
+
+            <th>
+              <span class="hidden-sm hidden-xs hidden-md ">Date</span>
+              <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
+              <span class="hidden-lg">D</span>
+            </th>
+
+            <th>
+              <span class="hidden-sm hidden-xs hidden-md ">Venue</span>
+              <span class="hidden-sm hidden-xs hidden-md tablesorter-image"></span>
+              <span class="hidden-lg">V</span>
+            </th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @foreach (Catch item in Model.Catches.Where(c => c.Number == 1 || (c.Number > 1 && (c.Longest != 0 && c.Heaviest != 0))))
+          {
+            <tr>
+              <td>@Html.ActionLink(@item.Fish.Name, "CaughtFish", "Fish", new { fishId = @item.FishId }, null)</td>
+              <td>@Model.Length(item)</td>
+              <td>@Model.HeaviestFish(item)</td>
+              <td>@item.Date.ToString(Format.DATE_FORMAT_CS)</td>
+              <td>@Html.ActionLink(@item.Entry.Competition.Venue, "Edit", "Competitions", new { id = @item.Entry.CompetitionId, tabId = 3 }, null)</td>
+            </tr>
+          }
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

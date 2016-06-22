@@ -74,6 +74,19 @@ namespace PNACCompetitionsDbFirst.Models
     }
 
 
+    public static string FormatNumber(double number, int decimals)
+    {
+      string value = "";
+
+      if (number == 0)
+        value = "NA";
+      else
+        value = Math.Round(number, decimals).ToString();
+
+      return value;
+    }
+
+
     public static string TimeOnly(DateTime theDate)
     {
       if (theDate == null)

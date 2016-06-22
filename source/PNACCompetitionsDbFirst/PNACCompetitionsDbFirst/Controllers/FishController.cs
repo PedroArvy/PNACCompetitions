@@ -87,7 +87,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
       foreach (Catch @catch in db.Catches.Where(c => c.FishId == fishId && c.Date <= end))
       {
-        caught = new FishCaught() { CompetitorName = @catch.Entry.Competitor.FriendlyName(), Competition = @catch.Entry.Competition.Venue, Date = @catch.Date, Length = @catch.LengthForPoints() };
+        caught = new FishCaught() { CompetitorName = @catch.Entry.Competitor.FriendlyName(), Competition = @catch.Entry.Competition.Venue, Date = @catch.Date, Length = @catch.LengthForPoints };
 
         if (@catch.Number == 1)
           caught.Weight = @catch.Weight;
@@ -112,6 +112,22 @@ namespace PNACCompetitionsDbFirst.Controllers
       Caught(index, end, fishId);
 
       return View("/Views/Fish/Caught.cshtml", index);
+    }
+
+
+    public ActionResult Delete(int id)
+    {
+      Fish fish = db.Fish.SingleOrDefault(c => c.FishId == id);
+
+      if (Competitor.Admin)
+      {
+        db.Fish.Remove(fish);
+        db.SaveChanges();
+
+        return RedirectToAction("Index");
+      }
+      else
+        throw new NotImplementedException();
     }
 
 

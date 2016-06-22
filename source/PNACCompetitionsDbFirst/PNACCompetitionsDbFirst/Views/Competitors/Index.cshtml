@@ -81,17 +81,19 @@
                     @Html.ActionLink("Delete", "Delete", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm white-button", onclick = "return DeleteCompetitor(" + competitor.CompetitorId + ")" })
                   }
 
-                                  @*
-    if(competitor.HasCatches)
-    {
-      <a href="/Competitors/Catches?id=@competitor.CompetitorId"><img src="~/Content/images/fish.png" width="30" border="0"/></a>
-    }
-                                  *@
-
+                  if (competitor.HasCatches)
+                  {
+                    <a href="/Competitors/Catches?id=@competitor.CompetitorId"><img src="~/Content/images/fish.png" width="30" border="0" /></a>
+                  }
                 }
                 else if (competitor.CanCreatePassword)
                 {
                   @Html.ActionLink("Create password", "Create", "Competitors", new { id = competitor.CompetitorId }, new { @class = "btn btn-primary btn-sm" })
+
+                  if (competitor.HasCatches)
+                  {
+                    <a href="/Competitors/Catches?id=@competitor.CompetitorId"><img src="~/Content/images/fish.png" width="30" border="0" /></a>
+                  }
                 }
 
               </td>
@@ -108,7 +110,7 @@
 </div>
 
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     var members = [
 
       @Html.Raw(Model.MemberNames)
