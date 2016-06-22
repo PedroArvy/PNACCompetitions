@@ -33,9 +33,9 @@ namespace PNACCompetitionsDbFirst.Models.ViewModels
     public string Name { get; set; }
 
 
-    [Required]
-    [Range(20, 2000)]
-    public int Maximum { get; set; }
+    //[Required]
+    //[Range(20, 2000)]
+    //public int Maximum { get; set; }
 
 
     [Required]

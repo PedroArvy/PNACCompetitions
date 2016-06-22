@@ -38,7 +38,7 @@ namespace PNACCompetitionsDbFirst.Controllers
     {
       fish.Name = model.Name;
       fish.Minimum = model.Minimum;
-      fish.Maximum = model.Maximum;
+      //fish.Maximum = model.Maximum;
       fish.Difficulty = model.Difficulty;
 
       fish.Environments.ToList().RemoveRange(0, fish.Environments.Count());
@@ -125,7 +125,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         edit.FishId = fish.FishId;
         edit.Name = fish.Name;
         edit.Minimum = fish.Minimum;
-        edit.Maximum = fish.Maximum;
+        //edit.Maximum = fish.Maximum;
         edit.Difficulty = fish.Difficulty;
 
         edit.EnvironmentFreshwater = fish.Environments.Any(e => e.EnvironmentId == (int)Fish.ENVIRONMENT.FRESHWATER);
