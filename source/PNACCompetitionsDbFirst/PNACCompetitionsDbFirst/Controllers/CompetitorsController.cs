@@ -200,7 +200,7 @@ namespace PNACCompetitionsDbFirst.Controllers
           edit.Email = competitor.AspNetUser.Email;
         else
           edit.Email = competitor.Email;
-       
+
         edit.Admin = competitor.Admin;
         edit.CompetitorType = competitor.CompetitorType;
         edit.Gender = competitor.Gender;
@@ -232,18 +232,19 @@ namespace PNACCompetitionsDbFirst.Controllers
       Competitor competitor = db.Competitors.SingleOrDefault(c => c.CompetitorId == model.CompetitorId);
 
       AssignErrors(competitor, model);
-      
+
       if (CanEdit(competitor) && ModelState.IsValid)
       {
         AssignModel(competitor, model);
         AspNetUser aspNetUser = db.AspNetUsers.SingleOrDefault(u => u.UserName == model.Email.Trim());
-        
+
         if (aspNetUser == null)
         {
           var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-          var result = UserManager.CreateAsync(user, model.Password);
+          var result = UserManager.Create(user, model.Password);
+          aspNetUser = db.AspNetUsers.SingleOrDefault(u => u.UserName == model.Email.Trim());
         }
-        else if(!string.IsNullOrWhiteSpace(model.Password))
+        else if (!string.IsNullOrWhiteSpace(model.Password))
         {
           var user = await UserManager.FindByNameAsync(model.Email);
 
@@ -251,15 +252,15 @@ namespace PNACCompetitionsDbFirst.Controllers
           UserManager.AddPassword(user.Id, model.Password);
         }
 
-        if(aspNetUser != null)
+        if (aspNetUser != null)
         {
-          competitor.AspNetUser.Email = model.Email;
-          competitor.AspNetUser.UserName = model.Email;
+          aspNetUser.Email = model.Email;
+          aspNetUser.UserName = model.Email;
         }
 
         db.SaveChanges();
         return RedirectToAction("Index");
-        
+
       }
       else if (CanEdit(competitor) && !ModelState.IsValid)
         return View(model);
@@ -390,7 +391,7 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         AspNetUser aspNetUser = db.AspNetUsers.SingleOrDefault(a => a.Email == model.Email);
 
-        if(aspNetUser != null)
+        if (aspNetUser != null)
           competitor.AspNetUser = aspNetUser;
 
         competitor.ClubId = db.Clubs.First().ClubId;
