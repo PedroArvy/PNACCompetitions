@@ -247,9 +247,12 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         if (aspNetUser == null)
         {
-          var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-          var result = UserManager.Create(user, model.Password);
-          aspNetUser = db.AspNetUsers.SingleOrDefault(u => u.UserName == model.Email.Trim());
+          if(!string.IsNullOrWhiteSpace(model.Email))
+          {
+            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            var result = UserManager.Create(user, model.Password);
+            aspNetUser = db.AspNetUsers.SingleOrDefault(u => u.UserName == model.Email.Trim());
+          }
         }
         else if (!string.IsNullOrWhiteSpace(model.Password))
         {

@@ -378,6 +378,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         newCompetition.EnvironmentId = db.Environments.Single(e => e.Name.ToLower().IndexOf("fresh") != -1).EnvironmentId;
 
         newCompetition.Environments = Environments();
+        newCompetition.CanEdit = IsAdmin;
       }
       else
         throw new UnauthorizedAccessException();
