@@ -193,6 +193,8 @@ namespace PNACCompetitionsDbFirst.Controllers
 
         if (db.Catches.Any(c => c.FishId == fish_.FishId))
           fishListItem.Caught = true;
+        else
+          fishListItem.Caught = false;
 
         index.FishListItems.Add(fishListItem);
       }

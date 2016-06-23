@@ -210,6 +210,17 @@ namespace PNACCompetitionsDbFirst.Entities
     }
 
 
+    /// <summary>
+    /// http://www.regentsprep.org/regents/math/algebra/ad6/quartiles.htm
+    /// </summary>
+    /// <param name="catchId"></param>
+    /// <param name="length"></param>
+    /// <param name="fish"></param>
+    /// <param name="smaller"></param>
+    /// <param name="total"></param>
+    /// <param name="equal"></param>
+    /// <param name="allPreviousCatches"></param>
+    /// <returns></returns>
     public double LengthPoints(int catchId, int length, Fish fish, out int smaller, out int total, out int equal, IQueryable<Catch> allPreviousCatches)
     {
       double points = 0;
