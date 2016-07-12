@@ -252,6 +252,8 @@ namespace PNACCompetitionsDbFirst.Controllers
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
             var result = UserManager.Create(user, model.Password);
             aspNetUser = db.AspNetUsers.SingleOrDefault(u => u.UserName == model.Email.Trim());
+            competitor.AspNetUserId = aspNetUser.Id;
+            db.SaveChanges();
           }
         }
         else if (!string.IsNullOrWhiteSpace(model.Password))
@@ -266,6 +268,7 @@ namespace PNACCompetitionsDbFirst.Controllers
         {
           aspNetUser.Email = model.Email;
           aspNetUser.UserName = model.Email;
+          competitor.AspNetUserId = aspNetUser.Id;
         }
 
         db.SaveChanges();
