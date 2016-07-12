@@ -260,6 +260,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="autocomplete-pair1.html" />
+    <Content Include="autocomplete-pair.html" />
+    <Content Include="autocomplete-simple.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\asc.gif" />
